@@ -1,5 +1,7 @@
 Copyright (c) 2015, Jonathan Price
+
 Copyright (c) 2015, Peter Reid
+
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
