@@ -874,7 +874,7 @@ while ($row = $new_exp_europe_realm_pop_query->fetchArray()) {
                       <br/>
                       <hr/>
                       <br/>
-                      <div class="black-text light region-subtitle">American Realms</div>
+                      <div class="black-text light region-subtitle">AMERICAN REALMS</div>
                       <br/>
                       <!-- Begin Chart -->
                       <div id="america_realm_distribution" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
@@ -882,7 +882,7 @@ while ($row = $new_exp_europe_realm_pop_query->fetchArray()) {
                       <br/>
                       <hr/>
                       <br/>
-                      <div class="black-text light region-subtitle">Japanese Realms</div>
+                      <div class="black-text light region-subtitle">JAPANESE REALMS</div>
                       <br/>
                       <!-- Begin Chart -->
                       <div id="japan_realm_distribution" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
@@ -890,7 +890,7 @@ while ($row = $new_exp_europe_realm_pop_query->fetchArray()) {
                       <br/>
                       <hr/>
                       <br/>
-                      <div class="black-text light region-subtitle">European Realms</div>
+                      <div class="black-text light region-subtitle">EUROPEAN REALMS</div>
                       <br/>
                       <!-- Begin Chart -->
                       <div id="europe_realm_distribution" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
@@ -1317,16 +1317,6 @@ $(function () {
             ],
             color: '#ce93d8'
         }, {
-            name: 'All (HW)',
-            data: [
-                <?php
-                        foreach ($new_america_realm_pop as $value) {
-                                echo "$value,";
-                        }
-                ?>
-            ],
-            color: '#81d4fa'
-        }, {
             name: 'Experienced (ARR)',
             data: [
                 <?php
@@ -1336,6 +1326,16 @@ $(function () {
                 ?>
             ],
             color: '#673ab7'
+        }, {
+            name: 'All (HW)',
+            data: [
+                <?php
+                        foreach ($new_america_realm_pop as $value) {
+                                echo "$value,";
+                        }
+                ?>
+            ],
+            color: '#81d4fa'
         }, {
             name: 'Experienced (HW)',
             data: [
@@ -1394,16 +1394,6 @@ $(function () {
             ],
             color: '#ce93d8'
         }, {
-            name: 'All (HW)',
-            data: [
-                <?php
-                        foreach ($new_japan_realm_pop as $value) {
-                                echo "$value,";
-                        }
-                ?>
-            ],
-            color: '#81d4fa'
-        }, {
             name: 'Experienced (ARR)',
             data: [
                 <?php
@@ -1413,6 +1403,16 @@ $(function () {
                 ?>
             ],
             color: '#673ab7'
+        }, {
+            name: 'All (HW)',
+            data: [
+                <?php
+                        foreach ($new_japan_realm_pop as $value) {
+                                echo "$value,";
+                        }
+                ?>
+            ],
+            color: '#81d4fa'
         }, {
             name: 'Experienced (HW)',
             data: [
@@ -1470,16 +1470,6 @@ $(function () {
             ],
             color: '#ce93d8'
         }, {
-            name: 'All (HW)',
-            data: [
-                <?php
-                        foreach ($new_europe_realm_pop as $value) {
-                                echo "$value,";
-                        }
-                ?>
-            ],
-            color: '#81d4fa'
-        }, {
             name: 'Experienced (ARR)',
             data: [
                 <?php
@@ -1489,6 +1479,16 @@ $(function () {
                 ?>
             ],
             color: '#673ab7'
+        }, {
+            name: 'All (HW)',
+            data: [
+                <?php
+                        foreach ($new_europe_realm_pop as $value) {
+                                echo "$value,";
+                        }
+                ?>
+            ],
+            color: '#81d4fa'
         }, {
             name: 'Experienced (HW)',
             data: [
