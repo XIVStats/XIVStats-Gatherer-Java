@@ -1,0 +1,1291 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="87eda50d-2c5c-4d09-bcdd-94aeb8df61a5" name="Default" comment="" />
+    <ignored path="XIVStats.iws" />
+    <ignored path=".idea/workspace.xml" />
+    <ignored path=".idea/dataSources.local.xml" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ChangesViewManager" flattened_view="true" show_ignored="false" />
+  <component name="CreatePatchCommitExecutor">
+    <option name="PATCH_PATH" value="" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
+  <component name="FavoritesManager">
+    <favorites_list name="XIVStats" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf>
+      <file leaf-file-name="xiv_compare.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/xiv_compare.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-0.22844344">
+              <caret line="955" column="74" selection-start-line="955" selection-start-column="74" selection-end-line="955" selection-end-column="74" />
+              <folding>
+                <marker date="1438872867024" expanded="true" signature="4173:4200" placeholder="SELECT count..players..." />
+                <marker date="1438872867024" expanded="true" signature="4366:4393" placeholder="SELECT count..players..." />
+                <marker date="1438872867024" expanded="true" signature="4639:4673" placeholder="SELECT count..players..." />
+                <marker date="1438872867024" expanded="true" signature="4890:4924" placeholder="SELECT count..players..." />
+                <marker date="1438872867024" expanded="true" signature="5284:5318" placeholder="SELECT count..players..." />
+                <marker date="1438872867024" expanded="true" signature="5543:5577" placeholder="SELECT count..players..." />
+                <marker date="1438872867024" expanded="true" signature="5906:5969" placeholder="SELECT count..players..." />
+                <marker date="1438872867024" expanded="true" signature="6220:6283" placeholder="SELECT count..players..." />
+                <marker date="1438872867024" expanded="true" signature="6648:6682" placeholder="SELECT count..players..." />
+                <marker date="1438872867024" expanded="true" signature="6897:6931" placeholder="SELECT count..players..." />
+                <marker date="1438872867024" expanded="true" signature="7244:7307" placeholder="SELECT count..players..." />
+                <marker date="1438872867024" expanded="true" signature="7548:7611" placeholder="SELECT count..players..." />
+                <marker date="1438872867024" expanded="true" signature="7964:7998" placeholder="SELECT count..players..." />
+                <marker date="1438872867024" expanded="true" signature="8218:8252" placeholder="SELECT count..players..." />
+                <marker date="1438872867024" expanded="true" signature="8573:8636" placeholder="SELECT count..players..." />
+                <marker date="1438872867024" expanded="true" signature="8882:8945" placeholder="SELECT count..players..." />
+                <marker date="1438872867024" expanded="true" signature="9354:9418" placeholder="SELECT grand..players..." />
+                <marker date="1438872867024" expanded="true" signature="9804:9905" placeholder="select grand..players..." />
+                <marker date="1438872867024" expanded="true" signature="10355:10415" placeholder="SELECT race,..players..." />
+                <marker date="1438872867024" expanded="true" signature="10527:10587" placeholder="SELECT race,..players..." />
+                <marker date="1438872867024" expanded="true" signature="11514:11611" placeholder="SELECT race,..players..." />
+                <marker date="1438872867024" expanded="true" signature="11735:11832" placeholder="SELECT race,..players..." />
+                <marker date="1438872867024" expanded="true" signature="12756:12811" placeholder="SELECT count..players..." />
+                <marker date="1438872867024" expanded="true" signature="12909:12963" placeholder="SELECT count..players..." />
+                <marker date="1438872867024" expanded="true" signature="13060:13114" placeholder="SELECT count..players..." />
+                <marker date="1438872867024" expanded="true" signature="13211:13263" placeholder="SELECT count..players..." />
+                <marker date="1438872867024" expanded="true" signature="13358:13410" placeholder="SELECT count..players..." />
+                <marker date="1438872867024" expanded="true" signature="13505:13556" placeholder="SELECT count..players..." />
+                <marker date="1438872867024" expanded="true" signature="13650:13704" placeholder="SELECT count..players..." />
+                <marker date="1438872867024" expanded="true" signature="13801:13858" placeholder="SELECT count..players..." />
+                <marker date="1438872867024" expanded="true" signature="13958:14012" placeholder="SELECT count..players..." />
+                <marker date="1438872867024" expanded="true" signature="14298:14353" placeholder="SELECT count..players..." />
+                <marker date="1438872867024" expanded="true" signature="14451:14507" placeholder="SELECT count..players..." />
+                <marker date="1438872867024" expanded="true" signature="14606:14659" placeholder="SELECT count..players..." />
+                <marker date="1438872867024" expanded="true" signature="14755:14810" placeholder="SELECT count..players..." />
+                <marker date="1438872867024" expanded="true" signature="14908:14967" placeholder="SELECT count..players..." />
+                <marker date="1438872867024" expanded="true" signature="15069:15121" placeholder="SELECT count..players..." />
+                <marker date="1438872867024" expanded="true" signature="15216:15271" placeholder="SELECT count..players..." />
+                <marker date="1438872867024" expanded="true" signature="15369:15425" placeholder="SELECT count..players..." />
+                <marker date="1438872867024" expanded="true" signature="15524:15575" placeholder="SELECT count..players..." />
+                <marker date="1438872867024" expanded="true" signature="15669:15723" placeholder="SELECT count..players..." />
+                <marker date="1438872867024" expanded="true" signature="15820:15872" placeholder="SELECT count..players..." />
+                <marker date="1438872867024" expanded="true" signature="16034:16089" placeholder="SELECT count..players..." />
+                <marker date="1438872867024" expanded="true" signature="16187:16241" placeholder="SELECT count..players..." />
+                <marker date="1438872867024" expanded="true" signature="16338:16392" placeholder="SELECT count..players..." />
+                <marker date="1438872867024" expanded="true" signature="16489:16541" placeholder="SELECT count..players..." />
+                <marker date="1438872867024" expanded="true" signature="16636:16688" placeholder="SELECT count..players..." />
+                <marker date="1438872867024" expanded="true" signature="16783:16834" placeholder="SELECT count..players..." />
+                <marker date="1438872867024" expanded="true" signature="16928:16982" placeholder="SELECT count..players..." />
+                <marker date="1438872867024" expanded="true" signature="17079:17136" placeholder="SELECT count..players..." />
+                <marker date="1438872867024" expanded="true" signature="17236:17290" placeholder="SELECT count..players..." />
+                <marker date="1438872867024" expanded="true" signature="17387:17443" placeholder="SELECT count..players..." />
+                <marker date="1438872867024" expanded="true" signature="17543:17598" placeholder="SELECT count..players..." />
+                <marker date="1438872867024" expanded="true" signature="17696:17753" placeholder="SELECT count..players..." />
+                <marker date="1438872867024" expanded="true" signature="17853:17908" placeholder="SELECT count..players..." />
+                <marker date="1438872867024" expanded="true" signature="18006:18062" placeholder="SELECT count..players..." />
+                <marker date="1438872867024" expanded="true" signature="18161:18214" placeholder="SELECT count..players..." />
+                <marker date="1438872867024" expanded="true" signature="18310:18365" placeholder="SELECT count..players..." />
+                <marker date="1438872867024" expanded="true" signature="18463:18522" placeholder="SELECT count..players..." />
+                <marker date="1438872867024" expanded="true" signature="18624:18676" placeholder="SELECT count..players..." />
+                <marker date="1438872867024" expanded="true" signature="18771:18826" placeholder="SELECT count..players..." />
+                <marker date="1438872867024" expanded="true" signature="18924:18980" placeholder="SELECT count..players..." />
+                <marker date="1438872867024" expanded="true" signature="19079:19130" placeholder="SELECT count..players..." />
+                <marker date="1438872867024" expanded="true" signature="19224:19278" placeholder="SELECT count..players..." />
+                <marker date="1438872867024" expanded="true" signature="19375:19427" placeholder="SELECT count..players..." />
+                <marker date="1438872867024" expanded="true" signature="19599:19682" placeholder="select count..players..." />
+                <marker date="1438872867024" expanded="true" signature="19784:19865" placeholder="select count..players..." />
+                <marker date="1438872867024" expanded="true" signature="19966:20047" placeholder="select count..players..." />
+                <marker date="1438872867024" expanded="true" signature="20148:20225" placeholder="select count..players..." />
+                <marker date="1438872867024" expanded="true" signature="20324:20401" placeholder="select count..players..." />
+                <marker date="1438872867024" expanded="true" signature="20500:20575" placeholder="select count..players..." />
+                <marker date="1438872867024" expanded="true" signature="20673:20754" placeholder="select count..players..." />
+                <marker date="1438872867024" expanded="true" signature="20855:20942" placeholder="select count..players..." />
+                <marker date="1438872867024" expanded="true" signature="21046:21127" placeholder="select count..players..." />
+                <marker date="1438872867024" expanded="true" signature="21429:21512" placeholder="select count..players..." />
+                <marker date="1438872867024" expanded="true" signature="21614:21699" placeholder="select count..players..." />
+                <marker date="1438872867024" expanded="true" signature="21802:21884" placeholder="select count..players..." />
+                <marker date="1438872867024" expanded="true" signature="21984:22067" placeholder="select count..players..." />
+                <marker date="1438872867024" expanded="true" signature="22169:22260" placeholder="select count..players..." />
+                <marker date="1438872867024" expanded="true" signature="22366:22443" placeholder="select count..players..." />
+                <marker date="1438872867024" expanded="true" signature="22542:22625" placeholder="select count..players..." />
+                <marker date="1438872867024" expanded="true" signature="22727:22812" placeholder="select count..players..." />
+                <marker date="1438872867024" expanded="true" signature="22915:22990" placeholder="select count..players..." />
+                <marker date="1438872867024" expanded="true" signature="23088:23169" placeholder="select count..players..." />
+                <marker date="1438872867024" expanded="true" signature="23270:23347" placeholder="select count..players..." />
+                <marker date="1438872867024" expanded="true" signature="23506:23589" placeholder="select count..players..." />
+                <marker date="1438872867024" expanded="true" signature="23691:23772" placeholder="select count..players..." />
+                <marker date="1438872867024" expanded="true" signature="23873:23954" placeholder="select count..players..." />
+                <marker date="1438872867024" expanded="true" signature="24055:24132" placeholder="select count..players..." />
+                <marker date="1438872867024" expanded="true" signature="24231:24308" placeholder="select count..players..." />
+                <marker date="1438872867024" expanded="true" signature="24407:24482" placeholder="select count..players..." />
+                <marker date="1438872867024" expanded="true" signature="24580:24661" placeholder="select count..players..." />
+                <marker date="1438872867024" expanded="true" signature="24762:24849" placeholder="select count..players..." />
+                <marker date="1438872867024" expanded="true" signature="24953:25034" placeholder="select count..players..." />
+                <marker date="1438872867024" expanded="true" signature="25135:25220" placeholder="select count..players..." />
+                <marker date="1438872867024" expanded="true" signature="25324:25407" placeholder="select count..players..." />
+                <marker date="1438872867024" expanded="true" signature="25509:25596" placeholder="select count..players..." />
+                <marker date="1438872867024" expanded="true" signature="25700:25783" placeholder="select count..players..." />
+                <marker date="1438872867024" expanded="true" signature="25885:25970" placeholder="select count..players..." />
+                <marker date="1438872867024" expanded="true" signature="26073:26155" placeholder="select count..players..." />
+                <marker date="1438872867024" expanded="true" signature="26255:26338" placeholder="select count..players..." />
+                <marker date="1438872867024" expanded="true" signature="26440:26531" placeholder="select count..players..." />
+                <marker date="1438872867024" expanded="true" signature="26637:26714" placeholder="select count..players..." />
+                <marker date="1438872867024" expanded="true" signature="26813:26896" placeholder="select count..players..." />
+                <marker date="1438872867024" expanded="true" signature="26998:27083" placeholder="select count..players..." />
+                <marker date="1438872867024" expanded="true" signature="27186:27261" placeholder="select count..players..." />
+                <marker date="1438872867024" expanded="true" signature="27359:27440" placeholder="select count..players..." />
+                <marker date="1438872867024" expanded="true" signature="27541:27618" placeholder="select count..players..." />
+                <marker date="1438872867024" expanded="true" signature="27803:27901" placeholder="SELECT realm..players..." />
+                <marker date="1438872867024" expanded="true" signature="28162:28260" placeholder="SELECT realm..players..." />
+                <marker date="1438872867024" expanded="true" signature="28529:28662" placeholder="SELECT realm..players..." />
+                <marker date="1438872867024" expanded="true" signature="28939:29072" placeholder="SELECT realm..players..." />
+                <marker date="1438872867024" expanded="true" signature="29338:29436" placeholder="SELECT realm..players..." />
+                <marker date="1438872867024" expanded="true" signature="29689:29787" placeholder="SELECT realm..players..." />
+                <marker date="1438872867024" expanded="true" signature="30048:30181" placeholder="SELECT realm..players..." />
+                <marker date="1438872867024" expanded="true" signature="30450:30583" placeholder="SELECT realm..players..." />
+                <marker date="1438872867024" expanded="true" signature="30846:30944" placeholder="SELECT realm..players..." />
+                <marker date="1438872867024" expanded="true" signature="31201:31299" placeholder="SELECT realm..players..." />
+                <marker date="1438872867024" expanded="true" signature="31564:31697" placeholder="SELECT realm..players..." />
+                <marker date="1438872867024" expanded="true" signature="31970:32103" placeholder="SELECT realm..players..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GradleLocalSettings">
+    <option name="externalProjectsViewState">
+      <projects_view />
+    </option>
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/staticHTML.html" />
+        <option value="$PROJECT_DIR$/xiv_compare.php" />
+      </list>
+    </option>
+  </component>
+  <component name="JsBuildToolGruntFileManager" detection-done="true" />
+  <component name="JsGulpfileManager">
+    <detection-done>true</detection-done>
+  </component>
+  <component name="NamedScopeManager">
+    <order />
+  </component>
+  <component name="PhpServers">
+    <servers />
+  </component>
+  <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
+    <option name="width" value="1936" />
+    <option name="height" value="1056" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="false">
+    <OptionsSetting value="true" id="Add" />
+    <OptionsSetting value="true" id="Remove" />
+    <OptionsSetting value="true" id="Checkout" />
+    <OptionsSetting value="true" id="Update" />
+    <OptionsSetting value="true" id="Status" />
+    <OptionsSetting value="true" id="Edit" />
+    <ConfirmationsSetting value="0" id="Add" />
+    <ConfirmationsSetting value="0" id="Remove" />
+  </component>
+  <component name="ProjectView">
+    <navigator currentView="ProjectPane" proportions="" version="1">
+      <flattenPackages />
+      <showMembers />
+      <showModules />
+      <showLibraryContents />
+      <hideEmptyPackages />
+      <abbreviatePackageNames />
+      <autoscrollToSource />
+      <autoscrollFromSource />
+      <sortByType />
+    </navigator>
+    <panes>
+      <pane id="ProjectPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="XIVStats" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="XIVStats" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="XIVStats" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+      <pane id="PackagesPane" />
+      <pane id="Scratches" />
+      <pane id="Scope" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="F:/Peter/Documents/FDSE/Programming Three/Week 2 - More OOP revision, testing, code review and Java Guidelines/RunningMachine" />
+    <property name="FullScreen" value="false" />
+    <property name="settings.editor.selected.configurable" value="SQL Dialects" />
+    <property name="settings.editor.splitter.proportion" value="0.2" />
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
+      <module name="" />
+      <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m -ea" />
+      <option name="PROGRAM_PARAMETERS" />
+      <method />
+    </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <module />
+      <method />
+    </configuration>
+    <configuration default="true" type="Application" factoryName="Application">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="CucumberJavaRunConfigurationType" factoryName="Cucumber java">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="myFilePath" />
+      <option name="GLUE" />
+      <option name="myNameFilter" />
+      <option name="myGeneratedName" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="CucumberRunConfigurationType" factoryName="Cucumber">
+      <predefined_log_file id="RUBY_CUCUMBER" enabled="true" />
+      <module name="" />
+      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="RUBY_ARGS" VALUE="-e $stdout.sync=true;$stderr.sync=true;load($0=ARGV.shift)" />
+      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="WORK DIR" VALUE="" />
+      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="SHOULD_USE_SDK" VALUE="false" />
+      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="ALTERN_SDK_NAME" VALUE="" />
+      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="myPassParentEnvs" VALUE="true" />
+      <envs />
+      <EXTENSION ID="BundlerRunConfigurationExtension" bundleExecEnabled="false" />
+      <EXTENSION ID="JRubyRunConfigurationExtension" NailgunExecEnabled="false" />
+      <EXTENSION ID="RubyCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" track_test_folders="true" runner="rcov" />
+      <EXTENSION ID="org.jetbrains.plugins.ruby.motion.run.MotionSimulatorRunExtension" />
+      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="TEST_FILE_MASK" VALUE="**/*.feature" />
+      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="TEST_TEST_TYPE" VALUE="TEST_SCRIPT" />
+      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="TESTS_FOLDER_PATH" VALUE="" />
+      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="TEST_SCRIPT_PATH" VALUE="" />
+      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="TEST_TAGS_FILTER" VALUE="" />
+      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="TEST_NAME_FILTER" VALUE="" />
+      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="CUCUMBER_ARGS" VALUE="--color -r features" />
+      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="RUNNER_VERSION" VALUE="" />
+      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="FULL_BACKTRACE" VALUE="false" />
+      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="VERBOSE_OPTION" VALUE="false" />
+      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="DRB" VALUE="false" />
+      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="ZEUS" VALUE="false" />
+      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="SPRING" VALUE="false" />
+      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="CUCUMBER_RUNNER_PATH" VALUE="" />
+      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="USE_CUSTOM_RUNNER" VALUE="false" />
+      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="SETTINGS_VERSION" VALUE="2" />
+      <method />
+    </configuration>
+    <configuration default="true" type="FlashRunConfigurationType" factoryName="Flash App">
+      <option name="BCName" value="" />
+      <option name="IOSSimulatorSdkPath" value="" />
+      <option name="adlOptions" value="" />
+      <option name="airProgramParameters" value="" />
+      <option name="appDescriptorForEmulator" value="Android" />
+      <option name="debugTransport" value="USB" />
+      <option name="debuggerSdkRaw" value="BC SDK" />
+      <option name="emulator" value="NexusOne" />
+      <option name="emulatorAdlOptions" value="" />
+      <option name="fastPackaging" value="true" />
+      <option name="fullScreenHeight" value="0" />
+      <option name="fullScreenWidth" value="0" />
+      <option name="launchUrl" value="false" />
+      <option name="launcherParameters">
+        <LauncherParameters>
+          <option name="browser" value="a7bb68e0-33c0-4d6f-a81a-aac1fdb870c8" />
+          <option name="launcherType" value="OSDefault" />
+          <option name="newPlayerInstance" value="false" />
+          <option name="playerPath" value="FlashPlayerDebugger.exe" />
+        </LauncherParameters>
+      </option>
+      <option name="mobileRunTarget" value="Emulator" />
+      <option name="moduleName" value="" />
+      <option name="overriddenMainClass" value="" />
+      <option name="overriddenOutputFileName" value="" />
+      <option name="overrideMainClass" value="false" />
+      <option name="runTrusted" value="true" />
+      <option name="screenDpi" value="0" />
+      <option name="screenHeight" value="0" />
+      <option name="screenWidth" value="0" />
+      <option name="url" value="http://" />
+      <option name="usbDebugPort" value="7936" />
+      <method />
+    </configuration>
+    <configuration default="true" type="FlexUnitRunConfigurationType" factoryName="FlexUnit" appDescriptorForEmulator="Android" class_name="" emulatorAdlOptions="" method_name="" package_name="" scope="Class">
+      <option name="BCName" value="" />
+      <option name="launcherParameters">
+        <LauncherParameters>
+          <option name="browser" value="a7bb68e0-33c0-4d6f-a81a-aac1fdb870c8" />
+          <option name="launcherType" value="OSDefault" />
+          <option name="newPlayerInstance" value="false" />
+          <option name="playerPath" value="FlashPlayerDebugger.exe" />
+        </LauncherParameters>
+      </option>
+      <option name="moduleName" value="" />
+      <option name="trusted" value="true" />
+      <method />
+    </configuration>
+    <configuration default="true" type="GradleRunConfiguration" factoryName="Gradle">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list />
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <method />
+    </configuration>
+    <configuration default="true" type="GrailsRunConfigurationType" factoryName="Grails">
+      <module name="" />
+      <setting name="vmparams" value="" />
+      <setting name="cmdLine" value="run-app" />
+      <setting name="depsClasspath" value="false" />
+      <setting name="passParentEnv" value="true" />
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <setting name="launchBrowser" value="false" />
+      <method />
+    </configuration>
+    <configuration default="true" type="JRubyCucumberRunConfigurationType" factoryName="JRuby Cucumber">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="VM_PARAMETERS" value="-Dforce.jruby.jit=true -Djruby.debug.fullTrace=true" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="" />
+      <envs />
+      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="TEST_FILE_MASK" VALUE="**/*.feature" />
+      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="TEST_TEST_TYPE" VALUE="TEST_SCRIPT" />
+      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="TESTS_FOLDER_PATH" VALUE="" />
+      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="TEST_SCRIPT_PATH" VALUE="" />
+      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="TEST_TAGS_FILTER" VALUE="" />
+      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="TEST_NAME_FILTER" VALUE="" />
+      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="CUCUMBER_ARGS" VALUE="--color -r features" />
+      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="RUNNER_VERSION" VALUE="" />
+      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="FULL_BACKTRACE" VALUE="false" />
+      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="VERBOSE_OPTION" VALUE="false" />
+      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="DRB" VALUE="false" />
+      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="ZEUS" VALUE="false" />
+      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="SPRING" VALUE="false" />
+      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="CUCUMBER_RUNNER_PATH" VALUE="" />
+      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="USE_CUSTOM_RUNNER" VALUE="false" />
+      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="SETTINGS_VERSION" VALUE="2" />
+      <method />
+    </configuration>
+    <configuration default="true" type="JUnit" factoryName="JUnit">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <module name="" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <envs />
+      <patterns />
+      <method />
+    </configuration>
+    <configuration default="true" type="JarApplication" factoryName="JAR Application">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug">
+      <method />
+    </configuration>
+    <configuration default="true" type="NodeJSConfigurationType" factoryName="Node.js" working-dir="">
+      <method />
+    </configuration>
+    <configuration default="true" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
+      <TestRunner />
+      <method />
+    </configuration>
+    <configuration default="true" type="PhpLocalRunConfigurationType" factoryName="PHP Console">
+      <method />
+    </configuration>
+    <configuration default="true" type="PhpUnitRemoteRunConfigurationType" factoryName="PHPUnit on Server">
+      <method />
+    </configuration>
+    <configuration default="true" type="Remote" factoryName="Remote">
+      <option name="USE_SOCKET_TRANSPORT" value="true" />
+      <option name="SERVER_MODE" value="false" />
+      <option name="SHMEM_ADDRESS" value="javadebug" />
+      <option name="HOST" value="localhost" />
+      <option name="PORT" value="5005" />
+      <method />
+    </configuration>
+    <configuration default="true" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <module name="" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="TestNG" factoryName="TestNG">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <module name="" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="SUITE_NAME" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="GROUP_NAME" />
+      <option name="TEST_OBJECT" value="CLASS" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="OUTPUT_DIRECTORY" />
+      <option name="ANNOTATION_TYPE" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <option name="USE_DEFAULT_REPORTERS" value="false" />
+      <option name="PROPERTIES_FILE" />
+      <envs />
+      <properties />
+      <listeners />
+      <method />
+    </configuration>
+    <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
+      <node-options />
+      <gulpfile />
+      <tasks />
+      <arguments />
+      <pass-parent-envs>true</pass-parent-envs>
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="osgi.bnd.run" factoryName="Run Launcher">
+      <method />
+    </configuration>
+    <configuration default="true" type="osgi.bnd.run" factoryName="Test Launcher (JUnit)">
+      <method />
+    </configuration>
+  </component>
+  <component name="ShelveChangesManager" show_recycled="false" />
+  <component name="SvnConfiguration">
+    <configuration>C:\Users\preid\AppData\Roaming\Subversion</configuration>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="87eda50d-2c5c-4d09-bcdd-94aeb8df61a5" name="Default" comment="" />
+      <created>1438608188388</created>
+      <option name="number" value="Default" />
+      <updated>1438608188388</updated>
+      <workItem from="1438608190194" duration="1925000" />
+      <workItem from="1438611197075" duration="809000" />
+      <workItem from="1441358399416" duration="11000" />
+      <workItem from="1442870139155" duration="120000" />
+      <workItem from="1442870332430" duration="352000" />
+    </task>
+    <task id="LOCAL-00001" summary="Fixed echo statements for chart data&#10;I accidentally removed them previously. Now fixed">
+      <created>1438611513122</created>
+      <option name="number" value="00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1438611513123</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="3217000" />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="false" />
+    <layout>
+      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32946146" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18020834" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+    </layout>
+  </component>
+  <component name="Vcs.Log.UiProperties">
+    <option name="RECENTLY_FILTERED_USER_GROUPS">
+      <collection />
+    </option>
+    <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+      <collection />
+    </option>
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Fixed echo statements for chart data&#10;I accidentally removed them previously. Now fixed" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed echo statements for chart data&#10;I accidentally removed them previously. Now fixed" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager />
+    <watches-manager />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <PATH>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="XIVStats" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="XIVStats" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value=".idea" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      </PATH_ELEMENT>
+    </PATH>
+  </component>
+  <component name="antWorkspaceConfiguration">
+    <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
+    <option name="FILTER_TARGETS" value="false" />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/xiv_compare.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <marker date="1438872867024" expanded="true" signature="4173:4200" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="4366:4393" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="4639:4673" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="4890:4924" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="5284:5318" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="5543:5577" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="5906:5969" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="6220:6283" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="6648:6682" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="6897:6931" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="7244:7307" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="7548:7611" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="7964:7998" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="8218:8252" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="8573:8636" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="8882:8945" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="9354:9418" placeholder="SELECT grand..players..." />
+            <marker date="1438872867024" expanded="true" signature="9804:9905" placeholder="select grand..players..." />
+            <marker date="1438872867024" expanded="true" signature="10355:10415" placeholder="SELECT race,..players..." />
+            <marker date="1438872867024" expanded="true" signature="10527:10587" placeholder="SELECT race,..players..." />
+            <marker date="1438872867024" expanded="true" signature="11514:11611" placeholder="SELECT race,..players..." />
+            <marker date="1438872867024" expanded="true" signature="11735:11832" placeholder="SELECT race,..players..." />
+            <marker date="1438872867024" expanded="true" signature="12756:12811" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="12909:12963" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="13060:13114" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="13211:13263" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="13358:13410" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="13505:13556" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="13650:13704" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="13801:13858" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="13958:14012" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="14298:14353" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="14451:14507" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="14606:14659" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="14755:14810" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="14908:14967" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="15069:15121" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="15216:15271" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="15369:15425" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="15524:15575" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="15669:15723" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="15820:15872" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="16034:16089" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="16187:16241" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="16338:16392" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="16489:16541" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="16636:16688" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="16783:16834" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="16928:16982" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="17079:17136" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="17236:17290" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="17387:17443" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="17543:17598" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="17696:17753" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="17853:17908" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="18006:18062" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="18161:18214" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="18310:18365" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="18463:18522" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="18624:18676" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="18771:18826" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="18924:18980" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="19079:19130" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="19224:19278" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="19375:19427" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="19599:19682" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="19784:19865" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="19966:20047" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="20148:20225" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="20324:20401" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="20500:20575" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="20673:20754" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="20855:20942" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="21046:21127" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="21429:21512" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="21614:21699" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="21802:21884" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="21984:22067" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="22169:22260" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="22366:22443" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="22542:22625" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="22727:22812" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="22915:22990" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="23088:23169" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="23270:23347" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="23506:23589" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="23691:23772" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="23873:23954" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="24055:24132" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="24231:24308" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="24407:24482" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="24580:24661" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="24762:24849" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="24953:25034" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="25135:25220" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="25324:25407" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="25509:25596" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="25700:25783" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="25885:25970" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="26073:26155" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="26255:26338" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="26440:26531" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="26637:26714" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="26813:26896" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="26998:27083" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="27186:27261" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="27359:27440" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="27541:27618" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="27803:27901" placeholder="SELECT realm..players..." />
+            <marker date="1438872867024" expanded="true" signature="28162:28260" placeholder="SELECT realm..players..." />
+            <marker date="1438872867024" expanded="true" signature="28529:28662" placeholder="SELECT realm..players..." />
+            <marker date="1438872867024" expanded="true" signature="28939:29072" placeholder="SELECT realm..players..." />
+            <marker date="1438872867024" expanded="true" signature="29338:29436" placeholder="SELECT realm..players..." />
+            <marker date="1438872867024" expanded="true" signature="29689:29787" placeholder="SELECT realm..players..." />
+            <marker date="1438872867024" expanded="true" signature="30048:30181" placeholder="SELECT realm..players..." />
+            <marker date="1438872867024" expanded="true" signature="30450:30583" placeholder="SELECT realm..players..." />
+            <marker date="1438872867024" expanded="true" signature="30846:30944" placeholder="SELECT realm..players..." />
+            <marker date="1438872867024" expanded="true" signature="31201:31299" placeholder="SELECT realm..players..." />
+            <marker date="1438872867024" expanded="true" signature="31564:31697" placeholder="SELECT realm..players..." />
+            <marker date="1438872867024" expanded="true" signature="31970:32103" placeholder="SELECT realm..players..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xiv_compare.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <marker date="1438872867024" expanded="true" signature="4173:4200" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="4366:4393" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="4639:4673" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="4890:4924" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="5284:5318" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="5543:5577" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="5906:5969" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="6220:6283" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="6648:6682" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="6897:6931" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="7244:7307" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="7548:7611" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="7964:7998" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="8218:8252" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="8573:8636" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="8882:8945" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="9354:9418" placeholder="SELECT grand..players..." />
+            <marker date="1438872867024" expanded="true" signature="9804:9905" placeholder="select grand..players..." />
+            <marker date="1438872867024" expanded="true" signature="10355:10415" placeholder="SELECT race,..players..." />
+            <marker date="1438872867024" expanded="true" signature="10527:10587" placeholder="SELECT race,..players..." />
+            <marker date="1438872867024" expanded="true" signature="11514:11611" placeholder="SELECT race,..players..." />
+            <marker date="1438872867024" expanded="true" signature="11735:11832" placeholder="SELECT race,..players..." />
+            <marker date="1438872867024" expanded="true" signature="12756:12811" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="12909:12963" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="13060:13114" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="13211:13263" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="13358:13410" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="13505:13556" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="13650:13704" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="13801:13858" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="13958:14012" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="14298:14353" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="14451:14507" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="14606:14659" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="14755:14810" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="14908:14967" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="15069:15121" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="15216:15271" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="15369:15425" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="15524:15575" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="15669:15723" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="15820:15872" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="16034:16089" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="16187:16241" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="16338:16392" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="16489:16541" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="16636:16688" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="16783:16834" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="16928:16982" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="17079:17136" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="17236:17290" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="17387:17443" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="17543:17598" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="17696:17753" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="17853:17908" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="18006:18062" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="18161:18214" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="18310:18365" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="18463:18522" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="18624:18676" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="18771:18826" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="18924:18980" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="19079:19130" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="19224:19278" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="19375:19427" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="19599:19682" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="19784:19865" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="19966:20047" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="20148:20225" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="20324:20401" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="20500:20575" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="20673:20754" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="20855:20942" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="21046:21127" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="21429:21512" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="21614:21699" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="21802:21884" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="21984:22067" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="22169:22260" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="22366:22443" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="22542:22625" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="22727:22812" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="22915:22990" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="23088:23169" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="23270:23347" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="23506:23589" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="23691:23772" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="23873:23954" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="24055:24132" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="24231:24308" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="24407:24482" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="24580:24661" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="24762:24849" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="24953:25034" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="25135:25220" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="25324:25407" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="25509:25596" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="25700:25783" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="25885:25970" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="26073:26155" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="26255:26338" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="26440:26531" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="26637:26714" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="26813:26896" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="26998:27083" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="27186:27261" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="27359:27440" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="27541:27618" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="27803:27901" placeholder="SELECT realm..players..." />
+            <marker date="1438872867024" expanded="true" signature="28162:28260" placeholder="SELECT realm..players..." />
+            <marker date="1438872867024" expanded="true" signature="28529:28662" placeholder="SELECT realm..players..." />
+            <marker date="1438872867024" expanded="true" signature="28939:29072" placeholder="SELECT realm..players..." />
+            <marker date="1438872867024" expanded="true" signature="29338:29436" placeholder="SELECT realm..players..." />
+            <marker date="1438872867024" expanded="true" signature="29689:29787" placeholder="SELECT realm..players..." />
+            <marker date="1438872867024" expanded="true" signature="30048:30181" placeholder="SELECT realm..players..." />
+            <marker date="1438872867024" expanded="true" signature="30450:30583" placeholder="SELECT realm..players..." />
+            <marker date="1438872867024" expanded="true" signature="30846:30944" placeholder="SELECT realm..players..." />
+            <marker date="1438872867024" expanded="true" signature="31201:31299" placeholder="SELECT realm..players..." />
+            <marker date="1438872867024" expanded="true" signature="31564:31697" placeholder="SELECT realm..players..." />
+            <marker date="1438872867024" expanded="true" signature="31970:32103" placeholder="SELECT realm..players..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xiv_compare.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <marker date="1438872867024" expanded="true" signature="4173:4200" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="4366:4393" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="4639:4673" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="4890:4924" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="5284:5318" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="5543:5577" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="5906:5969" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="6220:6283" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="6648:6682" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="6897:6931" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="7244:7307" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="7548:7611" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="7964:7998" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="8218:8252" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="8573:8636" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="8882:8945" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="9354:9418" placeholder="SELECT grand..players..." />
+            <marker date="1438872867024" expanded="true" signature="9804:9905" placeholder="select grand..players..." />
+            <marker date="1438872867024" expanded="true" signature="10355:10415" placeholder="SELECT race,..players..." />
+            <marker date="1438872867024" expanded="true" signature="10527:10587" placeholder="SELECT race,..players..." />
+            <marker date="1438872867024" expanded="true" signature="11514:11611" placeholder="SELECT race,..players..." />
+            <marker date="1438872867024" expanded="true" signature="11735:11832" placeholder="SELECT race,..players..." />
+            <marker date="1438872867024" expanded="true" signature="12756:12811" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="12909:12963" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="13060:13114" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="13211:13263" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="13358:13410" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="13505:13556" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="13650:13704" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="13801:13858" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="13958:14012" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="14298:14353" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="14451:14507" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="14606:14659" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="14755:14810" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="14908:14967" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="15069:15121" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="15216:15271" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="15369:15425" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="15524:15575" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="15669:15723" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="15820:15872" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="16034:16089" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="16187:16241" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="16338:16392" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="16489:16541" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="16636:16688" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="16783:16834" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="16928:16982" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="17079:17136" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="17236:17290" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="17387:17443" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="17543:17598" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="17696:17753" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="17853:17908" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="18006:18062" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="18161:18214" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="18310:18365" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="18463:18522" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="18624:18676" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="18771:18826" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="18924:18980" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="19079:19130" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="19224:19278" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="19375:19427" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="19599:19682" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="19784:19865" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="19966:20047" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="20148:20225" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="20324:20401" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="20500:20575" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="20673:20754" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="20855:20942" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="21046:21127" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="21429:21512" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="21614:21699" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="21802:21884" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="21984:22067" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="22169:22260" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="22366:22443" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="22542:22625" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="22727:22812" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="22915:22990" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="23088:23169" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="23270:23347" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="23506:23589" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="23691:23772" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="23873:23954" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="24055:24132" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="24231:24308" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="24407:24482" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="24580:24661" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="24762:24849" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="24953:25034" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="25135:25220" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="25324:25407" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="25509:25596" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="25700:25783" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="25885:25970" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="26073:26155" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="26255:26338" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="26440:26531" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="26637:26714" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="26813:26896" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="26998:27083" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="27186:27261" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="27359:27440" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="27541:27618" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="27803:27901" placeholder="SELECT realm..players..." />
+            <marker date="1438872867024" expanded="true" signature="28162:28260" placeholder="SELECT realm..players..." />
+            <marker date="1438872867024" expanded="true" signature="28529:28662" placeholder="SELECT realm..players..." />
+            <marker date="1438872867024" expanded="true" signature="28939:29072" placeholder="SELECT realm..players..." />
+            <marker date="1438872867024" expanded="true" signature="29338:29436" placeholder="SELECT realm..players..." />
+            <marker date="1438872867024" expanded="true" signature="29689:29787" placeholder="SELECT realm..players..." />
+            <marker date="1438872867024" expanded="true" signature="30048:30181" placeholder="SELECT realm..players..." />
+            <marker date="1438872867024" expanded="true" signature="30450:30583" placeholder="SELECT realm..players..." />
+            <marker date="1438872867024" expanded="true" signature="30846:30944" placeholder="SELECT realm..players..." />
+            <marker date="1438872867024" expanded="true" signature="31201:31299" placeholder="SELECT realm..players..." />
+            <marker date="1438872867024" expanded="true" signature="31564:31697" placeholder="SELECT realm..players..." />
+            <marker date="1438872867024" expanded="true" signature="31970:32103" placeholder="SELECT realm..players..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xiv_compare.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <marker date="1438872867024" expanded="true" signature="4173:4200" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="4366:4393" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="4639:4673" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="4890:4924" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="5284:5318" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="5543:5577" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="5906:5969" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="6220:6283" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="6648:6682" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="6897:6931" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="7244:7307" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="7548:7611" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="7964:7998" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="8218:8252" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="8573:8636" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="8882:8945" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="9354:9418" placeholder="SELECT grand..players..." />
+            <marker date="1438872867024" expanded="true" signature="9804:9905" placeholder="select grand..players..." />
+            <marker date="1438872867024" expanded="true" signature="10355:10415" placeholder="SELECT race,..players..." />
+            <marker date="1438872867024" expanded="true" signature="10527:10587" placeholder="SELECT race,..players..." />
+            <marker date="1438872867024" expanded="true" signature="11514:11611" placeholder="SELECT race,..players..." />
+            <marker date="1438872867024" expanded="true" signature="11735:11832" placeholder="SELECT race,..players..." />
+            <marker date="1438872867024" expanded="true" signature="12756:12811" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="12909:12963" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="13060:13114" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="13211:13263" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="13358:13410" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="13505:13556" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="13650:13704" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="13801:13858" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="13958:14012" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="14298:14353" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="14451:14507" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="14606:14659" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="14755:14810" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="14908:14967" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="15069:15121" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="15216:15271" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="15369:15425" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="15524:15575" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="15669:15723" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="15820:15872" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="16034:16089" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="16187:16241" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="16338:16392" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="16489:16541" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="16636:16688" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="16783:16834" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="16928:16982" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="17079:17136" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="17236:17290" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="17387:17443" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="17543:17598" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="17696:17753" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="17853:17908" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="18006:18062" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="18161:18214" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="18310:18365" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="18463:18522" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="18624:18676" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="18771:18826" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="18924:18980" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="19079:19130" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="19224:19278" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="19375:19427" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="19599:19682" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="19784:19865" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="19966:20047" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="20148:20225" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="20324:20401" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="20500:20575" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="20673:20754" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="20855:20942" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="21046:21127" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="21429:21512" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="21614:21699" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="21802:21884" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="21984:22067" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="22169:22260" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="22366:22443" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="22542:22625" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="22727:22812" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="22915:22990" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="23088:23169" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="23270:23347" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="23506:23589" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="23691:23772" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="23873:23954" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="24055:24132" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="24231:24308" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="24407:24482" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="24580:24661" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="24762:24849" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="24953:25034" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="25135:25220" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="25324:25407" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="25509:25596" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="25700:25783" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="25885:25970" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="26073:26155" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="26255:26338" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="26440:26531" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="26637:26714" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="26813:26896" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="26998:27083" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="27186:27261" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="27359:27440" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="27541:27618" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="27803:27901" placeholder="SELECT realm..players..." />
+            <marker date="1438872867024" expanded="true" signature="28162:28260" placeholder="SELECT realm..players..." />
+            <marker date="1438872867024" expanded="true" signature="28529:28662" placeholder="SELECT realm..players..." />
+            <marker date="1438872867024" expanded="true" signature="28939:29072" placeholder="SELECT realm..players..." />
+            <marker date="1438872867024" expanded="true" signature="29338:29436" placeholder="SELECT realm..players..." />
+            <marker date="1438872867024" expanded="true" signature="29689:29787" placeholder="SELECT realm..players..." />
+            <marker date="1438872867024" expanded="true" signature="30048:30181" placeholder="SELECT realm..players..." />
+            <marker date="1438872867024" expanded="true" signature="30450:30583" placeholder="SELECT realm..players..." />
+            <marker date="1438872867024" expanded="true" signature="30846:30944" placeholder="SELECT realm..players..." />
+            <marker date="1438872867024" expanded="true" signature="31201:31299" placeholder="SELECT realm..players..." />
+            <marker date="1438872867024" expanded="true" signature="31564:31697" placeholder="SELECT realm..players..." />
+            <marker date="1438872867024" expanded="true" signature="31970:32103" placeholder="SELECT realm..players..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xiv_compare.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.22844344">
+          <caret line="955" column="74" selection-start-line="955" selection-start-column="74" selection-end-line="955" selection-end-column="74" />
+          <folding>
+            <marker date="1438872867024" expanded="true" signature="4173:4200" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="4366:4393" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="4639:4673" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="4890:4924" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="5284:5318" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="5543:5577" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="5906:5969" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="6220:6283" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="6648:6682" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="6897:6931" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="7244:7307" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="7548:7611" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="7964:7998" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="8218:8252" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="8573:8636" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="8882:8945" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="9354:9418" placeholder="SELECT grand..players..." />
+            <marker date="1438872867024" expanded="true" signature="9804:9905" placeholder="select grand..players..." />
+            <marker date="1438872867024" expanded="true" signature="10355:10415" placeholder="SELECT race,..players..." />
+            <marker date="1438872867024" expanded="true" signature="10527:10587" placeholder="SELECT race,..players..." />
+            <marker date="1438872867024" expanded="true" signature="11514:11611" placeholder="SELECT race,..players..." />
+            <marker date="1438872867024" expanded="true" signature="11735:11832" placeholder="SELECT race,..players..." />
+            <marker date="1438872867024" expanded="true" signature="12756:12811" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="12909:12963" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="13060:13114" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="13211:13263" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="13358:13410" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="13505:13556" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="13650:13704" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="13801:13858" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="13958:14012" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="14298:14353" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="14451:14507" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="14606:14659" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="14755:14810" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="14908:14967" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="15069:15121" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="15216:15271" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="15369:15425" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="15524:15575" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="15669:15723" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="15820:15872" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="16034:16089" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="16187:16241" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="16338:16392" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="16489:16541" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="16636:16688" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="16783:16834" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="16928:16982" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="17079:17136" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="17236:17290" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="17387:17443" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="17543:17598" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="17696:17753" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="17853:17908" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="18006:18062" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="18161:18214" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="18310:18365" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="18463:18522" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="18624:18676" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="18771:18826" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="18924:18980" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="19079:19130" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="19224:19278" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="19375:19427" placeholder="SELECT count..players..." />
+            <marker date="1438872867024" expanded="true" signature="19599:19682" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="19784:19865" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="19966:20047" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="20148:20225" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="20324:20401" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="20500:20575" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="20673:20754" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="20855:20942" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="21046:21127" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="21429:21512" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="21614:21699" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="21802:21884" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="21984:22067" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="22169:22260" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="22366:22443" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="22542:22625" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="22727:22812" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="22915:22990" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="23088:23169" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="23270:23347" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="23506:23589" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="23691:23772" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="23873:23954" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="24055:24132" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="24231:24308" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="24407:24482" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="24580:24661" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="24762:24849" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="24953:25034" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="25135:25220" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="25324:25407" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="25509:25596" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="25700:25783" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="25885:25970" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="26073:26155" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="26255:26338" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="26440:26531" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="26637:26714" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="26813:26896" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="26998:27083" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="27186:27261" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="27359:27440" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="27541:27618" placeholder="select count..players..." />
+            <marker date="1438872867024" expanded="true" signature="27803:27901" placeholder="SELECT realm..players..." />
+            <marker date="1438872867024" expanded="true" signature="28162:28260" placeholder="SELECT realm..players..." />
+            <marker date="1438872867024" expanded="true" signature="28529:28662" placeholder="SELECT realm..players..." />
+            <marker date="1438872867024" expanded="true" signature="28939:29072" placeholder="SELECT realm..players..." />
+            <marker date="1438872867024" expanded="true" signature="29338:29436" placeholder="SELECT realm..players..." />
+            <marker date="1438872867024" expanded="true" signature="29689:29787" placeholder="SELECT realm..players..." />
+            <marker date="1438872867024" expanded="true" signature="30048:30181" placeholder="SELECT realm..players..." />
+            <marker date="1438872867024" expanded="true" signature="30450:30583" placeholder="SELECT realm..players..." />
+            <marker date="1438872867024" expanded="true" signature="30846:30944" placeholder="SELECT realm..players..." />
+            <marker date="1438872867024" expanded="true" signature="31201:31299" placeholder="SELECT realm..players..." />
+            <marker date="1438872867024" expanded="true" signature="31564:31697" placeholder="SELECT realm..players..." />
+            <marker date="1438872867024" expanded="true" signature="31970:32103" placeholder="SELECT realm..players..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ScopeChooserConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
+  </component>
+</project>
