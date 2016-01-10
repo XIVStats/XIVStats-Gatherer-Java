@@ -52,17 +52,18 @@ public class Main {
                 //Determine highest id param
                 highestID = Integer.parseInt(args[1]);
 
-                if (highestID < lowestID) {
-                    System.out.println("Error: The second argument needs to be greater than the first argument");
-                } else { //Else pass values into poll method
-                    gatherRange(lowestID, highestID);
-                }
-
                 //Read in config
                 try {
                     readConfig();
                 } catch (Exception ex) {
                     System.out.println(ex.getMessage());
+                }
+
+                if (highestID < lowestID) {
+                    System.out.println("Error: The second argument needs to be greater than the first argument");
+                } else { //Else pass values into poll method
+                    //gatherRange(lowestID, highestID);
+                    Player.getPlayer(11886902);
                 }
 
             } catch (Exception ex) {
@@ -110,22 +111,12 @@ public class Main {
         //Gather each player from min to max
         for (int currentID = lowestID; currentID <= highestID; currentID++) {
             try {
-                writeToDB(getPlayer(currentID));
+                writeToDB(Player.getPlayer(currentID));
             } catch (Exception ex) {
                 System.out.println(ex.getMessage());
             }
         }
 
-    }
-
-    /**
-     * Fetch a character's information from the lodestone/
-     *
-     * @param playerID the ID of the character to fetch
-     * @return the character matching the ID provided
-     */
-    public static Player getPlayer(int playerID) {
-        return null;
     }
 
 

@@ -1,5 +1,14 @@
 package com.ffxivcensus.gatherer;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.regex.Pattern;
+
 /**
  * Object class to represent a Character/Player.
  *
@@ -1552,4 +1561,192 @@ public class Player {
     public void setHasCompleted3pt1(boolean hasCompleted3pt1) {
         this.hasCompleted3pt1 = hasCompleted3pt1;
     }
+
+    /**
+     * Set player class levels.
+     *
+     * @param arrLevels integer array of classes in order displayed on lodestone.
+     */
+    public void setLevels(int[] arrLevels) {
+        this.setLvlGladiator(arrLevels[0]);
+        this.setLvlPugilist(arrLevels[1]);
+        this.setLvlMarauder(arrLevels[2]);
+        this.setLvlLancer(arrLevels[3]);
+        this.setLvlArcher(arrLevels[4]);
+        this.setLvlRogue(arrLevels[5]);
+        this.setLvlConjurer(arrLevels[6]);
+        this.setLvlThaumaturge(arrLevels[7]);
+        this.setLvlArcanist(arrLevels[8]);
+        this.setLvlDarkKnight(arrLevels[9]);
+        this.setLvlMachinist(arrLevels[10]);
+        this.setLvlAstrologian(arrLevels[11]);
+        this.setLvlCarpenter(arrLevels[12]);
+        this.setLvlBlacksmith(arrLevels[13]);
+        this.setLvlArmorer(arrLevels[14]);
+        this.setLvlGoldsmith(arrLevels[15]);
+        this.setLvlLeatherworker(arrLevels[16]);
+        this.setLvlWeaver(arrLevels[17]);
+        this.setLvlAlchemist(arrLevels[18]);
+        this.setLvlCulinarian(arrLevels[19]);
+        this.setLvlMiner(arrLevels[20]);
+        this.setLvlBotanist(arrLevels[21]);
+        this.setLvlFisher(arrLevels[22]);
+    }
+
+
+    public static Player getPlayer(int playerID) {
+        //Initialize array list object to store page data in
+        ArrayList page = new ArrayList();
+        //Initialize player object to return
+        Player player = new Player(playerID);
+        //Declare HTML document
+        Document doc;
+
+        //URL to connect to
+        String url = "http://eu.finalfantasyxiv.com/lodestone/character/" + playerID + "/";
+
+        try {
+            //Fetch the specified URL
+            doc = Jsoup.connect(url).get();
+            player.setPlayerName(getNameFromPage(doc));
+            player.setRealm(getRealmFromPage(doc));
+            player.setRace(getRaceFromPage(doc));
+            player.setGender(getGenderFromPage(doc));
+            player.setGrandCompany(getGrandCompanyFromPage(doc));
+            player.setLevels(getLevelsFromPage(doc));
+        } catch (IOException ioEx) {
+            ioEx.printStackTrace();
+        }
+        return player;
+    }
+
+    /**
+     * Given a lodestone profile page, return the name of the character.
+     *
+     * @param doc the lodestone profile page.
+     * @return the name of the character.
+     */
+    private static String getNameFromPage(Document doc) {
+        String[] parts = doc.title().split(Pattern.quote("|"));
+        String name = parts[0].trim();
+        return name;
+    }
+
+    /**
+     * Given a lodestone profile page, return the realm of the character.
+     *
+     * @param doc the lodestone profile page.
+     * @return the realm of the character.
+     */
+    private static String getRealmFromPage(Document doc) {
+        //Get elements in the player name area
+        Elements elements = doc.getElementsByClass("player_name_txt");
+        String realmName = elements.get(0).getElementsByTag("span").text().replace("(", "").replace(")", "");
+        //Return the realm name (contained in span)
+        return realmName;
+    }
+
+    /**
+     * Given a lodestone profile page, return the race of the character.
+     *
+     * @param doc the lodestone profile page.
+     * @return the race of the character.
+     */
+    private static String getRaceFromPage(Document doc) {
+        return doc.getElementsByClass("chara_profile_title").get(0).text().split(Pattern.quote("/"))[0].trim();
+    }
+
+    /**
+     * Given a lodestone profile page, return the gender of the character.
+     *
+     * @param doc the lodestone profile page.
+     * @return the gender of the character.
+     */
+    private static String getGenderFromPage(Document doc) {
+        String[] parts = doc.getElementsByClass("chara_profile_title").get(0).text().split(Pattern.quote("/"));
+        String gender = parts[2].trim();
+        if (gender.equals("♂")) {
+            return "male";
+        } else if (gender.equals("♀")) {
+            return "female";
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * Given a lodestone profile page, return the grand company of the character.
+     *
+     * @param doc the lodestone profile page.
+     * @return the grand company of the character.
+     */
+    private static String getGrandCompanyFromPage(Document doc) {
+        String gc = null;
+        String fc = null;
+        //Get all elements with class chara_profile_box_info
+        Elements elements = doc.getElementsByClass("txt_name");
+
+        //Checks to see if optional FC has been added
+        if (elements.size() == 5) {
+            fc = elements.get(4).getElementsByTag("a").text();
+        }
+
+        if (elements.size() == 5) { //If GC and FC present
+            gc = elements.get(4).text().split(Pattern.quote("/"))[0];
+        } else if (elements.size() == 4) { //If only GC present
+            gc = elements.get(3).text().split(Pattern.quote("/"))[0];
+        } else if (elements.size() == 3) {
+            gc = "none";
+        }
+        return gc;
+    }
+
+    /**
+     * Given a lodestone profile page, return the levelset of the character.
+     *
+     * @param doc the lodestone profile page
+     * @return the set of levels of the player in the order displayed on the lodestone.
+     */
+    private static int[] getLevelsFromPage(Document doc) {
+        //Initialize array list in which to store levels (in order displayed on lodestone)
+        ArrayList levels = new ArrayList();
+        //Get the html of the table for levels
+        Elements table = doc.getElementsByClass("class_list").select("tr");
+        //I
+
+        for (Element e : table) { //For each row of table
+            //Select the first level
+            String lvlOne = e.select("td:eq(1)").text();
+            //Initialize var to store second
+            String lvlTwo = null;
+
+            if (e.select("td").size() > 3) {
+                //Second level
+                lvlTwo = e.select("td:eq(4)").text();
+            }
+
+            if (lvlOne.equals("-")) {//If a dash
+                levels.add(0);
+            } else {
+                levels.add(Integer.parseInt(lvlOne));
+            }
+
+            if (lvlTwo.equals("-")) {
+                levels.add(0);
+            } else if (!lvlTwo.equals("")) {
+                levels.add(Integer.parseInt(lvlTwo));
+            }
+        }
+
+        //Initialize int array
+        int[] arrLevels = new int[levels.size()];
+        //Convert array list to array of ints
+        for (int index = 0; index < levels.size(); index++) {
+            arrLevels[index] = Integer.parseInt(levels.get(index).toString());
+        }
+
+        return arrLevels;
+    }
+
+
 }
