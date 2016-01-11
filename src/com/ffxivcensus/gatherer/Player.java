@@ -1633,6 +1633,7 @@ public class Player {
 
     /**
      * Determine if a player has a specified mount
+     *
      * @param mountName the name of the mount to check for.
      * @return whether the player has the specified mount.
      */
@@ -1695,7 +1696,7 @@ public class Player {
             player.setHasSoundtrack(player.doesPlayerHaveMinion("Wind-up Bahamut"));
             player.setHasAttendedEternalBond(player.doesPlayerHaveMinion("Demon Box"));
             player.setHasCompletedHWSightseeing(player.doesPlayerHaveMinion("Fledgling Apkallu"));
-            player.setHasCompleted2pt5(player.doesPlayerHaveMinion("Midgardsomr"));
+            player.setHasCompleted2pt5(player.doesPlayerHaveMinion("Midgardsormr"));
             player.setHasFiftyComms(player.doesPlayerHaveMinion("Princely Hatchling"));
             player.setHasMooglePlush(player.doesPlayerHaveMinion("Wind-up Delivery Moogle"));
             player.setHasCompletedHildibrand(player.doesPlayerHaveMinion("Wind-up Gengleman"));
@@ -1786,7 +1787,7 @@ public class Player {
         }
 
         if (elements.size() == 5) { //If GC and FC present
-            gc = elements.get(4).text().split(Pattern.quote("/"))[0];
+            gc = elements.get(3).text().split(Pattern.quote("/"))[0];
         } else if (elements.size() == 4) { //If only GC present
             gc = elements.get(3).text().split(Pattern.quote("/"))[0];
         } else if (elements.size() == 3) {
