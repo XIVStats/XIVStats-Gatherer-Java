@@ -74,6 +74,8 @@ public class Player {
     private boolean hasSylph;
     private boolean hasCompletedHW;
     private boolean hasCompleted3pt1;
+    private ArrayList minions;
+    private ArrayList mounts;
 
     /**
      * Constructor for player object.
@@ -1593,8 +1595,50 @@ public class Player {
         this.setLvlFisher(arrLevels[22]);
     }
 
+    /**
+     * Get player's mount set.
+     *
+     * @return the player's mounts as an arraylist.
+     */
+    public ArrayList getMounts() {
+        return mounts;
+    }
 
-    public static Player getPlayer(int playerID) {
+    /**
+     * Set player's mount set.
+     *
+     * @param mounts the player's mounts as an arraylist.
+     */
+    public void setMounts(ArrayList mounts) {
+        this.mounts = mounts;
+    }
+
+    /**
+     * Get player's minion set.
+     *
+     * @return the player's minions as an arraylist.
+     */
+    public ArrayList getMinions() {
+        return minions;
+    }
+
+    /**
+     * Set player's minion set.
+     *
+     * @param minions the player's minions as an arraylist.
+     */
+    public void setMinions(ArrayList minions) {
+        this.minions = minions;
+    }
+
+    /**
+     * Fetch a player from the lodestone specified by ID.
+     *
+     * @param playerID the ID of the player to fetch
+     * @return the player object matching the specified ID.
+     * @throws Exception exception thrown if more class levels returned than anticipated.
+     */
+    public static Player getPlayer(int playerID) throws Exception {
         //Initialize array list object to store page data in
         ArrayList page = new ArrayList();
         //Initialize player object to return
@@ -1614,6 +1658,8 @@ public class Player {
             player.setGender(getGenderFromPage(doc));
             player.setGrandCompany(getGrandCompanyFromPage(doc));
             player.setLevels(getLevelsFromPage(doc));
+            player.setMounts(getMountsFromPage(doc));
+            player.setMinions(getMinionsFromPage(doc));
         } catch (IOException ioEx) {
             ioEx.printStackTrace();
         }
@@ -1706,8 +1752,9 @@ public class Player {
      *
      * @param doc the lodestone profile page
      * @return the set of levels of the player in the order displayed on the lodestone.
+     * @throws Exception Exception thrown if more classes found than anticipated.
      */
-    private static int[] getLevelsFromPage(Document doc) {
+    private static int[] getLevelsFromPage(Document doc) throws Exception {
         //Initialize array list in which to store levels (in order displayed on lodestone)
         ArrayList levels = new ArrayList();
         //Get the html of the table for levels
@@ -1745,8 +1792,51 @@ public class Player {
             arrLevels[index] = Integer.parseInt(levels.get(index).toString());
         }
 
+        //Check if levels array is larger than this system is programmed for
+        if (arrLevels.length > 23) {
+            throw new Exception("Error: More class levels found than anticipated (23). The class definitions need to be updated.");
+        }
+
         return arrLevels;
     }
 
+    /**
+     * Get the set of minions from a page.
+     *
+     * @param doc the lodestone profile page to parse.
+     * @return the set of strings representing the player's minions.
+     */
+    private static ArrayList getMinionsFromPage(Document doc) {
+        //Get minion box element
+        Element minionBox = doc.getElementsByClass("minion_box").get(1);
+        //Get minions
+        Elements minionSet = minionBox.getElementsByTag("a");
+        //Initialize array in which to store minions
+        ArrayList minions = new ArrayList();
+        for (int index = 0; index < minionSet.size(); index++) { //For each minion link store into array
+            minions.add(minionSet.get(index).attr("title"));
+        }
+        return minions;
+    }
+
+
+    /**
+     * Get the set of mounts from a page.
+     *
+     * @param doc the lodestone profile page to parse.
+     * @return the set of strings representing the player's mounts.
+     */
+    private static ArrayList getMountsFromPage(Document doc) {
+        //Get minion box element
+        Element minionBox = doc.getElementsByClass("minion_box").get(0);
+        //Get mounts
+        Elements mountSet = minionBox.getElementsByTag("a");
+        //Initialize array in which to store minions
+        ArrayList mounts = new ArrayList();
+        for (int index = 0; index < mountSet.size(); index++) { //For each mount link store into array
+            mounts.add(mountSet.get(index).attr("title"));
+        }
+        return mounts;
+    }
 
 }
