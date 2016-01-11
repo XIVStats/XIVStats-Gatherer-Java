@@ -1632,6 +1632,25 @@ public class Player {
     }
 
     /**
+     * Determine if a player has a specified mount
+     * @param mountName the name of the mount to check for.
+     * @return whether the player has the specified mount.
+     */
+    public boolean doesPlayerHaveMount(String mountName) {
+        return this.mounts.contains(mountName);
+    }
+
+    /**
+     * Determine if a player has a specified minion.
+     *
+     * @param minionName the name of the minion to check for
+     * @return whether the player has the specified minion.
+     */
+    public boolean doesPlayerHaveMinion(String minionName) {
+        return this.minions.contains(minionName);
+    }
+
+    /**
      * Fetch a player from the lodestone specified by ID.
      *
      * @param playerID the ID of the player to fetch
@@ -1660,6 +1679,35 @@ public class Player {
             player.setLevels(getLevelsFromPage(doc));
             player.setMounts(getMountsFromPage(doc));
             player.setMinions(getMinionsFromPage(doc));
+            player.setHas30DaysSub(player.doesPlayerHaveMinion("Wind-up Cursor"));
+            player.setHas60DaysSub(player.doesPlayerHaveMinion("Black Chocobo Chick"));
+            player.setHas90DaysSub(player.doesPlayerHaveMinion("Beady Eye"));
+            player.setHas180DaysSub(player.doesPlayerHaveMinion("Minion of Light"));
+            player.setHas270DaysSub(player.doesPlayerHaveMinion("Wind-up Leader"));
+            player.setHas360DaysSub(player.doesPlayerHaveMinion("Wind-up Odin"));
+            player.setHas450DaysSub(player.doesPlayerHaveMinion("Wind-up Goblin"));
+            player.setHas630DaysSub(player.doesPlayerHaveMinion("Wind-up Nanamo"));
+            player.setHasPreOrderArr(player.doesPlayerHaveMinion("Cait Sith Doll"));
+            player.setHasPreOrderHW(player.doesPlayerHaveMinion("Chocobo Chick Courier"));
+            player.setHasArtbook(player.doesPlayerHaveMinion("Model Enterprise"));
+            player.setHasBeforeMeteor(player.doesPlayerHaveMinion("Wind-up Dalamud"));
+            player.setHasBeforeTheFall(player.doesPlayerHaveMinion("Set Of Primogs"));
+            player.setHasSoundtrack(player.doesPlayerHaveMinion("Wind-up Bahamut"));
+            player.setHasAttendedEternalBond(player.doesPlayerHaveMinion("Demon Box"));
+            player.setHasCompletedHWSightseeing(player.doesPlayerHaveMinion("Fledgling Apkallu"));
+            player.setHasCompleted2pt5(player.doesPlayerHaveMinion("Midgardsomr"));
+            player.setHasFiftyComms(player.doesPlayerHaveMinion("Princely Hatchling"));
+            player.setHasMooglePlush(player.doesPlayerHaveMinion("Wind-up Delivery Moogle"));
+            player.setHasCompletedHildibrand(player.doesPlayerHaveMinion("Wind-up Gengleman"));
+            player.setHasPS4Collectors(player.doesPlayerHaveMinion("Wind-up Moogle"));
+            player.setHasCompleted3pt1(player.doesPlayerHaveMinion("Wind-up Haurchefant"));
+            player.setHasEternalBond(player.doesPlayerHaveMount("Ceremony Chocoho"));
+            player.setHasARRCollectors(player.doesPlayerHaveMount("Coeurl"));
+            player.setHasKobold(player.doesPlayerHaveMount("Bomb Palanquin"));
+            player.setHasSahagin(player.doesPlayerHaveMount("Cavalry Elbst"));
+            player.setHasAmaljaa(player.doesPlayerHaveMount("Cavalry Drake"));
+            player.setHasSylph(player.doesPlayerHaveMount("Laurel Gobbue"));
+            player.setHasCompletedHW(player.doesPlayerHaveMount("Midgardsormr"));
         } catch (IOException ioEx) {
             ioEx.printStackTrace();
         }
