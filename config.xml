@@ -6,4 +6,7 @@
         <username>xivstats</username>
         <password>password</password>
     </jdbc>
+    <execution>
+        <threads>32</threads>
+    </execution>
 </config>
