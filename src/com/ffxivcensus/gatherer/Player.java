@@ -10,7 +10,8 @@ import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 /**
- * Object class to represent a Character/Player.
+ * Object class to represent a Character/Player. This class specifies the attributes and behaviour of a player object.
+ * It also serves the functionality of fetching player data from the Lodestone.
  *
  * @author Peter Reid
  */
@@ -1710,7 +1711,7 @@ public class Player {
             player.setHasSylph(player.doesPlayerHaveMount("Laurel Gobbue"));
             player.setHasCompletedHW(player.doesPlayerHaveMount("Midgardsormr"));
         } catch (IOException ioEx) {
-            ioEx.printStackTrace();
+            throw new Exception("Character " + playerID + " does not exist.");
         }
         return player;
     }
@@ -1790,6 +1791,9 @@ public class Player {
             gc = elements.get(3).text().split(Pattern.quote("/"))[0];
         } else if (elements.size() == 4) { //If only GC present
             gc = elements.get(3).text().split(Pattern.quote("/"))[0];
+            if (!gc.equals("Immortal Flames") || !gc.equals("Order of the Twin Adder") || !gc.equals("Maelstrom")) { //If not a valid GC
+                gc = "none";
+            }
         } else if (elements.size() == 3) {
             gc = "none";
         }
