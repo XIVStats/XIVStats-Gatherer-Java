@@ -1,10 +1,10 @@
 ## XIV Stats ##
 
-XIV Stats is primarily a script to produce a database of player
+XIV Stats is primarily a program to produce a database of player
 information for FFXIV. The information is pulled from directly from the
 lodestone. An example PHP file has been included to demonstrate
 visualising the statistics. You can also view a live demo of the example
-web page by visiting [jonathanprice.org/xiv](https://jonathanprice.org/xiv/).
+web page by visiting [ffxivcensus.com/](http://ffxivcensus.com/).
 
 The aim of this project is to allow people to build their own projects
 using this data. For example, creating a website to compare players.
@@ -14,26 +14,57 @@ player (as of 2015-04-23), please see the "Notes" section below.
 
 The project is inspired by [xivsoul.com](https://xivsoul.com).
 
-# Configuration #
+## Configuration
 
-The path for the database to be used is specified on the line beginning
-"db_path" in xiv_stats.rb.
+Before use please configure the following configuration options in 'config.xml'. The script is intended for use with MySQL server, however you can configure to your liking using the url configuration option detailed below.
 
-# Usage #
+### Database Configuration
+#### Server URL
+The url of your SQL server instance (support for sockets coming soon): e.g.
+
+```xml
+<url>mysql://localhost:3306</url>
+```
+
+#### Database 
+The database to create the table in and write records to. Ensure that you have created the database and successfully granted the user specified further on in this config full read/write access to said database.
+```xml
+<database>dbPlayers</database>
+```
+
+#### Username and password
+Please provide a username and password with read/write access to the database.
+```xml
+<username>xivstats</username>
+<password>password</password>
+```
+
+###Execution configuration
+#### Thread Limit
+Please specify the number of threads you want to allocate to the program as follows:
+```xml
+<threads>32</threads>
+```
+
+###Notes
+Please ensure to place the above configuration options within the xml structure specified in the provided config.xml.
+
+## Usage 
 
 The script will collect information on all players with IDs in the specified
 range, as shown below:
-
-    ./xiv_stats.rb <lowest ID> <highest ID>
+```shell
+    java -jar gatherer.jar <lowest-id-to-fetch> <highest-id-to-fetch>
+```
 
 The player ID can be determined by looking at the URL for the lodestone
 profile page of a given player.
 
-# Notes #
+## Notes 
 
-The script deliberately only retrieves between 1-2 players per second. This
-is to avoid excessive load on the lodestone's servers. Due to the slow
-execution, a complete copy of the database has been compiled and is avaiable
+The java package relies on the [jsoup](http://jsoup.org/) library, the program will not compile without it. 
+
+A complete copy of the database has been compiled (to a sqlite db) and is avaiable
 from the following URLs. 
 
 | Release | Live Patch | Live Expansion | Download |
@@ -107,3 +138,5 @@ This table contain the following columns:
 - moogleplush (bought a moogle plush)
 - hildibrand (Completed the 2.5 hildibrand quest line)
 - ps4collectors (Bought the PS4 collectors edition for A Realm Reborn)
+- hwcomplete (has completed the Heavensward 3.0 story)
+- hw_31_complete (has completed the Heavensward 3.1 story)
