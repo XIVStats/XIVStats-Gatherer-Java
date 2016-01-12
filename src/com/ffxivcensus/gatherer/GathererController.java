@@ -16,27 +16,34 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 /**
- * Main class of character gathering program. This class makes calls to fetch records from the lodestone, and then
+ * GathererController class of character gathering program. This class makes calls to fetch records from the lodestone, and then
  * subsequently writes them to the database. It also specifies the parameters to run the program with.
  *
  * @author Peter Reid
  * @see Player
+ * @see Gatherer
  */
-public class Main {
+public class GathererController {
 
     //Configuration options
     /**
      * The JDBC URL of the database to modify
      */
-    private static String DB_URL;
+    private static String dbUrl;
     /**
      * The Username of user of the MySQL server user to use.
      */
-    private static String DB_USER;
+    private static String dbUser;
     /**
      * The password for the user, to use.
      */
-    private static String DB_PASSWORD;
+    private static String dbPassword;
+
+    private static int startId;
+    private static int endId;
+    private static int nextID;
+    private static int threadLimit;
+    private final static int MAX_THREADS = 32;
 
     public static void main(String[] args) {
         //Lowest character ID
@@ -89,13 +96,20 @@ public class Main {
                 if (highestID < lowestID) {
                     System.out.println("Error: The second argument needs to be greater than the first argument");
                 } else { //Else pass values into poll method
+                    startId = lowestID;
+                    endId = highestID;
+                    System.out.println("Starting parse of range " + startId + " to " + endId + " using " + threadLimit + " threads");
                     gatherRange(lowestID, highestID);
                 }
 
-
                 //Get current time
                 long endTime = System.currentTimeMillis();
-                System.out.println("Run completed, " + (highestID - lowestID) + " records written in " + (endTime - startTime) + "ms");
+                long seconds = (endTime - startTime) / 1000;
+                long minutes = seconds / 60;
+                long hours = minutes / 60;
+                long days = hours / 24;
+                String time = days + " Days, " + hours % 24 + " hrs, " + minutes % 60 + " mins, " + seconds % 60 + "secs";
+                System.out.print("\nRun completed, " + (highestID - lowestID) + " records written in " + time + " (" + threadLimit + " threads)");
 
             } catch (Exception ex) {
                 ex.printStackTrace();
@@ -121,14 +135,24 @@ public class Main {
         //Parse the file
         Document doc = dBuilder.parse(xmlFile);
 
-        //Read out config
-        NodeList nodes = doc.getElementsByTagName("jdbc");
-        Element eElement = (Element) nodes.item(0);
+        //Read out db config
+        NodeList nodesJDBC = doc.getElementsByTagName("jdbc");
+        Element elementJDBC = (Element) nodesJDBC.item(0);
 
-        String url = eElement.getElementsByTagName("url").item(0).getTextContent() + eElement.getElementsByTagName("database").item(0).getTextContent();
-        DB_URL = url;
-        DB_USER = eElement.getElementsByTagName("username").item(0).getTextContent();
-        DB_PASSWORD = eElement.getElementsByTagName("password").item(0).getTextContent();
+        String url = elementJDBC.getElementsByTagName("url").item(0).getTextContent() + elementJDBC.getElementsByTagName("database").item(0).getTextContent();
+        dbUrl = url;
+        dbUser = elementJDBC.getElementsByTagName("username").item(0).getTextContent();
+        dbPassword = elementJDBC.getElementsByTagName("password").item(0).getTextContent();
+
+        //Read out execution config
+        NodeList nodesExecConf = doc.getElementsByTagName("execution");
+        Element elementExecConf = (Element) nodesExecConf.item(0);
+        int userThreadLimit = Integer.parseInt(elementExecConf.getElementsByTagName("threads").item(0).getTextContent());
+        if (userThreadLimit <= MAX_THREADS) {
+            threadLimit = userThreadLimit;
+        } else {
+            threadLimit = 4;
+        }
     }
 
     /**
@@ -139,12 +163,27 @@ public class Main {
      */
     public static void gatherRange(int lowestID, int highestID) {
 
-        //Gather each player from min to max
-        for (int currentID = lowestID; currentID <= highestID; currentID++) {
+        //Set next ID
+        nextID = lowestID;
+
+        //Start up up new threads up to limit
+        //Create array to store thread references into
+        Thread[] threads = new Thread[threadLimit];
+        for (int index = 0; index < threadLimit; index++) {
+            threads[index] = new Thread(new Gatherer());
+        }
+
+        //Start up threads
+        for (Thread thread : threads) {
+            thread.start();
+        }
+
+        //Spin down threads
+        for (Thread thread : threads) {
             try {
-                writeToDB(Player.getPlayer(currentID));
-            } catch (Exception ex) {
-                System.out.println(ex.getMessage());
+                thread.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
         }
 
@@ -187,7 +226,7 @@ public class Main {
      */
     private static Connection openConnection() {
         try {
-            Connection connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+            Connection connection = DriverManager.getConnection(dbUrl, dbUser, dbPassword);
             return connection;
         } catch (SQLException sqlEx) {
             System.out.println("Connection failed! Please see output console");
@@ -209,4 +248,39 @@ public class Main {
             System.out.println("Cannot close connection! Has it already been closed");
         }
     }
+
+    /**
+     * Get the next character ID to be parsed.
+     *
+     * @return the next character ID to be parsed.
+     */
+    public static int getNextID() {
+        if (nextID < endId) {
+            int next = nextID;
+            //Increment id
+            nextID++;
+            return nextID;
+        } else {
+            return -1;
+        }
+    }
+
+    /**
+     * Get the first ID to be processed.
+     *
+     * @return the first character ID to be processed
+     */
+    public static int getStartId() {
+        return startId;
+    }
+
+    /**
+     * Get the last ID to be processed.
+     *
+     * @return the last character ID due to be processed.
+     */
+    public static int getEndId() {
+        return endId;
+    }
+
 }
