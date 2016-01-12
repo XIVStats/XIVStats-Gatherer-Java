@@ -1791,7 +1791,7 @@ public class Player {
             gc = elements.get(3).text().split(Pattern.quote("/"))[0];
         } else if (elements.size() == 4) { //If only GC present
             gc = elements.get(3).text().split(Pattern.quote("/"))[0];
-            if (!gc.equals("Immortal Flames") || !gc.equals("Order of the Twin Adder") || !gc.equals("Maelstrom")) { //If not a valid GC
+            if (!gc.equals("Immortal Flames") && !gc.equals("Order of the Twin Adder") && !gc.equals("Maelstrom")) { //If not a valid GC
                 gc = "none";
             }
         } else if (elements.size() == 3) {
