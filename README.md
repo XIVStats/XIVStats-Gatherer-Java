@@ -62,6 +62,8 @@ The java script requires either Oracle or OpenJDK Java Runtime 8 to run.
 The player ID can be determined by looking at the URL for the lodestone
 profile page of a given player.
 
+A pre-built JAR of the Java application can be found [here](http://download.reidweb.com/xivstats/XIVStats.zip).
+
 ## Notes 
 
 The java package relies on the [jsoup](http://jsoup.org/) library, the program will not compile without it. 
