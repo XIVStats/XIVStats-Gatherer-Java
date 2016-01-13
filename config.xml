@@ -7,6 +7,6 @@
         <password>password</password>
     </jdbc>
     <execution>
-        <threads>32</threads>
+        <threads>128</threads>
     </execution>
 </config>
