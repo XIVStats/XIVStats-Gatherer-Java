@@ -1,6 +1,6 @@
 package com.ffxivcensus.gatherer;
 
-import com.mysql.jdbc.exceptions.MySQLNonTransientConnectionException;
+import com.mysql.jdbc.exceptions.jdbc4.MySQLNonTransientConnectionException;
 
 /**
  * Gatherer worker class that implements Runnable class.
@@ -40,7 +40,6 @@ public class Gatherer implements Runnable {
                         e.printStackTrace();
                     }
                 } catch (Exception e) {
-                    successfulWrite = true;
                     //System.out.println(e.getMessage());
                 }
             }

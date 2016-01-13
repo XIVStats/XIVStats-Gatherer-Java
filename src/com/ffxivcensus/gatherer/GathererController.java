@@ -215,6 +215,7 @@ public class GathererController {
 
             st.executeUpdate(strSQL);
             System.out.println("Character " + player.getId() + " written to database successfully.");
+            closeConnection(conn);
         } catch (SQLException e) {
             e.printStackTrace();
         }
