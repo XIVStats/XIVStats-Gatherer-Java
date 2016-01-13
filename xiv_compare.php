@@ -1317,16 +1317,6 @@ $(function () {
             ],
             color: '#ce93d8'
         }, {
-            name: 'Experienced (ARR)',
-            data: [
-                <?php
-                        foreach ($old_exp_america_realm_pop as $value) {
-                                echo "$value,";
-                        }
-                ?>
-            ],
-            color: '#673ab7'
-        }, {
             name: 'All (HW)',
             data: [
                 <?php
@@ -1336,6 +1326,16 @@ $(function () {
                 ?>
             ],
             color: '#81d4fa'
+        }, {
+            name: 'Experienced (ARR)',
+            data: [
+                <?php
+                        foreach ($old_exp_america_realm_pop as $value) {
+                                echo "$value,";
+                        }
+                ?>
+            ],
+            color: '#673ab7'
         }, {
             name: 'Experienced (HW)',
             data: [
@@ -1394,16 +1394,6 @@ $(function () {
             ],
             color: '#ce93d8'
         }, {
-            name: 'Experienced (ARR)',
-            data: [
-                <?php
-                        foreach ($old_exp_japan_realm_pop as $value) {
-                                echo "$value,";
-                        }
-                ?>
-            ],
-            color: '#673ab7'
-        }, {
             name: 'All (HW)',
             data: [
                 <?php
@@ -1413,6 +1403,16 @@ $(function () {
                 ?>
             ],
             color: '#81d4fa'
+        }, {
+            name: 'Experienced (ARR)',
+            data: [
+                <?php
+                        foreach ($old_exp_japan_realm_pop as $value) {
+                                echo "$value,";
+                        }
+                ?>
+            ],
+            color: '#673ab7'
         }, {
             name: 'Experienced (HW)',
             data: [
@@ -1470,16 +1470,6 @@ $(function () {
             ],
             color: '#ce93d8'
         }, {
-            name: 'Experienced (ARR)',
-            data: [
-                <?php
-                        foreach ($old_exp_europe_realm_pop as $value) {
-                                echo "$value,";
-                        }
-                ?>
-            ],
-            color: '#673ab7'
-        }, {
             name: 'All (HW)',
             data: [
                 <?php
@@ -1489,6 +1479,16 @@ $(function () {
                 ?>
             ],
             color: '#81d4fa'
+        }, {
+            name: 'Experienced (ARR)',
+            data: [
+                <?php
+                        foreach ($old_exp_europe_realm_pop as $value) {
+                                echo "$value,";
+                        }
+                ?>
+            ],
+            color: '#673ab7'
         }, {
             name: 'Experienced (HW)',
             data: [
