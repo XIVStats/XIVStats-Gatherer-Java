@@ -57,8 +57,12 @@ range, as shown below:
     java -jar gatherer.jar <lowest-id-to-fetch> <highest-id-to-fetch>
 ```
 
+The java script requires either Oracle or OpenJDK Java Runtime 8 to run.
+
 The player ID can be determined by looking at the URL for the lodestone
 profile page of a given player.
+
+A pre-built JAR of the Java application can be found [here](http://download.reidweb.com/xivstats/XIVStats.zip).
 
 ## Notes 
 
