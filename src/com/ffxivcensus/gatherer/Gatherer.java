@@ -25,14 +25,11 @@ public class Gatherer implements Runnable {
     public void run() {
         int nextID = GathererController.getNextID();
         while (nextID != -1) { //While we still have IDs to parse
-            boolean successfulWrite = false;
-            while (!successfulWrite){ //Keep looping until record is successfully written
                 try {
                     //Parse players and write them to DB
                     GathererController.writeToDB(Player.getPlayer(nextID));
-                    successfulWrite = true;
                 } catch (MySQLNonTransientConnectionException failWriteEx) { //If record fails to write due to too many connections
-                    successfulWrite = false;
+                    System.out.println("Error: Record write failure, reattempting write");
                     //Wait a second
                     try {
                         Thread.currentThread().wait(1);
@@ -42,7 +39,6 @@ public class Gatherer implements Runnable {
                 } catch (Exception e) {
                     //System.out.println(e.getMessage());
                 }
-            }
             //Get the nextID
             nextID = GathererController.getNextID();
         }

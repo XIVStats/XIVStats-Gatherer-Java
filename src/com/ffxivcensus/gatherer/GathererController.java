@@ -192,7 +192,10 @@ public class GathererController {
 
     }
 
-
+    /**
+     * Write a player record to the database.
+     * @param player the player to write to the database.
+     */
     public static void writeToDB(Player player) {
         //Open connection
         Connection conn = openConnection();
@@ -245,7 +248,7 @@ public class GathererController {
      * @param conn the connection to throw
      * @throws SQLException exception thrown if unable to close connection.
      */
-    private static void closeConnection(Connection conn) throws SQLException {
+    private static void closeConnection(Connection conn) {
         try {
             conn.close();
         } catch (SQLException sqlEx) {
