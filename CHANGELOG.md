@@ -19,3 +19,8 @@ v1.2.0
 
 * Added support for recording minions
 * Record several minions for specific purposes
+
+v2.0.0
+======
+
+* Gatherer script reimplemented in Java to utilise multi-threading
