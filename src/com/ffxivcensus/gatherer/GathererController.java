@@ -31,7 +31,7 @@ public class GathererController {
      */
     private static String dbUrl;
     /**
-     * The Username of user of the MySQL server user to use.
+     * The Username of user of the SQL server user to use.
      */
     private static String dbUser;
     /**
@@ -42,8 +42,14 @@ public class GathererController {
     private static int startId;
     private static int endId;
     private static int nextID;
+    /**
+     * User-defined limit for thread count.
+     */
     private static int threadLimit;
-    private final static int MAX_THREADS = 32;
+    /**
+     * Safety limit for thread count - user cannot exceed this limit.
+     */
+    private final static int MAX_THREADS = 128;
 
     public static void main(String[] args) {
         //Lowest character ID
@@ -99,7 +105,7 @@ public class GathererController {
                     startId = lowestID;
                     endId = highestID;
                     System.out.println("Starting parse of range " + startId + " to " + endId + " using " + threadLimit + " threads");
-                    gatherRange(lowestID, highestID);
+                    gatherRange();
                 }
 
                 //Get current time
@@ -157,14 +163,11 @@ public class GathererController {
 
     /**
      * Method to gather data for characters in specified range.
-     *
-     * @param lowestID  the ID of the lowest character to gather.
-     * @param highestID the ID of the highest character to gather.
      */
-    public static void gatherRange(int lowestID, int highestID) {
+    public static void gatherRange() {
 
         //Set next ID
-        nextID = lowestID;
+        nextID = startId;
 
         //Start up up new threads up to limit
         //Create array to store thread references into
