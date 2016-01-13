@@ -61,3 +61,8 @@ hs_err_pid*
 
 #Ignore config changes
 config.xml
+
+#Ignore build config files
+*xivstats.xml
+MANIFEST.MF
+xivstats.properties
