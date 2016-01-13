@@ -1,5 +1,7 @@
 package com.ffxivcensus.gatherer;
 
+import com.mysql.jdbc.exceptions.MySQLNonTransientConnectionException;
+
 /**
  * Gatherer worker class that implements Runnable class.
  * <p>
@@ -23,11 +25,24 @@ public class Gatherer implements Runnable {
     public void run() {
         int nextID = GathererController.getNextID();
         while (nextID != -1) { //While we still have IDs to parse
-            try {
-                //Parse players and write them to DB
-                GathererController.writeToDB(Player.getPlayer(nextID));
-            } catch (Exception e) {
-                e.getMessage();
+            boolean successfulWrite = false;
+            while (!successfulWrite){ //Keep looping until record is successfully written
+                try {
+                    //Parse players and write them to DB
+                    GathererController.writeToDB(Player.getPlayer(nextID));
+                    successfulWrite = true;
+                } catch (MySQLNonTransientConnectionException failWriteEx) { //If record fails to write due to too many connections
+                    successfulWrite = false;
+                    //Wait a second
+                    try {
+                        Thread.currentThread().wait(1);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                } catch (Exception e) {
+                    successfulWrite = true;
+                    System.out.println(e.getMessage());
+                }
             }
             //Get the nextID
             nextID = GathererController.getNextID();
