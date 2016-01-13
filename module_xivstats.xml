@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_xivstats" default="compile.module.xivstats">
+  <dirname property="module.xivstats.basedir" file="${ant.file.module_xivstats}"/>
+  
+  <property name="module.jdk.home.xivstats" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.xivstats" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.xivstats" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.xivstats" value="-encoding UTF-8 -source 8 -target 8 ${compiler.args}"/>
+  
+  <property name="xivstats.output.dir" value="${module.xivstats.basedir}/out/production/XIVStats"/>
+  <property name="xivstats.testoutput.dir" value="${module.xivstats.basedir}/out/test/XIVStats"/>
+  
+  <path id="xivstats.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="xivstats.module.production.classpath">
+    <path refid="${module.jdk.classpath.xivstats}"/>
+    <pathelement location="${basedir}/lib/jsoup-1.8.3.jar"/>
+    <pathelement location="${basedir}/lib/mysql-connector-java-5.1.38-bin.jar"/>
+  </path>
+  
+  <path id="xivstats.runtime.production.module.classpath">
+    <pathelement location="${xivstats.output.dir}"/>
+    <pathelement location="${basedir}/lib/jsoup-1.8.3.jar"/>
+    <pathelement location="${basedir}/lib/mysql-connector-java-5.1.38-bin.jar"/>
+  </path>
+  
+  <path id="xivstats.module.classpath">
+    <path refid="${module.jdk.classpath.xivstats}"/>
+    <pathelement location="${xivstats.output.dir}"/>
+    <pathelement location="${basedir}/lib/jsoup-1.8.3.jar"/>
+    <pathelement location="${basedir}/lib/mysql-connector-java-5.1.38-bin.jar"/>
+  </path>
+  
+  <path id="xivstats.runtime.module.classpath">
+    <pathelement location="${xivstats.testoutput.dir}"/>
+    <pathelement location="${xivstats.output.dir}"/>
+    <pathelement location="${basedir}/lib/jsoup-1.8.3.jar"/>
+    <pathelement location="${basedir}/lib/mysql-connector-java-5.1.38-bin.jar"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.xivstats">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.xivstats">
+    <patternset refid="excluded.from.module.xivstats"/>
+  </patternset>
+  
+  <path id="xivstats.module.sourcepath">
+    <dirset dir="${module.xivstats.basedir}">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.xivstats" depends="compile.module.xivstats.production,compile.module.xivstats.tests" description="Compile module XIVStats"/>
+  
+  <target name="compile.module.xivstats.production" depends="register.custom.compilers" description="Compile module XIVStats; production classes">
+    <mkdir dir="${xivstats.output.dir}"/>
+    <javac2 destdir="${xivstats.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.xivstats}/javac">
+      <compilerarg line="${compiler.args.xivstats}"/>
+      <bootclasspath refid="xivstats.module.bootclasspath"/>
+      <classpath refid="xivstats.module.production.classpath"/>
+      <src refid="xivstats.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.xivstats"/>
+    </javac2>
+    
+    <copy todir="${xivstats.output.dir}">
+      <fileset dir="${module.xivstats.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.xivstats.tests" depends="register.custom.compilers,compile.module.xivstats.production" description="compile module XIVStats; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.xivstats" description="cleanup module">
+    <delete dir="${xivstats.output.dir}"/>
+    <delete dir="${xivstats.testoutput.dir}"/>
+  </target>
+</project>
