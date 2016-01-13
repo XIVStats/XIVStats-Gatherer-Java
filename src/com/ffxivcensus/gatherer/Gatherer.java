@@ -41,7 +41,7 @@ public class Gatherer implements Runnable {
                     }
                 } catch (Exception e) {
                     successfulWrite = true;
-                    System.out.println(e.getMessage());
+                    //System.out.println(e.getMessage());
                 }
             }
             //Get the nextID
