@@ -54,7 +54,7 @@ public class GathererController {
         long startTime = System.currentTimeMillis();
 
         if (args.length == 0) { //If user provides no command line arguments
-            System.out.println("Usage: gatherer <lowest-id> <highest-id>");
+            System.out.println("Usage: XIVStats.jar <lowest-id> <highest-id>");
             System.exit(1);
         } else { //Else valid set of args
             try { //Try to convert params to ints
