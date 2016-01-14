@@ -49,7 +49,7 @@ public class GathererController {
     /**
      * Safety limit for thread count - user cannot exceed this limit.
      */
-    private final static int MAX_THREADS = 128;
+    private final static int MAX_THREADS = 64;
 
     public static void main(String[] args) {
         //Lowest character ID
