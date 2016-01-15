@@ -115,7 +115,7 @@ public class GathererController {
                 long hours = minutes / 60;
                 long days = hours / 24;
                 String time = days + " Days, " + hours % 24 + " hrs, " + minutes % 60 + " mins, " + seconds % 60 + " secs";
-                System.out.print("\nRun completed, " + (highestID - lowestID) + " records written in " + time + " (" + threadLimit + " threads)");
+                System.out.println("Run completed, " + (highestID - lowestID) + " records written in " + time + " (" + threadLimit + " threads)");
 
             } catch (Exception ex) {
                 ex.printStackTrace();
