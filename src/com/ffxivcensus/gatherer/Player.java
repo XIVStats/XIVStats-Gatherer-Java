@@ -55,6 +55,7 @@ public class Player {
     private boolean has360DaysSub;
     private boolean has450DaysSub;
     private boolean has630DaysSub;
+    private boolean has960DaysSub;
     private boolean hasPreOrderArr;
     private boolean hasPreOrderHW;
     private boolean hasArtbook;
@@ -122,6 +123,7 @@ public class Player {
         setHas360DaysSub(false);
         setHas450DaysSub(false);
         setHas630DaysSub(false);
+        setHas960DaysSub(false);
         setHasPreOrderArr(false);
         setHasPreOrderHW(false);
         setHasArtbook(false);
@@ -885,6 +887,15 @@ public class Player {
     }
 
     /**
+     * Set whether the player has had 630 days of subscription time.
+     *
+     * @param has630DaysSub whether the player has had 630 days of subscription time.
+     */
+    public void setHas630DaysSub(boolean has630DaysSub) {
+        this.has630DaysSub = has630DaysSub;
+    }
+
+    /**
      * Get whether the player has had 630 days of subscription time.
      *
      * @return whether the player has had 630 days of subscription time.
@@ -907,13 +918,36 @@ public class Player {
     }
 
     /**
-     * Set whether the player has had 630 days of subscription time.
+     * Set whether the player has had 960 days of subscription time.
      *
-     * @param has630DaysSub whether the player has had 630 days of subscription time.
+     * @param has960DaysSub whether the player has had 630 days of subscription time.
      */
-    public void setHas630DaysSub(boolean has630DaysSub) {
-        this.has630DaysSub = has630DaysSub;
+    public void setHas960DaysSub(boolean has960DaysSub) {
+        this.has960DaysSub = has960DaysSub;
     }
+
+    /**
+     * Get whether the player has had 960 days of subscription time.
+     *
+     * @return whether the player has had 960 days of subscription time.
+     */
+    public boolean isHas960DaysSub() {
+        return has960DaysSub;
+    }
+
+    /**
+     * Get bit value of whether the player has had 960 days of subscription time.
+     *
+     * @return whether the player has had 960 days of subscription time as a bit value.
+     */
+    public int getBitHas960DaysSub() {
+        if (isHas960DaysSub()) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
 
     /**
      * Get whether the player had preordered "A Realm Reborn".
@@ -1567,6 +1601,37 @@ public class Player {
     }
 
     /**
+     * Get the character's minion set as a comma delimited string.
+     * @return comma delimited string of player's minions.
+     */
+    public String getMinionsString(){
+        StringBuilder sbMinions = new StringBuilder();
+        for(int index =0; index < this.minions.size(); index++){//For each minion string
+            if(index != 0){
+                sbMinions.append(",");
+            }
+            sbMinions.append(this.minions.get(index).toString());
+        }
+        return sbMinions.toString();
+    }
+
+    /**
+     * Get the character's mount set as a comma delimited string.
+     * @return comma delimited string of player's mounts.
+     */
+    public String getMountsString(){
+        StringBuilder sbMounts = new StringBuilder();
+        for(int index =0; index < this.mounts.size(); index++){//For each mount string
+            if(index != 0){
+                sbMounts.append(",");
+            }
+            sbMounts.append(this.mounts.get(index).toString());
+        }
+        return sbMounts.toString();
+    }
+
+
+    /**
      * Set player class levels.
      *
      * @param arrLevels integer array of classes in order displayed on lodestone.
@@ -1690,6 +1755,7 @@ public class Player {
             player.setHas360DaysSub(player.doesPlayerHaveMinion("Wind-up Odin"));
             player.setHas450DaysSub(player.doesPlayerHaveMinion("Wind-up Goblin"));
             player.setHas630DaysSub(player.doesPlayerHaveMinion("Wind-up Nanamo"));
+            player.setHas960DaysSub(player.doesPlayerHaveMinion("Wind-up Firion"));
             player.setHasPreOrderArr(player.doesPlayerHaveMinion("Cait Sith Doll"));
             player.setHasPreOrderHW(player.doesPlayerHaveMinion("Chocobo Chick Courier"));
             player.setHasArtbook(player.doesPlayerHaveMinion("Model Enterprise"));
