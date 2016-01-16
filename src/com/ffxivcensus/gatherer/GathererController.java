@@ -82,7 +82,7 @@ public class GathererController {
                 Connection conn = openConnection();
                 try {
                     Statement st = conn.createStatement();
-                    String strSQL = "CREATE TABLE IF NOT EXISTS tblPlayers (id INTEGER PRIMARY KEY,name TEXT,realm TEXT,race TEXT,gender TEXT,grand_company TEXT"
+                    String strSQL = "CREATE TABLE IF NOT EXISTS tblplayers (id INTEGER PRIMARY KEY,name TEXT,realm TEXT,race TEXT,gender TEXT,grand_company TEXT"
                             + ",level_gladiator INTEGER,level_pugilist INTEGER,level_marauder INTEGER,level_lancer INTEGER,level_archer INTEGER"
                             + ",level_rogue INTEGER,level_conjurer INTEGER,level_thaumaturge INTEGER,level_arcanist INTEGER,level_darkknight INTEGER, level_machinist INTEGER"
                             + ",level_astrologian INTEGER,level_carpenter INTEGER,level_blacksmith INTEGER,level_armorer INTEGER,level_goldsmith INTEGER"
@@ -202,7 +202,7 @@ public class GathererController {
         try {
             //TODO Add hw_complete and hw_31_complete to table fields
             Statement st = conn.createStatement();
-            String strSQL = "INSERT IGNORE INTO tblPlayers (id, name, realm, race, gender, grand_company, level_gladiator, level_pugilist, level_marauder,"
+            String strSQL = "INSERT IGNORE INTO tblplayers (id, name, realm, race, gender, grand_company, level_gladiator, level_pugilist, level_marauder,"
                     + "level_lancer, level_archer, level_rogue, level_conjurer, level_thaumaturge, level_arcanist, level_astrologian, level_darkknight, level_machinist, level_carpenter,"
                     + "level_blacksmith, level_armorer, level_goldsmith, level_leatherworker, level_weaver, level_alchemist,"
                     + "level_culinarian, level_miner, level_botanist, level_fisher, p30days, p60days, p90days, p180days, p270days, p360days, p450days, p630days,"
