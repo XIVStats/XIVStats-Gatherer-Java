@@ -1799,10 +1799,10 @@ public class Player {
             player.setHasCompleted2pt5(player.doesPlayerHaveMinion("Midgardsormr"));
             player.setHasFiftyComms(player.doesPlayerHaveMinion("Princely Hatchling"));
             player.setHasMooglePlush(player.doesPlayerHaveMinion("Wind-up Delivery Moogle"));
-            player.setHasCompletedHildibrand(player.doesPlayerHaveMinion("Wind-up Gengleman"));
+            player.setHasCompletedHildibrand(player.doesPlayerHaveMinion("Wind-up Gentleman"));
             player.setHasPS4Collectors(player.doesPlayerHaveMinion("Wind-up Moogle"));
             player.setHasCompleted3pt1(player.doesPlayerHaveMinion("Wind-up Haurchefant"));
-            player.setHasEternalBond(player.doesPlayerHaveMount("Ceremony Chocoho"));
+            player.setHasEternalBond(player.doesPlayerHaveMount("Ceremony Chocobo"));
             player.setHasARRCollectors(player.doesPlayerHaveMount("Coeurl"));
             player.setHasKobold(player.doesPlayerHaveMount("Bomb Palanquin"));
             player.setHasSahagin(player.doesPlayerHaveMount("Cavalry Elbst"));
