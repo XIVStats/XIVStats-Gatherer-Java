@@ -1709,7 +1709,7 @@ public class Player {
             player.setHasKobold(player.doesPlayerHaveMount("Bomb Palanquin"));
             player.setHasSahagin(player.doesPlayerHaveMount("Cavalry Elbst"));
             player.setHasAmaljaa(player.doesPlayerHaveMount("Cavalry Drake"));
-            player.setHasSylph(player.doesPlayerHaveMount("Laurel Gobbue"));
+            player.setHasSylph(player.doesPlayerHaveMount("Laurel Goobbue"));
             player.setHasCompletedHW(player.doesPlayerHaveMount("Midgardsormr"));
         } catch (IOException ioEx) {
             throw new Exception("Character " + playerID + " does not exist.");
