@@ -90,7 +90,7 @@ public class GathererController {
                             + ",level_botanist INTEGER,level_fisher INTEGER,p30days BIT, p60days BIT, p90days BIT, p180days BIT, p270days BIT"
                             + ",p360days BIT,p450days BIT,p630days BIT,p960days BIT,prearr BIT,prehw BIT, artbook BIT, beforemeteor BIT, beforethefall BIT"
                             + ",soundtrack BIT,saweternalbond BIT,sightseeing BIT,arr_25_complete BIT,comm50 BIT,moogleplush BIT"
-                            + ",hildibrand BIT, ps4collectors BIT, dideternalbond BIT, arrcollector BIT, kobold BIT, sahagin BIT, amaljaa BIT, sylph BIT, hwcomplete BIT, hw_31_complete BIT, mounts TEXT, minions TEXT);";
+                            + ",hildibrand BIT, ps4collectors BIT, dideternalbond BIT, arrcollector BIT, kobold BIT, sahagin BIT, amaljaa BIT, sylph BIT, hwcomplete BIT, hw_31_complete BIT, legacy_player BIT,mounts TEXT, minions TEXT);";
 
                     st.executeUpdate(strSQL);
                 } catch (SQLException e) {
@@ -207,13 +207,13 @@ public class GathererController {
                     + "level_blacksmith, level_armorer, level_goldsmith, level_leatherworker, level_weaver, level_alchemist,"
                     + "level_culinarian, level_miner, level_botanist, level_fisher, p30days, p60days, p90days, p180days, p270days, p360days, p450days, p630days, p960days,"
                     + "prearr, prehw, artbook, beforemeteor, beforethefall, soundtrack, saweternalbond, sightseeing, arr_25_complete, comm50, moogleplush,"
-                    + "hildibrand, ps4collectors, dideternalbond, arrcollector, kobold, sahagin, amaljaa, sylph, hwcomplete, hw_31_complete, mounts, minions) "
+                    + "hildibrand, ps4collectors, dideternalbond, arrcollector, kobold, sahagin, amaljaa, sylph, hwcomplete, hw_31_complete, legacy_player, mounts, minions) "
                     + "VALUES(" + player.getId() + ",\"" + player.getPlayerName() + "\",\"" + player.getRealm() + "\",\"" + player.getRace() + "\",'" + player.getGender() + "','" + player.getGrandCompany() + "'," + player.getLvlGladiator() + "," + player.getLvlPugilist() + "," + player.getLvlMarauder() + ","
                     + player.getLvlLancer() + "," + player.getLvlArcher() + "," + player.getLvlRogue() + "," + player.getLvlConjurer() + "," + player.getLvlThaumaturge() + "," + player.getLvlArcanist() + "," + player.getLvlAstrologian() + "," + player.getLvlDarkKnight() + "," + player.getLvlMachinist() + "," + player.getLvlCarpenter() + ","
                     + player.getLvlBlacksmith() + "," + player.getLvlArmorer() + "," + player.getLvlGoldsmith() + "," + player.getLvlLeatherworker() + "," + player.getLvlWeaver() + "," + player.getLvlAlchemist() + ","
                     + player.getLvlCulinarian() + "," + player.getLvlMiner() + "," + player.getLvlBotanist() + "," + player.getLvlFisher() + "," + player.getBitHas30DaysSub() + "," + player.getBitHas60DaysSub() + "," + player.getBitHas90DaysSub() + "," + player.getBitHas180DaysSub() + "," + player.getBitHas270DaysSub() + "," + player.getBitHas360DaysSub() + "," + player.getBitHas450DaysSub() + "," + player.getBitHas630DaysSub() + "," + player.getBitHas960DaysSub() + ","
                     + player.getBitHasPreOrderArr() + "," + player.getBitHasPreOrderHW() + "," + player.getBitHasArtBook() + "," + player.getBitHasBeforeMeteor() + "," + player.getBitHasBeforeTheFall() + "," + player.getBitHasSoundTrack() + "," + player.getBitHasAttendedEternalBond() + "," + player.getBitHasCompletedHWSightseeing() + "," + player.getBitHasCompleted2pt5() + "," + player.getBitHasFiftyComms() + "," + player.getBitHasMooglePlush() + ","
-                    + player.getBitHasCompletedHildibrand() + "," + player.getBitHasPS4Collectors() + "," + player.getBitHasEternalBond() + "," + player.getBitHasARRCollectors() + "," + player.getBitHasKobold() + "," + player.getBitHasSahagin() + "," + player.getBitHasAmaljaa() + "," + player.getBitHasSylph() + "," + player.getBitHasCompletedHW() + "," + player.getBitHasCompleted3pt1() + ",\"" + player.getMountsString() + "\",\"" + player.getMinionsString() + "\""
+                    + player.getBitHasCompletedHildibrand() + "," + player.getBitHasPS4Collectors() + "," + player.getBitHasEternalBond() + "," + player.getBitHasARRCollectors() + "," + player.getBitHasKobold() + "," + player.getBitHasSahagin() + "," + player.getBitHasAmaljaa() + "," + player.getBitHasSylph() + "," + player.getBitHasCompletedHW() + "," + player.getBitHasCompleted3pt1() + "," + player.getBitIsLegacyPlayer()  + ",\"" + player.getMountsString() + "\",\"" + player.getMinionsString() + "\""
                     + ");";
 
             st.executeUpdate(strSQL);

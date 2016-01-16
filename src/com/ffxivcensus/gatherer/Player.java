@@ -77,6 +77,7 @@ public class Player {
     private boolean hasSylph;
     private boolean hasCompletedHW;
     private boolean hasCompleted3pt1;
+    private boolean isLegacyPlayer;
     private ArrayList minions;
     private ArrayList mounts;
 
@@ -1601,6 +1602,37 @@ public class Player {
     }
 
     /**
+     * Get whether the user played 1.0.
+     *
+     * @return whether the user has played 1.0
+     */
+    public boolean getIsLegacyPlayer() {
+        return isLegacyPlayer;
+    }
+
+    /**
+     * Get bit value whether the user has played 1.0
+     *
+     * @return bit value indicating whether player has played 1.0.
+     */
+    public int getBitIsLegacyPlayer() {
+        if (isLegacyPlayer) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+    /**
+     * Set whether the user has played 1.0.
+     *
+     * @param isLegacyPlayer whether the player has played 1.0.
+     */
+    public void setIsLegacyPlayer(boolean isLegacyPlayer) {
+        this.isLegacyPlayer = isLegacyPlayer;
+    }
+
+    /**
      * Get the character's minion set as a comma delimited string.
      * @return comma delimited string of player's minions.
      */
@@ -1777,6 +1809,7 @@ public class Player {
             player.setHasAmaljaa(player.doesPlayerHaveMount("Cavalry Drake"));
             player.setHasSylph(player.doesPlayerHaveMount("Laurel Goobbue"));
             player.setHasCompletedHW(player.doesPlayerHaveMount("Midgardsormr"));
+            player.setIsLegacyPlayer(player.doesPlayerHaveMount("Legacy Chocobo"));
         } catch (IOException ioEx) {
             throw new Exception("Character " + playerID + " does not exist.");
         }
