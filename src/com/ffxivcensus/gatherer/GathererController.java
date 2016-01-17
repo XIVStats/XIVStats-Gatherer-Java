@@ -266,7 +266,7 @@ public class GathererController {
             int next = nextID;
             //Increment id
             nextID++;
-            return nextID;
+            return next;
         } else {
             return -1;
         }
