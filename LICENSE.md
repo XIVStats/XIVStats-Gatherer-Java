@@ -1,6 +1,6 @@
 Copyright (c) 2015, Jonathan Price
 
-Copyright (c) 2015, Peter Reid
+Copyright (c) 2016, Peter Reid
 
 All rights reserved.
 
