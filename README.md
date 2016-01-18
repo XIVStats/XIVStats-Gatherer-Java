@@ -1,6 +1,6 @@
 ## XIV Stats ##
 
-[![Build Status](https://mygitlab.org:4043/job/XIVStats-Gatherer-Java/5/badge/icon)](https://mygitlab.org:4043/job/XIVStats-Gatherer-Java/5/)
+[![Build Status](https://mygitlab.org:4043/buildStatus/icon?job=XIVStats-Gatherer-Java)](https://mygitlab.org:4043/job/XIVStats-Gatherer-Java/)
 
 XIV Stats is primarily a program to produce a database of player
 information for FFXIV. The information is pulled from directly from the
