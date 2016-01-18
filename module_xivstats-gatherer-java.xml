@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_xivstats-gatherer-java" default="compile.module.xivstats-gatherer-java">
+  <dirname property="module.xivstats-gatherer-java.basedir" file="${ant.file.module_xivstats-gatherer-java}"/>
+  
+  <property name="module.jdk.home.xivstats-gatherer-java" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.xivstats-gatherer-java" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.xivstats-gatherer-java" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.xivstats-gatherer-java" value="-encoding UTF-8 -source 1.5 -target 1.5 ${compiler.args}"/>
+  
+  <property name="xivstats-gatherer-java.output.dir" value="${module.xivstats-gatherer-java.basedir}/target/classes"/>
+  <property name="xivstats-gatherer-java.testoutput.dir" value="${module.xivstats-gatherer-java.basedir}/target/test-classes"/>
+  
+  <path id="xivstats-gatherer-java.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="xivstats-gatherer-java.module.production.classpath">
+    <path refid="${module.jdk.classpath.xivstats-gatherer-java}"/>
+    <pathelement location="${basedir}/lib/jsoup-1.8.3.jar"/>
+    <pathelement location="${basedir}/lib/mysql-connector-java-5.1.38-bin.jar"/>
+    <path refid="library.maven:_mysql:mysql-connector-java:5.1.38.classpath"/>
+    <path refid="library.maven:_org.postgresql:postgresql:9.4.1207.classpath"/>
+    <path refid="library.maven:_org.jsoup:jsoup:1.8.3.classpath"/>
+  </path>
+  
+  <path id="xivstats-gatherer-java.runtime.production.module.classpath">
+    <pathelement location="${xivstats-gatherer-java.output.dir}"/>
+    <pathelement location="${basedir}/lib/jsoup-1.8.3.jar"/>
+    <pathelement location="${basedir}/lib/mysql-connector-java-5.1.38-bin.jar"/>
+    <path refid="library.maven:_mysql:mysql-connector-java:5.1.38.classpath"/>
+    <path refid="library.maven:_org.postgresql:postgresql:9.4.1207.classpath"/>
+    <path refid="library.maven:_org.jsoup:jsoup:1.8.3.classpath"/>
+  </path>
+  
+  <path id="xivstats-gatherer-java.module.classpath">
+    <path refid="${module.jdk.classpath.xivstats-gatherer-java}"/>
+    <pathelement location="${xivstats-gatherer-java.output.dir}"/>
+    <pathelement location="${basedir}/lib/jsoup-1.8.3.jar"/>
+    <pathelement location="${basedir}/lib/mysql-connector-java-5.1.38-bin.jar"/>
+    <path refid="library.maven:_mysql:mysql-connector-java:5.1.38.classpath"/>
+    <path refid="library.maven:_org.postgresql:postgresql:9.4.1207.classpath"/>
+    <path refid="library.maven:_org.jsoup:jsoup:1.8.3.classpath"/>
+  </path>
+  
+  <path id="xivstats-gatherer-java.runtime.module.classpath">
+    <pathelement location="${xivstats-gatherer-java.testoutput.dir}"/>
+    <pathelement location="${xivstats-gatherer-java.output.dir}"/>
+    <pathelement location="${basedir}/lib/jsoup-1.8.3.jar"/>
+    <pathelement location="${basedir}/lib/mysql-connector-java-5.1.38-bin.jar"/>
+    <path refid="library.maven:_mysql:mysql-connector-java:5.1.38.classpath"/>
+    <path refid="library.maven:_org.postgresql:postgresql:9.4.1207.classpath"/>
+    <path refid="library.maven:_org.jsoup:jsoup:1.8.3.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.xivstats-gatherer-java">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.xivstats-gatherer-java">
+    <patternset refid="excluded.from.module.xivstats-gatherer-java"/>
+  </patternset>
+  
+  <path id="xivstats-gatherer-java.module.sourcepath">
+    <dirset dir="${module.xivstats-gatherer-java.basedir}">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.xivstats-gatherer-java" depends="compile.module.xivstats-gatherer-java.production,compile.module.xivstats-gatherer-java.tests" description="Compile module XIVStats-Gatherer-Java"/>
+  
+  <target name="compile.module.xivstats-gatherer-java.production" depends="register.custom.compilers" description="Compile module XIVStats-Gatherer-Java; production classes">
+    <mkdir dir="${xivstats-gatherer-java.output.dir}"/>
+    <javac2 destdir="${xivstats-gatherer-java.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.xivstats-gatherer-java}/javac">
+      <compilerarg line="${compiler.args.xivstats-gatherer-java}"/>
+      <bootclasspath refid="xivstats-gatherer-java.module.bootclasspath"/>
+      <classpath refid="xivstats-gatherer-java.module.production.classpath"/>
+      <src refid="xivstats-gatherer-java.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.xivstats-gatherer-java"/>
+    </javac2>
+    
+    <copy todir="${xivstats-gatherer-java.output.dir}">
+      <fileset dir="${module.xivstats-gatherer-java.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.xivstats-gatherer-java.tests" depends="register.custom.compilers,compile.module.xivstats-gatherer-java.production" description="compile module XIVStats-Gatherer-Java; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.xivstats-gatherer-java" description="cleanup module">
+    <delete dir="${xivstats-gatherer-java.output.dir}"/>
+    <delete dir="${xivstats-gatherer-java.testoutput.dir}"/>
+  </target>
+</project>
