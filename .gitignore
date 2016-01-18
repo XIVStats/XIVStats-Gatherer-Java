@@ -66,3 +66,6 @@ config.xml
 *xivstats.xml
 MANIFEST.MF
 xivstats.properties
+
+#Ignore Maven target dir
+target/
