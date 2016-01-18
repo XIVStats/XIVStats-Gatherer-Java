@@ -1,7 +1,6 @@
 package com.ffxivcensus.gatherer;
 
 import static org.junit.Assert.*;
-import com.ffxivcensus.gatherer.Player;
 
 /**
  * JUnit test class to test the methods of the Player class.
