@@ -75,6 +75,7 @@ public class GathererController {
                     readConfig();
                 } catch (Exception ex) {
                     System.out.println(ex.getMessage());
+                    System.exit(0);
                 }
 
                 //Create DB table if it doesn't exist
