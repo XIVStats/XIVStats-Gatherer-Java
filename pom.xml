@@ -48,7 +48,7 @@
         <finalName>${project.artifactId}-${project.version}</finalName>
         <testOutputDirectory>test/test-classes</testOutputDirectory>
         <sourceDirectory>src/main</sourceDirectory>
-        <testSourceDirectory>src/test</testSourceDirectory>
+        <testSourceDirectory>src/test/com/ffxivcensus/gatherer/test</testSourceDirectory>
 
         <plugins>
             <plugin>
