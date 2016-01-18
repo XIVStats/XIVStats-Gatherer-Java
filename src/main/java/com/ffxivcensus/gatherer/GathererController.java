@@ -201,7 +201,6 @@ public class GathererController {
         //Open connection
         Connection conn = openConnection();
         try {
-            //TODO Add hw_complete and hw_31_complete to table fields
             Statement st = conn.createStatement();
             String strSQL = "INSERT IGNORE INTO tblplayers (id, name, realm, race, gender, grand_company, level_gladiator, level_pugilist, level_marauder,"
                     + "level_lancer, level_archer, level_rogue, level_conjurer, level_thaumaturge, level_arcanist, level_astrologian, level_darkknight, level_machinist, level_carpenter,"
