@@ -63,11 +63,6 @@
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.3</version>
-                <configuration>
-                    <includes>
-                        <include>src</include>
-                    </includes>
-                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
