@@ -1782,7 +1782,7 @@ public class Player {
             player.setHas30DaysSub(player.doesPlayerHaveMinion("Wind-up Cursor"));
             player.setHas60DaysSub(player.doesPlayerHaveMinion("Black Chocobo Chick"));
             player.setHas90DaysSub(player.doesPlayerHaveMinion("Beady Eye"));
-            player.setHas180DaysSub(player.doesPlayerHaveMinion("Minion of Light"));
+            player.setHas180DaysSub(player.doesPlayerHaveMinion("Minion Of Light"));
             player.setHas270DaysSub(player.doesPlayerHaveMinion("Wind-up Leader"));
             player.setHas360DaysSub(player.doesPlayerHaveMinion("Wind-up Odin"));
             player.setHas450DaysSub(player.doesPlayerHaveMinion("Wind-up Goblin"));
