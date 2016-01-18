@@ -65,6 +65,7 @@ config.xml
 #Ignore build config files
 *xivstats.xml
 MANIFEST.MF
+module_xivstats-gatherer-java.xml
 xivstats.properties
 
 #Ignore Maven target dir
