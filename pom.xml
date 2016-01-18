@@ -10,27 +10,6 @@
     <name>XIVStats Lodestone Gatherer</name>
     <url>https://github.com/xivstats</url>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>com.ffxivcensus.gatherer</groupId>
-                <artifactId>XIVStats-Gatherer-Java</artifactId>
-                <version>1.0pre</version>
-                <configuration>
-                    <archive>
-                        <manifest>
-                            <addClasspath>true</addClasspath>
-                            <mainClass>com.ffxivcensus.gatherer.GathererController</mainClass>
-                        </manifest>
-                    </archive>
-                </configuration>
-
-            </plugin>
-
-        </plugins>
-
-    </build>
-
     <repositories>
         <repository>
             <id>mvnrepository.com</id>
@@ -62,5 +41,36 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+
+    <build>
+        <outputDirectory>target/classes</outputDirectory>
+        <finalName>${project.artifactId}-${project.version}</finalName>
+        <testOutputDirectory>test/test-classes</testOutputDirectory>
+        <sourceDirectory>src/main</sourceDirectory>
+        <testSourceDirectory>src/test</testSourceDirectory>
+
+        <plugins>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.3.2</version>
+                <configuration>
+                    <includes>
+                        <include>src</include>
+                    </includes>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.4</version>
+                <configuration>
+                    <outputDirectory>lib</outputDirectory>
+                </configuration>
+            </plugin>
+
+        </plugins>
+
+    </build>
+
 
 </project>
