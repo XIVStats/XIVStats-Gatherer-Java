@@ -1,5 +1,6 @@
 package com.ffxivcensus.gatherer;
 
+import com.ffxivcensus.gatherer.Player;
 import static org.junit.Assert.*;
 
 /**
