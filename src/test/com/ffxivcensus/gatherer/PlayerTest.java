@@ -1,4 +1,4 @@
-package com.ffxivcensus.gatherer.test;
+package com.ffxivcensus.gatherer;
 
 import static org.junit.Assert.*;
 import com.ffxivcensus.gatherer.*;
