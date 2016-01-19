@@ -20,6 +20,7 @@ to produce a web page displaying statistics for the data gathered.
 * [Bugs and feature requests](Bugs and feature requests)
 * [Documentation](Documentation)
 * [Contributing](Contributing)
+* [Database](Database)
 * [XIVStats-Gatherer-Ruby](XIVStats-Gatherer-Ruby)
 * [Creators](Creators)
 * [Copyright and license](Copyright and license)
@@ -84,6 +85,75 @@ other positive contributions are welcome.
 
 All pull requests are subject to contributor review before passing, all build and
 test CI stages must also pass before a contribution can be merged.
+
+## Database
+The database table ```tblplayers``` has the following structure:
+
+|Column Name           |Datatype |Checks for Mount/Minion         |
+|:--------------------:|:-------:|:------------------------------:|
+|id                    |int      |N/A                             |
+|name                  |text     |N/A                             |
+|realm                 |text     |N/A                             |
+|gender                |text     |N/A                             |
+|grand_company         |text     |N/A                             |
+|level_gladiator       |int      |N/A                             |
+|level_pugilist        |int      |N/A                             |
+|level_marauder        |int      |N/A                             |
+|level_lancer          |int      |N/A                             |
+|level_archer          |int      |N/A                             |
+|level_rogue           |int      |N/A                             |
+|level_conjurer        |int      |N/A                             |
+|level_thaumaturge     |int      |N/A                             |
+|level_arcanist        |int      |N/A                             |
+|level_darkknight      |int      |N/A                             |
+|level_machinist       |int      |N/A                             |
+|level_astrologian     |int      |N/A                             |
+|level_carpenter       |int      |N/A                             |
+|level_blacksmith      |int      |N/A                             |
+|level_armorer         |int      |N/A                             |
+|level_goldsmith       |int      |N/A                             |
+|level_leatherworker   |int      |N/A                             |
+|level_weaver          |int      |N/A                             |
+|level_alchemist       |int      |N/A                             |
+|level_culinarian      |int      |N/A                             |
+|level_miner           |int      |N/A                             |
+|level_botanist        |int      |N/A                             |
+|level_fisher          |int      |N/A                             |
+|p30days               |bit      |Minion - Wind-up Cursor         |
+|p60days               |bit      |Minion - Black Chocobo Chick    |
+|p90days               |bit      |Minion - Beady Eye              |
+|p180days              |bit      |Minion - Minion Of Light        |
+|p270days              |bit      |Minion - Wind-up Leader         |
+|p360days              |bit      |Minion - Wind-up Odin           |
+|p450days              |bit      |Minion - Wind-up Goblin         |
+|p630days              |bit      |Minion - Wind-up Nanamo         |
+|p960days              |bit      |Minion - Wind-up Firion         |
+|prearr                |bit      |Minion - Cait Sith Doll         |
+|prehw                 |bit      |Minion - Chocobo Chick Courier  |
+|artbook               |bit      |Minion - Model Enterprise       |
+|beforemeteor          |bit      |Minion - Wind-up Dalamud        |
+|beforethefall         |bit      |Minion - Set Of Primogs         |
+|soundtrack            |bit      |Minion - Wind-up Bahamut        |
+|saweternalbond        |bit      |Minion - Demon Box              |
+|sightseeing           |bit      |Minion - Fledgling Apkallu      |
+|arr_25_complete       |bit      |Minion - Midgardsormr           |
+|comm50                |bit      |Minion - Princely Hatchling     |
+|moogleplush           |bit      |Minion - Wind-up Delivery Moogle|
+|hildibrand            |bit      |Minion - Wind-up Gentleman      |
+|ps4collectors         |bit      |Minion - Wind-up Moogle         |
+|dideternalbond        |bit      |Mount - Ceremony Chocobo        |
+|arrcollector          |bit      |Mount - Coeurl                  |
+|kobold                |bit      |Mount - Bomb Palanquin          |
+|sahagin               |bit      |Mount - Cavalry Elbst           |
+|amaljaa               |bit      |Mount - Cavalry Drake           |
+|sylph                 |bit      |Mount - Laurel Goobbue          |
+|hwcomplete            |bit      |Mount - Midgardsormr            |
+|hw_31_complete        |bit      |Minion - Wind-up Haurchefant    |
+|legacy_player         |bit      |Mount - Legacy Chocobo          |
+|*mounts*              |*text*   |*N/A*                           |
+|*minions*             |*text*   |*N/A*                           |
+
+*Italicised fields are only completed jf specified with a command line flag.*
 
 ## XIVStats-Gatherer-Ruby
 XIVStats-Gatherer-Java provides the same functionality as the original ruby-based  [XIVStats-Gatherer-Ruby](https://github.com/XIVStats/XIVStats-Gatherer-Ruby),
