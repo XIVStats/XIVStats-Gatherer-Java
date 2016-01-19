@@ -17,11 +17,11 @@ to produce a web page displaying statistics for the data gathered.
 
 ## Table of contents
 * [Quick start](#quick-start)
-* [Bugs and feature requests](#bugs-and-feature requests)
+* [Bugs and feature requests](#bugs-and-feature-requests)
 * [Documentation](#documentation)
 * [Contributing](#contributing)
 * [Database](#database)
-* [XIVStats-Gatherer-Ruby](#xivtats-Gatherer-Ruby)
+* [XIVStats-Gatherer-Ruby](#xivtats-gatherer-Ruby)
 * [Creators](#creators)
 * [Copyright and license](#copyright-and-license)
 
