@@ -16,14 +16,14 @@ can be used in conjunction with the [XIVStats PHP Script(s)](https://github.com/
 to produce a web page displaying statistics for the data gathered.
 
 ## Table of contents
-* [Quick start](#Quick Start)
-* [Bugs and feature requests](#Bugs and feature requests)
-* [Documentation](#Documentation)
-* [Contributing](#Contributing)
-* [Database](#Database)
-* [XIVStats-Gatherer-Ruby](#XIVStats-Gatherer-Ruby)
-* [Creators](#Creators)
-* [Copyright and license](#Copyright and license)
+* [Quick start](#quick-start)
+* [Bugs and feature requests](#bugs-and-feature requests)
+* [Documentation](#documentation)
+* [Contributing](#contributing)
+* [Database](#database)
+* [XIVStats-Gatherer-Ruby](#xivtats-Gatherer-Ruby)
+* [Creators](#creators)
+* [Copyright and license](#copyright-and-license)
 
 ## Quick Start
 Follow these steps to setup XIVStats-Gatherer-Java:
