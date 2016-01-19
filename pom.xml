@@ -77,31 +77,7 @@
                     </archive>
                 </configuration>
             </plugin>
-            <plugin>
-                <groupId>com.qualinsight.mojo.cobertura</groupId>
-                <artifactId>qualinsight-mojo-cobertura-core</artifactId>
-                <version>1.0.7</version>
-                <executions>
-                    <execution>
-                        <id>instrument-it</id>
-                        <phase>none</phase>
-                        <goals>
-                            <goal>instrument-it</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>report-ut-coverage</id>
-                        <phase>none</phase>
-                        <goals>
-                            <goal>report-ut-coverage</goal>
-                        </goals>
-                        <configuration>
-                            <format>xml</format>
-                            <convertToSonarQubeOutput>false</convertToSonarQubeOutput>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
+
         </plugins>
 
     </build>
@@ -126,12 +102,6 @@
             <groupId>junit</groupId>
             <artifactId>junit-dep</artifactId>
             <version>4.10</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>net.sourceforge.cobertura</groupId>
-            <artifactId>cobertura</artifactId>
-            <version>2.1.1</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
