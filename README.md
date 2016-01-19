@@ -1,7 +1,7 @@
 ## XIV Stats Gatherer Java ##
 
 [![Build Status](https://mygitlab.org:4043/buildStatus/icon?job=XIVStats-Gatherer-Java)](https://mygitlab.org:4043/job/XIVStats-Gatherer-Java/)
-[![Tests Status](https://img.shields.io/jenkins/t/https/mygitlab.org:4043/XIVStats-Gatherer-Java-Tests.svg)](https://mygitlab.org:4043/job/XIVStats-Gatherer-Java/com.ffxivcensus.gatherer$XIVStats-Gatherer-Java/lastBuild/testReport/)
+[![Tests Status](https://img.shields.io/jenkins/t/https/mygitlab.org:4043/XIVStats-Gatherer-Java-Tests.svg)](https://mygitlab.org:4043/job/XIVStats-Gatherer-Java-Tests/lastBuild/testReport/)
 [![License](https://img.shields.io/github/license/XIVStats/XIVStats-Gatherer-Java.svg)](https://github.com/XIVStats/XIVStats-Gatherer-Java/blob/master/LICENSE)
 
 XIV Stats is primarily a program to produce a database of player
