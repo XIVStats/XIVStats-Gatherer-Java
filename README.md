@@ -21,7 +21,7 @@ to produce a web page displaying statistics for the data gathered.
 * [Documentation](#documentation)
 * [Contributing](#contributing)
 * [Database](#database)
-* [XIVStats-Gatherer-Ruby](#xivtats-gatherer-Ruby)
+* [XIVStats-Gatherer-Ruby](#xivtats-gatherer-ruby)
 * [Creators](#creators)
 * [Copyright and license](#copyright-and-license)
 
