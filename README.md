@@ -1,12 +1,12 @@
-## XIV Stats ##
+## XIV Stats Gatherer Java ##
 
-[![Build Status](https://mygitlab.org:4043/job/XIVStats-Gatherer-Java/5/badge/icon)](https://mygitlab.org:4043/job/XIVStats-Gatherer-Java/5/)
+[![Build Status](https://mygitlab.org:4043/buildStatus/icon?job=XIVStats-Gatherer-Java)](https://mygitlab.org:4043/job/XIVStats-Gatherer-Java/)
+[![Tests Status](https://img.shields.io/jenkins/t/https/mygitlab.org:4043/XIVStats-Gatherer-Java-Tests.svg)](https://mygitlab.org:4043/job/XIVStats-Gatherer-Java-Tests/lastBuild/testReport/)
+[![License](https://img.shields.io/github/license/XIVStats/XIVStats-Gatherer-Java.svg)](https://github.com/XIVStats/XIVStats-Gatherer-Java/blob/master/LICENSE)
 
 XIV Stats is primarily a program to produce a database of player
 information for FFXIV. The information is pulled from directly from the
-lodestone. An example PHP file has been included to demonstrate
-visualising the statistics. You can also view a live demo of the example
-web page by visiting [ffxivcensus.com/](http://ffxivcensus.com/).
+lodestone. The generated database can be then used in conjuntion with the [XIVStats php script](https://github.com/XIVStats/XIVStats) to build a statistics page.
 
 The aim of this project is to allow people to build their own projects
 using this data. For example, creating a website to compare players.
