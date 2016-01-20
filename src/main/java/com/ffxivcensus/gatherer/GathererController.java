@@ -144,7 +144,7 @@ public class GathererController {
         NodeList nodesJDBC = doc.getElementsByTagName("jdbc");
         Element elementJDBC = (Element) nodesJDBC.item(0);
 
-        String url = "jdbc:" + elementJDBC.getElementsByTagName("url").item(0).getTextContent() + elementJDBC.getElementsByTagName("database").item(0).getTextContent();
+        String url = "jdbc:" + elementJDBC.getElementsByTagName("url").item(0).getTextContent() + "/" + elementJDBC.getElementsByTagName("database").item(0).getTextContent();
         dbUrl = url;
         dbUser = elementJDBC.getElementsByTagName("username").item(0).getTextContent();
         dbPassword = elementJDBC.getElementsByTagName("password").item(0).getTextContent();
