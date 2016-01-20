@@ -45,7 +45,7 @@ public class PlayerTest {
         //Disciples of Magic
         assertTrue(playerOne.getLvlConjurer() >= 60);
         assertTrue(playerOne.getLvlThaumaturge() >= 60);
-        assertTrue(playerOne.getLvlAstrologian() >= 60);
+        assertTrue(playerOne.getLvlArcanist() >= 60);
 
         //Extra Jobs
         assertTrue(playerOne.getLvlDarkKnight() >= 60);
