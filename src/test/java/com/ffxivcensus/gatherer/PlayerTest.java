@@ -72,40 +72,70 @@ public class PlayerTest {
         //Test boolean values
         //Subscription periods
         assertTrue(playerOne.isHas30DaysSub());
+        assertEquals(playerOne.getBitHas30DaysSub(), 1);
         assertTrue(playerOne.isHas60DaysSub());
+        assertEquals(playerOne.getBitHas60DaysSub(),1);
         assertTrue(playerOne.isHas90DaysSub());
+        assertEquals(playerOne.getBitHas90DaysSub(),1);
         assertTrue(playerOne.isHas180DaysSub());
+        assertEquals(playerOne.getBitHas180DaysSub(),1);
         assertTrue(playerOne.isHas270DaysSub());
+        assertEquals(playerOne.getBitHas270DaysSub(),1);
         assertTrue(playerOne.isHas360DaysSub());
+        assertEquals(playerOne.getBitHas360DaysSub(),1);
         assertTrue(playerOne.isHas450DaysSub());
+        assertEquals(playerOne.getBitHas450DaysSub(),1);
         assertTrue(playerOne.isHas630DaysSub());
+        assertEquals(playerOne.getBitHas630DaysSub(),1);
         assertTrue(playerOne.isHas630DaysSub());
+        assertEquals(playerOne.getBitHas630DaysSub(),1);
 
         //Collectibles
         assertTrue(playerOne.isHasPreOrderArr());
+        assertEquals(playerOne.getBitHasPreOrderArr(),1);
         assertTrue(playerOne.isHasPreOrderHW());
+        assertEquals(playerOne.getBitHasPreOrderHW(),1);
         assertTrue(playerOne.isHasPS4Collectors());
+        assertEquals(playerOne.getBitHasPS4Collectors(),1);
         assertTrue(playerOne.isHasARRCollectors());
+        assertEquals(playerOne.getBitHasARRCollectors(),1);
         //Assuming the below don't change
         assertFalse(playerOne.isHasArtbook());
+        assertEquals(playerOne.getBitHasArtBook(),0);
         assertFalse(playerOne.isHasBeforeMeteor());
+        assertEquals(playerOne.getBitHasBeforeMeteor(),0);
         assertFalse(playerOne.isHasBeforeTheFall());
+        assertEquals(playerOne.getBitHasBeforeTheFall(),0);
         assertFalse(playerOne.isHasSoundtrack());
+        assertEquals(playerOne.getBitHasSoundTrack(),0);
         assertFalse(playerOne.isHasMooglePlush());
+        assertEquals(playerOne.getBitHasMooglePlush(),0);
 
         //Achievements
         assertTrue(playerOne.isHasAttendedEternalBond());
+        assertEquals(playerOne.getBitHasAttendedEternalBond(),1);
         assertFalse(playerOne.isHasCompletedHWSightseeing());
+        assertEquals(playerOne.getBitHasCompletedHWSightseeing(),0);
         assertTrue(playerOne.isHasCompleted2pt5());
+        assertEquals(playerOne.getBitHasCompleted2pt5(),1);
         assertTrue(playerOne.isHasFiftyComms());
+        assertEquals(playerOne.getBitHasFiftyComms(),1);
         assertTrue(playerOne.isHasCompletedHildibrand());
+        assertEquals(playerOne.getBitHasCompletedHildibrand(),1);
         assertTrue(playerOne.isHasEternalBond());
+        assertEquals(playerOne.getBitHasEternalBond(),1);
         assertTrue(playerOne.isHasKobold());
+        assertEquals(playerOne.getBitHasKobold(),1);
         assertTrue(playerOne.isHasSahagin());
+        assertEquals(playerOne.getBitHasSahagin(),1);
         assertTrue(playerOne.isHasAmaljaa());
+        assertEquals(playerOne.getBitHasAmaljaa(),1);
         assertTrue(playerOne.isHasSylph());
+        assertEquals(playerOne.getBitHasSylph(),1);
         assertTrue(playerOne.isHasCompletedHW());
+        assertEquals(playerOne.getBitHasCompletedHW(),1);
         assertFalse(playerOne.getIsLegacyPlayer());
+        assertEquals(playerOne.getBitIsLegacyPlayer(),0);
     }
 
     /**
