@@ -107,16 +107,16 @@ public class GathererController {
                     endId = highestID;
                     System.out.println("Starting parse of range " + startId + " to " + endId + " using " + threadLimit + " threads");
                     gatherRange();
-                }
+                    //Get current time
+                    long endTime = System.currentTimeMillis();
+                    long seconds = (endTime - startTime) / 1000;
+                    long minutes = seconds / 60;
+                    long hours = minutes / 60;
+                    long days = hours / 24;
+                    String time = days + " Days, " + hours % 24 + " hrs, " + minutes % 60 + " mins, " + seconds % 60 + " secs";
+                    System.out.println("Run completed, " + ((highestID - lowestID) + 1) + " character IDs scanned in " + time + " (" + threadLimit + " threads)");
 
-                //Get current time
-                long endTime = System.currentTimeMillis();
-                long seconds = (endTime - startTime) / 1000;
-                long minutes = seconds / 60;
-                long hours = minutes / 60;
-                long days = hours / 24;
-                String time = days + " Days, " + hours % 24 + " hrs, " + minutes % 60 + " mins, " + seconds % 60 + " secs";
-                System.out.println("Run completed, " + ((highestID - lowestID) + 1) + " character IDs scanned in " + time + " (" + threadLimit + " threads)");
+                }
 
             } catch (Exception ex) {
                 ex.printStackTrace();
