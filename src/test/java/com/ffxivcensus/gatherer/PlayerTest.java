@@ -177,6 +177,49 @@ public class PlayerTest {
 
 
     /**
+     * Perform a test of the getPlayer method using character #13002145 (Matthew Pricewood, Cerberus) to test data
+     * that could not be tested with other tests.
+     * @throws Exception
+     */
+    @org.junit.Test
+    public void testUnplayedPlayer() throws Exception{
+        Player player = Player.getPlayer(13002145);
+
+        //Test grand company
+        assertEquals(player.getGrandCompany(),"none");
+
+        //Test gender
+        assertEquals(player.getGender(),"male");
+
+        //Test that classes are polling correctly, arcanist level will be indicated on page by '-' should be 0 in player object.
+        assertEquals(player.getLvlArcanist(),0);
+
+        //Test fields that are true in other tests
+        assertEquals(player.getBitHas30DaysSub(),0);
+        assertEquals(player.getBitHas60DaysSub(),0);
+        assertEquals(player.getBitHas90DaysSub(),0);
+        assertEquals(player.getBitHas180DaysSub(),0);
+        assertEquals(player.getBitHas360DaysSub(),0);
+        assertEquals(player.getBitHas450DaysSub(),0);
+        assertEquals(player.getBitHas630DaysSub(),0);
+        assertEquals(player.getBitHas960DaysSub(),0);
+        assertEquals(player.getBitHasPreOrderArr(),0);
+        assertEquals(player.getBitHasPreOrderHW(),0);
+        assertEquals(player.getBitHasAttendedEternalBond(),0);
+        assertEquals(player.getBitHasCompleted2pt5(),0);
+        assertEquals(player.getBitHasFiftyComms(),0);
+        assertEquals(player.getBitHasCompletedHildibrand(),0);
+        assertEquals(player.getBitHasPS4Collectors(),0);
+        assertEquals(player.getBitHasEternalBond(),0);
+        assertEquals(player.getBitHasKobold(),0);
+        assertEquals(player.getBitHasSahagin(),0);
+        assertEquals(player.getBitHasAmaljaa(),0);
+        assertEquals(player.getBitHasSylph(),0);
+        assertEquals(player.getBitHasCompletedHW(),0);
+        assertEquals(player.getBitHasCompleted3pt1(),0);
+    }
+
+    /**
      * Perform a test of the getPlayer method, using character #2356539, which should not exist.
      */
     @org.junit.Test
