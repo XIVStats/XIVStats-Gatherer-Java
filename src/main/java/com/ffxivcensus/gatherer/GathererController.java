@@ -61,7 +61,6 @@ public class GathererController {
 
         if (args.length == 0) { //If user provides no command line arguments
             System.out.println("Usage: java -jar XIVStats.jar <lowest-id> <highest-id>");
-            System.exit(1);
         } else { //Else valid set of args
             try { //Try to convert params to ints
 
@@ -75,7 +74,6 @@ public class GathererController {
                     readConfig();
                 } catch (Exception ex) {
                     System.out.println(ex.getMessage());
-                    System.exit(0);
                 }
 
                 //Create DB table if it doesn't exist
