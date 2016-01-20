@@ -53,6 +53,16 @@ public class GathererControllerTest {
     public static void setUpBaseClass(){
         try {
             readConfig();
+            String strSQL = "DROP TABLE  tblplayers;";
+            java.sql.Connection conn = openConnection();
+            try {
+                Statement stmt = conn.createStatement();
+                stmt.executeUpdate(strSQL);
+            } catch (SQLException e) {
+                System.out.println("Error executing SQL statement to DROP TABLE");
+            }
+            closeConnection(conn);
+
         } catch (ParserConfigurationException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -60,15 +70,7 @@ public class GathererControllerTest {
         } catch (SAXException e) {
             e.printStackTrace();
         }
-        String strSQL = "DROP TABLE  tblplayers;";
-        java.sql.Connection conn = openConnection();
-        try {
-            Statement stmt = conn.createStatement();
-            stmt.executeUpdate(strSQL);
-        } catch (SQLException e) {
-            System.out.println("Error executing SQL statement to DROP TABLE");
-        }
-        closeConnection(conn);
+
     }
 
     /**
