@@ -16,7 +16,7 @@ public class PlayerTest {
     /**
      * Perform a test of the getPlayer method, using character #2356533 (Aelia Sokoto, Cerberus) as the test character.
      *
-     * @throws Exception excception thrown when reading non-existant character.
+     * @throws Exception exception thrown when reading non-existant character.
      */
     @org.junit.Test
     public void testGetPlayer() throws Exception {
@@ -155,6 +155,26 @@ public class PlayerTest {
         //Test for data from very end
         assertTrue(playerOne.getMountsString().contains("Midgardsormr"));
     }
+
+    /**
+     * Perform a test of the getPlayer method using character #501646 (Omega Venom, Cerberus) to test data that could
+     * not be tested with other tests.
+     *
+     * @throws Exception exception thrown when reading non-existant character.
+     */
+    @org.junit.Test
+    public void testVeteranPlayer() throws Exception {
+        Player player = Player.getPlayer(501646);
+
+        //Player has 960 days sub, make sure recorded correctly
+        assertTrue(player.isHas960DaysSub());
+        assertEquals(player.getBitHas960DaysSub(),1);
+
+        //Player is also a legacy player - so test for that
+        assertTrue(player.getIsLegacyPlayer());
+        assertEquals(player.getBitIsLegacyPlayer(),1);
+    }
+
 
     /**
      * Perform a test of the getPlayer method, using character #2356539, which should not exist.
