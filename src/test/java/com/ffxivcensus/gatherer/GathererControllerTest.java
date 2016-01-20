@@ -53,6 +53,7 @@ public class GathererControllerTest {
     public static void setUpBaseClass(){
         try {
             readConfig();
+            System.out.println(dbUrl);
             String strSQL = "DROP TABLE  tblplayers;";
             java.sql.Connection conn = openConnection();
             try {
