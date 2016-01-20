@@ -75,7 +75,7 @@ If you have discovered a bug, are having issues running the program
 [open an issue over here](https://github.com/XIVStats/XIVStats-Gatherer-Java/issues).
 
 ## Documentation
-Javadoc documentation for the program can be found [here](http://download.reidweb.com/xivstats/doc/master/index.html).
+Javadoc documentation for the program can be found [here](http://download.reidweb.com/xivstats/doc/origin/master/index.html).
 
 ## Contributing
 If you want to contribute to the XIVStats-Gatherer-Java project, please fork this
