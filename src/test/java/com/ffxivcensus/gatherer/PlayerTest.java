@@ -134,6 +134,8 @@ public class PlayerTest {
         assertEquals(playerOne.getBitHasSylph(),1);
         assertTrue(playerOne.isHasCompletedHW());
         assertEquals(playerOne.getBitHasCompletedHW(),1);
+        assertTrue(playerOne.isHasCompleted3pt1());
+        assertEquals(playerOne.getBitHasCompleted3pt1(),1);
         assertFalse(playerOne.getIsLegacyPlayer());
         assertEquals(playerOne.getBitIsLegacyPlayer(),0);
     }
