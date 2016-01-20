@@ -262,7 +262,7 @@ public class GathererController {
      * @return the next character ID to be parsed.
      */
     public static int getNextID() {
-        if (nextID < endId) {
+        if (nextID <= endId) {
             int next = nextID;
             //Increment id
             nextID++;
