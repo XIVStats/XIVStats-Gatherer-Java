@@ -1,6 +1,7 @@
 package com.ffxivcensus.gatherer;
 
 import com.ffxivcensus.gatherer.Player;
+
 import static org.junit.Assert.*;
 
 /**
@@ -14,6 +15,7 @@ public class PlayerTest {
 
     /**
      * Perform a test of the getPlayer method, using character #2356533 (Aelia Sokoto, Cerberus) as the test character.
+     *
      * @throws Exception excception thrown when reading non-existant character.
      */
     @org.junit.Test
@@ -23,14 +25,14 @@ public class PlayerTest {
 
         //NOTE: All of the following tests assume various pieces of information
         //Testing information that is very unlikely to change
-        assertEquals(playerOne.getId(),2356533);
-        assertEquals(playerOne.getPlayerName(),"Aelia Sokoto");
+        assertEquals(playerOne.getId(), 2356533);
+        assertEquals(playerOne.getPlayerName(), "Aelia Sokoto");
         assertEquals(playerOne.getRealm(), "Cerberus");
 
         //Following can only be assumed to be true based on info at time of test creation
-        assertEquals(playerOne.getRace(),"Miqo'te");
-        assertEquals(playerOne.getGender(),"female");
-        assertEquals(playerOne.getGrandCompany(),"Maelstrom");
+        assertEquals(playerOne.getRace(), "Miqo'te");
+        assertEquals(playerOne.getGender(), "female");
+        assertEquals(playerOne.getGrandCompany(), "Maelstrom");
 
 
         //Test classes - levels based on those at time of test creation
@@ -55,7 +57,7 @@ public class PlayerTest {
         //Disciples of the hand
         assertTrue(playerOne.getLvlCarpenter() >= 53);
         assertTrue(playerOne.getLvlBlacksmith() >= 53);
-        assertTrue(playerOne.getLvlArmorer() >=  58);
+        assertTrue(playerOne.getLvlArmorer() >= 58);
         assertTrue(playerOne.getLvlGoldsmith() >= 58);
         assertTrue(playerOne.getLvlLeatherworker() >= 53);
         assertTrue(playerOne.getLvlWeaver() >= 56);
@@ -111,12 +113,12 @@ public class PlayerTest {
      */
     @org.junit.Test
     public void testGetPlayerInvalid() {
-        try{
+        try {
             //Try to get a character that doesn't exist
             Player player = Player.getPlayer(2356539);
             //If no exception thrown fail
             fail("Character should not exist");
-        } catch (Exception e){
+        } catch (Exception e) {
 
         }
     }
