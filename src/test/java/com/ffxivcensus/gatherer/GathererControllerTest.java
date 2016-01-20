@@ -90,7 +90,7 @@ public class GathererControllerTest {
 
         //Test that records were successfully written to db
         java.sql.Connection conn = openConnection();
-        String strSQL = "SELECT * FROM tblPlayers WHERE `id`>=" + arrParams[0] + " AND `id`<=" + arrParams[1] +";";
+        String strSQL = "SELECT * FROM tblplayers WHERE `id`>=" + arrParams[0] + " AND `id`<=" + arrParams[1] +";";
         try {
             Statement stmt = conn.createStatement();
             rs = stmt.executeQuery(strSQL);
