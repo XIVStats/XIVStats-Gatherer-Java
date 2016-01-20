@@ -138,6 +138,22 @@ public class PlayerTest {
         assertEquals(playerOne.getBitHasCompleted3pt1(),1);
         assertFalse(playerOne.getIsLegacyPlayer());
         assertEquals(playerOne.getBitIsLegacyPlayer(),0);
+
+        //Test minions string
+        //Test for data near start
+        assertTrue(playerOne.getMinionsString().contains("Wayward Hatchling,Storm Hatchling,Flame Hatchling"));
+        //Test for data in middle
+        assertTrue(playerOne.getMinionsString().contains("Morbol Seedling"));
+        //Test for data from end
+        assertTrue(playerOne.getMinionsString().contains("Wind-up Sun"));
+
+        //Test mounts string
+        //Test for data from (near) start
+        assertTrue(playerOne.getMountsString().contains("Company Chocobo,Draught Chocobo,Ceremony Chocobo,Black Chocobo"));
+        //Test for data from middle
+        assertTrue(playerOne.getMountsString().contains("Cavalry Drake,Cavalry Elbst"));
+        //Test for data from very end
+        assertTrue(playerOne.getMountsString().contains("Midgardsormr"));
     }
 
     /**
