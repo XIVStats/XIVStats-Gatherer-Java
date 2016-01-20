@@ -163,7 +163,7 @@ public class PlayerTest {
      * @throws Exception exception thrown when reading non-existant character.
      */
     @org.junit.Test
-    public void testVeteranPlayer() throws Exception {
+    public void testGetVeteranPlayer() throws Exception {
         Player player = Player.getPlayer(501646);
 
         //Player has 960 days sub, make sure recorded correctly
@@ -179,7 +179,7 @@ public class PlayerTest {
     /**
      * Perform a test of the getPlayer method using character #13002145 (Matthew Pricewood, Cerberus) to test data
      * that could not be tested with other tests.
-     * @throws Exception
+     * @throws Exception Exception exception thrown when reading non-existant character.
      */
     @org.junit.Test
     public void testUnplayedPlayer() throws Exception{
@@ -199,6 +199,7 @@ public class PlayerTest {
         assertEquals(player.getBitHas60DaysSub(),0);
         assertEquals(player.getBitHas90DaysSub(),0);
         assertEquals(player.getBitHas180DaysSub(),0);
+        assertEquals(player.getBitHas270DaysSub(),0);
         assertEquals(player.getBitHas360DaysSub(),0);
         assertEquals(player.getBitHas450DaysSub(),0);
         assertEquals(player.getBitHas630DaysSub(),0);
@@ -217,6 +218,53 @@ public class PlayerTest {
         assertEquals(player.getBitHasSylph(),0);
         assertEquals(player.getBitHasCompletedHW(),0);
         assertEquals(player.getBitHasCompleted3pt1(),0);
+        assertEquals(player.getBitHasARRCollectors(),0);
+
+        //Test get minions method
+        assertTrue(player.getMinions().size() == 0);
+        assertTrue(player.getMounts().size() == 0);
+    }
+
+    /**
+     * Perform a test of the getPlayer method against character #1, which has no Grand Company but does have a free company.
+     * @throws Exception Exception exception thrown when reading non-existant character.
+     */
+    @org.junit.Test
+    public void testGetPlayerNoGCHasFC() throws Exception {
+        Player player = Player.getPlayer(1);
+
+        //Verify that grand company is "None"
+        assertEquals(player.getGrandCompany(),"none");
+    }
+
+    /**
+     * Perform a test of the getPlayer method against character #11886920, which has no Free Company but does have a grand company.
+     * @throws Exception Exception exception thrown when reading non-existant character.
+     */
+    @org.junit.Test
+    public void testGetPlayerNoFCHasGC() throws Exception{
+        Player player = Player.getPlayer(11886920);
+
+        //Test that GC is maelstrom
+        assertEquals(player.getGrandCompany(),"Maelstrom");
+    }
+
+    /**
+     * Perform a test of the getPlayer method, using character #71 (Mirai Kuriyama, Aegis) as the test character. Testing
+     * for boolean values that have not yet been tested if true condition works.
+     *
+     * @throws Exception exception thrown when reading non-existant character.
+     */
+    @org.junit.Test
+    public void testGetPlayerWithAllCollectibles() throws Exception{
+        Player player = Player.getPlayer(71);
+
+        assertEquals(player.getBitHasArtBook(),1);
+        assertEquals(player.getBitHasBeforeMeteor(),1);
+        assertEquals(player.getBitHasBeforeTheFall(),1);
+        assertEquals(player.getBitHasSoundTrack(),1);
+        assertEquals(player.getBitHasCompletedHWSightseeing(),1);
+        assertEquals(player.getBitHasMooglePlush(),1);
     }
 
     /**
