@@ -20,6 +20,7 @@ import java.sql.Statement;
  * subsequently writes them to the database. It also specifies the parameters to run the program with.
  *
  * @author Peter Reid
+ * @since 1.0pre
  * @see Player
  * @see Gatherer
  */
@@ -29,80 +30,166 @@ public class GathererController {
     /**
      * The JDBC URL of the database to modify
      */
-    private static String dbUrl;
+    private String dbUrl;
     /**
      * The Username of user of the SQL server user to use.
      */
-    private static String dbUser;
+    private String dbUser;
     /**
      * The password for the user, to use.
      */
-    private static String dbPassword;
-
-    private static int startId;
-    private static int endId;
-    private static int nextID;
+    private String dbPassword;
+    /**
+     * The character ID to start the gatherer at.
+     */
+    private int startId = -1;
+    /**
+     * The character ID to end the gatherer at.
+     */
+    private int endId = -1;
+    /**
+     * The next ID to be gathered.
+     */
+    private int nextID = -1;
     /**
      * User-defined limit for thread count.
      */
-    private static int threadLimit;
+    private int threadLimit;
+
+    /**
+     * Boolean value indicating whether to store a comma delimited list of minions to database.
+     */
+    private boolean storeMinions;
+    /**
+     * Boolean value indicating whether to store a comma delimited list of mounts to database.
+     */
+    private boolean storeMounts;
+    /**
+     * Boolean value indicating whether to store bit fields indicating player achievements/progress.
+     */
+    private boolean storeProgression;
+    /**
+     * String field to store the table name to write records to (if not splitting tables).
+     */
+    private String tableName;
+    /**
+     * Boolean field indicating whether to split character records across multiple tables, with one table for each realm/server.
+     */
+    private boolean splitTables;
+    /**
+     * Suffix to be appended to all tables e.g. 15012016
+     */
+    private String tableSuffix;
+
+    /**
+     * List of playable realms (used when splitting tables).
+     */
+    private final static String[] realms = {"Adamantoise", "Aegis", "Alexander", "Anima", "Asura", "Atomos", "Bahamut",
+            "Balmung", "Behemoth", "Belias", "Brynhildr", "Cactuar", "Carbuncle", "Cerberus", "Chocobo", "Coeurl",
+            "Diabolos", "Durandal", "Excalibur", "Exodus", "Faerie", "Famfrit", "Fenrir", "Garuda", "Gilgamesh",
+            "Goblin", "Gungnir", "Hades", "Hyperion", "Ifrit", "Ixion", "Jenova", "Kujata", "Lamia", "Leviathan",
+            "Lich", "Malboro", "Mandragora", "Masamune", "Mateus", "Midgardsormr", "Moogle", "Odin", "Pandaemonium",
+            "Phoenix", "Ragnarok", "Ramuh", "Ridill", "Sargatanas", "Shinryu", "Shiva", "Siren", "Tiamat", "Titan",
+            "Tonberry", "Typhon", "Ultima", "Ultros", "Unicorn", "Valefor", "Yojimbo", "Zalera", "Zeromus", "Zodiark"};
+
     /**
      * Safety limit for thread count - user cannot exceed this limit.
      */
     private final static int MAX_THREADS = 64;
 
-    public static void main(String[] args) {
-        //Lowest character ID
-        int lowestID;
-        int highestID;
+    /**
+     * Setup  a gatherer using simply start id and end id. Read other configuration options from config.
+     * <p>
+     * Other options should be should be established using setters.
+     *
+     * @param startId the character id to start gatherer run at (inclusive).
+     * @param endId   the character id to end the gather run at (inclusive).
+     */
+    public GathererController(int startId, int endId) {
+        this.startId = startId;
+        this.endId = endId;
+        this.storeMinions = false;
+        this.storeMounts = false;
+        this.storeProgression = true;
+        this.tableName = "tblplayers";
+        this.splitTables = false;
+        this.tableSuffix = "";
+        this.tableName = "tblplayers";
 
+        //Read in config
+        try {
+            this.readConfig();
+        } catch (Exception ex) {
+            System.out.println("No config found - please set variables via setters.");
+        }
+    }
+
+
+    public GathererController(int startId, int endId, boolean storeMinions, boolean storeMounts, boolean storeProgression,
+                              String dbUrl, String dbName, String dbUser, String dbPassword, int threads, String tableName) {
+        this.startId = startId;
+        this.endId = endId;
+        this.storeMinions = storeMinions;
+        this.storeMounts = storeMounts;
+        this.storeProgression = storeProgression;
+
+        //Read in config
+        try {
+            this.readConfig();
+        } catch (Exception ex) {
+        }
+
+        this.dbUrl = "jdbc:" + dbUrl + "/" + dbName;
+        this.dbUser = dbUser;
+        this.dbPassword = dbPassword;
+        this.threadLimit = threads;
+        this.tableName = tableName;
+        this.tableSuffix = "";
+    }
+
+    public GathererController(int startId, int endId, boolean storeMinions, boolean storeMounts, boolean storeProgression,
+                              String dbUrl, String dbName, String dbUser, String dbPassword, int threads,
+                              String tableSuffix, boolean splitTables) {
+        this.startId = startId;
+        this.endId = endId;
+        this.storeMinions = storeMinions;
+        this.storeMounts = storeMounts;
+        this.storeProgression = storeProgression;
+
+        //Read in config
+        try {
+            this.readConfig();
+        } catch (Exception ex) {
+        }
+
+        this.dbUrl = "jdbc:" + dbUrl + "/" + dbName;
+        this.dbUser = dbUser;
+        this.dbPassword = dbPassword;
+        this.threadLimit = threads;
+        this.tableName = "tblplayers";
+        this.tableSuffix = tableSuffix;
+    }
+
+    public void run() {
         //Store start time
         long startTime = System.currentTimeMillis();
 
-        if (args.length == 0) { //If user provides no command line arguments
-            System.out.println("Usage: java -jar XIVStats.jar <lowest-id> <highest-id>");
-        } else { //Else valid set of args
-            try { //Try to convert params to ints
+        if (!isConfigured()) { //If not configured
+            System.out.println("System configuration error");
+        } else { //Else configured correctly
+            try {
 
-                //Determine lowest id param
-                lowestID = Integer.parseInt(args[0]);
-                //Determine highest id param
-                highestID = Integer.parseInt(args[1]);
-
-                //Read in config
-                try {
-                    readConfig();
-                } catch (Exception ex) {
-                    System.out.println(ex.getMessage());
+                if(splitTables) { //If specified to split tables
+                    for (String realm : realms) { //Create a table for each realm
+                        this.createTable("tbl"+realm+tableSuffix);
+                    }
+                } else{ //Else just create a single table
+                    this.createTable(tableName);
                 }
 
-                //Create DB table if it doesn't exist
-                //Open connection
-                Connection conn = openConnection();
-                try {
-                    Statement st = conn.createStatement();
-                    String strSQL = "CREATE TABLE IF NOT EXISTS tblplayers (id INTEGER PRIMARY KEY,name TEXT,realm TEXT,race TEXT,gender TEXT,grand_company TEXT"
-                            + ",level_gladiator INTEGER,level_pugilist INTEGER,level_marauder INTEGER,level_lancer INTEGER,level_archer INTEGER"
-                            + ",level_rogue INTEGER,level_conjurer INTEGER,level_thaumaturge INTEGER,level_arcanist INTEGER,level_darkknight INTEGER, level_machinist INTEGER"
-                            + ",level_astrologian INTEGER,level_carpenter INTEGER,level_blacksmith INTEGER,level_armorer INTEGER,level_goldsmith INTEGER"
-                            + ",level_leatherworker INTEGER,level_weaver INTEGER,level_alchemist INTEGER,level_culinarian INTEGER,level_miner INTEGER"
-                            + ",level_botanist INTEGER,level_fisher INTEGER,p30days BIT, p60days BIT, p90days BIT, p180days BIT, p270days BIT"
-                            + ",p360days BIT,p450days BIT,p630days BIT,p960days BIT,prearr BIT,prehw BIT, artbook BIT, beforemeteor BIT, beforethefall BIT"
-                            + ",soundtrack BIT,saweternalbond BIT,sightseeing BIT,arr_25_complete BIT,comm50 BIT,moogleplush BIT"
-                            + ",hildibrand BIT, ps4collectors BIT, dideternalbond BIT, arrcollector BIT, kobold BIT, sahagin BIT, amaljaa BIT, sylph BIT, hwcomplete BIT, hw_31_complete BIT, legacy_player BIT,mounts TEXT, minions TEXT);";
-
-                    st.executeUpdate(strSQL);
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-                closeConnection(conn);
-
-
-                if (highestID < lowestID) {
+                if (startId > endId) {
                     System.out.println("Error: The second argument needs to be greater than the first argument");
                 } else { //Else pass values into poll method
-                    startId = lowestID;
-                    endId = highestID;
                     System.out.println("Starting parse of range " + startId + " to " + endId + " using " + threadLimit + " threads");
                     gatherRange();
                     //Get current time
@@ -112,7 +199,7 @@ public class GathererController {
                     long hours = minutes / 60;
                     long days = hours / 24;
                     String time = days + " Days, " + hours % 24 + " hrs, " + minutes % 60 + " mins, " + seconds % 60 + " secs";
-                    System.out.println("Run completed, " + ((highestID - lowestID) + 1) + " character IDs scanned in " + time + " (" + threadLimit + " threads)");
+                    System.out.println("Run completed, " + ((endId - startId) + 1) + " character IDs scanned in " + time + " (" + threadLimit + " threads)");
 
                 }
 
@@ -120,8 +207,69 @@ public class GathererController {
                 ex.printStackTrace();
             }
         }
+    }
 
+    private boolean isConfigured() {
+        boolean configured = true;
+        if (this.startId == 0) {
+            System.out.println("Start ID must be configured to a positive numerical value");
+            configured = false;
+        }
+        if (this.endId == 0) {
+            System.out.println("End ID must be configured to a positive numerical value");
+            configured = false;
+        }
+        if (this.dbUrl == null) {
+            System.out.println("Database URL has not been configured");
+            configured = false;
+        }
+        if (this.dbUser == null) {
+            System.out.println("Database User has not been configred");
+            configured = false;
+        }
+        if (this.dbPassword == null) {
+            System.out.println("Database Password has not been configured");
+        }
+        return configured;
+    }
 
+    private void createTable(String tableName) {
+        //Create DB table if it doesn't exist
+        //Open connection
+        Connection conn = openConnection();
+        try {
+            Statement st = conn.createStatement();
+            StringBuilder sbSQL = new StringBuilder();
+            sbSQL.append("CREATE TABLE IF NOT EXISTS ");
+            sbSQL.append(tableName);
+            sbSQL.append(" (id INTEGER PRIMARY KEY,name TEXT,realm TEXT,race TEXT,gender TEXT,grand_company TEXT,free_company TEXT,");
+            sbSQL.append("level_gladiator INTEGER,level_pugilist INTEGER,level_marauder INTEGER,level_lancer INTEGER,level_archer INTEGER,");
+            sbSQL.append("level_rogue INTEGER,level_conjurer INTEGER,level_thaumaturge INTEGER,level_arcanist INTEGER,level_darkknight INTEGER, level_machinist INTEGER,");
+            sbSQL.append("level_astrologian INTEGER,level_carpenter INTEGER,level_blacksmith INTEGER,level_armorer INTEGER,level_goldsmith INTEGER,");
+            sbSQL.append("level_leatherworker INTEGER,level_weaver INTEGER,level_alchemist INTEGER,level_culinarian INTEGER,level_miner INTEGER,");
+            sbSQL.append("level_botanist INTEGER,level_fisher INTEGER");
+            if (this.storeProgression) {
+                sbSQL.append(",");
+                sbSQL.append("p30days BIT, p60days BIT, p90days BIT, p180days BIT, p270days BIT,p360days BIT,p450days BIT,p630days BIT,p960days BIT,");
+                sbSQL.append("prearr BIT,prehw BIT, artbook BIT, beforemeteor BIT, beforethefall BIT, ps4collectors BIT, ");
+                sbSQL.append("soundtrack BIT,saweternalbond BIT,sightseeing BIT,comm50 BIT,moogleplush BIT,");
+                sbSQL.append("hildibrand BIT, dideternalbond BIT, arrcollector BIT,");
+                sbSQL.append("kobold BIT, sahagin BIT, amaljaa BIT, sylph BIT,");
+                sbSQL.append("arr_25_complete BIT,hwcomplete BIT, hw_31_complete BIT, legacy_player BIT");
+            }
+            if (this.storeMounts) {
+                sbSQL.append(",mounts TEXT");
+            }
+            if (this.storeMinions) {
+                sbSQL.append(",minions TEXT");
+            }
+            sbSQL.append(");");
+
+            st.executeUpdate(sbSQL.toString());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        closeConnection(conn);
     }
 
     /**
@@ -131,7 +279,7 @@ public class GathererController {
      * @throws IOException                  Indicates an error reading the file specified.
      * @throws SAXException                 Indicates an error parsing XML.
      */
-    public static void readConfig() throws ParserConfigurationException, IOException, SAXException {
+    public void readConfig() throws ParserConfigurationException, IOException, SAXException {
         //Set config file location
         File xmlFile = new File("config.xml");
         //Initialize parsers
@@ -144,7 +292,8 @@ public class GathererController {
         NodeList nodesJDBC = doc.getElementsByTagName("jdbc");
         Element elementJDBC = (Element) nodesJDBC.item(0);
 
-        String url = "jdbc:" + elementJDBC.getElementsByTagName("url").item(0).getTextContent() + "/" + elementJDBC.getElementsByTagName("database").item(0).getTextContent();
+        String url = "jdbc:" + elementJDBC.getElementsByTagName("url").item(0).getTextContent() + "/"
+                    + elementJDBC.getElementsByTagName("database").item(0).getTextContent();
         dbUrl = url;
         dbUser = elementJDBC.getElementsByTagName("username").item(0).getTextContent();
         dbPassword = elementJDBC.getElementsByTagName("password").item(0).getTextContent();
@@ -163,7 +312,7 @@ public class GathererController {
     /**
      * Method to gather data for characters in specified range.
      */
-    public static void gatherRange() {
+    public void gatherRange() {
 
         //Set next ID
         nextID = startId;
@@ -172,7 +321,7 @@ public class GathererController {
         //Create array to store thread references into
         Thread[] threads = new Thread[threadLimit];
         for (int index = 0; index < threadLimit; index++) {
-            threads[index] = new Thread(new Gatherer());
+            threads[index] = new Thread(new Gatherer(this));
         }
 
         //Start up threads
@@ -192,28 +341,100 @@ public class GathererController {
     }
 
     /**
-     * Write a player record to the database.
-     * @param player the player to write to the database.
+     * Write a player record to database
      */
-    public static void writeToDB(Player player) {
+    public void writeToDB(Player player) {
         //Open connection
         Connection conn = openConnection();
         try {
             Statement st = conn.createStatement();
-            String strSQL = "INSERT IGNORE INTO tblplayers (id, name, realm, race, gender, grand_company, level_gladiator, level_pugilist, level_marauder,"
-                    + "level_lancer, level_archer, level_rogue, level_conjurer, level_thaumaturge, level_arcanist, level_astrologian, level_darkknight, level_machinist, level_carpenter,"
-                    + "level_blacksmith, level_armorer, level_goldsmith, level_leatherworker, level_weaver, level_alchemist,"
-                    + "level_culinarian, level_miner, level_botanist, level_fisher, p30days, p60days, p90days, p180days, p270days, p360days, p450days, p630days, p960days,"
-                    + "prearr, prehw, artbook, beforemeteor, beforethefall, soundtrack, saweternalbond, sightseeing, arr_25_complete, comm50, moogleplush,"
-                    + "hildibrand, ps4collectors, dideternalbond, arrcollector, kobold, sahagin, amaljaa, sylph, hwcomplete, hw_31_complete, legacy_player, mounts, minions) "
-                    + "VALUES(" + player.getId() + ",\"" + player.getPlayerName() + "\",\"" + player.getRealm() + "\",\"" + player.getRace() + "\",'" + player.getGender() + "','" + player.getGrandCompany() + "'," + player.getLvlGladiator() + "," + player.getLvlPugilist() + "," + player.getLvlMarauder() + ","
-                    + player.getLvlLancer() + "," + player.getLvlArcher() + "," + player.getLvlRogue() + "," + player.getLvlConjurer() + "," + player.getLvlThaumaturge() + "," + player.getLvlArcanist() + "," + player.getLvlAstrologian() + "," + player.getLvlDarkKnight() + "," + player.getLvlMachinist() + "," + player.getLvlCarpenter() + ","
-                    + player.getLvlBlacksmith() + "," + player.getLvlArmorer() + "," + player.getLvlGoldsmith() + "," + player.getLvlLeatherworker() + "," + player.getLvlWeaver() + "," + player.getLvlAlchemist() + ","
-                    + player.getLvlCulinarian() + "," + player.getLvlMiner() + "," + player.getLvlBotanist() + "," + player.getLvlFisher() + "," + player.getBitHas30DaysSub() + "," + player.getBitHas60DaysSub() + "," + player.getBitHas90DaysSub() + "," + player.getBitHas180DaysSub() + "," + player.getBitHas270DaysSub() + "," + player.getBitHas360DaysSub() + "," + player.getBitHas450DaysSub() + "," + player.getBitHas630DaysSub() + "," + player.getBitHas960DaysSub() + ","
-                    + player.getBitHasPreOrderArr() + "," + player.getBitHasPreOrderHW() + "," + player.getBitHasArtBook() + "," + player.getBitHasBeforeMeteor() + "," + player.getBitHasBeforeTheFall() + "," + player.getBitHasSoundTrack() + "," + player.getBitHasAttendedEternalBond() + "," + player.getBitHasCompletedHWSightseeing() + "," + player.getBitHasCompleted2pt5() + "," + player.getBitHasFiftyComms() + "," + player.getBitHasMooglePlush() + ","
-                    + player.getBitHasCompletedHildibrand() + "," + player.getBitHasPS4Collectors() + "," + player.getBitHasEternalBond() + "," + player.getBitHasARRCollectors() + "," + player.getBitHasKobold() + "," + player.getBitHasSahagin() + "," + player.getBitHasAmaljaa() + "," + player.getBitHasSylph() + "," + player.getBitHasCompletedHW() + "," + player.getBitHasCompleted3pt1() + "," + player.getBitIsLegacyPlayer()  + ",\"" + player.getMountsString() + "\",\"" + player.getMinionsString() + "\""
-                    + ");";
 
+            //Declare string builders to build up components of statement
+            StringBuilder sbFields = new StringBuilder();
+            StringBuilder sbValues = new StringBuilder();
+
+            //Set default table name
+            String tableName;
+            //Determine table to write to
+            if (splitTables){
+                tableName = "tbl" + player.getRealm() +  tableSuffix;
+            } else {
+                tableName = this.tableName + tableSuffix;
+            }
+
+            sbFields.append("INSERT IGNORE INTO ").append(tableName).append(" (");
+            sbValues.append(" VALUES (");
+
+            sbFields.append("id, name, realm, race, gender, grand_company,free_company,");
+            sbValues.append(player.getId() + ",\"" + player.getPlayerName() + "\",\"" + player.getRealm() + "\",\""
+                            + player.getRace() + "\",'" + player.getGender() + "','" + player.getGrandCompany() + "','"
+                            + player.getFreeCompany() + "',");
+
+            sbFields.append("level_gladiator, level_pugilist, level_marauder,level_lancer, level_archer, level_rogue,");
+            sbValues.append(player.getLvlGladiator() + "," + player.getLvlPugilist() + "," + player.getLvlMarauder()
+                            + "," + player.getLvlLancer() + "," + player.getLvlArcher() + "," + player.getLvlRogue() + ",");
+
+            sbFields.append("level_conjurer, level_thaumaturge, level_arcanist, level_astrologian, level_darkknight," +
+                            " level_machinist, level_carpenter,");
+            sbValues.append(player.getLvlConjurer() + "," + player.getLvlThaumaturge() + "," + player.getLvlArcanist()
+                            + "," + player.getLvlAstrologian() + "," + player.getLvlDarkKnight() + "," + player.getLvlMachinist()
+                            + "," + player.getLvlCarpenter() + ",");
+
+            sbFields.append("level_blacksmith, level_armorer, level_goldsmith, level_leatherworker, level_weaver, level_alchemist,");
+            sbValues.append(player.getLvlBlacksmith() + "," + player.getLvlArmorer() + "," + player.getLvlGoldsmith()
+                            + "," + player.getLvlLeatherworker() + "," + player.getLvlWeaver() + "," + player.getLvlAlchemist()
+                            + ",");
+
+            sbFields.append("level_culinarian, level_miner, level_botanist, level_fisher");
+            sbValues.append(player.getLvlCulinarian() + "," + player.getLvlMiner() + "," + player.getLvlBotanist() + "," + player.getLvlFisher());
+
+            if(this.storeProgression){
+                sbFields.append(",");
+                sbValues.append(",");
+
+                sbFields.append("p30days, p60days, p90days, p180days, p270days, p360days, p450days, p630days, p960days,");
+                sbValues.append(player.getBitHas30DaysSub() + "," + player.getBitHas60DaysSub() + ","
+                        + player.getBitHas90DaysSub() + "," + player.getBitHas180DaysSub() + ","
+                        + player.getBitHas270DaysSub() + "," + player.getBitHas360DaysSub() + ","
+                        + player.getBitHas450DaysSub() + "," + player.getBitHas630DaysSub() + ","
+                        + player.getBitHas960DaysSub() + ",");
+
+                sbFields.append("prearr, prehw, artbook, beforemeteor, beforethefall, soundtrack, saweternalbond, "
+                                + "sightseeing, arr_25_complete, comm50, moogleplush,");
+                sbValues.append(player.getBitHasPreOrderArr() + "," + player.getBitHasPreOrderHW() + ","
+                                + player.getBitHasArtBook() + "," + player.getBitHasBeforeMeteor() + ","
+                                + player.getBitHasBeforeTheFall() + "," + player.getBitHasSoundTrack() + ","
+                                + player.getBitHasAttendedEternalBond() + "," + player.getBitHasCompletedHWSightseeing()
+                                + "," + player.getBitHasCompleted2pt5() + "," + player.getBitHasFiftyComms() + ","
+                                + player.getBitHasMooglePlush() + ",");
+
+                sbFields.append("hildibrand, ps4collectors, dideternalbond, arrcollector, kobold, sahagin, amaljaa, "
+                                + "sylph, hwcomplete, hw_31_complete, legacy_player");
+                sbValues.append(player.getBitHasCompletedHildibrand() + "," + player.getBitHasPS4Collectors() + ","
+                        + player.getBitHasEternalBond() + "," + player.getBitHasARRCollectors() + ","
+                        + player.getBitHasKobold() + "," + player.getBitHasSahagin() + "," + player.getBitHasAmaljaa()
+                        + "," + player.getBitHasSylph() + "," + player.getBitHasCompletedHW() + ","
+                        + player.getBitHasCompleted3pt1() + "," + player.getBitIsLegacyPlayer());
+
+
+                if(this.storeMinions){
+                    sbFields.append(",");
+                    sbValues.append(",");
+                    sbFields.append("minions");
+                    sbValues.append("\"" + player.getMinionsString() + "\"");
+                }
+                if(this.storeMounts){
+                    sbFields.append(",");
+                    sbValues.append(",");
+                    sbFields.append("mounts");
+                    sbValues.append("\"" + player.getMountsString() + "\"");
+                }
+
+                sbFields.append(")");
+                sbValues.append(");");
+            }
+
+            String strSQL = sbFields.toString() + sbValues.toString();
             st.executeUpdate(strSQL);
             System.out.println("Character " + player.getId() + " written to database successfully.");
             closeConnection(conn);
@@ -229,7 +450,7 @@ public class GathererController {
      * @return the opened connection
      * @throws SQLException exception thrown if unable to connect
      */
-    private static Connection openConnection() {
+    protected Connection openConnection() {
         try {
             Connection connection = DriverManager.getConnection(dbUrl, dbUser, dbPassword);
             return connection;
@@ -246,7 +467,7 @@ public class GathererController {
      * @param conn the connection to throw
      * @throws SQLException exception thrown if unable to close connection.
      */
-    private static void closeConnection(Connection conn) {
+    protected void closeConnection(Connection conn) {
         try {
             conn.close();
         } catch (SQLException sqlEx) {
@@ -259,7 +480,7 @@ public class GathererController {
      *
      * @return the next character ID to be parsed.
      */
-    public static int getNextID() {
+    public int getNextID() {
         if (nextID <= endId) {
             int next = nextID;
             //Increment id
@@ -275,7 +496,7 @@ public class GathererController {
      *
      * @return the first character ID to be processed
      */
-    public static int getStartId() {
+    public int getStartId() {
         return startId;
     }
 
@@ -284,7 +505,7 @@ public class GathererController {
      *
      * @return the last character ID due to be processed.
      */
-    public static int getEndId() {
+    public int getEndId() {
         return endId;
     }
 
