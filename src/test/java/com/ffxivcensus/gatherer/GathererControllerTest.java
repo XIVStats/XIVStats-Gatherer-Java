@@ -1,7 +1,5 @@
 package com.ffxivcensus.gatherer;
 
-import com.sun.rowset.internal.Row;
-import org.jsoup.Connection;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.w3c.dom.Document;
@@ -60,7 +58,7 @@ public class GathererControllerTest {
                 Statement stmt = conn.createStatement();
                 stmt.executeUpdate(strSQL);
             } catch (SQLException e) {
-                System.out.println("Error executing SQL statement to DROP TABLE");
+
             }
             closeConnection(conn);
 
@@ -83,14 +81,16 @@ public class GathererControllerTest {
     @org.junit.Test
     public void testRunMain() throws IOException, SAXException, ParserConfigurationException {
         ResultSet rs;
-        String[] arrParams = {"11886902","11887010"};
-        GathererController.main(arrParams);
+        int startId = 11886902;
+        int endId = 11887010;
+        GathererController gathererController = new GathererController(startId,endId);
+        gathererController.run();
         //Array list of results
         ArrayList addedIDs = new ArrayList();
 
         //Test that records were successfully written to db
         java.sql.Connection conn = openConnection();
-        String strSQL = "SELECT * FROM tblplayers WHERE `id`>=" + arrParams[0] + " AND `id`<=" + arrParams[1] +";";
+        String strSQL = "SELECT * FROM tblplayers WHERE `id`>=" + startId + " AND `id`<=" + endId +";";
         try {
             Statement stmt = conn.createStatement();
             rs = stmt.executeQuery(strSQL);
@@ -124,29 +124,17 @@ public class GathererControllerTest {
      */
     @org.junit.Test
     public void testRunMainInvalidParams(){
-        String[] arrParams = {"11887010","11886902"};
+        int startId = 11887010;
+        int endId = 11886902;
 
         //Store start time
         long startTime = System.currentTimeMillis();
-        GathererController.main(arrParams);
+        GathererController gathererController = new GathererController(startId,endId);
+        gathererController.run();
         long endTime = System.currentTimeMillis();
         //Program will close in less than 3 seconds if invalid params supplied
         assertTrue((endTime - startTime) <= 3000);
 
-    }
-
-    /**
-     * Run the program with no params
-     */
-    @org.junit.Test
-    public void testRunNoParams(){
-
-        //Store start time
-        long startTime = System.currentTimeMillis();
-        GathererController.main(new String[0]);
-        long endTime = System.currentTimeMillis();
-        //Program will close in less than 3 seconds if invalid params supplied
-        assertTrue((endTime - startTime) <= 3000);
     }
 
     //Utility methods
