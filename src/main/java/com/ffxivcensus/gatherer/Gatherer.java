@@ -8,26 +8,31 @@ import com.mysql.jdbc.exceptions.jdbc4.MySQLNonTransientConnectionException;
  * A worker that executes parses and writes the corresponding player record to the DB.
  *
  * @author Peter Reid
+ * @since 1.0pre
  * @see Player
  * @see GathererController
+ * @see java.lang.Runnable
  */
 public class Gatherer implements Runnable {
+
+    GathererController parent;
 
     /**
      * Default constructor
      */
-    public Gatherer() {
+    public Gatherer(GathererController parent) {
+        this.parent = parent;
     }
 
     /**
      * Run the Gatherer.
      */
     public void run() {
-        int nextID = GathererController.getNextID();
+        int nextID = parent.getNextID();
         while (nextID != -1) { //While we still have IDs to parse
             try {
                 //Parse players and write them to DB
-                GathererController.writeToDB(Player.getPlayer(nextID));
+                parent.writeToDB(Player.getPlayer(nextID));
             } catch (MySQLNonTransientConnectionException failWriteEx) { //If record fails to write due to too many connections
                 System.out.println("Error: Record write failure, reattempting write");
                 //Wait a second
@@ -38,7 +43,7 @@ public class Gatherer implements Runnable {
                 }
                 //Then attempt to write again
                 try {
-                    GathererController.writeToDB(Player.getPlayer(nextID));
+                    parent.writeToDB(Player.getPlayer(nextID));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -46,7 +51,7 @@ public class Gatherer implements Runnable {
                 //System.out.println(e.getMessage());
             }
             //Get the nextID
-            nextID = GathererController.getNextID();
+            nextID = parent.getNextID();
         }
     }
 

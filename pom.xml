@@ -72,7 +72,7 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>com.ffxivcensus.gatherer.GathererController</mainClass>
+                            <mainClass>com.ffxivcensus.gatherer.Console</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
@@ -127,6 +127,11 @@
             <artifactId>junit-dep</artifactId>
             <version>4.10</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>commons-cli</groupId>
+            <artifactId>commons-cli</artifactId>
+            <version>1.3.1</version>
         </dependency>
     </dependencies>
 
