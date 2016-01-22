@@ -6,6 +6,9 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
@@ -24,6 +27,7 @@ public class Player {
     private String race;
     private String gender;
     private String grandCompany;
+    private String freeCompany;
     private int lvlGladiator;
     private int lvlPugilist;
     private int lvlMarauder;
@@ -84,7 +88,7 @@ public class Player {
     /**
      * Constructor for player object.
      *
-     * @param id id of chracter.
+     * @param id id of character to fetch.
      */
     public Player(int id) {
         this.setId(id);
@@ -93,6 +97,7 @@ public class Player {
         setRace(null);
         setGender(null);
         setGrandCompany(null);
+        setFreeCompany(null);
         setLvlGladiator(0);
         setLvlPugilist(0);
         setLvlMarauder(0);
@@ -254,6 +259,22 @@ public class Player {
      */
     public void setGrandCompany(String grandCompany) {
         this.grandCompany = grandCompany;
+    }
+
+    /**
+     * Get the player's free company.
+     * @return player's free company.
+     */
+    public String getFreeCompany() {
+        return freeCompany;
+    }
+
+    /**
+     * Set the player's free company.
+     * @param freeCompany the player's free company.
+     */
+    public void setFreeCompany(String freeCompany) {
+        this.freeCompany = freeCompany;
     }
 
     /**
@@ -1758,8 +1779,6 @@ public class Player {
      * @throws Exception exception thrown if more class levels returned than anticipated.
      */
     public static Player getPlayer(int playerID) throws Exception {
-        //Initialize array list object to store page data in
-        ArrayList page = new ArrayList();
         //Initialize player object to return
         Player player = new Player(playerID);
         //Declare HTML document
@@ -1776,6 +1795,7 @@ public class Player {
             player.setRace(getRaceFromPage(doc));
             player.setGender(getGenderFromPage(doc));
             player.setGrandCompany(getGrandCompanyFromPage(doc));
+            player.setFreeCompany(getFreeCompanyFromPage(doc));
             player.setLevels(getLevelsFromPage(doc));
             player.setMounts(getMountsFromPage(doc));
             player.setMinions(getMinionsFromPage(doc));
@@ -1898,6 +1918,36 @@ public class Player {
             gc = "none";
         }
         return gc;
+    }
+
+    /**
+     * Given a lodestone profile page, return the free company of the character.
+     *
+     * @param doc the lodestone profile page.
+     * @return the free company of the character.
+     */
+    private static String getFreeCompanyFromPage(Document doc) {
+        String gc = null;
+        String fc = null;
+        //Get all elements with class chara_profile_box_info
+        Elements elements = doc.getElementsByClass("txt_name");
+
+        //Checks to see if optional FC has been added
+        if (elements.size() == 5) {
+            fc = elements.get(4).getElementsByTag("a").text();
+        } else if (elements.size() == 4) { //If only 4 elements present
+            //Assume that gc is what is in slot 3
+            gc = elements.get(3).text().split(Pattern.quote("/"))[0];
+            if (!gc.equals("Immortal Flames") && !gc.equals("Order of the Twin Adder") && !gc.equals("Maelstrom")) { //If not a valid GC
+                gc = "none";
+                fc = elements.get(3).text().split(Pattern.quote("/"))[0];
+            } else {
+                fc= "none";
+            }
+        } else if (elements.size() == 3) {
+            fc = "none";
+        }
+        return fc;
     }
 
     /**
