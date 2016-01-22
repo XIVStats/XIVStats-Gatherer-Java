@@ -33,7 +33,7 @@ public class PlayerTest {
         assertEquals(playerOne.getRace(), "Miqo'te");
         assertEquals(playerOne.getGender(), "female");
         assertEquals(playerOne.getGrandCompany(), "Maelstrom");
-
+        assertEquals(playerOne.getFreeCompany(),"End of Days");
 
         //Test classes - levels based on those at time of test creation
         //Disciples of War
@@ -187,6 +187,7 @@ public class PlayerTest {
 
         //Test grand company
         assertEquals(player.getGrandCompany(),"none");
+        assertEquals(player.getFreeCompany(),"none");
 
         //Test gender
         assertEquals(player.getGender(),"male");
@@ -235,6 +236,7 @@ public class PlayerTest {
 
         //Verify that grand company is "None"
         assertEquals(player.getGrandCompany(),"none");
+        assertEquals(player.getFreeCompany(),"NegiNabe");
     }
 
     /**
@@ -247,7 +249,10 @@ public class PlayerTest {
 
         //Test that GC is maelstrom
         assertEquals(player.getGrandCompany(),"Maelstrom");
+        assertEquals(player.getFreeCompany(),"none");
     }
+
+
 
     /**
      * Perform a test of the getPlayer method, using character #71 (Mirai Kuriyama, Aegis) as the test character. Testing
