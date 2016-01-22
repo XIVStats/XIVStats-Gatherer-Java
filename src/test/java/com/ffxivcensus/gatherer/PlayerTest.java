@@ -25,15 +25,15 @@ public class PlayerTest {
 
         //NOTE: All of the following tests assume various pieces of information
         //Testing information that is very unlikely to change
-        assertEquals(playerOne.getId(), 2356533);
-        assertEquals(playerOne.getPlayerName(), "Aelia Sokoto");
-        assertEquals(playerOne.getRealm(), "Cerberus");
+        assertEquals(2356533, playerOne.getId());
+        assertEquals("Aelia Sokoto", playerOne.getPlayerName());
+        assertEquals("Cerberus", playerOne.getRealm());
 
         //Following can only be assumed to be true based on info at time of test creation
-        assertEquals(playerOne.getRace(), "Miqo'te");
-        assertEquals(playerOne.getGender(), "female");
-        assertEquals(playerOne.getGrandCompany(), "Maelstrom");
-        assertEquals(playerOne.getFreeCompany(),"End of Days");
+        assertEquals("Miqo'te", playerOne.getRace());
+        assertEquals("female", playerOne.getGender());
+        assertEquals("Maelstrom", playerOne.getGrandCompany());
+        assertEquals("End of Days", playerOne.getFreeCompany());
 
         //Test classes - levels based on those at time of test creation
         //Disciples of War
@@ -74,70 +74,70 @@ public class PlayerTest {
         assertTrue(playerOne.isHas30DaysSub());
         assertEquals(playerOne.getBitHas30DaysSub(), 1);
         assertTrue(playerOne.isHas60DaysSub());
-        assertEquals(playerOne.getBitHas60DaysSub(),1);
+        assertEquals(playerOne.getBitHas60DaysSub(), 1);
         assertTrue(playerOne.isHas90DaysSub());
-        assertEquals(playerOne.getBitHas90DaysSub(),1);
+        assertEquals(playerOne.getBitHas90DaysSub(), 1);
         assertTrue(playerOne.isHas180DaysSub());
-        assertEquals(playerOne.getBitHas180DaysSub(),1);
+        assertEquals(playerOne.getBitHas180DaysSub(), 1);
         assertTrue(playerOne.isHas270DaysSub());
-        assertEquals(playerOne.getBitHas270DaysSub(),1);
+        assertEquals(playerOne.getBitHas270DaysSub(), 1);
         assertTrue(playerOne.isHas360DaysSub());
-        assertEquals(playerOne.getBitHas360DaysSub(),1);
+        assertEquals(playerOne.getBitHas360DaysSub(), 1);
         assertTrue(playerOne.isHas450DaysSub());
-        assertEquals(playerOne.getBitHas450DaysSub(),1);
+        assertEquals(playerOne.getBitHas450DaysSub(), 1);
         assertTrue(playerOne.isHas630DaysSub());
-        assertEquals(playerOne.getBitHas630DaysSub(),1);
+        assertEquals(playerOne.getBitHas630DaysSub(), 1);
         assertTrue(playerOne.isHas630DaysSub());
-        assertEquals(playerOne.getBitHas630DaysSub(),1);
+        assertEquals(playerOne.getBitHas630DaysSub(), 1);
 
         //Collectibles
         assertTrue(playerOne.isHasPreOrderArr());
-        assertEquals(playerOne.getBitHasPreOrderArr(),1);
+        assertEquals(playerOne.getBitHasPreOrderArr(), 1);
         assertTrue(playerOne.isHasPreOrderHW());
-        assertEquals(playerOne.getBitHasPreOrderHW(),1);
+        assertEquals(playerOne.getBitHasPreOrderHW(), 1);
         assertTrue(playerOne.isHasPS4Collectors());
-        assertEquals(playerOne.getBitHasPS4Collectors(),1);
+        assertEquals(playerOne.getBitHasPS4Collectors(), 1);
         assertTrue(playerOne.isHasARRCollectors());
-        assertEquals(playerOne.getBitHasARRCollectors(),1);
+        assertEquals(playerOne.getBitHasARRCollectors(), 1);
         //Assuming the below don't change
         assertFalse(playerOne.isHasArtbook());
-        assertEquals(playerOne.getBitHasArtBook(),0);
+        assertEquals(playerOne.getBitHasArtBook(), 0);
         assertFalse(playerOne.isHasBeforeMeteor());
-        assertEquals(playerOne.getBitHasBeforeMeteor(),0);
+        assertEquals(playerOne.getBitHasBeforeMeteor(), 0);
         assertFalse(playerOne.isHasBeforeTheFall());
-        assertEquals(playerOne.getBitHasBeforeTheFall(),0);
+        assertEquals(playerOne.getBitHasBeforeTheFall(), 0);
         assertFalse(playerOne.isHasSoundtrack());
-        assertEquals(playerOne.getBitHasSoundTrack(),0);
+        assertEquals(playerOne.getBitHasSoundTrack(), 0);
         assertFalse(playerOne.isHasMooglePlush());
-        assertEquals(playerOne.getBitHasMooglePlush(),0);
+        assertEquals(playerOne.getBitHasMooglePlush(), 0);
 
         //Achievements
         assertTrue(playerOne.isHasAttendedEternalBond());
-        assertEquals(playerOne.getBitHasAttendedEternalBond(),1);
+        assertEquals(playerOne.getBitHasAttendedEternalBond(), 1);
         assertFalse(playerOne.isHasCompletedHWSightseeing());
-        assertEquals(playerOne.getBitHasCompletedHWSightseeing(),0);
+        assertEquals(playerOne.getBitHasCompletedHWSightseeing(), 0);
         assertTrue(playerOne.isHasCompleted2pt5());
-        assertEquals(playerOne.getBitHasCompleted2pt5(),1);
+        assertEquals(playerOne.getBitHasCompleted2pt5(), 1);
         assertTrue(playerOne.isHasFiftyComms());
-        assertEquals(playerOne.getBitHasFiftyComms(),1);
+        assertEquals(playerOne.getBitHasFiftyComms(), 1);
         assertTrue(playerOne.isHasCompletedHildibrand());
-        assertEquals(playerOne.getBitHasCompletedHildibrand(),1);
+        assertEquals(playerOne.getBitHasCompletedHildibrand(), 1);
         assertTrue(playerOne.isHasEternalBond());
-        assertEquals(playerOne.getBitHasEternalBond(),1);
+        assertEquals(playerOne.getBitHasEternalBond(), 1);
         assertTrue(playerOne.isHasKobold());
-        assertEquals(playerOne.getBitHasKobold(),1);
+        assertEquals(playerOne.getBitHasKobold(), 1);
         assertTrue(playerOne.isHasSahagin());
-        assertEquals(playerOne.getBitHasSahagin(),1);
+        assertEquals(playerOne.getBitHasSahagin(), 1);
         assertTrue(playerOne.isHasAmaljaa());
-        assertEquals(playerOne.getBitHasAmaljaa(),1);
+        assertEquals(playerOne.getBitHasAmaljaa(), 1);
         assertTrue(playerOne.isHasSylph());
-        assertEquals(playerOne.getBitHasSylph(),1);
+        assertEquals(playerOne.getBitHasSylph(), 1);
         assertTrue(playerOne.isHasCompletedHW());
-        assertEquals(playerOne.getBitHasCompletedHW(),1);
+        assertEquals(playerOne.getBitHasCompletedHW(), 1);
         assertTrue(playerOne.isHasCompleted3pt1());
-        assertEquals(playerOne.getBitHasCompleted3pt1(),1);
+        assertEquals(playerOne.getBitHasCompleted3pt1(), 1);
         assertFalse(playerOne.getIsLegacyPlayer());
-        assertEquals(playerOne.getBitIsLegacyPlayer(),0);
+        assertEquals(playerOne.getBitIsLegacyPlayer(), 0);
 
         //Test minions string
         //Test for data near start
@@ -168,58 +168,59 @@ public class PlayerTest {
 
         //Player has 960 days sub, make sure recorded correctly
         assertTrue(player.isHas960DaysSub());
-        assertEquals(player.getBitHas960DaysSub(),1);
+        assertEquals(player.getBitHas960DaysSub(), 1);
 
         //Player is also a legacy player - so test for that
         assertTrue(player.getIsLegacyPlayer());
-        assertEquals(player.getBitIsLegacyPlayer(),1);
+        assertEquals(player.getBitIsLegacyPlayer(), 1);
     }
 
 
     /**
      * Perform a test of the getPlayer method using character #13002145 (Matthew Pricewood, Cerberus) to test data
      * that could not be tested with other tests.
+     *
      * @throws Exception Exception exception thrown when reading non-existant character.
      */
     @org.junit.Test
-    public void testUnplayedPlayer() throws Exception{
+    public void testUnplayedPlayer() throws Exception {
         Player player = Player.getPlayer(13002145);
 
         //Test grand company
-        assertEquals(player.getGrandCompany(),"none");
-        assertEquals(player.getFreeCompany(),"none");
+        assertEquals("none", player.getGrandCompany());
+        assertEquals("none", player.getFreeCompany());
 
         //Test gender
-        assertEquals(player.getGender(),"male");
+        assertEquals("male", player.getGender());
 
         //Test that classes are polling correctly, arcanist level will be indicated on page by '-' should be 0 in player object.
-        assertEquals(player.getLvlArcanist(),0);
+        assertEquals(player.getLvlArcanist(), 0);
 
         //Test fields that are true in other tests
-        assertEquals(player.getBitHas30DaysSub(),0);
-        assertEquals(player.getBitHas60DaysSub(),0);
-        assertEquals(player.getBitHas90DaysSub(),0);
-        assertEquals(player.getBitHas180DaysSub(),0);
-        assertEquals(player.getBitHas270DaysSub(),0);
-        assertEquals(player.getBitHas360DaysSub(),0);
-        assertEquals(player.getBitHas450DaysSub(),0);
-        assertEquals(player.getBitHas630DaysSub(),0);
-        assertEquals(player.getBitHas960DaysSub(),0);
-        assertEquals(player.getBitHasPreOrderArr(),0);
-        assertEquals(player.getBitHasPreOrderHW(),0);
-        assertEquals(player.getBitHasAttendedEternalBond(),0);
-        assertEquals(player.getBitHasCompleted2pt5(),0);
-        assertEquals(player.getBitHasFiftyComms(),0);
-        assertEquals(player.getBitHasCompletedHildibrand(),0);
-        assertEquals(player.getBitHasPS4Collectors(),0);
-        assertEquals(player.getBitHasEternalBond(),0);
-        assertEquals(player.getBitHasKobold(),0);
-        assertEquals(player.getBitHasSahagin(),0);
-        assertEquals(player.getBitHasAmaljaa(),0);
-        assertEquals(player.getBitHasSylph(),0);
-        assertEquals(player.getBitHasCompletedHW(),0);
-        assertEquals(player.getBitHasCompleted3pt1(),0);
-        assertEquals(player.getBitHasARRCollectors(),0);
+        assertEquals(player.getBitHas30DaysSub(), 0);
+        assertEquals(player.getBitHas60DaysSub(), 0);
+        assertEquals(player.getBitHas90DaysSub(), 0);
+        assertEquals(player.getBitHas180DaysSub(), 0);
+        assertEquals(player.getBitHas270DaysSub(), 0);
+        assertEquals(player.getBitHas360DaysSub(), 0);
+        assertEquals(player.getBitHas450DaysSub(), 0);
+        assertEquals(player.getBitHas630DaysSub(), 0);
+        assertEquals(player.getBitHas960DaysSub(), 0);
+        assertEquals(player.getBitHasPreOrderArr(), 0);
+        assertEquals(player.getBitHasPreOrderHW(), 0);
+        assertEquals(player.getBitHasAttendedEternalBond(), 0);
+        assertEquals(player.getBitHasCompleted2pt5(), 0);
+        assertEquals(player.getBitHasFiftyComms(), 0);
+        assertEquals(player.getBitHasCompletedHildibrand(), 0);
+        assertEquals(player.getBitHasPS4Collectors(), 0);
+        assertEquals(player.getBitHasEternalBond(), 0);
+        assertEquals(player.getBitHasKobold(), 0);
+        assertEquals(player.getBitHasSahagin(), 0);
+        assertEquals(player.getBitHasAmaljaa(), 0);
+        assertEquals(player.getBitHasSylph(), 0);
+        assertEquals(player.getBitHasCompletedHW(), 0);
+        assertEquals(player.getBitHasCompleted3pt1(), 0);
+        assertEquals(player.getBitHasARRCollectors(), 0);
 
         //Test get minions method
         assertTrue(player.getMinions().size() == 0);
@@ -228,6 +229,7 @@ public class PlayerTest {
 
     /**
      * Perform a test of the getPlayer method against character #1, which has no Grand Company but does have a free company.
+     *
      * @throws Exception Exception exception thrown when reading non-existant character.
      */
     @org.junit.Test
@@ -235,23 +237,23 @@ public class PlayerTest {
         Player player = Player.getPlayer(1);
 
         //Verify that grand company is "None"
-        assertEquals(player.getGrandCompany(),"none");
-        assertEquals(player.getFreeCompany(),"NegiNabe");
+        assertEquals("none", player.getGrandCompany());
+        assertEquals("NegiNabe", player.getFreeCompany());
     }
 
     /**
      * Perform a test of the getPlayer method against character #11886920, which has no Free Company but does have a grand company.
+     *
      * @throws Exception Exception exception thrown when reading non-existant character.
      */
     @org.junit.Test
-    public void testGetPlayerNoFCHasGC() throws Exception{
+    public void testGetPlayerNoFCHasGC() throws Exception {
         Player player = Player.getPlayer(11886920);
 
         //Test that GC is maelstrom
-        assertEquals(player.getGrandCompany(),"Maelstrom");
-        assertEquals(player.getFreeCompany(),"none");
+        assertEquals("Maelstrom", player.getGrandCompany());
+        assertEquals("none", player.getFreeCompany());
     }
-
 
 
     /**
@@ -261,15 +263,15 @@ public class PlayerTest {
      * @throws Exception exception thrown when reading non-existant character.
      */
     @org.junit.Test
-    public void testGetPlayerWithAllCollectibles() throws Exception{
+    public void testGetPlayerWithAllCollectibles() throws Exception {
         Player player = Player.getPlayer(71);
 
-        assertEquals(player.getBitHasArtBook(),1);
-        assertEquals(player.getBitHasBeforeMeteor(),1);
-        assertEquals(player.getBitHasBeforeTheFall(),1);
-        assertEquals(player.getBitHasSoundTrack(),1);
-        assertEquals(player.getBitHasCompletedHWSightseeing(),1);
-        assertEquals(player.getBitHasMooglePlush(),1);
+        assertEquals(player.getBitHasArtBook(), 1);
+        assertEquals(player.getBitHasBeforeMeteor(), 1);
+        assertEquals(player.getBitHasBeforeTheFall(), 1);
+        assertEquals(player.getBitHasSoundTrack(), 1);
+        assertEquals(player.getBitHasCompletedHWSightseeing(), 1);
+        assertEquals(player.getBitHasMooglePlush(), 1);
     }
 
     /**
