@@ -43,6 +43,10 @@ public class GathererControllerTest {
      * The password for the user, to use.
      */
     private static String dbPassword;
+    /**
+     * The database to use
+     */
+    private static String dbName;
 
     /**
      * Before running drop the table.
@@ -51,12 +55,20 @@ public class GathererControllerTest {
     public static void setUpBaseClass(){
         try {
             readConfig();
-            System.out.println(dbUrl);
-            String strSQL = "DROP TABLE  tblplayers;";
+            System.out.println("Connecting to " + dbUrl);
+            StringBuilder sbSQL = new StringBuilder();
+            //DROP existing test tables
+            sbSQL.append("DROP TABLE  tblplayers_test;");
+            sbSQL.append("DROP TABLE tblplayers_test_two;");
+
+            for (String strRealm : GathererController.getRealms()){
+                sbSQL.append("DROP TABLE " + strRealm + ";");
+            }
+
             java.sql.Connection conn = openConnection();
             try {
                 Statement stmt = conn.createStatement();
-                stmt.executeUpdate(strSQL);
+                stmt.executeUpdate(sbSQL.toString());
             } catch (SQLException e) {
 
             }
@@ -79,11 +91,12 @@ public class GathererControllerTest {
      * @throws ParserConfigurationException
      */
     @org.junit.Test
-    public void testRunMain() throws IOException, SAXException, ParserConfigurationException {
+    public void testRunBasic() throws IOException, SAXException, ParserConfigurationException {
         ResultSet rs;
         int startId = 11886902;
         int endId = 11887010;
         GathererController gathererController = new GathererController(startId,endId);
+        gathererController.setTableName("tblplayers_test");
         try {
             gathererController.run();
         } catch (Exception e) {
@@ -94,7 +107,7 @@ public class GathererControllerTest {
 
         //Test that records were successfully written to db
         java.sql.Connection conn = openConnection();
-        String strSQL = "SELECT * FROM tblplayers WHERE `id`>=" + startId + " AND `id`<=" + endId +";";
+        String strSQL = "SELECT * FROM " + gathererController.getTableName() + " WHERE `id`>=" + startId + " AND `id`<=" + endId +";";
         try {
             Statement stmt = conn.createStatement();
             rs = stmt.executeQuery(strSQL);
@@ -127,7 +140,7 @@ public class GathererControllerTest {
      * Run the program with invalid parameters.
      */
     @org.junit.Test
-    public void testRunMainInvalidParams(){
+    public void testRunBasicInvalidParams(){
         int startId = 11887010;
         int endId = 11886902;
 
@@ -142,6 +155,56 @@ public class GathererControllerTest {
         long endTime = System.currentTimeMillis();
         //Program will close in less than 3 seconds if invalid params supplied
         assertTrue((endTime - startTime) <= 3000);
+
+    }
+
+    /**
+     * Perform a test run of GathererController with values passed in via constructor.
+     */
+    @org.junit.Test
+    public void testRunAdvancedOptions(){
+        ResultSet rs;
+        int startId = 1557260;
+        int endId = 1558260;
+
+        GathererController gathererController = new GathererController(startId,endId,true,false,true,true,true,"mysql://localhost:3306",dbName,dbUser,dbPassword,32,"tblplayers_test_two");
+        try {
+            gathererController.run();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        //Array list of results
+        ArrayList addedIDs = new ArrayList();
+
+        //Test that records were successfully written to db
+        java.sql.Connection conn = openConnection();
+        String strSQL = "SELECT * FROM tblplayers_test_two WHERE `id`>=" + startId + " AND `id`<=" + endId +";";
+        try {
+            Statement stmt = conn.createStatement();
+            rs = stmt.executeQuery(strSQL);
+
+            //Convert dataset to array list
+            while(rs.next()){
+                addedIDs.add(rs.getInt(1));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        closeConnection(conn);
+
+        //Test for IDs we know exist
+        assertTrue(addedIDs.contains(startId));
+        assertTrue(addedIDs.contains(endId));
+        assertTrue(addedIDs.contains(1557362));
+        assertTrue(addedIDs.contains(1557495));
+
+        //Test that gatherer has not written records that don't exist
+        assertFalse(addedIDs.contains(1558259));
+
+        //Test that gatherer has not 'overrun'
+        assertFalse(addedIDs.contains(startId - 1));
+        assertFalse(addedIDs.contains(endId + 1));
 
     }
 
@@ -201,6 +264,7 @@ public class GathererControllerTest {
         dbUrl = url;
         dbUser = elementJDBC.getElementsByTagName("username").item(0).getTextContent();
         dbPassword = elementJDBC.getElementsByTagName("password").item(0).getTextContent();
+        dbName = elementJDBC.getElementsByTagName("database").item(0).getTextContent();
     }
 
 }
