@@ -323,7 +323,7 @@ public class GathererController {
                 sbSQL.append("soundtrack BIT,saweternalbond BIT,sightseeing BIT,comm50 BIT,moogleplush BIT,");
                 sbSQL.append("hildibrand BIT, dideternalbond BIT, arrcollector BIT,");
                 sbSQL.append("kobold BIT, sahagin BIT, amaljaa BIT, sylph BIT,");
-                sbSQL.append("arr_25_complete BIT,hwcomplete BIT, hw_31_complete BIT, legacy_player BIT");
+                sbSQL.append("arr_25_complete BIT,hw_complete BIT, hw_31_complete BIT, legacy_player BIT");
             }
             if (this.storeMounts) {
                 sbSQL.append(",mounts TEXT");
@@ -477,7 +477,7 @@ public class GathererController {
                                 + player.getBitHasMooglePlush() + ",");
 
                 sbFields.append("hildibrand, ps4collectors, dideternalbond, arrcollector, kobold, sahagin, amaljaa, "
-                                + "sylph, hwcomplete, hw_31_complete, legacy_player");
+                                + "sylph, hw_complete, hw_31_complete, legacy_player");
                 sbValues.append(player.getBitHasCompletedHildibrand() + "," + player.getBitHasPS4Collectors() + ","
                         + player.getBitHasEternalBond() + "," + player.getBitHasARRCollectors() + ","
                         + player.getBitHasKobold() + "," + player.getBitHasSahagin() + "," + player.getBitHasAmaljaa()
