@@ -84,7 +84,11 @@ public class GathererControllerTest {
         int startId = 11886902;
         int endId = 11887010;
         GathererController gathererController = new GathererController(startId,endId);
-        gathererController.run();
+        try {
+            gathererController.run();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         //Array list of results
         ArrayList addedIDs = new ArrayList();
 
@@ -130,7 +134,11 @@ public class GathererControllerTest {
         //Store start time
         long startTime = System.currentTimeMillis();
         GathererController gathererController = new GathererController(startId,endId);
-        gathererController.run();
+        try {
+            gathererController.run();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         long endTime = System.currentTimeMillis();
         //Program will close in less than 3 seconds if invalid params supplied
         assertTrue((endTime - startTime) <= 3000);

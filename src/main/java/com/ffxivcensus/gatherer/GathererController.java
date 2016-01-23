@@ -80,6 +80,15 @@ public class GathererController {
      * Suffix to be appended to all tables e.g. 15012016
      */
     private String tableSuffix;
+    /**
+     * Whether to provide console output.
+     */
+    private boolean verbose;
+    /**
+     * Whether to output when system finds a character that does not exist.
+     */
+    private boolean printDuds;
+
 
     /**
      * List of playable realms (used when splitting tables).
@@ -98,7 +107,7 @@ public class GathererController {
     private final static int MAX_THREADS = 64;
 
     /**
-     * Setup  a gatherer using simply start id and end id. Read other configuration options from config.
+     * Constructor for GathererController using simply start id and end id. Read other configuration options from config.
      * <p>
      * Other options should be should be established using setters.
      *
@@ -115,6 +124,8 @@ public class GathererController {
         this.splitTables = false;
         this.tableSuffix = "";
         this.tableName = "tblplayers";
+        this.verbose = true;
+        this.printDuds = false;
 
         //Read in config
         try {
@@ -124,14 +135,32 @@ public class GathererController {
         }
     }
 
-
-    public GathererController(int startId, int endId, boolean storeMinions, boolean storeMounts, boolean storeProgression,
+    /**
+     * Constructor for GathererController taking additional parameters to set configuration of gatherer controller instance.
+     *
+     * @param startId the character id to start gatherer run at (inclusive).
+     * @param endId the character if to end the gatherer run at (inclusive).
+     * @param verbose whether to provide console output indicating progress in adding characters.
+     * @param printDuds whether to provide console output indicating IDs where characters were not found.
+     * @param storeMinions whether to store a player's minions to a comma delimited list in DB.
+     * @param storeMounts whether to store a player's mounts to a comma delimited list in DB.
+     * @param storeProgression whether to store boolean values indicating character achivements/progress in DB.
+     * @param dbUrl the URL of the database server to connect to (e.g. mysql://localhost:3307).
+     * @param dbName the name of the database to use to store character records.
+     * @param dbUser the username of the SQL server user to connect to the database with.
+     * @param dbPassword the password of the SQL server user to connect to the database with.
+     * @param threads the number of threads to run the program with.
+     * @param tableName the name of the SQL table to write character records to.
+     */
+    public GathererController(int startId, int endId,boolean verbose, boolean printDuds, boolean storeMinions, boolean storeMounts, boolean storeProgression,
                               String dbUrl, String dbName, String dbUser, String dbPassword, int threads, String tableName) {
         this.startId = startId;
         this.endId = endId;
         this.storeMinions = storeMinions;
         this.storeMounts = storeMounts;
         this.storeProgression = storeProgression;
+        this.verbose = verbose;
+        this.printDuds = printDuds;
 
         //Read in config
         try {
@@ -139,6 +168,7 @@ public class GathererController {
         } catch (Exception ex) {
         }
 
+        //Parameters specified should outweigh config
         this.dbUrl = "jdbc:" + dbUrl + "/" + dbName;
         this.dbUser = dbUser;
         this.dbPassword = dbPassword;
@@ -147,7 +177,27 @@ public class GathererController {
         this.tableSuffix = "";
     }
 
-    public GathererController(int startId, int endId, boolean storeMinions, boolean storeMounts, boolean storeProgression,
+    /**
+     * Constructor for GathererController taking additional parameters to set configuration of gatherer controller instance.
+     *
+     * To be used when you want to split the single table into a table for each realm.
+     *
+     * @param startId the character id to start gatherer run at (inclusive).
+     * @param endId the character if to end the gatherer run at (inclusive).
+     * @param verbose whether to provide console output indicating progress in adding characters.
+     * @param printDuds whether to provide console output indicating IDs where characters were not found.
+     * @param storeMinions whether to store a player's minions to a comma delimited list in DB.
+     * @param storeMounts whether to store a player's mounts to a comma delimited list in DB.
+     * @param storeProgression whether to store boolean values indicating character achivements/progress in DB.
+     * @param dbUrl the URL of the database server to connect to (e.g. mysql://localhost:3307).
+     * @param dbName the name of the database to use to store character records.
+     * @param dbUser the username of the SQL server user to connect to the database with.
+     * @param dbPassword the password of the SQL server user to connect to the database with.
+     * @param threads the number of threads to run the program with.
+     * @param tableSuffix the suffix to apply to all tables created, e.g. 23012016
+     * @param splitTables whether to split up the single player table into one for each realm/server.
+     */
+    public GathererController(int startId, int endId,boolean verbose, boolean printDuds, boolean storeMinions, boolean storeMounts, boolean storeProgression,
                               String dbUrl, String dbName, String dbUser, String dbPassword, int threads,
                               String tableSuffix, boolean splitTables) {
         this.startId = startId;
@@ -155,6 +205,8 @@ public class GathererController {
         this.storeMinions = storeMinions;
         this.storeMounts = storeMounts;
         this.storeProgression = storeProgression;
+        this.verbose = verbose;
+        this.printDuds = printDuds;
 
         //Read in config
         try {
@@ -162,6 +214,7 @@ public class GathererController {
         } catch (Exception ex) {
         }
 
+        //Parameters specified should outweigh config
         this.dbUrl = "jdbc:" + dbUrl + "/" + dbName;
         this.dbUser = dbUser;
         this.dbPassword = dbPassword;
@@ -170,12 +223,16 @@ public class GathererController {
         this.tableSuffix = tableSuffix;
     }
 
-    public void run() {
+    /**
+     * Start the gatherer controller instance up.
+     * @throws Exception Exception thrown if system is incorrectly configured.
+     */
+    public void run() throws Exception {
         //Store start time
         long startTime = System.currentTimeMillis();
 
         if (!isConfigured()) { //If not configured
-            System.out.println("System configuration error");
+            throw new Exception("Program not (correctly) configured");
         } else { //Else configured correctly
             try {
 
@@ -188,7 +245,7 @@ public class GathererController {
                 }
 
                 if (startId > endId) {
-                    System.out.println("Error: The second argument needs to be greater than the first argument");
+                    System.out.println("Error: The finish id argument needs to be greater than the start id argument");
                 } else { //Else pass values into poll method
                     System.out.println("Starting parse of range " + startId + " to " + endId + " using " + threadLimit + " threads");
                     gatherRange();
@@ -209,30 +266,41 @@ public class GathererController {
         }
     }
 
+    /**
+     * Determine whether the instance is correctly configured.
+     * @return boolean indicating whether the system is correctly configured.
+     */
     private boolean isConfigured() {
         boolean configured = true;
-        if (this.startId == 0) {
+        if (this.startId == 0 || this.startId < 0) {
             System.out.println("Start ID must be configured to a positive numerical value");
             configured = false;
         }
-        if (this.endId == 0) {
+        if (this.endId == 0 || this.endId < 0) {
             System.out.println("End ID must be configured to a positive numerical value");
             configured = false;
         }
-        if (this.dbUrl == null) {
+        if (this.dbUrl == null || dbUrl.length() <= 5) {
             System.out.println("Database URL has not been configured");
             configured = false;
         }
-        if (this.dbUser == null) {
+        if (this.dbUser == null || dbUser.length() == 0) {
             System.out.println("Database User has not been configred");
             configured = false;
         }
-        if (this.dbPassword == null) {
+        if (this.dbPassword == null || dbPassword.length() == 0) {
             System.out.println("Database Password has not been configured");
+        }
+        if (this.tableName.length() == 0){
+            System.out.println("Table name has not been configured");
         }
         return configured;
     }
 
+    /**
+     * Create the table to write character records to.
+     * @param tableName the name of the table to setup.
+     */
     private void createTable(String tableName) {
         //Create DB table if it doesn't exist
         //Open connection
@@ -279,7 +347,7 @@ public class GathererController {
      * @throws IOException                  Indicates an error reading the file specified.
      * @throws SAXException                 Indicates an error parsing XML.
      */
-    public void readConfig() throws ParserConfigurationException, IOException, SAXException {
+    private void readConfig() throws ParserConfigurationException, IOException, SAXException {
         //Set config file location
         File xmlFile = new File("config.xml");
         //Initialize parsers
@@ -312,7 +380,7 @@ public class GathererController {
     /**
      * Method to gather data for characters in specified range.
      */
-    public void gatherRange() {
+    private void gatherRange() {
 
         //Set next ID
         nextID = startId;
@@ -343,7 +411,7 @@ public class GathererController {
     /**
      * Write a player record to database
      */
-    public void writeToDB(Player player) {
+    protected void writeToDB(Player player) {
         //Open connection
         Connection conn = openConnection();
         try {
@@ -509,4 +577,147 @@ public class GathererController {
         return endId;
     }
 
+    /**
+     * Get the maximum number of threads allowed for the Gatherer Controller instance.
+     * @return the maximum number of threads allowed.
+     */
+    public int getThreadLimit() {
+        return threadLimit;
+    }
+
+    /**
+     * Set the maximum number of threads allowed for the gatherer controller instance
+     * @param threadLimit the maximum number of threads allowed.
+     */
+    public void setThreadLimit(int threadLimit) {
+        this.threadLimit = threadLimit;
+    }
+
+    /**
+     * Get whether each character's minion set will be written to the database.
+     * @return whether each character's minion set will be written to DB.
+     */
+    public boolean isStoreMinions() {
+        return storeMinions;
+    }
+
+    /**
+     * Set whether to store each character's minion set to the database.
+     * @param storeMinions whether to store each character's minion set to the database.
+     */
+    public void setStoreMinions(boolean storeMinions) {
+        this.storeMinions = storeMinions;
+    }
+
+    /**
+     * Get whether each character's mount set will be written to the database.
+     * @return whether each character's mount set will be written to DB.
+     */
+    public boolean isStoreMounts() {
+        return storeMounts;
+    }
+
+    /**
+     * Set whether each character's mount set will be written to the database.
+     * @param storeMounts whether each character's mount set will be written to DB.
+     */
+    public void setStoreMounts(boolean storeMounts) {
+        this.storeMounts = storeMounts;
+    }
+
+    /**
+     * Get whether to store boolean values indicating character progression in the database.
+     * @return whether to store boolean values indicating character progression in the database.
+     */
+    public boolean isStoreProgression() {
+        return storeProgression;
+    }
+
+    /**
+     * Set whether to store boolean values indicating character progression in the database.
+     * @param storeProgression whether to store boolean values indicating character progression in the database.
+     */
+    public void setStoreProgression(boolean storeProgression) {
+        this.storeProgression = storeProgression;
+    }
+
+    /**
+     * Get the name of the table that character records will be written to.
+     * @return the name of the table that character records will be written to.
+     */
+    public String getTableName() {
+        return tableName;
+    }
+
+    /**
+     * Set the name of the table that character records will be written to.
+     * @param tableName the name of the table that character records will be written to.
+     */
+    public void setTableName(String tableName) {
+        this.tableName = tableName;
+    }
+
+    /**
+     * Whether the single player table is being split up into one table for each realm.
+     * @return whether the single player table is being split up into one table for each realm.
+     */
+    public boolean isSplitTables() {
+        return splitTables;
+    }
+
+    /**
+     * Set whether the single player table should be split up into one table for each realm.
+     * @param splitTables whether the single player table is being split up into one table for each realm.
+     */
+    public void setSplitTables(boolean splitTables) {
+        this.splitTables = splitTables;
+    }
+
+    /**
+     * Get the suffix to append to all tables.
+     * @return the suffix to append to all tables.
+     */
+    public String getTableSuffix() {
+        return tableSuffix;
+    }
+
+    /**
+     * Set the suffix to append to all tables.
+     * @param tableSuffix the suffix to append to all tables.
+     */
+    public void setTableSuffix(String tableSuffix) {
+        this.tableSuffix = tableSuffix;
+    }
+
+    /**
+     * Set whether to run the program in verbose mode (print each successfully written record).
+     * @return whether to run the program in verbose mode
+     */
+    public boolean isVerbose() {
+        return verbose;
+    }
+
+    /**
+     * Set whether to run the program in verbose mode (print each successfully written record).
+     * @param verbose whether to run the program in verbose mode.
+     */
+    public void setVerbose(boolean verbose) {
+        this.verbose = verbose;
+    }
+
+    /**
+     * Set whether to print an output when records don't exist.
+     * @return whether to print an output when records don't exist.
+     */
+    public boolean isPrintDuds() {
+        return printDuds;
+    }
+
+    /**
+     * Set whether to print an output when records don't exist.
+     * @param printDuds whether to print an output when records don't exist.
+     */
+    public void setPrintDuds(boolean printDuds) {
+        this.printDuds = printDuds;
+    }
 }
