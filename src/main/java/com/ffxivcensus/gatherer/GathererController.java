@@ -89,7 +89,6 @@ public class GathererController {
      */
     private boolean printDuds;
 
-
     /**
      * List of playable realms (used when splitting tables).
      */
@@ -435,8 +434,8 @@ public class GathererController {
 
             sbFields.append("id, name, realm, race, gender, grand_company,free_company,");
             sbValues.append(player.getId() + ",\"" + player.getPlayerName() + "\",\"" + player.getRealm() + "\",\""
-                            + player.getRace() + "\",'" + player.getGender() + "','" + player.getGrandCompany() + "','"
-                            + player.getFreeCompany() + "',");
+                            + player.getRace() + "\",'" + player.getGender() + "','" + player.getGrandCompany() + "',\""
+                            + player.getFreeCompany() + "\",");
 
             sbFields.append("level_gladiator, level_pugilist, level_marauder,level_lancer, level_archer, level_rogue,");
             sbValues.append(player.getLvlGladiator() + "," + player.getLvlPugilist() + "," + player.getLvlMarauder()
@@ -720,4 +719,12 @@ public class GathererController {
     public void setPrintDuds(boolean printDuds) {
         this.printDuds = printDuds;
     }
+    /**
+     * Get list of realms to create tables for
+     * @return
+     */
+    public static String[] getRealms() {
+        return realms;
+    }
+
 }
