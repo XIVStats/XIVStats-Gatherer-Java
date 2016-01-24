@@ -12,10 +12,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 
 import static org.junit.Assert.*;
@@ -92,7 +89,6 @@ public class GathererControllerTest {
      */
     @org.junit.Test
     public void testRunBasic() throws IOException, SAXException, ParserConfigurationException {
-        ResultSet rs;
         int startId = 11886902;
         int endId = 11887010;
         GathererController gathererController = new GathererController(startId,endId);
@@ -102,24 +98,11 @@ public class GathererControllerTest {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        //Array list of results
-        ArrayList addedIDs = new ArrayList();
-
         //Test that records were successfully written to db
         java.sql.Connection conn = openConnection();
         String strSQL = "SELECT * FROM " + gathererController.getTableName() + " WHERE `id`>=" + startId + " AND `id`<=" + endId +";";
-        try {
-            Statement stmt = conn.createStatement();
-            rs = stmt.executeQuery(strSQL);
+        ArrayList addedIDs = getAdded(conn,strSQL);
 
-            //Convert dataset to array list
-            while(rs.next()){
-                addedIDs.add(rs.getInt(1));
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
         closeConnection(conn);
 
         //Test for IDs we know exist
@@ -163,7 +146,6 @@ public class GathererControllerTest {
      */
     @org.junit.Test
     public void testRunAdvancedOptions(){
-        ResultSet rs;
         int startId = 1557260;
         int endId = 1558260;
 
@@ -173,24 +155,11 @@ public class GathererControllerTest {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        //Array list of results
-        ArrayList addedIDs = new ArrayList();
 
         //Test that records were successfully written to db
         java.sql.Connection conn = openConnection();
         String strSQL = "SELECT * FROM tblplayers_test_two WHERE `id`>=" + startId + " AND `id`<=" + endId +";";
-        try {
-            Statement stmt = conn.createStatement();
-            rs = stmt.executeQuery(strSQL);
-
-            //Convert dataset to array list
-            while(rs.next()){
-                addedIDs.add(rs.getInt(1));
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        ArrayList addedIDs = getAdded(conn,strSQL);
         closeConnection(conn);
 
         //Test for IDs we know exist
@@ -267,4 +236,32 @@ public class GathererControllerTest {
         dbName = elementJDBC.getElementsByTagName("database").item(0).getTextContent();
     }
 
+    public static ResultSet executeStatement(Connection conn, String strSQL){
+        ResultSet rs;
+        try {
+            Statement stmt = conn.createStatement();
+            rs = stmt.executeQuery(strSQL);
+
+            return rs;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static ArrayList getAdded(Connection conn, String strSQL){
+        ResultSet rs;
+        ArrayList addedIDs = new ArrayList();
+        rs = executeStatement(conn,strSQL);
+        //Convert dataset to array list
+        try {
+            while(rs.next()){
+                addedIDs.add(rs.getInt(1));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return addedIDs;
+    }
 }
