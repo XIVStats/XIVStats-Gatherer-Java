@@ -282,18 +282,18 @@ public class GathererController {
             configured = false;
         }
         if (this.dbUrl == null || dbUrl.length() <= 5) {
-            sbOut.append("Database URL has not been configured\n");
+            sbOut.append("Database URL has not been configured correctly\n");
             configured = false;
         }
         if (this.dbUser == null || dbUser.length() == 0) {
-            sbOut.append("Database User has not been configred\n");
+            sbOut.append("Database User has not been configured correctly\n");
             configured = false;
         }
         if (this.dbPassword == null || dbPassword.length() == 0) {
-            sbOut.append("Database Password has not been configured\n");
+            sbOut.append("Database Password has not been configured correctly\n");
         }
         if (this.tableName.length() == 0){
-            sbOut.append("Table name has not been configured\n");
+            sbOut.append("Table name has not been configured correctly\n");
         }
         return sbOut.toString();
     }
@@ -730,6 +730,30 @@ public class GathererController {
      */
     public static String[] getRealms() {
         return realms;
+    }
+
+    /**
+     * Set the SQL server database url.
+     * @param dbUrl the SQL server database url.
+     */
+    public void setDbUrl(String dbUrl) {
+        this.dbUrl = dbUrl;
+    }
+
+    /**
+     * Set the SQL server database user.
+     * @param dbUser the SQL server database user.
+     */
+    public void setDbUser(String dbUser) {
+        this.dbUser = dbUser;
+    }
+
+    /**
+     * Set the SQL Server user password.
+     * @param dbPassword the SQL Server user password.
+     */
+    public void setDbPassword(String dbPassword) {
+        this.dbPassword = dbPassword;
     }
 
 }
