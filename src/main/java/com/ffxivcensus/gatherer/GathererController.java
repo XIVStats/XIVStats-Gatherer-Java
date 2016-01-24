@@ -427,7 +427,7 @@ public class GathererController {
             String tableName;
             //Determine table to write to
             if (splitTables){
-                tableName = "tbl" + player.getRealm() +  tableSuffix;
+                tableName = "tbl" + player.getRealm().toLowerCase() +  tableSuffix;
             } else {
                 tableName = this.tableName + tableSuffix;
             }
