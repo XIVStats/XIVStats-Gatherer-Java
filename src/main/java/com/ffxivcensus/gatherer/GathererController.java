@@ -270,7 +270,7 @@ public class GathererController {
      * Determine whether the instance is correctly configured.
      * @return string containing warnings/errors in configuration.
      */
-    private String isConfigured() {
+    public String isConfigured() {
         boolean configured = true;
         StringBuilder sbOut = new StringBuilder();
         if (this.startId == 0 || this.startId < 0) {
