@@ -177,6 +177,55 @@ public class GathererControllerTest {
 
     }
 
+    /**
+     * Invoke a test run in which the single characters table is being split across several tables, one for each realm.
+     *
+     * Also testing non-verbose mode, debug output (print non-existant records).
+     */
+    @org.junit.Test
+    public void testRunSplitTables(){
+        int startId = 1557260;
+        int endId = 1558260;
+
+        GathererController gathererController = new GathererController(startId,endId,false,true,false,true,false,"mysql://localhost:3306",dbName,dbUser,dbPassword,71,"_test",true);
+        try {
+            gathererController.run();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        //Test that records were successfully written to db
+        java.sql.Connection conn = openConnection();
+        String strSQLCerberus = "SELECT * FROM tblcerberus_test WHERE `id`>=" + startId + " AND `id`<=" + endId +";";
+        ArrayList addedIDsCerberus = getAdded(conn,strSQLCerberus);
+
+        String strSQLShiva = "SELECT * FROM tblshiva_test WHERE `id`>=" + startId + " AND `id`<=" + endId +";";
+        ArrayList addedIDsShiva = getAdded(conn,strSQLShiva);
+
+        String strSQLMoogle = "SELECT * FROM tblmoogle_test WHERE `id`>=" + startId + " AND `id`<=" + endId +";";
+        ArrayList addedIDsMoogle = getAdded(conn,strSQLMoogle);
+        closeConnection(conn);
+
+
+        //Test for IDs we know exist in cerberus (realm of startID char)
+        assertTrue(addedIDsCerberus.contains(startId));
+        assertTrue(addedIDsCerberus.contains(1557648));
+        assertTrue(addedIDsCerberus.contains(1558014));
+        assertTrue(addedIDsCerberus.contains(1558244));
+
+        //Test for ids that will exist on shiva (realm of end char)
+        assertTrue(addedIDsShiva.contains(endId));
+        assertTrue(addedIDsShiva.contains(1557297));
+
+        //Test for ids that will exist on Moogle
+        assertTrue(addedIDsMoogle.contains(1557265));
+        assertTrue(addedIDsMoogle.contains(1557301));
+
+        //Test that gatherer has not written records that don't exist on cerberus
+        assertFalse(addedIDsCerberus.contains(endId));
+
+    }
+
     //Utility methods
     /**
      * Open a connection to database.
@@ -236,6 +285,12 @@ public class GathererControllerTest {
         dbName = elementJDBC.getElementsByTagName("database").item(0).getTextContent();
     }
 
+    /**
+     * Execute a SQL query and return the results.
+     * @param conn the SQL connection to use.
+     * @param strSQL the SQL statement to execute.
+     * @return the result set of added rows.
+     */
     public static ResultSet executeStatement(Connection conn, String strSQL){
         ResultSet rs;
         try {
@@ -250,6 +305,12 @@ public class GathererControllerTest {
         return null;
     }
 
+    /**
+     * Get an array list containing the added IDs returned by executing a SQL statement.
+     * @param conn the SQL connection to use.
+     * @param strSQL the SQL statement to execute
+     * @return an array list of the IDs successfully added to DB.
+     */
     public static ArrayList getAdded(Connection conn, String strSQL){
         ResultSet rs;
         ArrayList addedIDs = new ArrayList();
