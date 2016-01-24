@@ -226,6 +226,56 @@ public class GathererControllerTest {
 
     }
 
+    /**
+     * Invoke a test run using options that will cause the program not to run.
+     */
+    @org.junit.Test
+    public void testRunMisconfigured(){
+        int startId = -1;
+        int endId = -1;
+
+        GathererController gathererController = new GathererController(startId,endId);
+        //Set invalid options
+        gathererController.setDbUser("");
+        gathererController.setDbPassword("");
+        gathererController.setDbUrl("mysq");
+        gathererController.setTableName("");
+
+        try {
+            gathererController.run();
+        } catch (Exception e) {
+            assertEquals("Program not (correctly) configured",e.getMessage());
+        }
+        String strOut = gathererController.isConfigured();
+        assertTrue(strOut.contains("Start ID must be configured to a positive numerical value"));
+        assertTrue(strOut.contains("End ID must be configured to a positive numerical value"));
+        assertTrue(strOut.contains("Database URL has not been configured correctly"));
+        assertTrue(strOut.contains("Database User has not been configured correctly"));
+        assertTrue(strOut.contains("Database Password has not been configured correctly"));
+        assertTrue(strOut.contains("Table name has not been configured correctly"));
+
+    }
+
+    @org.junit.Test
+    public void testRunMisconfiguredTwo(){
+        int startId = 0;
+        int endId = 100;
+
+        GathererController gathererController = new GathererController(startId,endId);
+        //Set invalid options
+        gathererController.setDbUser(null);
+        gathererController.setDbPassword(null);
+        gathererController.setDbUrl(null);
+        gathererController.setTableName(null);
+
+        String strOut = gathererController.isConfigured();
+        assertTrue(strOut.contains("Database URL has not been configured correctly"));
+        assertTrue(strOut.contains("Database User has not been configured correctly"));
+        assertTrue(strOut.contains("Database Password has not been configured correctly"));
+        assertTrue(strOut.contains("Table name has not been configured correctly"));
+
+    }
+
     //Utility methods
     /**
      * Open a connection to database.
