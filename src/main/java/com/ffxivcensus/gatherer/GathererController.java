@@ -220,6 +220,7 @@ public class GathererController {
         this.threadLimit = threads;
         this.tableName = "tblplayers";
         this.tableSuffix = tableSuffix;
+        this.splitTables = splitTables;
     }
 
     /**
@@ -230,14 +231,14 @@ public class GathererController {
         //Store start time
         long startTime = System.currentTimeMillis();
 
-        if (!isConfigured()) { //If not configured
+        if (isConfigured().length() > 0) { //If not configured
             throw new Exception("Program not (correctly) configured");
         } else { //Else configured correctly
             try {
 
                 if(splitTables) { //If specified to split tables
                     for (String realm : realms) { //Create a table for each realm
-                        this.createTable("tbl"+realm+tableSuffix);
+                        this.createTable("tbl"+realm.toLowerCase()+tableSuffix);
                     }
                 } else{ //Else just create a single table
                     this.createTable(tableName);
@@ -267,33 +268,34 @@ public class GathererController {
 
     /**
      * Determine whether the instance is correctly configured.
-     * @return boolean indicating whether the system is correctly configured.
+     * @return string containing warnings/errors in configuration.
      */
-    private boolean isConfigured() {
+    private String isConfigured() {
         boolean configured = true;
+        StringBuilder sbOut = new StringBuilder();
         if (this.startId == 0 || this.startId < 0) {
-            System.out.println("Start ID must be configured to a positive numerical value");
+            sbOut.append("Start ID must be configured to a positive numerical value");
             configured = false;
         }
         if (this.endId == 0 || this.endId < 0) {
-            System.out.println("End ID must be configured to a positive numerical value");
+            sbOut.append("End ID must be configured to a positive numerical value");
             configured = false;
         }
         if (this.dbUrl == null || dbUrl.length() <= 5) {
-            System.out.println("Database URL has not been configured");
+            sbOut.append("Database URL has not been configured");
             configured = false;
         }
         if (this.dbUser == null || dbUser.length() == 0) {
-            System.out.println("Database User has not been configred");
+            sbOut.append("Database User has not been configred");
             configured = false;
         }
         if (this.dbPassword == null || dbPassword.length() == 0) {
-            System.out.println("Database Password has not been configured");
+            sbOut.append("Database Password has not been configured");
         }
         if (this.tableName.length() == 0){
-            System.out.println("Table name has not been configured");
+            sbOut.append("Table name has not been configured");
         }
-        return configured;
+        return sbOut.toString();
     }
 
     /**
@@ -410,7 +412,8 @@ public class GathererController {
     /**
      * Write a player record to database
      */
-    protected void writeToDB(Player player) {
+    protected String writeToDB(Player player) {
+        String strOut = "";
         //Open connection
         Connection conn = openConnection();
         try {
@@ -483,32 +486,34 @@ public class GathererController {
                         + "," + player.getBitHasSylph() + "," + player.getBitHasCompletedHW() + ","
                         + player.getBitHasCompleted3pt1() + "," + player.getBitIsLegacyPlayer());
 
-
-                if(this.storeMinions){
-                    sbFields.append(",");
-                    sbValues.append(",");
-                    sbFields.append("minions");
-                    sbValues.append("\"" + player.getMinionsString() + "\"");
-                }
-                if(this.storeMounts){
-                    sbFields.append(",");
-                    sbValues.append(",");
-                    sbFields.append("mounts");
-                    sbValues.append("\"" + player.getMountsString() + "\"");
-                }
-
-                sbFields.append(")");
-                sbValues.append(");");
             }
+
+            if(this.storeMinions){
+                sbFields.append(",");
+                sbValues.append(",");
+                sbFields.append("minions");
+                sbValues.append("\"" + player.getMinionsString() + "\"");
+            }
+            if(this.storeMounts){
+                sbFields.append(",");
+                sbValues.append(",");
+                sbFields.append("mounts");
+                sbValues.append("\"" + player.getMountsString() + "\"");
+            }
+
+            sbFields.append(")");
+            sbValues.append(");");
 
             String strSQL = sbFields.toString() + sbValues.toString();
             st.executeUpdate(strSQL);
-            System.out.println("Character " + player.getId() + " written to database successfully.");
+            if(this.verbose) {
+                strOut = "Character " + player.getId() + " written to database successfully.";
+            }
             closeConnection(conn);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
+        return strOut;
     }
 
     /**
