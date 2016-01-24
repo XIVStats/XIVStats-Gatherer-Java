@@ -33,7 +33,7 @@ public class Gatherer implements Runnable {
             try {
                 //Parse players and write them to DB
                 String out = parent.writeToDB(Player.getPlayer(nextID));
-                if (parent.isVerbose()) {
+                if (parent.isVerbose() || parent.isPrintDuds()) {
                     System.out.println(out);
                 }
             } catch (MySQLNonTransientConnectionException failWriteEx) { //If record fails to write due to too many connections
@@ -47,7 +47,7 @@ public class Gatherer implements Runnable {
                 //Then attempt to write again
                 try {
                     String out = parent.writeToDB(Player.getPlayer(nextID));
-                    if (parent.isVerbose()) {
+                    if (parent.isVerbose() || parent.isPrintDuds()) {
                         System.out.println(out);
                     }
                 } catch (Exception e) {

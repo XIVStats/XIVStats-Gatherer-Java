@@ -292,7 +292,7 @@ public class GathererController {
         if (this.dbPassword == null || dbPassword.length() == 0) {
             sbOut.append("Database Password has not been configured correctly\n");
         }
-        if (this.tableName.length() == 0){
+        if (this.tableName == null || this.tableName.length() == 0){
             sbOut.append("Table name has not been configured correctly\n");
         }
         return sbOut.toString();
@@ -506,7 +506,7 @@ public class GathererController {
 
             String strSQL = sbFields.toString() + sbValues.toString();
             st.executeUpdate(strSQL);
-            if(this.verbose) {
+            if(this.verbose || this.isPrintDuds()) {
                 strOut = "Character " + player.getId() + " written to database successfully.";
             }
             closeConnection(conn);
