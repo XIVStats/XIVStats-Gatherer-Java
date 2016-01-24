@@ -274,26 +274,26 @@ public class GathererController {
         boolean configured = true;
         StringBuilder sbOut = new StringBuilder();
         if (this.startId == 0 || this.startId < 0) {
-            sbOut.append("Start ID must be configured to a positive numerical value");
+            sbOut.append("Start ID must be configured to a positive numerical value\n");
             configured = false;
         }
         if (this.endId == 0 || this.endId < 0) {
-            sbOut.append("End ID must be configured to a positive numerical value");
+            sbOut.append("End ID must be configured to a positive numerical value\n");
             configured = false;
         }
         if (this.dbUrl == null || dbUrl.length() <= 5) {
-            sbOut.append("Database URL has not been configured");
+            sbOut.append("Database URL has not been configured\n");
             configured = false;
         }
         if (this.dbUser == null || dbUser.length() == 0) {
-            sbOut.append("Database User has not been configred");
+            sbOut.append("Database User has not been configred\n");
             configured = false;
         }
         if (this.dbPassword == null || dbPassword.length() == 0) {
-            sbOut.append("Database Password has not been configured");
+            sbOut.append("Database Password has not been configured\n");
         }
         if (this.tableName.length() == 0){
-            sbOut.append("Table name has not been configured");
+            sbOut.append("Table name has not been configured\n");
         }
         return sbOut.toString();
     }
