@@ -10,8 +10,10 @@ import org.xml.sax.SAXException;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -45,6 +47,21 @@ public class GathererControllerTest {
      */
     private static String dbName;
 
+    private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+    private final ByteArrayOutputStream errContent = new ByteArrayOutputStream();
+
+    @org.junit.Before
+    public void setUpStreams() {
+        System.setOut(new PrintStream(outContent));
+        System.setErr(new PrintStream(errContent));
+    }
+
+    @org.junit.After
+    public void cleanUpStreams() {
+        System.setOut(null);
+        System.setErr(null);
+    }
+
     /**
      * Before running drop the table.
      */
@@ -52,7 +69,6 @@ public class GathererControllerTest {
     public static void setUpBaseClass(){
         try {
             readConfig();
-            System.out.println("Connecting to " + dbUrl);
             StringBuilder sbSQL = new StringBuilder();
             //DROP existing test tables
             sbSQL.append("DROP TABLE  tblplayers_test;");
@@ -96,7 +112,6 @@ public class GathererControllerTest {
         try {
             gathererController.run();
         } catch (Exception e) {
-            e.printStackTrace();
         }
         //Test that records were successfully written to db
         java.sql.Connection conn = openConnection();
@@ -133,7 +148,6 @@ public class GathererControllerTest {
         try {
             gathererController.run();
         } catch (Exception e) {
-            e.printStackTrace();
         }
         long endTime = System.currentTimeMillis();
         //Program will close in less than 3 seconds if invalid params supplied
@@ -153,7 +167,6 @@ public class GathererControllerTest {
         try {
             gathererController.run();
         } catch (Exception e) {
-            e.printStackTrace();
         }
 
         //Test that records were successfully written to db
@@ -191,7 +204,6 @@ public class GathererControllerTest {
         try {
             gathererController.run();
         } catch (Exception e) {
-            e.printStackTrace();
         }
         assertEquals(gathererController.getThreadLimit(), gathererController.getThreadLimit());
 
