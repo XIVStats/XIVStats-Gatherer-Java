@@ -231,6 +231,11 @@ public class GathererController {
         //Store start time
         long startTime = System.currentTimeMillis();
 
+        //If user attempts to exceed the maximum no. of threads - overwrite their input and set to MAX_THREADS
+        if (this.threadLimit > MAX_THREADS){
+            this.threadLimit = MAX_THREADS;
+        }
+
         if (isConfigured().length() > 0) { //If not configured
             throw new Exception("Program not (correctly) configured");
         } else { //Else configured correctly
@@ -370,12 +375,7 @@ public class GathererController {
         //Read out execution config
         NodeList nodesExecConf = doc.getElementsByTagName("execution");
         Element elementExecConf = (Element) nodesExecConf.item(0);
-        int userThreadLimit = Integer.parseInt(elementExecConf.getElementsByTagName("threads").item(0).getTextContent());
-        if (userThreadLimit <= MAX_THREADS) {
-            threadLimit = userThreadLimit;
-        } else {
-            threadLimit = 4;
-        }
+        threadLimit  = Integer.parseInt(elementExecConf.getElementsByTagName("threads").item(0).getTextContent());
     }
 
     /**
