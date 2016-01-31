@@ -193,6 +193,7 @@ public class GathererControllerTest {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        assertEquals(gathererController.getThreadLimit(), gathererController.getThreadLimit());
 
         //Test that records were successfully written to db
         java.sql.Connection conn = openConnection();
