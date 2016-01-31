@@ -8,7 +8,7 @@ import com.mysql.jdbc.exceptions.jdbc4.MySQLNonTransientConnectionException;
  * A worker that executes parses and writes the corresponding player record to the DB.
  *
  * @author Peter Reid
- * @since 1.0pre
+ * @since v1.0
  * @see Player
  * @see GathererController
  * @see java.lang.Runnable

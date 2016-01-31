@@ -20,7 +20,7 @@ import java.sql.Statement;
  * subsequently writes them to the database. It also specifies the parameters to run the program with.
  *
  * @author Peter Reid
- * @since 1.0pre
+ * @since v1.0
  * @see Player
  * @see Gatherer
  */

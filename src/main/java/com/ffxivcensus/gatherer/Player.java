@@ -17,6 +17,7 @@ import java.util.regex.Pattern;
  * It also serves the functionality of fetching player data from the Lodestone.
  *
  * @author Peter Reid
+ * @since v1.0
  * @see Gatherer
  */
 public class Player {

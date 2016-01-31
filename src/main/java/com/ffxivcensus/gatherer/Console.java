@@ -6,7 +6,7 @@ import org.apache.commons.cli.*;
  * Class to run instance of GatherController from the CLI.
  * @author Peter Reid
  * @see com.ffxivcensus.gatherer.GathererController
- * @since 1.0pre
+ * @since v1.0
  */
 public class Console {
 

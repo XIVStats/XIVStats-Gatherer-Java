@@ -8,8 +8,8 @@ import static org.junit.Assert.*;
  * JUnit test class to test the methods of the Player class.
  *
  * @author Peter Reid
- * @see Player
- * @since 1.0
+ * @see com.ffxivcensus.gatherer.PlayerTest
+ * @since v1.0
  */
 public class PlayerTest {
 
