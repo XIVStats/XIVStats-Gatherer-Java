@@ -273,11 +273,11 @@ public class GathererController {
     public String isConfigured() {
         boolean configured = true;
         StringBuilder sbOut = new StringBuilder();
-        if (this.startId == 0 || this.startId < 0) {
+        if ( this.startId < 0) {
             sbOut.append("Start ID must be configured to a positive numerical value\n");
             configured = false;
         }
-        if (this.endId == 0 || this.endId < 0) {
+        if ( this.endId < 0) {
             sbOut.append("End ID must be configured to a positive numerical value\n");
             configured = false;
         }
