@@ -10,8 +10,18 @@ import org.apache.commons.cli.*;
  */
 public class Console {
 
-    public static void main(String[] args) {
 
+
+    public static void main(String[] args) {
+        GathererController gc = run(args);
+    }
+
+    /**
+     * Run the program provided a set of arguments.
+     * @param args arguments to supply to the system.
+     * @return the gatherer controller built up.
+     */
+    public static GathererController run(String [] args){
         // create Options object
         Options options = setupOptions();
 
@@ -50,7 +60,7 @@ public class Console {
             gatherer.setStoreMounts(cmd.hasOption("m"));
 
             //Store progression
-            gatherer.setStoreProgression(cmd.hasOption("b"));
+            gatherer.setStoreProgression(!cmd.hasOption("b"));
 
             //Database URL
             if(cmd.hasOption("d") && cmd.hasOption("U")){
@@ -97,12 +107,14 @@ public class Console {
             }
 
             gatherer.run();
+            return gatherer;
         }
         catch (ParseException pEx) {
             formatter.printHelp(usage, options);
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return null;
     }
 
     /**
