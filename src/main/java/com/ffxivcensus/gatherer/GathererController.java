@@ -756,4 +756,12 @@ public class GathererController {
         this.dbPassword = dbPassword;
     }
 
+    /**
+     * Get the 'safety limit' of threads that is set in the program.
+     * @return the thread 'safety limit'
+     */
+    public static int getMaxThreads() {
+        return MAX_THREADS;
+    }
+
 }
