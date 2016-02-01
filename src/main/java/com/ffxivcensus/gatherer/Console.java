@@ -99,7 +99,7 @@ public class Console {
             gatherer.setPrintFails(cmd.hasOption("F"));
 
             //Split tables
-            gatherer.setStoreMounts(cmd.hasOption("S"));
+            gatherer.setSplitTables(cmd.hasOption("S"));
 
             //Set suffix
             if(cmd.hasOption("x")){
