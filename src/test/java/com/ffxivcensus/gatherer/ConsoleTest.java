@@ -162,7 +162,7 @@ public class ConsoleTest {
     @Test
     public void TestConsoleHelpDefault() throws Exception{
 
-        String strHelp = "usage: java -jar XIVStats-Gatherer-Java.jar [-bmqvFPS] -s startid -f";
+        String strHelp = "usage: java -jar XIVStats-Gatherer-Java.jar [-bmqvxFPS] -s startid -f";
 
         //Test for a help dialog displayed upon failure
         String[] args = {""};
@@ -174,7 +174,7 @@ public class ConsoleTest {
     @Test
     public void TestConsoleHelpOnFail() throws Exception{
 
-        String strHelp = "usage: java -jar XIVStats-Gatherer-Java.jar [-bmqvFPS] -s startid -f";
+        String strHelp = "usage: java -jar XIVStats-Gatherer-Java.jar [-bmqvxFPS] -s startid -f";
         //Test for a help dialog displayed upon failure
         String[] args = {"-s 0"};
         GathererController gc = Console.run(args);
@@ -186,7 +186,7 @@ public class ConsoleTest {
     @Test
     public void TestConsoleHelp() throws Exception{
 
-        String strHelp = "usage: java -jar XIVStats-Gatherer-Java.jar [-bmqvFPS] -s startid -f";
+        String strHelp = "usage: java -jar XIVStats-Gatherer-Java.jar [-bmqvxFPS] -s startid -f";
 
         //First test for a user requested help dialog
         String[] args = {"--help"};
@@ -218,6 +218,14 @@ public class ConsoleTest {
         //Check output
         assertFalse(outContent.toString().contains("written to database successfully."));
         assertTrue(outContent.toString().contains("does not exist."));
+    }
+
+    @Test
+    public void testSplitTables(){
+        String[] args = {"-s","900","-f","1000","-x","_test","-S"};
+        GathererController gc = Console.run(args);
+        assertTrue(gc.isSplitTables());
+        assertEquals(gc.getTableSuffix(),"_test");
     }
 
     //Utility methods
