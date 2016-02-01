@@ -151,7 +151,7 @@ public class Console {
         Option optSplitTable = Option.builder("S").longOpt("split-table").hasArg().numberOfArgs(1).argName("table-suffix").desc("split tblplayers into multiple tables").build();
         Option optQuiet = Option.builder("q").longOpt("quiet").desc("run program in quiet mode - no console output").build();
         Option optVerbose = Option.builder("v").longOpt("verbose").desc("run program in verbose bug mode - full console output").build();
-        Option optFailPrint = Option.builder("F").longOpt("print-failures").desc("run program in quiet mode but print records that don't exist").build();
+        Option optFailPrint = Option.builder("F").longOpt("print-failures").desc("print records that don't exist").build();
 
         //Add each option to the options object
         options.addOption(optStart);
