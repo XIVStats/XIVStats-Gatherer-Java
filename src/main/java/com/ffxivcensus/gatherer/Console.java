@@ -26,7 +26,7 @@ public class Console {
         Options options = setupOptions();
 
         //Declare usage string
-        String usage = "java -jar XIVStats-Gatherer-Java.jar [-bmqvFPS] -s startid -f finishid [-d database-name] [-u database-user] [-p database-user-password] [-U database-url] [-T table] [-t threads]";
+        String usage = "java -jar XIVStats-Gatherer-Java.jar [-bmqvxFPS] -s startid -f finishid [-d database-name] [-u database-user] [-p database-user-password] [-U database-url] [-T table] [-t threads]";
         HelpFormatter formatter = new HelpFormatter();
 
         try{
@@ -89,32 +89,22 @@ public class Console {
                 gatherer.setTableName(cmd.getOptionValue("T"));
             }
 
-            //Split tables
-            gatherer.setSplitTables(cmd.hasOption("S"));
-
             //Verbose mode
-            if(cmd.hasOption("q")){
-                gatherer.setQuiet(true);
-            } else {
-                gatherer.setQuiet(false);
-            }
+            gatherer.setQuiet(cmd.hasOption("q"));
 
             //Debug mode
-            if(cmd.hasOption("v")){
-                gatherer.setVerbose(true);
-            } else{
-                gatherer.setVerbose(false);
-            }
+            gatherer.setVerbose(cmd.hasOption("v"));
 
             //Fail print
-            if(cmd.hasOption("F")){
-                gatherer.setPrintFails(true);
-            }
-            else
-            {
-                gatherer.setPrintFails(false);
-            }
+            gatherer.setPrintFails(cmd.hasOption("F"));
 
+            //Split tables
+            gatherer.setStoreMounts(cmd.hasOption("S"));
+
+            //Set suffix
+            if(cmd.hasOption("x")){
+                gatherer.setTableSuffix(cmd.getOptionValue("x"));
+            }
 
             gatherer.run();
             return gatherer;
@@ -148,10 +138,11 @@ public class Console {
         Option optPassword = Option.builder("p").longOpt("password").argName("database-user-password").hasArg().numberOfArgs(1).desc("database user password").build();
         Option optThreads = Option.builder("t").longOpt("threads").argName("no-threads").hasArg().numberOfArgs(1).desc("number of gatherer threads to run").build();
         Option optTable = Option.builder("T").longOpt("table").hasArg().numberOfArgs(1).argName("table").desc("the table to write records to").build();
-        Option optSplitTable = Option.builder("S").longOpt("split-table").hasArg().numberOfArgs(1).argName("table-suffix").desc("split tblplayers into multiple tables").build();
+        Option optSplitTable = Option.builder("S").longOpt("split-table").desc("split tblplayers into multiple tables").build();
         Option optQuiet = Option.builder("q").longOpt("quiet").desc("run program in quiet mode - no console output").build();
         Option optVerbose = Option.builder("v").longOpt("verbose").desc("run program in verbose bug mode - full console output").build();
         Option optFailPrint = Option.builder("F").longOpt("print-failures").desc("print records that don't exist").build();
+        Option optSuffix = Option.builder("x").longOpt("suffix").hasArg().numberOfArgs(1).argName("table-suffix").desc("suffix to append to all tables").build();
 
         //Add each option to the options object
         options.addOption(optStart);
@@ -170,6 +161,7 @@ public class Console {
         options.addOption(optQuiet);
         options.addOption(optVerbose);
         options.addOption(optFailPrint);
+        options.addOption(optSuffix);
 
         return options;
     }
