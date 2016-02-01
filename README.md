@@ -34,7 +34,7 @@ Follow these steps to setup XIVStats-Gatherer-Java:
   server instance (if you have not already done so).
   2. Setup a database to store the program data in:
     ```sql
-    
+
     CREATE DATABASE dbplayers;
     ```
   3. Create a user for the program to use to connect to the database.
@@ -65,8 +65,29 @@ Follow these steps to setup XIVStats-Gatherer-Java:
   ```shell
   java -jar XIVStats-Gatherer-Java.jar -s {lowest character id to fetch} -f {highest character id to fetch}
   ```
- Further command line options can be used, to view a list run the jar command with -h option.
- 
+  The application can be run with the following command line options/args:
+
+  | Short option | Long option           | Argument type  | Description                                               |
+  |:------------:|:---------------------:|:--------------:|:---------------------------------------------------------:|
+  |-b            |--do-not-store-progress| none           | do not store boolean data indicating player progress      |
+  |-d            | --database            | String         | database name                                             |
+  |-f            | --finish              | integer        | the character id to conclude character run at (inclusive) |
+  |-F            | --print-failures      | none           |  print records that don't exist                           |
+  |-h            | --help                | none           | display help message                                      |
+  |-m            | --store-mounts        | none           | store mount data set for each player into the database    |
+  |-P            | --store-minions       | none           | store minion data set for each player into the database   |
+  |-p            | --password            | String         | database user password                                    |
+  |-q            | --quiet               | none           | run program in quiet mode - no console output             |
+  |-s            | --start               | integer        | the character id to start from (inclusive)                |
+  |-S            | --split-table         | none           | split table into several small tables                     |
+  |-t            | --threads             | integer        | number of gatherer thrads to running                      |
+  |-T            | --table               | String         | the table to write records to                             |
+  |-u            | --user                | String         | database user                                             |
+  |-U            | --url                 | String         | the database URL of the database server to connect to     |
+  |-v            | --verbose             | none           | run program in verbose mode - full console output         |
+  |-x            | --suffix              | String         | suffix to append to all tables generated                  |
+
+
   Note: On Linux/Unix it is advised to run the program in Tmux/Screen or similar.
 
 ## Bugs and feature requests
