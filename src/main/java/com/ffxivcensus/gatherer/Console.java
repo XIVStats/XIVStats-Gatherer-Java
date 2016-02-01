@@ -26,7 +26,7 @@ public class Console {
         Options options = setupOptions();
 
         //Declare usage string
-        String usage = "java -jar XIVStats-Gatherer-Java.jar [-bmqDPS] -s startid -f finishid [-d database-name] [-u database-user] [-p database-user-password] [-U database-url] [-T table] [-t threads]";
+        String usage = "java -jar XIVStats-Gatherer-Java.jar [-bmqvFPS] -s startid -f finishid [-d database-name] [-u database-user] [-p database-user-password] [-U database-url] [-T table] [-t threads]";
         HelpFormatter formatter = new HelpFormatter();
 
         try{
@@ -94,17 +94,27 @@ public class Console {
 
             //Verbose mode
             if(cmd.hasOption("q")){
-                gatherer.setVerbose(false);
+                gatherer.setQuiet(true);
             } else {
-                gatherer.setVerbose(true);
+                gatherer.setQuiet(false);
             }
 
             //Debug mode
-            if(cmd.hasOption("D")){
-                gatherer.setPrintDuds(true);
+            if(cmd.hasOption("v")){
+                gatherer.setVerbose(true);
             } else{
-                gatherer.setPrintDuds(false);
+                gatherer.setVerbose(false);
             }
+
+            //Fail print
+            if(cmd.hasOption("F")){
+                gatherer.setPrintFails(true);
+            }
+            else
+            {
+                gatherer.setPrintFails(false);
+            }
+
 
             gatherer.run();
             return gatherer;
@@ -139,8 +149,9 @@ public class Console {
         Option optThreads = Option.builder("t").longOpt("threads").argName("no-threads").hasArg().numberOfArgs(1).desc("number of gatherer threads to run").build();
         Option optTable = Option.builder("T").longOpt("table").hasArg().numberOfArgs(1).argName("table").desc("the table to write records to").build();
         Option optSplitTable = Option.builder("S").longOpt("split-table").hasArg().numberOfArgs(1).argName("table-suffix").desc("split tblplayers into multiple tables").build();
-        Option optVerbose = Option.builder("q").longOpt("quiet").desc("run program in quiet mode - no console output").build();
-        Option optDebug = Option.builder("D").longOpt("debug").desc("run program in debug mode - full console output").build();
+        Option optQuiet = Option.builder("q").longOpt("quiet").desc("run program in quiet mode - no console output").build();
+        Option optVerbose = Option.builder("v").longOpt("verbose").desc("run program in verbose bug mode - full console output").build();
+        Option optFailPrint = Option.builder("F").longOpt("print-failures").desc("run program in quiet mode but print records that don't exist").build();
 
         //Add each option to the options object
         options.addOption(optStart);
@@ -156,8 +167,9 @@ public class Console {
         options.addOption(optHelp);
         options.addOption(optTable);
         options.addOption(optSplitTable);
+        options.addOption(optQuiet);
         options.addOption(optVerbose);
-        options.addOption(optDebug);
+        options.addOption(optFailPrint);
 
         return options;
     }

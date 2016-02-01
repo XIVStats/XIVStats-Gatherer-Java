@@ -83,11 +83,15 @@ public class GathererController {
     /**
      * Whether to provide console output.
      */
+    private boolean quiet;
+    /**
+     * Whether to output all console output.
+     */
     private boolean verbose;
     /**
-     * Whether to output when system finds a character that does not exist.
+     * Whether to output failed records
      */
-    private boolean printDuds;
+    private boolean printFails;
 
     /**
      * List of playable realms (used when splitting tables).
@@ -123,8 +127,9 @@ public class GathererController {
         this.splitTables = false;
         this.tableSuffix = "";
         this.tableName = "tblplayers";
-        this.verbose = true;
-        this.printDuds = false;
+        this.quiet = true;
+        this.verbose = false;
+        this.printFails = false;
 
         //Read in config
         try {
@@ -139,8 +144,8 @@ public class GathererController {
      *
      * @param startId the character id to start gatherer run at (inclusive).
      * @param endId the character if to end the gatherer run at (inclusive).
-     * @param verbose whether to provide console output indicating progress in adding characters.
-     * @param printDuds whether to provide console output indicating IDs where characters were not found.
+     * @param quiet whether to provide console output indicating progress in adding characters.
+     * @param verbose whether to provide console output indicating IDs where characters were not found.
      * @param storeMinions whether to store a player's minions to a comma delimited list in DB.
      * @param storeMounts whether to store a player's mounts to a comma delimited list in DB.
      * @param storeProgression whether to store boolean values indicating character achivements/progress in DB.
@@ -151,15 +156,16 @@ public class GathererController {
      * @param threads the number of threads to run the program with.
      * @param tableName the name of the SQL table to write character records to.
      */
-    public GathererController(int startId, int endId,boolean verbose, boolean printDuds, boolean storeMinions, boolean storeMounts, boolean storeProgression,
+    public GathererController(int startId, int endId, boolean quiet, boolean verbose, boolean storeMinions, boolean storeMounts, boolean storeProgression,
                               String dbUrl, String dbName, String dbUser, String dbPassword, int threads, String tableName) {
         this.startId = startId;
         this.endId = endId;
         this.storeMinions = storeMinions;
         this.storeMounts = storeMounts;
         this.storeProgression = storeProgression;
+        this.quiet = quiet;
         this.verbose = verbose;
-        this.printDuds = printDuds;
+        this.printFails = false;
 
         //Read in config
         try {
@@ -183,8 +189,8 @@ public class GathererController {
      *
      * @param startId the character id to start gatherer run at (inclusive).
      * @param endId the character if to end the gatherer run at (inclusive).
-     * @param verbose whether to provide console output indicating progress in adding characters.
-     * @param printDuds whether to provide console output indicating IDs where characters were not found.
+     * @param quiet whether to provide console output indicating progress in adding characters.
+     * @param verbose whether to provide console output indicating IDs where characters were not found.
      * @param storeMinions whether to store a player's minions to a comma delimited list in DB.
      * @param storeMounts whether to store a player's mounts to a comma delimited list in DB.
      * @param storeProgression whether to store boolean values indicating character achivements/progress in DB.
@@ -196,7 +202,7 @@ public class GathererController {
      * @param tableSuffix the suffix to apply to all tables created, e.g. 23012016
      * @param splitTables whether to split up the single player table into one for each realm/server.
      */
-    public GathererController(int startId, int endId,boolean verbose, boolean printDuds, boolean storeMinions, boolean storeMounts, boolean storeProgression,
+    public GathererController(int startId, int endId, boolean quiet, boolean verbose, boolean storeMinions, boolean storeMounts, boolean storeProgression,
                               String dbUrl, String dbName, String dbUser, String dbPassword, int threads,
                               String tableSuffix, boolean splitTables) {
         this.startId = startId;
@@ -204,8 +210,9 @@ public class GathererController {
         this.storeMinions = storeMinions;
         this.storeMounts = storeMounts;
         this.storeProgression = storeProgression;
+        this.quiet = quiet;
         this.verbose = verbose;
-        this.printDuds = printDuds;
+        this.printFails = false;
 
         //Read in config
         try {
@@ -506,7 +513,7 @@ public class GathererController {
 
             String strSQL = sbFields.toString() + sbValues.toString();
             st.executeUpdate(strSQL);
-            if(this.verbose || this.isPrintDuds()) {
+            if(!this.quiet || this.isVerbose()) {
                 strOut = "Character " + player.getId() + " written to database successfully.";
             }
             closeConnection(conn);
@@ -694,35 +701,35 @@ public class GathererController {
     }
 
     /**
-     * Set whether to run the program in verbose mode (print each successfully written record).
-     * @return whether to run the program in verbose mode
+     * Set whether to run the program in quiet mode (no console output).
+     * @return whether to run the program in quiet mode
      */
-    public boolean isVerbose() {
-        return verbose;
+    public boolean isQuiet() {
+        return quiet;
     }
 
     /**
-     * Set whether to run the program in verbose mode (print each successfully written record).
-     * @param verbose whether to run the program in verbose mode.
+     * Set whether to run the program in quiet mode (print each successfully written record).
+     * @param quiet whether to run the program in quiet mode.
      */
-    public void setVerbose(boolean verbose) {
-        this.verbose = verbose;
+    public void setQuiet(boolean quiet) {
+        this.quiet = quiet;
     }
 
     /**
      * Set whether to print an output when records don't exist.
      * @return whether to print an output when records don't exist.
      */
-    public boolean isPrintDuds() {
-        return printDuds;
+    public boolean isVerbose() {
+        return verbose;
     }
 
     /**
      * Set whether to print an output when records don't exist.
-     * @param printDuds whether to print an output when records don't exist.
+     * @param verbose whether to print an output when records don't exist.
      */
-    public void setPrintDuds(boolean printDuds) {
-        this.printDuds = printDuds;
+    public void setVerbose(boolean verbose) {
+        this.verbose = verbose;
     }
     /**
      * Get list of realms to create tables for
@@ -764,4 +771,19 @@ public class GathererController {
         return MAX_THREADS;
     }
 
+    /**
+     * Get whether to print record write fails
+     * @return whether to print record write fails
+     */
+    public boolean isPrintFails() {
+        return printFails;
+    }
+
+    /**
+     * Set whether to print record write fails
+     * @param printFails whether to print record write fails
+     */
+    public void setPrintFails(boolean printFails) {
+        this.printFails = printFails;
+    }
 }
