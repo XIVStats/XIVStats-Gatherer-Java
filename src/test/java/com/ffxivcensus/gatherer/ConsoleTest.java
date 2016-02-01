@@ -197,8 +197,10 @@ public class ConsoleTest {
 
     @Test
     public void testMain(){
-        String[] args = {"-s","200", "-f","300"};
+        String[] args = {"-s","1100", "-f","1400"};
         Console.main(args);
+        //Check output
+        assertFalse(outContent.toString().contains("does not exist."));
     }
 
     @Test
@@ -206,7 +208,6 @@ public class ConsoleTest {
         String[] args = {"-s","500","-f","600"};
         GathererController gc = Console.run(args);
         //Check output
-        assertTrue(outContent.toString().contains("written to database successfully."));
         assertFalse(outContent.toString().contains("does not exist."));
     }
 
