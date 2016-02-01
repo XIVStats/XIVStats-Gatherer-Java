@@ -120,12 +120,17 @@ public class ConsoleTest {
         //Test that options have set attributes correctly
         assertFalse(gc.isStoreProgression()); //b
         assertTrue(gc.isStoreMinions()); //P
+        assertTrue(gc.isQuiet()); //q
         assertFalse(gc.isVerbose()); //q
-        assertFalse(gc.isPrintDuds()); //q
         assertEquals("tblplayers_test",gc.getTableName());
         assertEquals(gc.getStartId(),0);
         assertEquals(gc.getEndId(),100);
         assertEquals(gc.getThreadLimit(),10);
+
+        assertTrue(outContent.toString().contains("Starting parse of range 0 to 100 using 10 threads"));
+        assertTrue(outContent.toString().contains("Run completed, 101 character IDs scanned"));
+        assertFalse(outContent.toString().contains("does not exist"));
+        assertFalse(outContent.toString().contains(" written to database successfully."));
     }
 
     /**
@@ -137,26 +142,27 @@ public class ConsoleTest {
      *     <li>Print duds</li>
      *     <li>User specified db name</li>
      *     <li>User specified db credentials</li>
+     *     <li>Verbose mode</li>
      * </ul>
      * @throws Exception
      */
     @Test
     public void testConsoleFullOptions() throws Exception {
 
-        String[] args = {"--start=100", "--finish=200", "--threads", "32","-D","-d",dbName,"-U","mysql://localhost:3306","-u",dbUser,"-p",dbPassword};
+        String[] args = {"--start=100", "--finish=200", "--threads", "32","-v","-d",dbName,"-U","mysql://localhost:3306","-u",dbUser,"-p",dbPassword};
         GathererController gc = Console.run(args);
 
         assertEquals(gc.getStartId(),100);
         assertEquals(gc.getEndId(),200);
         assertEquals(gc.getThreadLimit(),32);
-        assertTrue(gc.isPrintDuds());
+        assertTrue(gc.isVerbose());
     }
 
 
     @Test
     public void TestConsoleHelpDefault() throws Exception{
 
-        String strHelp = "usage: java -jar XIVStats-Gatherer-Java.jar [-bmqDPS] -s startid -f";
+        String strHelp = "usage: java -jar XIVStats-Gatherer-Java.jar [-bmqvFPS] -s startid -f";
 
         //Test for a help dialog displayed upon failure
         String[] args = {""};
@@ -168,7 +174,7 @@ public class ConsoleTest {
     @Test
     public void TestConsoleHelpOnFail() throws Exception{
 
-        String strHelp = "usage: java -jar XIVStats-Gatherer-Java.jar [-bmqDPS] -s startid -f";
+        String strHelp = "usage: java -jar XIVStats-Gatherer-Java.jar [-bmqvFPS] -s startid -f";
         //Test for a help dialog displayed upon failure
         String[] args = {"-s 0"};
         GathererController gc = Console.run(args);
@@ -180,20 +186,37 @@ public class ConsoleTest {
     @Test
     public void TestConsoleHelp() throws Exception{
 
-        String strHelp = "usage: java -jar XIVStats-Gatherer-Java.jar [-bmqDPS] -s startid -f";
+        String strHelp = "usage: java -jar XIVStats-Gatherer-Java.jar [-bmqvFPS] -s startid -f";
 
         //First test for a user requested help dialog
         String[] args = {"--help"};
         GathererController gc = Console.run(args);
         //Check output
         assertTrue(outContent.toString().contains(strHelp));
-
     }
 
     @Test
     public void testMain(){
-        String[] args = {"-s 200", "-f=300"};
+        String[] args = {"-s","200", "-f","300"};
         Console.main(args);
+    }
+
+    @Test
+    public void testDefault(){
+        String[] args = {"-s","500","-f","600"};
+        GathererController gc = Console.run(args);
+        //Check output
+        assertTrue(outContent.toString().contains("written to database successfully."));
+        assertFalse(outContent.toString().contains("does not exist."));
+    }
+
+    @Test
+    public void testPrintFails(){
+        String[] args = {"-s","700","-f","800","-qF"};
+        GathererController gc = Console.run(args);
+        //Check output
+        assertFalse(outContent.toString().contains("written to database successfully."));
+        assertTrue(outContent.toString().contains("does not exist."));
     }
 
     //Utility methods
