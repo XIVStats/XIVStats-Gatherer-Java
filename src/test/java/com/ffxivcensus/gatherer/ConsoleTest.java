@@ -156,126 +156,37 @@ public class ConsoleTest {
     @Test
     public void TestConsoleHelpDefault() throws Exception{
 
-        String strHelp = "usage: java -jar XIVStats-Gatherer-Java.jar [-bmqDPS] -s startid -f\n" +
-                "            finishid [-d database-name] [-u database-user] [-p\n" +
-                "            database-user-password] [-U database-url] [-T table] [-t\n" +
-                "            threads]\n" +
-                " -b,--do-not-store-progress               do not store boolean data\n" +
-                "                                          indicating player progress\n" +
-                " -d,--database <database-name>            database name\n" +
-                " -D,--debug                               run program in debug mode - full\n" +
-                "                                          console output\n" +
-                " -f,--finish <end-id>                     the character id to conclude\n" +
-                "                                          gather run at (inclusive)\n" +
-                " -h,--help                                display this help message\n" +
-                " -m,--store-mounts                        store mount data set for each\n" +
-                "                                          player into the database\n" +
-                " -P,--store-minions                       store minion data set for each\n" +
-                "                                          player into the database\n" +
-                " -p,--password <database-user-password>   database user password\n" +
-                " -q,--quiet                               run program in quiet mode - no\n" +
-                "                                          console output\n" +
-                " -s,--start <start-id>                    the character id to start\n" +
-                "                                          gatherer run from (inclusive)\n" +
-                " -S,--split-table <table-suffix>          split tblplayers into multiple\n" +
-                "                                          tables\n" +
-                " -t,--threads <no-threads>                number of gatherer threads to\n" +
-                "                                          run\n" +
-                " -T,--table <table>                       the table to write records to\n" +
-                " -u,--user <database-user>                database user\n" +
-                " -U,--url <database-server-url>           the database url of the database\n" +
-                "                                          server to connect to e.g.\n" +
-                "                                          mysql://localhost:3306\n";
+        String strHelp = "usage: java -jar XIVStats-Gatherer-Java.jar [-bmqDPS] -s startid -f";
 
         //Test for a help dialog displayed upon failure
         String[] args = {""};
         GathererController gc = Console.run(args);
         //Check output
-        assertEquals(strHelp.replaceAll("\n", " "),outContent.toString().replaceAll("\r\n", " "));
-
+        assertTrue(outContent.toString().contains(strHelp));
     }
 
     @Test
     public void TestConsoleHelpOnFail() throws Exception{
 
-        String strHelp = "usage: java -jar XIVStats-Gatherer-Java.jar [-bmqDPS] -s startid -f\n" +
-                "            finishid [-d database-name] [-u database-user] [-p\n" +
-                "            database-user-password] [-U database-url] [-T table] [-t\n" +
-                "            threads]\n" +
-                " -b,--do-not-store-progress               do not store boolean data\n" +
-                "                                          indicating player progress\n" +
-                " -d,--database <database-name>            database name\n" +
-                " -D,--debug                               run program in debug mode - full\n" +
-                "                                          console output\n" +
-                " -f,--finish <end-id>                     the character id to conclude\n" +
-                "                                          gather run at (inclusive)\n" +
-                " -h,--help                                display this help message\n" +
-                " -m,--store-mounts                        store mount data set for each\n" +
-                "                                          player into the database\n" +
-                " -P,--store-minions                       store minion data set for each\n" +
-                "                                          player into the database\n" +
-                " -p,--password <database-user-password>   database user password\n" +
-                " -q,--quiet                               run program in quiet mode - no\n" +
-                "                                          console output\n" +
-                " -s,--start <start-id>                    the character id to start\n" +
-                "                                          gatherer run from (inclusive)\n" +
-                " -S,--split-table <table-suffix>          split tblplayers into multiple\n" +
-                "                                          tables\n" +
-                " -t,--threads <no-threads>                number of gatherer threads to\n" +
-                "                                          run\n" +
-                " -T,--table <table>                       the table to write records to\n" +
-                " -u,--user <database-user>                database user\n" +
-                " -U,--url <database-server-url>           the database url of the database\n" +
-                "                                          server to connect to e.g.\n" +
-                "                                          mysql://localhost:3306\n";
-
+        String strHelp = "usage: java -jar XIVStats-Gatherer-Java.jar [-bmqDPS] -s startid -f";
         //Test for a help dialog displayed upon failure
         String[] args = {"-s 0"};
         GathererController gc = Console.run(args);
         //Check output
-        assertEquals(strHelp.replaceAll("\n", " "),outContent.toString().replaceAll("\r\n", " "));
+        assertTrue(outContent.toString().contains(strHelp));
 
     }
 
     @Test
     public void TestConsoleHelp() throws Exception{
 
-        String strHelp = "usage: java -jar XIVStats-Gatherer-Java.jar [-bmqDPS] -s startid -f\n" +
-                "            finishid [-d database-name] [-u database-user] [-p\n" +
-                "            database-user-password] [-U database-url] [-T table] [-t\n" +
-                "            threads]\n" +
-                " -b,--do-not-store-progress               do not store boolean data\n" +
-                "                                          indicating player progress\n" +
-                " -d,--database <database-name>            database name\n" +
-                " -D,--debug                               run program in debug mode - full\n" +
-                "                                          console output\n" +
-                " -f,--finish <end-id>                     the character id to conclude\n" +
-                "                                          gather run at (inclusive)\n" +
-                " -h,--help                                display this help message\n" +
-                " -m,--store-mounts                        store mount data set for each\n" +
-                "                                          player into the database\n" +
-                " -P,--store-minions                       store minion data set for each\n" +
-                "                                          player into the database\n" +
-                " -p,--password <database-user-password>   database user password\n" +
-                " -q,--quiet                               run program in quiet mode - no\n" +
-                "                                          console output\n" +
-                " -s,--start <start-id>                    the character id to start\n" +
-                "                                          gatherer run from (inclusive)\n" +
-                " -S,--split-table <table-suffix>          split tblplayers into multiple\n" +
-                "                                          tables\n" +
-                " -t,--threads <no-threads>                number of gatherer threads to\n" +
-                "                                          run\n" +
-                " -T,--table <table>                       the table to write records to\n" +
-                " -u,--user <database-user>                database user\n" +
-                " -U,--url <database-server-url>           the database url of the database\n" +
-                "                                          server to connect to e.g.\n" +
-                "                                          mysql://localhost:3306\n";
+        String strHelp = "usage: java -jar XIVStats-Gatherer-Java.jar [-bmqDPS] -s startid -f";
 
         //First test for a user requested help dialog
         String[] args = {"--help"};
         GathererController gc = Console.run(args);
         //Check output
-        assertEquals(strHelp.replaceAll("\n", " "),outContent.toString().replaceAll("\r\n", " "));
+        assertTrue(outContent.toString().contains(strHelp));
 
     }
 
