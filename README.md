@@ -1,7 +1,7 @@
 # XIV Stats Gatherer (Java) #
 
-[![Build Status](https://mygitlab.org:4043/buildStatus/icon?job=XIVStats-Gatherer-Java)](https://mygitlab.org:4043/job/XIVStats-Gatherer-Java/)
-[![Tests Status](https://img.shields.io/jenkins/t/https/mygitlab.org:4043/XIVStats-Gatherer-Java-Tests.svg)](https://mygitlab.org:4043/job/XIVStats-Gatherer-Java-Tests/lastBuild/testReport/)
+[![Build Status](https://mygitlab.org:4043/buildStatus/icon?job=XIVStats/XIVStats-Gatherer-Java)](https://mygitlab.org:4043/job/XIVStats/job/XIVStats-Gatherer-Java/)
+[![Tests Status](https://img.shields.io/jenkins/t/https/mygitlab.org:4043/XIVStats-Gatherer-Java-Tests.svg)](https://mygitlab.org:4043/job/XIVStats/job/XIVStats-Gatherer-Java-Tests/lastBuild/testReport/)
 [![codecov.io](https://codecov.io/github/XIVStats/XIVStats-Gatherer-Java/coverage.svg?branch=master)](https://codecov.io/github/XIVStats/XIVStats-Gatherer-Java?branch=master)
 
 XIVStats Gatherer Java is a multi threaded Java program with the purpose of
