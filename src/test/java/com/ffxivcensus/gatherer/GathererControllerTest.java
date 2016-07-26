@@ -23,11 +23,11 @@ import static org.junit.Assert.*;
  * Test the core functionality of the program, including CLI parameters.
  *
  * @author Peter Reid
- * @since v1.0
  * @see com.ffxivcensus.gatherer.Player
  * @see com.ffxivcensus.gatherer.Gatherer
  * @see com.ffxivcensus.gatherer.GathererController
  * @see com.ffxivcensus.gatherer.PlayerTest
+ * @since v1.0
  */
 public class GathererControllerTest {
     /**
@@ -46,6 +46,10 @@ public class GathererControllerTest {
      * The database to use
      */
     private static String dbName;
+    /**
+     * Hostname of database, e.g. mysql://host.example.com:3306
+     */
+    private static String dbHost;
 
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
     private final ByteArrayOutputStream errContent = new ByteArrayOutputStream();
@@ -66,7 +70,7 @@ public class GathererControllerTest {
      * Before running drop the table.
      */
     @BeforeClass
-    public static void setUpBaseClass(){
+    public static void setUpBaseClass() {
         try {
             readConfig();
             StringBuilder sbSQL = new StringBuilder();
@@ -74,7 +78,7 @@ public class GathererControllerTest {
             sbSQL.append("DROP TABLE  tblplayers_test;");
             sbSQL.append("DROP TABLE tblplayers_test_two;");
 
-            for (String strRealm : GathererController.getRealms()){
+            for (String strRealm : GathererController.getRealms()) {
                 sbSQL.append("DROP TABLE " + strRealm + ";");
             }
 
@@ -99,6 +103,7 @@ public class GathererControllerTest {
 
     /**
      * Test gathering run of range from 11886902 to 11887010
+     *
      * @throws IOException
      * @throws SAXException
      * @throws ParserConfigurationException
@@ -107,7 +112,7 @@ public class GathererControllerTest {
     public void testRunBasic() throws IOException, SAXException, ParserConfigurationException {
         int startId = 11886902;
         int endId = 11887010;
-        GathererController gathererController = new GathererController(startId,endId);
+        GathererController gathererController = new GathererController(startId, endId);
         gathererController.setTableName("tblplayers_test");
         try {
             gathererController.run();
@@ -115,8 +120,8 @@ public class GathererControllerTest {
         }
         //Test that records were successfully written to db
         java.sql.Connection conn = openConnection();
-        String strSQL = "SELECT * FROM " + gathererController.getTableName() + " WHERE `id`>=" + startId + " AND `id`<=" + endId +";";
-        ArrayList addedIDs = getAdded(conn,strSQL);
+        String strSQL = "SELECT * FROM " + gathererController.getTableName() + " WHERE `id`>=" + startId + " AND `id`<=" + endId + ";";
+        ArrayList addedIDs = getAdded(conn, strSQL);
 
         closeConnection(conn);
 
@@ -138,13 +143,13 @@ public class GathererControllerTest {
      * Run the program with invalid parameters.
      */
     @org.junit.Test
-    public void testRunBasicInvalidParams(){
+    public void testRunBasicInvalidParams() {
         int startId = 11887010;
         int endId = 11886902;
 
         //Store start time
         long startTime = System.currentTimeMillis();
-        GathererController gathererController = new GathererController(startId,endId);
+        GathererController gathererController = new GathererController(startId, endId);
         try {
             gathererController.run();
         } catch (Exception e) {
@@ -159,11 +164,11 @@ public class GathererControllerTest {
      * Perform a test run of GathererController with values passed in via constructor.
      */
     @org.junit.Test
-    public void testRunAdvancedOptions(){
+    public void testRunAdvancedOptions() {
         int startId = 1557260;
         int endId = 1558260;
 
-        GathererController gathererController = new GathererController(startId,endId,true,false,true,true,true,"mysql://localhost:3306",dbName,dbUser,dbPassword,32,"tblplayers_test_two");
+        GathererController gathererController = new GathererController(startId, endId, true, false, true, true, true, dbHost, dbName, dbUser, dbPassword, 32, "tblplayers_test_two");
         try {
             gathererController.run();
         } catch (Exception e) {
@@ -171,8 +176,8 @@ public class GathererControllerTest {
 
         //Test that records were successfully written to db
         java.sql.Connection conn = openConnection();
-        String strSQL = "SELECT * FROM tblplayers_test_two WHERE `id`>=" + startId + " AND `id`<=" + endId +";";
-        ArrayList addedIDs = getAdded(conn,strSQL);
+        String strSQL = "SELECT * FROM tblplayers_test_two WHERE `id`>=" + startId + " AND `id`<=" + endId + ";";
+        ArrayList addedIDs = getAdded(conn, strSQL);
         closeConnection(conn);
 
         //Test for IDs we know exist
@@ -196,11 +201,11 @@ public class GathererControllerTest {
      * Also testing non-verbose mode, debug output (print non-existant records).
      */
     @org.junit.Test
-    public void testRunSplitTables(){
+    public void testRunSplitTables() {
         int startId = 1557260;
         int endId = 1558260;
 
-        GathererController gathererController = new GathererController(startId,endId,false,true,false,true,false,"mysql://localhost:3306",dbName,dbUser,dbPassword,71,"_test",true);
+        GathererController gathererController = new GathererController(startId, endId, false, true, false, true, false, dbHost, dbName, dbUser, dbPassword, 71, "_test", true);
         try {
             gathererController.run();
         } catch (Exception e) {
@@ -209,21 +214,20 @@ public class GathererControllerTest {
 
         //Test that records were successfully written to db
         java.sql.Connection conn = openConnection();
-        String strSQLCerberus = "SELECT * FROM tblcerberus_test WHERE `id`>=" + startId + " AND `id`<=" + endId +";";
-        ArrayList addedIDsCerberus = getAdded(conn,strSQLCerberus);
+        String strSQLCerberus = "SELECT * FROM tblcerberus_test WHERE `id`>=" + startId + " AND `id`<=" + endId + ";";
+        ArrayList addedIDsCerberus = getAdded(conn, strSQLCerberus);
 
-        String strSQLShiva = "SELECT * FROM tblshiva_test WHERE `id`>=" + startId + " AND `id`<=" + endId +";";
-        ArrayList addedIDsShiva = getAdded(conn,strSQLShiva);
+        String strSQLShiva = "SELECT * FROM tblshiva_test WHERE `id`>=" + startId + " AND `id`<=" + endId + ";";
+        ArrayList addedIDsShiva = getAdded(conn, strSQLShiva);
 
-        String strSQLMoogle = "SELECT * FROM tblmoogle_test WHERE `id`>=" + startId + " AND `id`<=" + endId +";";
-        ArrayList addedIDsMoogle = getAdded(conn,strSQLMoogle);
+        String strSQLMoogle = "SELECT * FROM tblmoogle_test WHERE `id`>=" + startId + " AND `id`<=" + endId + ";";
+        ArrayList addedIDsMoogle = getAdded(conn, strSQLMoogle);
         closeConnection(conn);
 
 
         //Test for IDs we know exist in cerberus (realm of startID char)
         assertTrue(addedIDsCerberus.contains(startId));
         assertTrue(addedIDsCerberus.contains(1557648));
-        assertTrue(addedIDsCerberus.contains(1558014));
         assertTrue(addedIDsCerberus.contains(1558244));
 
         //Test for ids that will exist on shiva (realm of end char)
@@ -243,11 +247,11 @@ public class GathererControllerTest {
      * Invoke a test run using options that will cause the program not to run.
      */
     @org.junit.Test
-    public void testRunMisconfigured(){
+    public void testRunMisconfigured() {
         int startId = -1;
         int endId = -1;
 
-        GathererController gathererController = new GathererController(startId,endId);
+        GathererController gathererController = new GathererController(startId, endId);
         //Set invalid options
         gathererController.setDbUser("");
         gathererController.setDbPassword("");
@@ -257,7 +261,7 @@ public class GathererControllerTest {
         try {
             gathererController.run();
         } catch (Exception e) {
-            assertEquals("Program not (correctly) configured",e.getMessage());
+            assertEquals("Program not (correctly) configured", e.getMessage());
         }
         String strOut = gathererController.isConfigured();
         assertTrue(strOut.contains("Start ID must be configured to a positive numerical value"));
@@ -270,11 +274,11 @@ public class GathererControllerTest {
     }
 
     @org.junit.Test
-    public void testRunMisconfiguredTwo(){
+    public void testRunMisconfiguredTwo() {
         int startId = 0;
         int endId = 100;
 
-        GathererController gathererController = new GathererController(startId,endId);
+        GathererController gathererController = new GathererController(startId, endId);
         //Set invalid options
         gathererController.setDbUser(null);
         gathererController.setDbPassword(null);
@@ -290,6 +294,7 @@ public class GathererControllerTest {
     }
 
     //Utility methods
+
     /**
      * Open a connection to database.
      *
@@ -346,15 +351,17 @@ public class GathererControllerTest {
         dbUser = elementJDBC.getElementsByTagName("username").item(0).getTextContent();
         dbPassword = elementJDBC.getElementsByTagName("password").item(0).getTextContent();
         dbName = elementJDBC.getElementsByTagName("database").item(0).getTextContent();
+        dbHost = elementJDBC.getElementsByTagName("url").item(0).getTextContent();
     }
 
     /**
      * Execute a SQL query and return the results.
-     * @param conn the SQL connection to use.
+     *
+     * @param conn   the SQL connection to use.
      * @param strSQL the SQL statement to execute.
      * @return the result set of added rows.
      */
-    public static ResultSet executeStatement(Connection conn, String strSQL){
+    public static ResultSet executeStatement(Connection conn, String strSQL) {
         ResultSet rs;
         try {
             Statement stmt = conn.createStatement();
@@ -370,17 +377,18 @@ public class GathererControllerTest {
 
     /**
      * Get an array list containing the added IDs returned by executing a SQL statement.
-     * @param conn the SQL connection to use.
+     *
+     * @param conn   the SQL connection to use.
      * @param strSQL the SQL statement to execute
      * @return an array list of the IDs successfully added to DB.
      */
-    public static ArrayList getAdded(Connection conn, String strSQL){
+    public static ArrayList getAdded(Connection conn, String strSQL) {
         ResultSet rs;
         ArrayList addedIDs = new ArrayList();
-        rs = executeStatement(conn,strSQL);
+        rs = executeStatement(conn, strSQL);
         //Convert dataset to array list
         try {
-            while(rs.next()){
+            while (rs.next()) {
                 addedIDs.add(rs.getInt(1));
             }
         } catch (SQLException e) {
