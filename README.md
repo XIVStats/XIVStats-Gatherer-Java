@@ -170,8 +170,9 @@ The database table ```tblplayers``` has the following structure:
 |sahagin               |bit      |Mount - Cavalry Elbst           |
 |amaljaa               |bit      |Mount - Cavalry Drake           |
 |sylph                 |bit      |Mount - Laurel Goobbue          |
-|hw_complete            |bit      |Mount - Midgardsormr            |
+|hw_complete           |bit      |Mount - Midgardsormr            |
 |hw_31_complete        |bit      |Minion - Wind-up Haurchefant    |
+|hw_33_complete        |bit      |Minion - Wind-up Aymeric        |
 |legacy_player         |bit      |Mount - Legacy Chocobo          |
 |*mounts*              |*text*   |*N/A*                           |
 |*minions*             |*text*   |*N/A*                           |

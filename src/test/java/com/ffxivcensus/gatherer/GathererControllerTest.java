@@ -30,6 +30,7 @@ import static org.junit.Assert.*;
  * @since v1.0
  */
 public class GathererControllerTest {
+
     /**
      * The JDBC URL of the database to modify
      */
@@ -54,42 +55,10 @@ public class GathererControllerTest {
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
     private final ByteArrayOutputStream errContent = new ByteArrayOutputStream();
 
-    @org.junit.Before
-    public void setUpStreams() {
-        System.setOut(new PrintStream(outContent));
-        System.setErr(new PrintStream(errContent));
-    }
-
-    @org.junit.After
-    public void cleanUpStreams() {
-        System.setOut(null);
-        System.setErr(null);
-    }
-
-    /**
-     * Before running drop the table.
-     */
     @BeforeClass
     public static void setUpBaseClass() {
         try {
             readConfig();
-            StringBuilder sbSQL = new StringBuilder();
-            //DROP existing test tables
-            sbSQL.append("DROP TABLE  tblplayers_test;");
-            sbSQL.append("DROP TABLE tblplayers_test_two;");
-
-            for (String strRealm : GathererController.getRealms()) {
-                sbSQL.append("DROP TABLE " + strRealm + ";");
-            }
-
-            java.sql.Connection conn = openConnection();
-            try {
-                Statement stmt = conn.createStatement();
-                stmt.executeUpdate(sbSQL.toString());
-            } catch (SQLException e) {
-
-            }
-            closeConnection(conn);
 
         } catch (ParserConfigurationException e) {
             e.printStackTrace();
@@ -98,7 +67,38 @@ public class GathererControllerTest {
         } catch (SAXException e) {
             e.printStackTrace();
         }
+    }
 
+    /**
+     * Before running each test, drop tables and pipe output into buffer
+     */
+    @org.junit.Before
+    public void setUpDB() {
+        System.setOut(new PrintStream(outContent));
+        System.setErr(new PrintStream(errContent));
+        StringBuilder sbSQL = new StringBuilder();
+        //DROP existing test tables
+        sbSQL.append("DROP TABLE  tblplayers_test;");
+        sbSQL.append("DROP TABLE tblplayers_test_two;");
+
+        for (String strRealm : GathererController.getRealms()) {
+            sbSQL.append("DROP TABLE " + strRealm + ";");
+        }
+
+        java.sql.Connection conn = openConnection();
+        try {
+            Statement stmt = conn.createStatement();
+            stmt.executeUpdate(sbSQL.toString());
+        } catch (SQLException e) {
+
+        }
+        closeConnection(conn);
+    }
+
+    @org.junit.After
+    public void cleanUpStreams() {
+        System.setOut(null);
+        System.setErr(null);
     }
 
     /**
@@ -113,7 +113,7 @@ public class GathererControllerTest {
         int startId = 11886902;
         int endId = 11887010;
         GathererController gathererController = new GathererController(startId, endId);
-        gathererController.setTableName("tblplayers_test");
+        gathererController.setTableName("tblplayers_test_3");
         try {
             gathererController.run();
         } catch (Exception e) {
@@ -161,7 +161,8 @@ public class GathererControllerTest {
     }
 
     /**
-     * Perform a test run of GathererController with values passed in via constructor.
+     * Perform a test run of GathererController with values passed in via
+     * constructor.
      */
     @org.junit.Test
     public void testRunAdvancedOptions() {
@@ -196,7 +197,8 @@ public class GathererControllerTest {
     }
 
     /**
-     * Invoke a test run in which the single characters table is being split across several tables, one for each realm.
+     * Invoke a test run in which the single characters table is being split
+     * across several tables, one for each realm.
      *
      * Also testing non-verbose mode, debug output (print non-existant records).
      */
@@ -205,7 +207,7 @@ public class GathererControllerTest {
         int startId = 1557260;
         int endId = 1558260;
 
-        GathererController gathererController = new GathererController(startId, endId, false, true, false, true, false, dbHost, dbName, dbUser, dbPassword, 71, "_test", true);
+        GathererController gathererController = new GathererController(startId, endId, false, true, false, false, false, dbHost, dbName, dbUser, dbPassword, 71, "_test", true);
         try {
             gathererController.run();
         } catch (Exception e) {
@@ -223,7 +225,6 @@ public class GathererControllerTest {
         String strSQLMoogle = "SELECT * FROM tblmoogle_test WHERE `id`>=" + startId + " AND `id`<=" + endId + ";";
         ArrayList addedIDsMoogle = getAdded(conn, strSQLMoogle);
         closeConnection(conn);
-
 
         //Test for IDs we know exist in cerberus (realm of startID char)
         assertTrue(addedIDsCerberus.contains(startId));
@@ -294,7 +295,6 @@ public class GathererControllerTest {
     }
 
     //Utility methods
-
     /**
      * Open a connection to database.
      *
@@ -329,9 +329,10 @@ public class GathererControllerTest {
     /**
      * Read configuration from config.xml
      *
-     * @throws ParserConfigurationException Indicates a serious configuration error.
-     * @throws IOException                  Indicates an error reading the file specified.
-     * @throws SAXException                 Indicates an error parsing XML.
+     * @throws ParserConfigurationException Indicates a serious configuration
+     * error.
+     * @throws IOException Indicates an error reading the file specified.
+     * @throws SAXException Indicates an error parsing XML.
      */
     public static void readConfig() throws ParserConfigurationException, IOException, SAXException {
         //Set config file location
@@ -357,7 +358,7 @@ public class GathererControllerTest {
     /**
      * Execute a SQL query and return the results.
      *
-     * @param conn   the SQL connection to use.
+     * @param conn the SQL connection to use.
      * @param strSQL the SQL statement to execute.
      * @return the result set of added rows.
      */
@@ -376,9 +377,10 @@ public class GathererControllerTest {
     }
 
     /**
-     * Get an array list containing the added IDs returned by executing a SQL statement.
+     * Get an array list containing the added IDs returned by executing a SQL
+     * statement.
      *
-     * @param conn   the SQL connection to use.
+     * @param conn the SQL connection to use.
      * @param strSQL the SQL statement to execute
      * @return an array list of the IDs successfully added to DB.
      */

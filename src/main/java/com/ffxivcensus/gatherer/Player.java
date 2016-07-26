@@ -82,6 +82,7 @@ public class Player {
     private boolean hasSylph;
     private boolean hasCompletedHW;
     private boolean hasCompleted3pt1;
+    private boolean hasCompleted3pt3;
     private boolean isLegacyPlayer;
     private ArrayList minions;
     private ArrayList mounts;
@@ -152,6 +153,7 @@ public class Player {
         setHasSylph(false);
         setHasCompletedHW(false);
         setHasCompleted3pt1(false);
+        setHasCompleted3pt3(false);
     }
 
     /**
@@ -1624,6 +1626,37 @@ public class Player {
     }
 
     /**
+     * Get whether the user has completed the 3.3 story.
+     *
+     * @return whether the user has completed the 3.3 story.
+     */
+    public boolean isHasCompleted3pt3() {
+        return hasCompleted3pt3;
+    }
+
+    /**
+     * Get bit value whether the user has completed the 3.3 story.
+     *
+     * @return bit value
+     */
+    public int getBitHasCompleted3pt3() {
+        if (hasCompleted3pt3) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+    /**
+     * Set whether the user has completed the 3.3 story.
+     *
+     * @param hasCompleted3pt3 whether the user has completed the 3.3 story.
+     */
+    public void setHasCompleted3pt3(boolean hasCompleted3pt3) {
+        this.hasCompleted3pt3 = hasCompleted3pt3;
+    }    
+    
+    /**
      * Get whether the user played 1.0.
      *
      * @return whether the user has played 1.0
@@ -1823,6 +1856,7 @@ public class Player {
             player.setHasCompletedHildibrand(player.doesPlayerHaveMinion("Wind-up Gentleman"));
             player.setHasPS4Collectors(player.doesPlayerHaveMinion("Wind-up Moogle"));
             player.setHasCompleted3pt1(player.doesPlayerHaveMinion("Wind-up Haurchefant"));
+            player.setHasCompleted3pt3(player.doesPlayerHaveMinion("Wind-up Aymeric"));
             player.setHasEternalBond(player.doesPlayerHaveMount("Ceremony Chocobo"));
             player.setHasARRCollectors(player.doesPlayerHaveMount("Coeurl"));
             player.setHasKobold(player.doesPlayerHaveMount("Bomb Palanquin"));
