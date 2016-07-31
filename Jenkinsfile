@@ -1,6 +1,5 @@
 node {
   stage 'Checkout'
-  step([$class: 'GitHubCommitStatusSetter'])
   //Clean dir
   deleteDir()
   //Checkoute code from repository
@@ -14,8 +13,7 @@ node {
   sh 'mkdir - p target/release'
   sh 'cp target/*dependencies.jar target/release/XIVStats-Gatherer-Java.jar'
   sh 'cp config_example.xml target/release'
-  sh 'cd target/release'
-  sh 'zip -r XIVStats-Gatherer-Java-$POM_VERSION.zip .'
+  sh 'cd target/release && zip -r XIVStats-Gatherer-Java-$POM_VERSION.zip .'
   sh 'cd ../..'
   archiveArtifacts 'target/*.jar,target/**/*.class'
   archiveArtifacts 'target/release/*.zip'
