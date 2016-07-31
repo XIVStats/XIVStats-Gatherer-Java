@@ -10,7 +10,6 @@ node {
   sh 'mvn clean install -DskipTests validate compile package jar:jar javadoc:javadoc'
   
   stage 'Publish Artifacts'
-  propagate()
   step([$class: 'JavadocArchiver', javadocDir: 'target/site/apidocs'])
   sh 'mkdir - p target/release'
   sh 'cp target/*dependencies.jar target/release/XIVStats-Gatherer-Java.jar'
@@ -22,7 +21,6 @@ node {
   archiveArtifacts 'target/release/*.zip'
   
   stage 'Test'
-  propogate()
   sh 'cp ~/xivstatsFiles/config.xml .'
   sh 'mvn test'
   sh 'rm config.xml'
