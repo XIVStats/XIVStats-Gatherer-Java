@@ -1,5 +1,6 @@
 node {
   stage 'Checkout'
+  step([$class: 'GitHubCommitStatusSetter'])
   //Clean dir
   deleteDir()
   //Checkoute code from repository
