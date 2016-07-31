@@ -13,7 +13,7 @@ node {
   step([$class: 'JavadocArchiver', javadocDir: 'target/site/apidocs'])
   sh 'mkdir - p target/release'
   sh 'cp target/*dependencies.jar target/release/XIVStats-Gatherer-Java.jar'
-  cp 'cp config_example.xml target/release'
+  sh 'cp config_example.xml target/release'
   sh 'cd target/release'
   sh 'zip -r XIVStats-Gatherer-Java-$POM_VERSION.zip .'
   sh 'cd ../..'
