@@ -37,8 +37,9 @@ try {
     // currentBuild.result must be non-null for this step to work.
     step([$class: 'Mailer', notifyEveryUnstableBuild: true, recipients: emailextrecipients([[$class: 'CulpritsRecipientProvider'], [$class: 'RequesterRecipientProvider']])])
 
-  /* Must re-throw exception to propagate error */
-  if (err) {
-    throw err
+    /* Must re-throw exception to propagate error */
+    if (err) {
+      throw err
+    }
   }
 }
