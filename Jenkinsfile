@@ -1,10 +1,3 @@
-def envVars = env.getEnvironment()
-String email_to
-
-if (envVars.containsKey("EMAIL_TO")) {
-  email_to = EMAIL_TO
-}
-
 try {
   node {
     stage 'Checkout'
@@ -42,11 +35,7 @@ try {
   (currentBuild.result != "ABORTED") && node("master") {
     // Send e-mail notifications for failed or unstable builds.
     // currentBuild.result must be non-null for this step to work.
-    step([$class: 'Mailer',
-          notifyEveryUnstableBuild: true,
-          recipients: "${email_to}",
-          sendToIndividuals: true])
-  }
+    step([$class: 'Mailer', notifyEveryUnstableBuild: true, recipients: emailextrecipients([[$class: 'CulpritsRecipientProvider'], [$class: 'RequesterRecipientProvider']])])
 
   /* Must re-throw exception to propagate error */
   if (err) {
