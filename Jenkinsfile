@@ -28,7 +28,7 @@ try {
     step([$class: 'JUnitResultArchiver', testResults: 'target/surefire-reports/*.xml'])
 
   }
-} catch (caughtError) { #End of Try
+} catch (caughtError) { //End of Try
   err = caughtError
   currentBuild.result = "FAILURE"
 } finally {
