@@ -1,3 +1,5 @@
+def envVars = env.getEnvironment()
+
 if (envVars.containsKey("EMAIL_TO")) {
   email_to = EMAIL_TO
 }
