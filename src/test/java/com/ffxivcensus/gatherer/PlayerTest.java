@@ -30,7 +30,7 @@ public class PlayerTest {
         assertEquals("Cerberus", playerOne.getRealm());
 
         //Following can only be assumed to be true based on info at time of test creation
-        assertEquals("Au Ra", playerOne.getRace());
+        assertEquals("Miqo'te", playerOne.getRace());
         assertEquals("female", playerOne.getGender());
         assertEquals("Maelstrom", playerOne.getGrandCompany());
         assertEquals("End of Days", playerOne.getFreeCompany());
