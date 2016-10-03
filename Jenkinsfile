@@ -2,6 +2,7 @@ def err = null
 try {
   node {
     stage 'Checkout'
+    echo "SONAR_SERVER = "+ SONAR_SERVER
     //Clean dir
     deleteDir()
     //Checkoute code from repository
