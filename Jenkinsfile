@@ -28,6 +28,9 @@ try {
     sh 'codecov --token=96498141-ca0d-4144-af53-c04b593115ef'
     step([$class: 'JUnitResultArchiver', testResults: 'target/surefire-reports/*.xml'])
 
+    stage 'Static Analysis'
+    def sonarqubeScannerHome = tool name: 'SonarQubeScanner', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
+    sh "${sonarqubeScannerHome}/bin/sonar-scanner -e -Dsonar.host.url=https://sonar.reidweb.com"
   }
 } catch (caughtError) { //End of Try
   err = caughtError
