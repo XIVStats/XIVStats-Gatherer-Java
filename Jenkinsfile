@@ -10,7 +10,7 @@ try {
     stage 'Build'
     sh 'mvn clean install -DskipTests validate compile package jar:jar javadoc:javadoc'
 
-    stage 'Publish Artifacts'
+    stage 'Generate Artifacts'
     step([$class: 'JavadocArchiver', javadocDir: 'target/site/apidocs'])
     sh 'mkdir - p target/release'
     sh 'cp target/*dependencies.jar target/release/XIVStats-Gatherer-Java.jar'
@@ -27,6 +27,14 @@ try {
     sh 'pip install --user codecov'
     sh 'codecov --token=96498141-ca0d-4144-af53-c04b593115ef'
     step([$class: 'JUnitResultArchiver', testResults: 'target/surefire-reports/*.xml'])
+
+    stage 'Static Analysis'
+    // requires SonarQube Scanner 2.8+
+    def scannerHome = tool 'SonarQube Scanner 2.8';
+    withSonarQubeEnv('SonarQube') {
+      sh "${scannerHome}/bin/sonar-scanner"
+    }
+
   }
 } catch (caughtError) { //End of Try
   err = caughtError
