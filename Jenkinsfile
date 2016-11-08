@@ -32,12 +32,14 @@ try {
       step([$class: 'JUnitResultArchiver', testResults: 'target/surefire-reports/*.xml'])
     }
 
-//    stage 'Static Analysis'
-//    // requires SonarQube Scanner 2.8+
-//    def scannerHome = tool 'SonarQube Scanner 2.8';
-//    withSonarQubeEnv('SonarQube') {
-//      sh "${scannerHome}/bin/sonar-scanner"
-//    }
+    stage('SonarQube analysis') {
+      // requires SonarQube Scanner 2.8+
+      def scannerHome = tool 'SonarQube Scanner 2.8';
+      println scannerHome;
+//      withSonarQubeEnv('ReidWeb SonarQube') {
+//        sh "${scannerHome}/bin/sonar-scanner"
+//      }
+    }
 
   }
 } catch (caughtError) { //End of Try
