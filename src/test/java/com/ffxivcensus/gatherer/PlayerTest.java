@@ -177,14 +177,14 @@ public class PlayerTest {
 
 
     /**
-     * Perform a test of the getPlayer method using character #13002145 (Matthew Pricewood, Cerberus) to test data
+     * Perform a test of the getPlayer method using character #13002145 (Mi Clay, Yojimbo) to test data
      * that could not be tested with other tests.
      *
      * @throws Exception Exception exception thrown when reading non-existant character.
      */
     @org.junit.Test
     public void testUnplayedPlayer() throws Exception {
-        Player player = Player.getPlayer(13002145);
+        Player player = Player.getPlayer(13002142);
 
         //Test grand company
         assertEquals("none", player.getGrandCompany());
