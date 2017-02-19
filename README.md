@@ -197,5 +197,5 @@ being able to perform asynchronous database transactions.
 * [GitHub](https://github.com/pricetx)
 
 ## Copyright and license
-Code and documentation copyright 2015-2016 Jonathan Price & Peter Reid, Code
+Code and documentation copyright 2015-2017 Jonathan Price & Peter Reid, Code
 and documentation released under the [BSD 2-Clause "Simplified" License](https://github.com/XIVStats/XIVStats-Gatherer-Java/blob/master/LICENSE).
