@@ -91,7 +91,7 @@ public class Player {
     private boolean isLegacyPlayer;
     private ArrayList minions;
     private ArrayList mounts;
-    private Date imgLastModified;
+    private Date dateImgLastModified;
 
     /**
      * Constructor for player object.
@@ -160,7 +160,7 @@ public class Player {
         setHasCompletedHW(false);
         setHasCompleted3pt1(false);
         setHasCompleted3pt3(false);
-        setImgLastModified(new Date());
+        setDateImgLastModified(new Date());
     }
 
     /**
@@ -1665,10 +1665,10 @@ public class Player {
 
     /**
      * Set the date on which the player's avatar was last modified
-     * @param imgLastModified the date on which the player's avatar was last modified
+     * @param dateImgLastModified the date on which the player's avatar was last modified
      */
-    public void setImgLastModified(Date imgLastModified) {
-        this.imgLastModified = imgLastModified;
+    public void setDateImgLastModified(Date dateImgLastModified) {
+        this.dateImgLastModified = dateImgLastModified;
     }
 
     /**
@@ -1845,7 +1845,7 @@ public class Player {
             player.setGender(getGenderFromPage(doc));
             player.setGrandCompany(getGrandCompanyFromPage(doc));
             player.setFreeCompany(getFreeCompanyFromPage(doc));
-            player.setImgLastModified(getDateLastUpdatedFromPage(doc));
+            player.setDateImgLastModified(getDateLastUpdatedFromPage(doc));
             player.setLevels(getLevelsFromPage(doc));
             player.setMounts(getMountsFromPage(doc));
             player.setMinions(getMinionsFromPage(doc));
@@ -2128,7 +2128,7 @@ public class Player {
      * Get the date on which the Character's full body image was last modified
      * @return the date on which the Character's full body image was last modified
      */
-    public Date getImgLastModified() {
-        return imgLastModified;
+    public Date getDateImgLastModified() {
+        return dateImgLastModified;
     }
 }
