@@ -33,8 +33,6 @@ public class Player {
      */
     private final static int ACTIVITY_RANGE_DAYS = 30;
 
-
-    private static final long ONE_MINUTE_IN_MILLIS=60000;
     private static final long ONE_DAY_IN_MILLIS=86400000;
 
     /**
@@ -1913,7 +1911,7 @@ public class Player {
 
         Calendar date = Calendar.getInstance();
         long t= date.getTimeInMillis();
-        Date nowMinusExcludeRange =new Date(t - (EXCLUDE_RANGE * ONE_MINUTE_IN_MILLIS));
+        Date nowMinusExcludeRange =new Date(t - (EXCLUDE_RANGE * 30000));
 
         Date nowMinusIncludeRange = new Date(t - (ACTIVITY_RANGE_DAYS * ONE_DAY_IN_MILLIS));
         if(this.dateImgLastModified.after(nowMinusExcludeRange)) { //If the date modified is inside the exclude range
