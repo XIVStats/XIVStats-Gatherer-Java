@@ -236,6 +236,8 @@ public class GathererController {
         this.tableName = "tblplayers";
         this.tableSuffix = tableSuffix;
         this.splitTables = splitTables;
+        this.storeActiveDate = true;
+        this.storePlayerActive = true;
     }
 
     /**
@@ -530,7 +532,12 @@ public class GathererController {
                 sbFields.append(",");
                 sbValues.append(",");
                 sbFields.append("date_active");
-                sbValues.append(player.getDateImgLastModified());
+                java.util.Date dt = new java.util.Date();
+
+                java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd");
+
+                String sqlDate = sdf.format(player.getDateImgLastModified());
+                sbValues.append("\"" + sqlDate + "\"");
             }
             if(this.storePlayerActive) {
                 sbFields.append(",");
