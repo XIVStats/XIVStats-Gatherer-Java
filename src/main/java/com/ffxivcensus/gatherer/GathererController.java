@@ -764,7 +764,7 @@ public class GathererController {
     }
     /**
      * Get list of realms to create tables for
-     * @return
+     * @return array of realm names
      */
     public static String[] getRealms() {
         return realms;
