@@ -2177,6 +2177,15 @@ public class Player {
     }
 
     /**
+     * Get whether a Player is active
+     * @return whether Player is active
+     */
+    public int getBitIsActive() {
+        if(this.isActive) return 1;
+        return 0;
+    }
+
+    /**
      * Set whether Player is active
      * @param active whether player is considered active
      */
