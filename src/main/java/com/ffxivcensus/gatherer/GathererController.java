@@ -92,6 +92,14 @@ public class GathererController {
      * Whether to output failed records
      */
     private boolean printFails;
+    /**
+     * Whether to store player activity dates
+     */
+    private boolean storeActiveDate;
+    /**
+     * Whether to store player activity bit
+     */
+    private boolean storePlayerActive;
 
     /**
      * List of playable realms (used when splitting tables).
@@ -228,6 +236,8 @@ public class GathererController {
         this.tableName = "tblplayers";
         this.tableSuffix = tableSuffix;
         this.splitTables = splitTables;
+        this.storeActiveDate = true;
+        this.storePlayerActive = true;
     }
 
     /**
@@ -343,6 +353,14 @@ public class GathererController {
             }
             if (this.storeMinions) {
                 sbSQL.append(",minions TEXT");
+            }
+            if(this.storeActiveDate) {
+                sbSQL.append(",");
+                sbSQL.append("date_active DATE");
+            }
+            if(this.storePlayerActive) {
+                sbSQL.append(",");
+                sbSQL.append("is_active BIT");
             }
             sbSQL.append(");");
 
@@ -507,6 +525,25 @@ public class GathererController {
                 sbValues.append(",");
                 sbFields.append("mounts");
                 sbValues.append("\"" + player.getMountsString() + "\"");
+            }
+
+
+            if(this.storeActiveDate) {
+                sbFields.append(",");
+                sbValues.append(",");
+                sbFields.append("date_active");
+                java.util.Date dt = new java.util.Date();
+
+                java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd");
+
+                String sqlDate = sdf.format(player.getDateImgLastModified());
+                sbValues.append("\"" + sqlDate + "\"");
+            }
+            if(this.storePlayerActive) {
+                sbFields.append(",");
+                sbValues.append(",");
+                sbFields.append("is_active");
+                sbValues.append(player.getBitIsActive());
             }
 
             sbFields.append(")");
@@ -734,7 +771,7 @@ public class GathererController {
     }
     /**
      * Get list of realms to create tables for
-     * @return
+     * @return array of realm names
      */
     public static String[] getRealms() {
         return realms;
@@ -786,5 +823,21 @@ public class GathererController {
      */
     public void setPrintFails(boolean printFails) {
         this.printFails = printFails;
+    }
+
+    /**
+     * Set whether to store the last active date of a character
+     * @param storeActiveDate whether to store the last active date of a character
+     */
+    public void setStoreActiveDate(boolean storeActiveDate) {
+        this.storeActiveDate = storeActiveDate;
+    }
+
+    /**
+     * Set whether to store a boolean value indicating player activity
+     * @param storePlayerActive whether to store a boolean value indicating player activity
+     */
+    public void setStorePlayerActive(boolean storePlayerActive) {
+        this.storePlayerActive = storePlayerActive;
     }
 }

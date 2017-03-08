@@ -2,6 +2,8 @@ package com.ffxivcensus.gatherer;
 
 import com.ffxivcensus.gatherer.Player;
 
+import java.util.Date;
+
 import static org.junit.Assert.*;
 
 /**
@@ -154,6 +156,9 @@ public class PlayerTest {
         assertTrue(playerOne.getMountsString().contains("Cavalry Drake,Cavalry Elbst"));
         //Test for data from very end
         assertTrue(playerOne.getMountsString().contains("Midgardsormr"));
+
+        //Is active
+        assertTrue(playerOne.isActive());
     }
 
     /**
@@ -221,6 +226,9 @@ public class PlayerTest {
         assertEquals(player.getBitHasCompletedHW(), 0);
         assertEquals(player.getBitHasCompleted3pt1(), 0);
         assertEquals(player.getBitHasARRCollectors(), 0);
+        //Tricky to test this - testing here that it was at the very least set to some value other than what it is set to a value other than that which it is initialized
+        assertTrue(player.getDateImgLastModified() != new Date());
+        assertFalse(player.isActive());
 
         //Test get minions method
         assertTrue(player.getMinions().size() == 0);

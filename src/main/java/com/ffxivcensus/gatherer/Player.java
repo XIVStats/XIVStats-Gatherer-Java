@@ -1,15 +1,21 @@
 package com.ffxivcensus.gatherer;
 
+import com.mashape.unirest.http.HttpResponse;
+import com.mashape.unirest.http.JsonNode;
+import com.mashape.unirest.http.Unirest;
+import com.mashape.unirest.http.exceptions.UnirestException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.regex.Pattern;
 
 /**
@@ -21,6 +27,20 @@ import java.util.regex.Pattern;
  * @see Gatherer
  */
 public class Player {
+
+    /**
+     * Number of days inactivity before character is considered inactive
+     */
+    private final static int ACTIVITY_RANGE_DAYS = 30;
+
+
+    private static final long ONE_MINUTE_IN_MILLIS=60000;
+    private static final long ONE_DAY_IN_MILLIS=86400000;
+
+    /**
+     * Ignore dates from inside EXCLUDE_RANGE in minutes
+     */
+    private static final long EXCLUDE_RANGE= 5;
 
     private int id;
     private String realm;
@@ -86,6 +106,8 @@ public class Player {
     private boolean isLegacyPlayer;
     private ArrayList minions;
     private ArrayList mounts;
+    private Date dateImgLastModified;
+    private boolean isActive;
 
     /**
      * Constructor for player object.
@@ -154,6 +176,8 @@ public class Player {
         setHasCompletedHW(false);
         setHasCompleted3pt1(false);
         setHasCompleted3pt3(false);
+        setDateImgLastModified(new Date());
+        setActive(false);
     }
 
     /**
@@ -1654,8 +1678,16 @@ public class Player {
      */
     public void setHasCompleted3pt3(boolean hasCompleted3pt3) {
         this.hasCompleted3pt3 = hasCompleted3pt3;
-    }    
-    
+    }
+
+    /**
+     * Set the date on which the player's avatar was last modified
+     * @param dateImgLastModified the date on which the player's avatar was last modified
+     */
+    public void setDateImgLastModified(Date dateImgLastModified) {
+        this.dateImgLastModified = dateImgLastModified;
+    }
+
     /**
      * Get whether the user played 1.0.
      *
@@ -1830,6 +1862,7 @@ public class Player {
             player.setGender(getGenderFromPage(doc));
             player.setGrandCompany(getGrandCompanyFromPage(doc));
             player.setFreeCompany(getFreeCompanyFromPage(doc));
+            player.setDateImgLastModified(getDateLastUpdatedFromPage(doc));
             player.setLevels(getLevelsFromPage(doc));
             player.setMounts(getMountsFromPage(doc));
             player.setMinions(getMinionsFromPage(doc));
@@ -1865,10 +1898,29 @@ public class Player {
             player.setHasSylph(player.doesPlayerHaveMount("Laurel Goobbue"));
             player.setHasCompletedHW(player.doesPlayerHaveMount("Midgardsormr"));
             player.setIsLegacyPlayer(player.doesPlayerHaveMount("Legacy Chocobo"));
+            player.setActive(player.isPlayerActiveInDateRange());
         } catch (IOException ioEx) {
             throw new Exception("Character " + playerID + " does not exist.");
         }
         return player;
+    }
+
+    /**
+     * Determine whether a player is active based upon the last modified date of their full body image
+     * @return whether player has been active inside the activity window
+     */
+    private boolean isPlayerActiveInDateRange() {
+
+        Calendar date = Calendar.getInstance();
+        long t= date.getTimeInMillis();
+        Date nowMinusExcludeRange =new Date(t - (EXCLUDE_RANGE * ONE_MINUTE_IN_MILLIS));
+
+        Date nowMinusIncludeRange = new Date(t - (ACTIVITY_RANGE_DAYS * ONE_DAY_IN_MILLIS));
+        if(this.dateImgLastModified.after(nowMinusExcludeRange)) { //If the date modified is inside the exclude range
+            //Reset the last modified date to epoch because we aren't considering it valid
+            this.dateImgLastModified = new Date(0);
+            return false;
+        } else return this.dateImgLastModified.after(nowMinusIncludeRange); //If the date occurs between the include range and now, then return true. Else false
     }
 
     /**
@@ -2077,4 +2129,67 @@ public class Player {
         return mounts;
     }
 
+    /**
+     * Gets the last-modified date of the Character full body image.
+     * @param doc the lodestone profile page to parse
+     * @return the date on which the full body image was last modified.
+     */
+    private static Date getDateLastUpdatedFromPage(Document doc) throws Exception {
+        Date dateLastModified = new Date();
+        //Get character image URL.
+        String imgUrl = doc.getElementsByClass("bg_chara_264").get(0).getElementsByTag("img").get(0).attr("src");
+        String strLastModifiedDate = "";
+
+        try {
+            HttpResponse<JsonNode> jsonResponse = Unirest.head(imgUrl).asJson();
+
+            strLastModifiedDate = jsonResponse.getHeaders().get("Last-Modified").toString();
+        } catch (UnirestException e) {
+            e.printStackTrace();
+        }
+
+        strLastModifiedDate = strLastModifiedDate.replace("[", "");
+        strLastModifiedDate = strLastModifiedDate.replace("]", "");
+        DateFormat dateFormat = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss zzz");
+
+        try {
+            dateLastModified = dateFormat.parse(strLastModifiedDate);
+        } catch (ParseException e) {
+            throw new Exception("Could not correctly parse date 'Last-Modified' header from full body image");
+        }
+        return dateLastModified;
+    }
+
+    /**
+     * Get the date on which the Character's full body image was last modified
+     * @return the date on which the Character's full body image was last modified
+     */
+    public Date getDateImgLastModified() {
+        return dateImgLastModified;
+    }
+
+    /**
+     * Get whether a Player is active
+     * @return whether Player is active
+     */
+    public boolean isActive() {
+        return isActive;
+    }
+
+    /**
+     * Get whether a Player is active
+     * @return whether Player is active
+     */
+    public int getBitIsActive() {
+        if(this.isActive) return 1;
+        return 0;
+    }
+
+    /**
+     * Set whether Player is active
+     * @param active whether player is considered active
+     */
+    public void setActive(boolean active) {
+        isActive = active;
+    }
 }

@@ -26,7 +26,7 @@ public class Console {
         Options options = setupOptions();
 
         //Declare usage string
-        String usage = "java -jar XIVStats-Gatherer-Java.jar [-bmqvxFPS] -s startid -f finishid [-d database-name] [-u database-user] [-p database-user-password] [-U database-url] [-T table] [-t threads]";
+        String usage = "java -jar XIVStats-Gatherer-Java.jar [-abmqvxDFPS] -s startid -f finishid [-d database-name] [-u database-user] [-p database-user-password] [-U database-url] [-T table] [-t threads]";
         HelpFormatter formatter = new HelpFormatter();
 
         try{
@@ -61,6 +61,12 @@ public class Console {
 
             //Store progression
             gatherer.setStoreProgression(!cmd.hasOption("b"));
+
+            //Store whether player is active
+            gatherer.setStorePlayerActive(!cmd.hasOption("a"));
+
+            //Store player active date
+            gatherer.setStoreActiveDate(!cmd.hasOption("D"));
 
             //Database URL
             if(cmd.hasOption("d") && cmd.hasOption("U")){
@@ -143,6 +149,8 @@ public class Console {
         Option optVerbose = Option.builder("v").longOpt("verbose").desc("run program in verbose bug mode - full console output").build();
         Option optFailPrint = Option.builder("F").longOpt("print-failures").desc("print records that don't exist").build();
         Option optSuffix = Option.builder("x").longOpt("suffix").hasArg().numberOfArgs(1).argName("table-suffix").desc("suffix to append to all tables").build();
+        Option optStoreActive = Option.builder("a").longOpt("do-not-store-activity").desc("do not store boolean data indicating player activity in last 30 days").build();
+        Option optStoreDate = Option.builder("D").longOpt("do-not-store-date").desc("do not store Date of last player activity").build();
 
         //Add each option to the options object
         options.addOption(optStart);
@@ -162,6 +170,8 @@ public class Console {
         options.addOption(optVerbose);
         options.addOption(optFailPrint);
         options.addOption(optSuffix);
+        options.addOption(optStoreActive);
+        options.addOption(optStoreDate);
 
         return options;
     }
