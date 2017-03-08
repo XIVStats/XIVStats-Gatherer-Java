@@ -14,6 +14,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.regex.Pattern;
 
@@ -26,6 +27,20 @@ import java.util.regex.Pattern;
  * @see Gatherer
  */
 public class Player {
+
+    /**
+     * Number of days inactivity before character is considered inactive
+     */
+    private final static int ACTIVITY_RANGE_DAYS = 30;
+
+
+    private static final long ONE_MINUTE_IN_MILLIS=60000;
+    private static final long ONE_DAY_IN_MILLIS=86400000;
+
+    /**
+     * Ignore dates from inside EXCLUDE_RANGE in minutes
+     */
+    private static final long EXCLUDE_RANGE= 5;
 
     private int id;
     private String realm;
@@ -92,6 +107,7 @@ public class Player {
     private ArrayList minions;
     private ArrayList mounts;
     private Date dateImgLastModified;
+    private boolean isActive;
 
     /**
      * Constructor for player object.
@@ -161,6 +177,7 @@ public class Player {
         setHasCompleted3pt1(false);
         setHasCompleted3pt3(false);
         setDateImgLastModified(new Date());
+        setActive(false);
     }
 
     /**
@@ -1881,10 +1898,29 @@ public class Player {
             player.setHasSylph(player.doesPlayerHaveMount("Laurel Goobbue"));
             player.setHasCompletedHW(player.doesPlayerHaveMount("Midgardsormr"));
             player.setIsLegacyPlayer(player.doesPlayerHaveMount("Legacy Chocobo"));
+            player.setActive(player.isPlayerActiveInDateRange());
         } catch (IOException ioEx) {
             throw new Exception("Character " + playerID + " does not exist.");
         }
         return player;
+    }
+
+    /**
+     * Determine whether a player is active based upon the last modified date of their full body image
+     * @return whether player has been active inside the activity window
+     */
+    private boolean isPlayerActiveInDateRange() {
+
+        Calendar date = Calendar.getInstance();
+        long t= date.getTimeInMillis();
+        Date nowMinusExcludeRange =new Date(t - (EXCLUDE_RANGE * ONE_MINUTE_IN_MILLIS));
+
+        Date nowMinusIncludeRange = new Date(t - (ACTIVITY_RANGE_DAYS * ONE_DAY_IN_MILLIS));
+        if(this.dateImgLastModified.after(nowMinusExcludeRange)) { //If the date modified is inside the exclude range
+            //Reset the last modified date to epoch because we aren't considering it valid
+            this.dateImgLastModified = new Date(0);
+            return false;
+        } else return this.dateImgLastModified.after(nowMinusIncludeRange); //If the date occurs between the include range and now, then return true. Else false
     }
 
     /**
@@ -2130,5 +2166,21 @@ public class Player {
      */
     public Date getDateImgLastModified() {
         return dateImgLastModified;
+    }
+
+    /**
+     * Get whether a Player is active
+     * @return whether Player is active
+     */
+    public boolean isActive() {
+        return isActive;
+    }
+
+    /**
+     * Set whether Player is active
+     * @param active whether player is considered active
+     */
+    public void setActive(boolean active) {
+        isActive = active;
     }
 }
