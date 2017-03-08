@@ -2,6 +2,8 @@ package com.ffxivcensus.gatherer;
 
 import com.ffxivcensus.gatherer.Player;
 
+import java.util.Date;
+
 import static org.junit.Assert.*;
 
 /**
@@ -221,6 +223,8 @@ public class PlayerTest {
         assertEquals(player.getBitHasCompletedHW(), 0);
         assertEquals(player.getBitHasCompleted3pt1(), 0);
         assertEquals(player.getBitHasARRCollectors(), 0);
+        //Tricky to test this - testing here that it was at the very least set to some value other than what it is set to a value other than that which it is initialized
+        assertTrue(player.getImgLastModified() != new Date());
 
         //Test get minions method
         assertTrue(player.getMinions().size() == 0);

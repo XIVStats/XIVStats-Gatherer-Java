@@ -1,15 +1,20 @@
 package com.ffxivcensus.gatherer;
 
+import com.mashape.unirest.http.HttpResponse;
+import com.mashape.unirest.http.JsonNode;
+import com.mashape.unirest.http.Unirest;
+import com.mashape.unirest.http.exceptions.UnirestException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.regex.Pattern;
 
 /**
@@ -86,6 +91,7 @@ public class Player {
     private boolean isLegacyPlayer;
     private ArrayList minions;
     private ArrayList mounts;
+    private Date imgLastModified;
 
     /**
      * Constructor for player object.
@@ -154,6 +160,7 @@ public class Player {
         setHasCompletedHW(false);
         setHasCompleted3pt1(false);
         setHasCompleted3pt3(false);
+        setImgLastModified(new Date());
     }
 
     /**
@@ -1654,8 +1661,16 @@ public class Player {
      */
     public void setHasCompleted3pt3(boolean hasCompleted3pt3) {
         this.hasCompleted3pt3 = hasCompleted3pt3;
-    }    
-    
+    }
+
+    /**
+     * Set the date on which the player's avatar was last modified
+     * @param imgLastModified the date on which the player's avatar was last modified
+     */
+    public void setImgLastModified(Date imgLastModified) {
+        this.imgLastModified = imgLastModified;
+    }
+
     /**
      * Get whether the user played 1.0.
      *
@@ -1830,6 +1845,7 @@ public class Player {
             player.setGender(getGenderFromPage(doc));
             player.setGrandCompany(getGrandCompanyFromPage(doc));
             player.setFreeCompany(getFreeCompanyFromPage(doc));
+            player.setImgLastModified(getDateLastUpdatedFromPage(doc));
             player.setLevels(getLevelsFromPage(doc));
             player.setMounts(getMountsFromPage(doc));
             player.setMinions(getMinionsFromPage(doc));
@@ -2077,4 +2093,42 @@ public class Player {
         return mounts;
     }
 
+    /**
+     * Gets the last-modified date of the Character full body image.
+     * @param doc the lodestone profile page to parse
+     * @return the date on which the full body image was last modified.
+     */
+    private static Date getDateLastUpdatedFromPage(Document doc) throws Exception {
+        Date dateLastModified = new Date();
+        //Get character image URL.
+        String imgUrl = doc.getElementsByClass("bg_chara_264").get(0).getElementsByTag("img").get(0).attr("src");
+        String strLastModifiedDate = "";
+
+        try {
+            HttpResponse<JsonNode> jsonResponse = Unirest.head(imgUrl).asJson();
+
+            strLastModifiedDate = jsonResponse.getHeaders().get("Last-Modified").toString();
+        } catch (UnirestException e) {
+            e.printStackTrace();
+        }
+
+        strLastModifiedDate = strLastModifiedDate.replace("[", "");
+        strLastModifiedDate = strLastModifiedDate.replace("]", "");
+        DateFormat dateFormat = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss zzz");
+
+        try {
+            dateLastModified = dateFormat.parse(strLastModifiedDate);
+        } catch (ParseException e) {
+            throw new Exception("Could not correctly parse date 'Last-Modified' header from full body image");
+        }
+        return dateLastModified;
+    }
+
+    /**
+     * Get the date on which the Character's full body image was last modified
+     * @return the date on which the Character's full body image was last modified
+     */
+    public Date getImgLastModified() {
+        return imgLastModified;
+    }
 }
