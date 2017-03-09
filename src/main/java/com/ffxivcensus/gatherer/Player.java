@@ -1911,14 +1911,9 @@ public class Player {
 
         Calendar date = Calendar.getInstance();
         long t= date.getTimeInMillis();
-        Date nowMinusExcludeRange =new Date(t - (EXCLUDE_RANGE * 30000));
 
         Date nowMinusIncludeRange = new Date(t - (ACTIVITY_RANGE_DAYS * ONE_DAY_IN_MILLIS));
-        if(this.dateImgLastModified.after(nowMinusExcludeRange)) { //If the date modified is inside the exclude range
-            //Reset the last modified date to epoch because we aren't considering it valid
-            this.dateImgLastModified = new Date(0);
-            return false;
-        } else return this.dateImgLastModified.after(nowMinusIncludeRange); //If the date occurs between the include range and now, then return true. Else false
+        return this.dateImgLastModified.after(nowMinusIncludeRange); //If the date occurs between the include range and now, then return true. Else false
     }
 
     /**
