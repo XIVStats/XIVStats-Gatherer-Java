@@ -342,8 +342,10 @@ public class GathererController {
             if (this.storeProgression) {
                 sbSQL.append(",");
                 sbSQL.append("p30days BIT, p60days BIT, p90days BIT, p180days BIT, p270days BIT,p360days BIT,p450days BIT,p630days BIT,p960days BIT,");
-                sbSQL.append("prearr BIT,prehw BIT, artbook BIT, beforemeteor BIT, beforethefall BIT, ps4collectors BIT, ");
+                sbSQL.append("prearr BIT,prehw BIT, arrartbook BIT, hwartbookone BIT, hwartbooktwo BIT, hasencyclopedia BIT, ");
+                sbSQL.append("beforemeteor BIT, beforethefall BIT, ps4collectors BIT, ");
                 sbSQL.append("soundtrack BIT,saweternalbond BIT,sightseeing BIT,comm50 BIT,moogleplush BIT,");
+                sbSQL.append("topazcarubuncleplush BIT,emeraldcarbuncleplush BIT,");
                 sbSQL.append("hildibrand BIT, dideternalbond BIT, arrcollector BIT,");
                 sbSQL.append("kobold BIT, sahagin BIT, amaljaa BIT, sylph BIT,");
                 sbSQL.append("arr_25_complete BIT,hw_complete BIT, hw_31_complete BIT, hw_33_complete BIT, legacy_player BIT");
@@ -494,14 +496,17 @@ public class GathererController {
                         + player.getBitHas450DaysSub() + "," + player.getBitHas630DaysSub() + ","
                         + player.getBitHas960DaysSub() + ",");
 
-                sbFields.append("prearr, prehw, artbook, beforemeteor, beforethefall, soundtrack, saweternalbond, "
-                                + "sightseeing, arr_25_complete, comm50, moogleplush,");
+                sbFields.append("prearr, prehw, arrartbook, hwartbookone, hwartbooktwo, hasencyclopedia, beforemeteor, beforethefall, soundtrack, saweternalbond, "
+                                + "sightseeing, arr_25_complete, comm50, moogleplush, topazcarubuncleplush, emeraldcarbuncleplush");
                 sbValues.append(player.getBitHasPreOrderArr() + "," + player.getBitHasPreOrderHW() + ","
-                                + player.getBitHasArtBook() + "," + player.getBitHasBeforeMeteor() + ","
+                                + player.getBitHasArrArtbook() + "," + player.getBitHasHWArtbookOne() + ","
+                                + player.getBitHasHWArtbookTwo() + "," + player.getBitHasEncyclopediaEorzea() + ","
+                                + player.getBitHasBeforeMeteor() + ","
                                 + player.getBitHasBeforeTheFall() + "," + player.getBitHasSoundTrack() + ","
                                 + player.getBitHasAttendedEternalBond() + "," + player.getBitHasCompletedHWSightseeing()
                                 + "," + player.getBitHasCompleted2pt5() + "," + player.getBitHasFiftyComms() + ","
-                                + player.getBitHasMooglePlush() + ",");
+                                + player.getBitHasMooglePlush() + "," + player.getBitHasTopazCarbunclePlush() + ","
+                                + player.getBitHasEmeraldCarbunclePlush() + ",");
 
                 sbFields.append("hildibrand, ps4collectors, dideternalbond, arrcollector, kobold, sahagin, amaljaa, "
                                 + "sylph, hw_complete, hw_31_complete, hw_33_complete, legacy_player");
