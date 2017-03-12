@@ -1,6 +1,12 @@
 v1.2.2
 ======
 * Completely removed 30 second exclude range - it was excluding players that are active, and none of the players being excluded are inactive.
+* DB field `artbook` renamed to `arrartbook`
+* Added parsing for owners of Encyclopedia Eorzea
+* Added parsing for owners of Heavensward Lore book 1
+* Added parsing for owners of Heavensward Lore book 2
+* Added parsing for owners of Topaz Carbuncle plush
+* Added parsing for owners of Emerald Carbuncle plush
 
 v1.2.1
 ======
