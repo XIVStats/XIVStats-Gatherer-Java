@@ -9,6 +9,7 @@ v1.3.0
 * Added parsing for owners of Emerald Carbuncle plush
 * Added parsing for characters who have completed Moogle Beast Tribe to Rank 7
 * Added parsing for characters who have completed Vanu Vanu Beast Tribe to Rank 7
+* Added parsing for characters who have completed Vath Beast Tribe to Rank 7
 
 v1.2.1
 ======

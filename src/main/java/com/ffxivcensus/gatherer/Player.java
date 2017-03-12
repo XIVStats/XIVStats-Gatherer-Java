@@ -105,6 +105,7 @@ public class Player {
     private boolean hasSylph;
     private boolean hasMoogle;
     private boolean hasVanuVanu;
+    private boolean hasVath;
     private boolean hasCompletedHW;
     private boolean hasCompleted3pt1;
     private boolean hasCompleted3pt3;
@@ -185,6 +186,7 @@ public class Player {
         setHasSylph(false);
         setHasMoogle(false);
         setHasVanuVanu(false);
+        setHasVath(false);
         setHasCompletedHW(false);
         setHasCompleted3pt1(false);
         setHasCompleted3pt3(false);
@@ -1915,6 +1917,7 @@ public class Player {
             player.setHasSylph(player.doesPlayerHaveMount("Laurel Goobbue"));
             player.setHasMoogle(player.doesPlayerHaveMount("Cloud Mallow"));
             player.setHasVanuVanu(player.doesPlayerHaveMount("Sanuwa"));
+            player.setHasVath(player.doesPlayerHaveMount("Kongamato"));
             player.setHasCompletedHW(player.doesPlayerHaveMount("Midgardsormr"));
             player.setIsLegacyPlayer(player.doesPlayerHaveMount("Legacy Chocobo"));
             player.setActive(player.isPlayerActiveInDateRange());
@@ -2382,5 +2385,30 @@ public class Player {
      */
     public void setHasVanuVanu(boolean hasVanuVanu) {
         this.hasVanuVanu = hasVanuVanu;
+    }
+
+    /**
+     * Get whether player has reached Rank 7 with Vath Beast Tribe
+     * @return whether player has reached Rank 7 with Vath Tribe
+     */
+    public boolean isHasVath() {
+        return hasVath;
+    }
+
+    /**
+     * Get whether player has reached Rank 7 with Vath Beast Tribe
+     * @return whether player has reached Rank 7 with Vath Beast Tribe
+     */
+    public int getBitHasVath() {
+        if(this.hasVath) return 1;
+        return 0;
+    }
+
+    /**
+     * Set whether player has reached Rank 7 with Vath Beast Tribe
+     * @param hasVath whether player has reached Rank 7 with Vath Beast Tribe
+     */
+    public void setHasVath(boolean hasVath) {
+        this.hasVath = hasVath;
     }
 }
