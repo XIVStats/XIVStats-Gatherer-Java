@@ -1,6 +1,6 @@
-v1.2.2
+v1.3.0
 ======
-* Completely removed 30 second exclude range - it was excluding players that are active, and none of the players being excluded are inactive.
+* Completely removed 30 second exclude range from image reader - it was excluding players that are active, and none of the players being excluded are inactive.
 * DB field `artbook` renamed to `arrartbook`
 * Added parsing for owners of Encyclopedia Eorzea
 * Added parsing for owners of Heavensward Lore book 1
@@ -8,6 +8,7 @@ v1.2.2
 * Added parsing for owners of Topaz Carbuncle plush
 * Added parsing for owners of Emerald Carbuncle plush
 * Added parsing for characters who have completed Moogle Beast Tribe to Rank 7
+* Added parsing for characters who have completed Vanu Vanu Beast Tribe to Rank 7
 
 v1.2.1
 ======

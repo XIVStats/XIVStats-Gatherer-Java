@@ -104,6 +104,7 @@ public class Player {
     private boolean hasAmaljaa;
     private boolean hasSylph;
     private boolean hasMoogle;
+    private boolean hasVanuVanu;
     private boolean hasCompletedHW;
     private boolean hasCompleted3pt1;
     private boolean hasCompleted3pt3;
@@ -183,6 +184,7 @@ public class Player {
         setHasAmaljaa(false);
         setHasSylph(false);
         setHasMoogle(false);
+        setHasVanuVanu(false);
         setHasCompletedHW(false);
         setHasCompleted3pt1(false);
         setHasCompleted3pt3(false);
@@ -1912,6 +1914,7 @@ public class Player {
             player.setHasAmaljaa(player.doesPlayerHaveMount("Cavalry Drake"));
             player.setHasSylph(player.doesPlayerHaveMount("Laurel Goobbue"));
             player.setHasMoogle(player.doesPlayerHaveMount("Cloud Mallow"));
+            player.setHasVanuVanu(player.doesPlayerHaveMount("Sanuwa"));
             player.setHasCompletedHW(player.doesPlayerHaveMount("Midgardsormr"));
             player.setIsLegacyPlayer(player.doesPlayerHaveMount("Legacy Chocobo"));
             player.setActive(player.isPlayerActiveInDateRange());
@@ -2355,4 +2358,29 @@ public class Player {
         this.hasMoogle = hasMoogle;
     }
 
+    /**
+     * Get whether player has reached Rank 7 with Vanu Vanu Beast Tribe
+     * @return whether player has reached Rank 7 with Vanu Vanu Beast Tribe
+     */
+    public boolean isHasVanuVanu() {
+        return hasVanuVanu;
+    }
+
+    /**
+     * Get whether player has reached Rank 7 with Vanu Vanu Beast Tribe
+     * @return whether player has reached Rank 7 with Vanu Vanu Beast Tribe
+     */
+    public int getBitHasVanuVanu() {
+        if(this.hasVanuVanu) return 1;
+        return 0;
+    }
+
+
+    /**
+     * Set whether player has reached Rank 7 with Vanu Vanu Beast Tribe
+     * @param hasVanuVanu whether player has reached Rank 7 with Vanu Vanu Beast Tribe
+     */
+    public void setHasVanuVanu(boolean hasVanuVanu) {
+        this.hasVanuVanu = hasVanuVanu;
+    }
 }
