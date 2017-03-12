@@ -7,6 +7,7 @@ v1.2.2
 * Added parsing for owners of Heavensward Lore book 2
 * Added parsing for owners of Topaz Carbuncle plush
 * Added parsing for owners of Emerald Carbuncle plush
+* Added parsing for characters who have completed Moogle Beast Tribe to Rank 7
 
 v1.2.1
 ======

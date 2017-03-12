@@ -103,6 +103,7 @@ public class Player {
     private boolean hasSahagin;
     private boolean hasAmaljaa;
     private boolean hasSylph;
+    private boolean hasMoogle;
     private boolean hasCompletedHW;
     private boolean hasCompleted3pt1;
     private boolean hasCompleted3pt3;
@@ -181,6 +182,7 @@ public class Player {
         setHasSahagin(false);
         setHasAmaljaa(false);
         setHasSylph(false);
+        setHasMoogle(false);
         setHasCompletedHW(false);
         setHasCompleted3pt1(false);
         setHasCompleted3pt3(false);
@@ -1909,6 +1911,7 @@ public class Player {
             player.setHasSahagin(player.doesPlayerHaveMount("Cavalry Elbst"));
             player.setHasAmaljaa(player.doesPlayerHaveMount("Cavalry Drake"));
             player.setHasSylph(player.doesPlayerHaveMount("Laurel Goobbue"));
+            player.setHasMoogle(player.doesPlayerHaveMount("Cloud Mallow"));
             player.setHasCompletedHW(player.doesPlayerHaveMount("Midgardsormr"));
             player.setIsLegacyPlayer(player.doesPlayerHaveMount("Legacy Chocobo"));
             player.setActive(player.isPlayerActiveInDateRange());
@@ -2325,4 +2328,31 @@ public class Player {
     public void setHasEmeraldCarbunclePlush(boolean hasEmeraldCarbunclePlush) {
         this.hasEmeraldCarbunclePlush = hasEmeraldCarbunclePlush;
     }
+
+    /**
+     * Get whether player has reached Rank 7 with Moogle Beast Tribe
+     * @return whether player has reached Rank 7 with Moogle Beast Tribe
+     */
+    public boolean isHasMoogle() {
+        return hasMoogle;
+    }
+
+    /**
+     * Get whether player has reached Rank 7 with Moogle Beast Tribe
+     * @return whether player has reached Rank 7 with Moogle Beast Tribe
+     */
+    public int getBitHasMoogle() {
+        if(this.hasMoogle) return 1;
+        return 0;
+    }
+
+
+    /**
+     * Set whether player has reached Rank 7 with Moogle Beast Tribe
+     * @param hasMoogle whether player has reached Rank 7 with Moogle Beast Tribe
+     */
+    public void setHasMoogle(boolean hasMoogle) {
+        this.hasMoogle = hasMoogle;
+    }
+
 }

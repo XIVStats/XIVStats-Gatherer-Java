@@ -176,6 +176,7 @@ The database table ```tblplayers``` has the following structure:
 |sahagin               |bit      |Mount - Cavalry Elbst           |
 |amaljaa               |bit      |Mount - Cavalry Drake           |
 |sylph                 |bit      |Mount - Laurel Goobbue          |
+|moogle                |bit      |Mount - Cloud Mallow            |
 |hw_complete           |bit      |Mount - Midgardsormr            |
 |hw_31_complete        |bit      |Minion - Wind-up Haurchefant    |
 |hw_33_complete        |bit      |Minion - Wind-up Aymeric        |
