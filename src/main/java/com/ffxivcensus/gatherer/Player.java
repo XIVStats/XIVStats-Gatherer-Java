@@ -840,7 +840,7 @@ public class Player {
      * @return whether the player has had 180 days of subscription time as a bit value.
      */
     public int getBitHas180DaysSub() {
-        if (isHas90DaysSub()) {
+        if (isHas180DaysSub()) {
             return 1;
         } else {
             return 0;
