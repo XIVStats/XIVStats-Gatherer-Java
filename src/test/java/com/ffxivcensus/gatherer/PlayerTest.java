@@ -1,7 +1,5 @@
 package com.ffxivcensus.gatherer;
 
-import com.ffxivcensus.gatherer.Player;
-
 import java.util.Date;
 
 import static org.junit.Assert.*;
@@ -102,8 +100,8 @@ public class PlayerTest {
         assertTrue(playerOne.isHasARRCollectors());
         assertEquals(playerOne.getBitHasARRCollectors(), 1);
         //Assuming the below don't change
-        assertFalse(playerOne.isHasArtbook());
-        assertEquals(playerOne.getBitHasArtBook(), 0);
+        assertFalse(playerOne.isHasARRArtbook());
+        assertEquals(playerOne.getBitHasArrArtbook(), 0);
         assertFalse(playerOne.isHasBeforeMeteor());
         assertEquals(playerOne.getBitHasBeforeMeteor(), 0);
         assertFalse(playerOne.isHasBeforeTheFall());
@@ -274,7 +272,7 @@ public class PlayerTest {
     public void testGetPlayerWithAllCollectibles() throws Exception {
         Player player = Player.getPlayer(71);
 
-        assertEquals(player.getBitHasArtBook(), 1);
+        assertEquals(player.getBitHasArrArtbook(), 1);
         assertEquals(player.getBitHasBeforeMeteor(), 1);
         assertEquals(player.getBitHasBeforeTheFall(), 1);
         assertEquals(player.getBitHasSoundTrack(), 1);

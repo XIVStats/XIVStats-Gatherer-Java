@@ -13,6 +13,8 @@ try {
     }
 
     stage ('Generate Artifacts') {
+      pom = readMavenPom file: 'pom.xml'
+      $POM_VERSION = pom.version
       step([$class: 'JavadocArchiver', javadocDir: 'target/site/apidocs'])
       sh 'mkdir - p target/release'
       sh 'cp target/*dependencies.jar target/release/XIVStats-Gatherer-Java.jar'

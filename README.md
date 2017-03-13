@@ -154,7 +154,10 @@ The database table ```tblplayers``` has the following structure:
 |p960days              |bit      |Minion - Wind-up Firion         |
 |prearr                |bit      |Minion - Cait Sith Doll         |
 |prehw                 |bit      |Minion - Chocobo Chick Courier  |
-|artbook               |bit      |Minion - Model Enterprise       |
+|arrartbook            |bit      |Minion - Model Enterprise       |
+|hwartbookone          |bit      |Minion - Wind-Up Relm           |
+|hwartbooktw           |bit      |Minion - Wind-Up Hraesvelgr     |
+|hasencyclopedia       |bit      |Minion - Namingway              |
 |beforemeteor          |bit      |Minion - Wind-up Dalamud        |
 |beforethefall         |bit      |Minion - Set Of Primogs         |
 |soundtrack            |bit      |Minion - Wind-up Bahamut        |
@@ -163,6 +166,8 @@ The database table ```tblplayers``` has the following structure:
 |arr_25_complete       |bit      |Minion - Midgardsormr           |
 |comm50                |bit      |Minion - Princely Hatchling     |
 |moogleplush           |bit      |Minion - Wind-up Delivery Moogle|
+|topazcarubuncleplush  |bit      |Minion - Heliodor Carbuncle     |
+|emeraldcarbuncleplush |bit      |Minion - Peridot Carbuncle      |
 |hildibrand            |bit      |Minion - Wind-up Gentleman      |
 |ps4collectors         |bit      |Minion - Wind-up Moogle         |
 |dideternalbond        |bit      |Mount - Ceremony Chocobo        |
@@ -171,6 +176,9 @@ The database table ```tblplayers``` has the following structure:
 |sahagin               |bit      |Mount - Cavalry Elbst           |
 |amaljaa               |bit      |Mount - Cavalry Drake           |
 |sylph                 |bit      |Mount - Laurel Goobbue          |
+|moogle                |bit      |Mount - Cloud Mallow            |
+|vanuvanu              |bit      |Mount - Sanuwa                  |
+|vath                  |bit      |Mount - Kongamato               |
 |hw_complete           |bit      |Mount - Midgardsormr            |
 |hw_31_complete        |bit      |Minion - Wind-up Haurchefant    |
 |hw_33_complete        |bit      |Minion - Wind-up Aymeric        |

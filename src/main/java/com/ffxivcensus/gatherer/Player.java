@@ -81,7 +81,10 @@ public class Player {
     private boolean has960DaysSub;
     private boolean hasPreOrderArr;
     private boolean hasPreOrderHW;
-    private boolean hasArtbook;
+    private boolean hasARRArtbook;
+    private boolean hasHWArtbookOne;
+    private boolean hasHWArtbookTwo;
+    private boolean hasEncyclopediaEorzea;
     private boolean hasBeforeMeteor;
     private boolean hasBeforeTheFall;
     private boolean hasSoundtrack;
@@ -90,6 +93,8 @@ public class Player {
     private boolean hasCompleted2pt5;
     private boolean hasFiftyComms;
     private boolean hasMooglePlush;
+    private boolean hasTopazCarbunclePlush;
+    private boolean hasEmeraldCarbunclePlush;
     private boolean hasCompletedHildibrand;
     private boolean hasPS4Collectors;
     private boolean hasEternalBond;
@@ -98,6 +103,9 @@ public class Player {
     private boolean hasSahagin;
     private boolean hasAmaljaa;
     private boolean hasSylph;
+    private boolean hasMoogle;
+    private boolean hasVanuVanu;
+    private boolean hasVath;
     private boolean hasCompletedHW;
     private boolean hasCompleted3pt1;
     private boolean hasCompleted3pt3;
@@ -154,7 +162,10 @@ public class Player {
         setHas960DaysSub(false);
         setHasPreOrderArr(false);
         setHasPreOrderHW(false);
-        setHasArtbook(false);
+        setHasARRArtbook(false);
+        setHasHWArtbookOne(false);
+        setHasHWArtbookTwo(false);
+        setHasEncyclopediaEorzea(false);
         setHasBeforeMeteor(false);
         setHasBeforeTheFall(false);
         setHasSoundtrack(false);
@@ -163,6 +174,8 @@ public class Player {
         setHasCompleted2pt5(false);
         setHasFiftyComms(false);
         setHasMooglePlush(false);
+        setHasTopazCarbunclePlush(false);
+        setHasEmeraldCarbunclePlush(false);
         setHasCompletedHildibrand(false);
         setHasPS4Collectors(false);
         setHasEternalBond(false);
@@ -171,6 +184,9 @@ public class Player {
         setHasSahagin(false);
         setHasAmaljaa(false);
         setHasSylph(false);
+        setHasMoogle(false);
+        setHasVanuVanu(false);
+        setHasVath(false);
         setHasCompletedHW(false);
         setHasCompleted3pt1(false);
         setHasCompleted3pt3(false);
@@ -824,7 +840,7 @@ public class Player {
      * @return whether the player has had 180 days of subscription time as a bit value.
      */
     public int getBitHas180DaysSub() {
-        if (isHas90DaysSub()) {
+        if (isHas180DaysSub()) {
             return 1;
         } else {
             return 0;
@@ -1063,8 +1079,8 @@ public class Player {
      *
      * @return whether the user has purchased the artbook.
      */
-    public boolean isHasArtbook() {
-        return hasArtbook;
+    public boolean isHasARRArtbook() {
+        return hasARRArtbook;
     }
 
     /**
@@ -1072,8 +1088,8 @@ public class Player {
      *
      * @return bit value as to whether the player has purchased the artbook.
      */
-    public int getBitHasArtBook() {
-        if (isHasArtbook()) {
+    public int getBitHasArrArtbook() {
+        if (isHasARRArtbook()) {
             return 1;
         } else {
             return 0;
@@ -1083,10 +1099,10 @@ public class Player {
     /**
      * Set whether the player has purchased the artbook.
      *
-     * @param hasArtbook whether the player has purchased the artbook.
+     * @param hasARRArtbook whether the player has purchased the artbook.
      */
-    public void setHasArtbook(boolean hasArtbook) {
-        this.hasArtbook = hasArtbook;
+    public void setHasARRArtbook(boolean hasARRArtbook) {
+        this.hasARRArtbook = hasARRArtbook;
     }
 
     /**
@@ -1875,7 +1891,10 @@ public class Player {
             player.setHas960DaysSub(player.doesPlayerHaveMinion("Wind-up Firion"));
             player.setHasPreOrderArr(player.doesPlayerHaveMinion("Cait Sith Doll"));
             player.setHasPreOrderHW(player.doesPlayerHaveMinion("Chocobo Chick Courier"));
-            player.setHasArtbook(player.doesPlayerHaveMinion("Model Enterprise"));
+            player.setHasARRArtbook(player.doesPlayerHaveMinion("Model Enterprise"));
+            player.setHasHWArtbookOne(player.doesPlayerHaveMinion("Wind-Up Relm"));
+            player.setHasHWArtbookTwo(player.doesPlayerHaveMinion("Wind-Up Hraesvelgr"));
+            player.setHasEncyclopediaEorzea(player.doesPlayerHaveMinion("Namingway"));
             player.setHasBeforeMeteor(player.doesPlayerHaveMinion("Wind-up Dalamud"));
             player.setHasBeforeTheFall(player.doesPlayerHaveMinion("Set Of Primogs"));
             player.setHasSoundtrack(player.doesPlayerHaveMinion("Wind-up Bahamut"));
@@ -1884,6 +1903,8 @@ public class Player {
             player.setHasCompleted2pt5(player.doesPlayerHaveMinion("Midgardsormr"));
             player.setHasFiftyComms(player.doesPlayerHaveMinion("Princely Hatchling"));
             player.setHasMooglePlush(player.doesPlayerHaveMinion("Wind-up Delivery Moogle"));
+            player.setHasTopazCarbunclePlush(player.doesPlayerHaveMinion("Heliodor Carbuncle"));
+            player.setHasEmeraldCarbunclePlush(player.doesPlayerHaveMinion("Peridot Carbuncle"));
             player.setHasCompletedHildibrand(player.doesPlayerHaveMinion("Wind-up Gentleman"));
             player.setHasPS4Collectors(player.doesPlayerHaveMinion("Wind-up Moogle"));
             player.setHasCompleted3pt1(player.doesPlayerHaveMinion("Wind-up Haurchefant"));
@@ -1894,6 +1915,9 @@ public class Player {
             player.setHasSahagin(player.doesPlayerHaveMount("Cavalry Elbst"));
             player.setHasAmaljaa(player.doesPlayerHaveMount("Cavalry Drake"));
             player.setHasSylph(player.doesPlayerHaveMount("Laurel Goobbue"));
+            player.setHasMoogle(player.doesPlayerHaveMount("Cloud Mallow"));
+            player.setHasVanuVanu(player.doesPlayerHaveMount("Sanuwa"));
+            player.setHasVath(player.doesPlayerHaveMount("Kongamato"));
             player.setHasCompletedHW(player.doesPlayerHaveMount("Midgardsormr"));
             player.setIsLegacyPlayer(player.doesPlayerHaveMount("Legacy Chocobo"));
             player.setActive(player.isPlayerActiveInDateRange());
@@ -1911,14 +1935,9 @@ public class Player {
 
         Calendar date = Calendar.getInstance();
         long t= date.getTimeInMillis();
-        Date nowMinusExcludeRange =new Date(t - (EXCLUDE_RANGE * 30000));
 
         Date nowMinusIncludeRange = new Date(t - (ACTIVITY_RANGE_DAYS * ONE_DAY_IN_MILLIS));
-        if(this.dateImgLastModified.after(nowMinusExcludeRange)) { //If the date modified is inside the exclude range
-            //Reset the last modified date to epoch because we aren't considering it valid
-            this.dateImgLastModified = new Date(0);
-            return false;
-        } else return this.dateImgLastModified.after(nowMinusIncludeRange); //If the date occurs between the include range and now, then return true. Else false
+        return this.dateImgLastModified.after(nowMinusIncludeRange); //If the date occurs between the include range and now, then return true. Else false
     }
 
     /**
@@ -2189,5 +2208,207 @@ public class Player {
      */
     public void setActive(boolean active) {
         isActive = active;
+    }
+
+    /**
+     * Get whether the Player has the Artbook 'Stone and Steel'
+     * @return whether the Player has the Artbook 'Stone and Steel'
+     */
+    public boolean isHasHWArtbookOne() {
+        return hasHWArtbookOne;
+    }
+
+    /**
+     * Get whether the Player has the Artbook 'Stone and Steel'
+     * @return whether the Player has the Artbook 'Stone and Steel'
+     */
+    public int getBitHasHWArtbookOne() {
+        if(this.hasHWArtbookOne) return 1;
+        return 0;
+    }
+
+    /**
+     * Set whether the Player has the Artbook 'Stone and Steel'
+     * @param hasHWArtbookOne whether the Player has the Artbook 'Stone and Steel'
+     */
+    public void setHasHWArtbookOne(boolean hasHWArtbookOne) {
+        this.hasHWArtbookOne = hasHWArtbookOne;
+    }
+
+    /**
+     * Get whether Player has the Artbook 'Scars of War'
+     * @return whether Player has the Artbook 'Scars of War'
+     */
+    public boolean isHasHWArtbookTwo() {
+        return hasHWArtbookTwo;
+    }
+
+    /**
+     * Get whether Player has the Artbook 'Scars of War'
+     * @return whether Player has the Artbook 'Scars of War'
+     */
+    public int getBitHasHWArtbookTwo() {
+        if(this.hasHWArtbookTwo) return 1;
+        return 0;
+    }
+
+    /**
+     * Set whether Player has the Artbook 'Scars of War'
+     * @param hasHWArtbookTwo whether Player has the Artbook 'Scars of War'
+     */
+    public void setHasHWArtbookTwo(boolean hasHWArtbookTwo) {
+        this.hasHWArtbookTwo = hasHWArtbookTwo;
+    }
+
+    /**
+     * Get whether the Player has the FFXIV Lorebook - Encyclopedia Eorzea
+     * @return whether the Player has the FFXIV Lorebook - Encyclopedia Eorzea
+     */
+    public boolean isHasEncyclopediaEorzea() {
+        return hasEncyclopediaEorzea;
+    }
+
+    /**
+     * Get whether the Player has the FFXIV Lorebook - Encyclopedia Eorzea
+     * @return whether the Player has the FFXIV Lorebook - Encyclopedia Eorzea
+     */
+    public int getBitHasEncyclopediaEorzea() {
+        if(this.hasEncyclopediaEorzea) return 1;
+        return 0;
+    }
+
+    /**
+     * Set whether the Player has the FFXIV Lorebook - Encyclopedia Eorzea
+     * @param hasEncyclopediaEorzea whether the Player has the FFXIV Lorebook - Encyclopedia Eorzea
+     */
+    public void setHasEncyclopediaEorzea(boolean hasEncyclopediaEorzea) {
+        this.hasEncyclopediaEorzea = hasEncyclopediaEorzea;
+    }
+
+    /**
+     * Get whether the player has the topaz carbuncle plush
+     * @return whether the player has the topaz carbuncle plush
+     */
+    public boolean isHasTopazCarbunclePlush() {
+        return hasTopazCarbunclePlush;
+    }
+
+    /**
+     * Get whether the player has the topaz carbuncle plush
+     * @return whether the player has the topaz carbuncle plush
+     */
+    public int getBitHasTopazCarbunclePlush() {
+        if(this.hasTopazCarbunclePlush) return 1;
+        return 0;
+    }
+
+    /**
+     * Set whether the player has the topaz carbuncle plush
+     * @param hasTopazCarbunclePlush whether the player has the topaz carbuncle plush
+     */
+    public void setHasTopazCarbunclePlush(boolean hasTopazCarbunclePlush) {
+        this.hasTopazCarbunclePlush = hasTopazCarbunclePlush;
+    }
+
+    /**
+     * Get whether the player has the emerald carbuncle plush
+     * @return whether the player has the emerald carbuncle plush
+     */
+    public boolean isHasEmeraldCarbunclePlush() {
+        return hasEmeraldCarbunclePlush;
+    }
+
+    /**
+     * Get whether the player has the emerald carbuncle plush
+     * @return whether the player has the emerald carbuncle plush
+     */
+    public int getBitHasEmeraldCarbunclePlush() {
+        if(this.hasEmeraldCarbunclePlush) return 1;
+        return 0;
+    }
+
+    /**
+     * Set whether the player has the emerald carbuncle plush
+     * @param hasEmeraldCarbunclePlush whether the player has the emerald carbuncle plush
+     */
+    public void setHasEmeraldCarbunclePlush(boolean hasEmeraldCarbunclePlush) {
+        this.hasEmeraldCarbunclePlush = hasEmeraldCarbunclePlush;
+    }
+
+    /**
+     * Get whether player has reached Rank 7 with Moogle Beast Tribe
+     * @return whether player has reached Rank 7 with Moogle Beast Tribe
+     */
+    public boolean isHasMoogle() {
+        return hasMoogle;
+    }
+
+    /**
+     * Get whether player has reached Rank 7 with Moogle Beast Tribe
+     * @return whether player has reached Rank 7 with Moogle Beast Tribe
+     */
+    public int getBitHasMoogle() {
+        if(this.hasMoogle) return 1;
+        return 0;
+    }
+
+
+    /**
+     * Set whether player has reached Rank 7 with Moogle Beast Tribe
+     * @param hasMoogle whether player has reached Rank 7 with Moogle Beast Tribe
+     */
+    public void setHasMoogle(boolean hasMoogle) {
+        this.hasMoogle = hasMoogle;
+    }
+
+    /**
+     * Get whether player has reached Rank 7 with Vanu Vanu Beast Tribe
+     * @return whether player has reached Rank 7 with Vanu Vanu Beast Tribe
+     */
+    public boolean isHasVanuVanu() {
+        return hasVanuVanu;
+    }
+
+    /**
+     * Get whether player has reached Rank 7 with Vanu Vanu Beast Tribe
+     * @return whether player has reached Rank 7 with Vanu Vanu Beast Tribe
+     */
+    public int getBitHasVanuVanu() {
+        if(this.hasVanuVanu) return 1;
+        return 0;
+    }
+
+
+    /**
+     * Set whether player has reached Rank 7 with Vanu Vanu Beast Tribe
+     * @param hasVanuVanu whether player has reached Rank 7 with Vanu Vanu Beast Tribe
+     */
+    public void setHasVanuVanu(boolean hasVanuVanu) {
+        this.hasVanuVanu = hasVanuVanu;
+    }
+
+    /**
+     * Get whether player has reached Rank 7 with Vath Beast Tribe
+     * @return whether player has reached Rank 7 with Vath Tribe
+     */
+    public boolean isHasVath() {
+        return hasVath;
+    }
+
+    /**
+     * Get whether player has reached Rank 7 with Vath Beast Tribe
+     * @return whether player has reached Rank 7 with Vath Beast Tribe
+     */
+    public int getBitHasVath() {
+        if(this.hasVath) return 1;
+        return 0;
+    }
+
+    /**
+     * Set whether player has reached Rank 7 with Vath Beast Tribe
+     * @param hasVath whether player has reached Rank 7 with Vath Beast Tribe
+     */
+    public void setHasVath(boolean hasVath) {
+        this.hasVath = hasVath;
     }
 }
