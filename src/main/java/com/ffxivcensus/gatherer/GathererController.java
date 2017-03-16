@@ -14,6 +14,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -435,7 +436,12 @@ public class GathererController {
             }
             thread.start();
             try {
-                TimeUnit.MILLISECONDS.sleep(10);
+                //Generate random number 1-10 and sleep for it
+                Random rand = new Random();
+
+                int randomNum = rand.nextInt((10 - 1) + 1) + 1;
+
+                TimeUnit.MILLISECONDS.sleep(randomNum);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
