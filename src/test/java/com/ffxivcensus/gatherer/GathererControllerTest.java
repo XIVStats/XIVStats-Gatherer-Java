@@ -233,12 +233,12 @@ public class GathererControllerTest {
         assertTrue(addedIDsCerberus.contains(1557648));
         assertTrue(addedIDsCerberus.contains(1558244));
 
-        //Test for ids that will exist on shiva (realm of end char)
-        assertTrue(addedIDsShiva.contains(endId));
+
         assertTrue(addedIDsShiva.contains(1557297));
 
         //Test for ids that will exist on Moogle
         assertTrue(addedIDsMoogle.contains(1557265));
+        assertTrue(addedIDsMoogle.contains(endId));
         assertTrue(addedIDsMoogle.contains(1557301));
 
         //Test that gatherer has not written records that don't exist on cerberus
