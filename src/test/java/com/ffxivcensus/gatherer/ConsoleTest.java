@@ -119,7 +119,7 @@ public class ConsoleTest {
     @Test
     public void testConsole() throws Exception {
 
-        String[] args = {"-s", "0", "-f", "100", "-t", "10", "-T", "tblplayers_test", "-d", dbName,"-U",dbHost, "-bPq"};
+        String[] args = {"-is", "0", "-f", "100", "-t", "10", "-T", "tblplayers_test", "-d", dbName,"-U",dbHost, "-bPq"};
 
         GathererController gc = Console.run(args);
         //Test that options have set attributes correctly
@@ -168,7 +168,7 @@ public class ConsoleTest {
     @Test
     public void TestConsoleHelpDefault() throws Exception {
 
-        String strHelp = "usage: java -jar XIVStats-Gatherer-Java.jar [-abmqvxDFPS] -s startid -f";
+        String strHelp = "usage: java -jar XIVStats-Gatherer-Java.jar [-abimqvxDFPS] -s startid -f";
 
         //Test for a help dialog displayed upon failure
         String[] args = {""};
@@ -180,7 +180,7 @@ public class ConsoleTest {
     @Test
     public void TestConsoleHelpOnFail() throws Exception {
 
-        String strHelp = "usage: java -jar XIVStats-Gatherer-Java.jar [-abmqvxDFPS] -s startid -f";
+        String strHelp = "usage: java -jar XIVStats-Gatherer-Java.jar [-abimqvxDFPS] -s startid -f";
         //Test for a help dialog displayed upon failure
         String[] args = {"-s 0"};
         GathererController gc = Console.run(args);
@@ -192,7 +192,7 @@ public class ConsoleTest {
     @Test
     public void TestConsoleHelp() throws Exception {
 
-        String strHelp = "usage: java -jar XIVStats-Gatherer-Java.jar [-abmqvxDFPS] -s startid -f";
+        String strHelp = "usage: java -jar XIVStats-Gatherer-Java.jar [-abimqvxDFPS] -s startid -f";
 
         //First test for a user requested help dialog
         String[] args = {"--help"};

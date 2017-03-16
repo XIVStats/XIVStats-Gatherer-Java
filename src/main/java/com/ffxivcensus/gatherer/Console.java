@@ -26,7 +26,7 @@ public class Console {
         Options options = setupOptions();
 
         //Declare usage string
-        String usage = "java -jar XIVStats-Gatherer-Java.jar [-abmqvxDFPS] -s startid -f finishid [-d database-name] [-u database-user] [-p database-user-password] [-U database-url] [-T table] [-t threads]";
+        String usage = "java -jar XIVStats-Gatherer-Java.jar [-abimqvxDFPS] -s startid -f finishid [-d database-name] [-u database-user] [-p database-user-password] [-U database-url] [-T table] [-t threads]";
         HelpFormatter formatter = new HelpFormatter();
 
         try{
@@ -84,6 +84,8 @@ public class Console {
             if(cmd.hasOption("p")){
                 gatherer.setDbPassword(cmd.getOptionValue("p"));
             }
+
+            gatherer.setDbIgnoreSSLWarn(cmd.hasOption("i"));
 
             //Program threads
             if(cmd.hasOption("t")){
@@ -151,6 +153,7 @@ public class Console {
         Option optSuffix = Option.builder("x").longOpt("suffix").hasArg().numberOfArgs(1).argName("table-suffix").desc("suffix to append to all tables").build();
         Option optStoreActive = Option.builder("a").longOpt("do-not-store-activity").desc("do not store boolean data indicating player activity in last 30 days").build();
         Option optStoreDate = Option.builder("D").longOpt("do-not-store-date").desc("do not store Date of last player activity").build();
+        Option optIgnoreSSLVerify = Option.builder("i").longOpt("ignore-ssl-verification").desc("Supress/ignore MySQL SSL verification warnings").build();
 
         //Add each option to the options object
         options.addOption(optStart);
@@ -172,6 +175,7 @@ public class Console {
         options.addOption(optSuffix);
         options.addOption(optStoreActive);
         options.addOption(optStoreDate);
+        options.addOption(optIgnoreSSLVerify);
 
         return options;
     }

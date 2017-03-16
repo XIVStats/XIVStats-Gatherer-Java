@@ -40,6 +40,10 @@ public class GathererController {
      */
     private String dbPassword;
     /**
+     * Whether to ignore database SSL verification warnings
+     */
+    private boolean dbIgnoreSSLWarn;
+    /**
      * The character ID to start the gatherer at.
      */
     private int startId = -1;
@@ -183,6 +187,9 @@ public class GathererController {
 
         //Parameters specified should outweigh config
         this.dbUrl = "jdbc:" + dbUrl + "/" + dbName;
+        if (this.dbIgnoreSSLWarn) {
+            this.dbUrl += "?useSSL=false";
+        }
         this.dbUser = dbUser;
         this.dbPassword = dbPassword;
         this.threadLimit = threads;
@@ -347,7 +354,7 @@ public class GathererController {
                 sbSQL.append("soundtrack BIT,saweternalbond BIT,sightseeing BIT,comm50 BIT,moogleplush BIT,");
                 sbSQL.append("topazcarubuncleplush BIT,emeraldcarbuncleplush BIT,");
                 sbSQL.append("hildibrand BIT, dideternalbond BIT, arrcollector BIT,");
-                sbSQL.append("kobold BIT, sahagin BIT, amaljaa BIT, sylph BIT, moogle BIT, vanuvanu BIT, vath BIT, ");
+                sbSQL.append("kobold BIT, sahagin BIT, amaljaa BIT, sylph BIT,");
                 sbSQL.append("arr_25_complete BIT,hw_complete BIT, hw_31_complete BIT, hw_33_complete BIT, legacy_player BIT");
             }
             if (this.storeMounts) {
@@ -497,7 +504,7 @@ public class GathererController {
                         + player.getBitHas960DaysSub() + ",");
 
                 sbFields.append("prearr, prehw, arrartbook, hwartbookone, hwartbooktwo, hasencyclopedia, beforemeteor, beforethefall, soundtrack, saweternalbond, "
-                                + "sightseeing, arr_25_complete, comm50, moogleplush, topazcarubuncleplush, emeraldcarbuncleplush");
+                                + "sightseeing, arr_25_complete, comm50, moogleplush, topazcarubuncleplush, emeraldcarbuncleplush,");
                 sbValues.append(player.getBitHasPreOrderArr() + "," + player.getBitHasPreOrderHW() + ","
                                 + player.getBitHasArrArtbook() + "," + player.getBitHasHWArtbookOne() + ","
                                 + player.getBitHasHWArtbookTwo() + "," + player.getBitHasEncyclopediaEorzea() + ","
@@ -845,5 +852,13 @@ public class GathererController {
      */
     public void setStorePlayerActive(boolean storePlayerActive) {
         this.storePlayerActive = storePlayerActive;
+    }
+
+    /**
+     * Set whether to ignore database ssl verification warnings
+     * @param dbIgnoreSSLWarn whether to ignore database ssl verification warnings
+     */
+    public void setDbIgnoreSSLWarn(boolean dbIgnoreSSLWarn) {
+        this.dbIgnoreSSLWarn = dbIgnoreSSLWarn;
     }
 }
