@@ -17,6 +17,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Random;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
 
 /**
@@ -1919,9 +1921,18 @@ public class Player {
             player.setActive(player.isPlayerActiveInDateRange());
         } catch (IOException ioEx) {
             String strEx = org.apache.commons.lang.exception.ExceptionUtils.getStackTrace(ioEx);
-            String[] words = strEx.split("\\s+");
-            words[5] = words[5].replace("Status=","").replace(",","");
-            throw new Exception("Character " + playerID + " does not exist. Status: " +  words[5]);
+            String statusCode = strEx.split("\\s+")[5].replace("Status=","").replace(",","");
+            if(statusCode.equals("429")) {
+                //Generate random number 1-10 and sleep for it
+                Random rand = new Random();
+
+                int randomNum = rand.nextInt((10 - 1) + 1) + 1;
+                System.out.println("Experiencing rate limiting (HTTP 429) while fetching id " + playerID + ", waiting " + randomNum + "ms then retrying...");
+                TimeUnit.MILLISECONDS.sleep(randomNum);
+                player = Player.getPlayer(playerID);
+            } else {
+                throw new Exception("Character " + playerID + " does not exist. Status: " + statusCode);
+            }
         }
         return player;
     }
