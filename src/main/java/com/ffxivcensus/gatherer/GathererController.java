@@ -40,6 +40,10 @@ public class GathererController {
      */
     private String dbPassword;
     /**
+     * Whether to ignore database SSL verification warnings
+     */
+    private boolean dbIgnoreSSLWarn;
+    /**
      * The character ID to start the gatherer at.
      */
     private int startId = -1;
@@ -183,6 +187,9 @@ public class GathererController {
 
         //Parameters specified should outweigh config
         this.dbUrl = "jdbc:" + dbUrl + "/" + dbName;
+        if (this.dbIgnoreSSLWarn) {
+            this.dbUrl += "??useSSL=false";
+        }
         this.dbUser = dbUser;
         this.dbPassword = dbPassword;
         this.threadLimit = threads;
@@ -845,5 +852,13 @@ public class GathererController {
      */
     public void setStorePlayerActive(boolean storePlayerActive) {
         this.storePlayerActive = storePlayerActive;
+    }
+
+    /**
+     * Set whether to ignore database ssl verification warnings
+     * @param dbIgnoreSSLWarn whether to ignore database ssl verification warnings
+     */
+    public void setDbIgnoreSSLWarn(boolean dbIgnoreSSLWarn) {
+        this.dbIgnoreSSLWarn = dbIgnoreSSLWarn;
     }
 }
