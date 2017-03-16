@@ -15,7 +15,7 @@ import com.mysql.jdbc.exceptions.jdbc4.MySQLNonTransientConnectionException;
  */
 public class Gatherer implements Runnable {
 
-    GathererController parent;
+    private GathererController parent;
 
     /**
      * Default constructor
