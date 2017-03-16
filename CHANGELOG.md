@@ -1,3 +1,8 @@
+v1.3.1
+======
+* Resolved bug with mismatching number of column headers and values in SQL inserts
+* Added option to suppress SSL verification warnings - `-s`
+
 v1.3.0
 ======
 * Completely removed 30 second exclude range from image reader - it was excluding players that are active, and none of the players being excluded are inactive.
