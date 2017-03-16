@@ -115,6 +115,7 @@ public class GathererControllerTest {
         GathererController gathererController = new GathererController(startId, endId);
         gathererController.setTableName("tblplayers_test_3");
         gathererController.setVerbose(true);
+        gathererController.setThreadLimit(40);
         try {
             gathererController.run();
         } catch (Exception e) {
@@ -208,7 +209,7 @@ public class GathererControllerTest {
         int startId = 1557260;
         int endId = 1558260;
 
-        GathererController gathererController = new GathererController(startId, endId, false, true, false, false, false, dbHost, dbName, dbUser, dbPassword, 71, "_test", true);
+        GathererController gathererController = new GathererController(startId, endId, false, true, false, false, false, dbHost, dbName, dbUser, dbPassword, 50, "_test", true);
         try {
             gathererController.run();
         } catch (Exception e) {
