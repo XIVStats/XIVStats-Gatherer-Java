@@ -10,6 +10,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -2156,7 +2157,8 @@ public class Player {
             HttpResponse<JsonNode> jsonResponse = Unirest.head(imgUrl).asJson();
 
             strLastModifiedDate = jsonResponse.getHeaders().get("Last-Modified").toString();
-        } catch (UnirestException e) {
+        }
+        catch (Exception e) {
             System.out.println("Setting last-active date to ARR launch date due to an an error loading character " + id + "'s profile image: " + e.getMessage());
             strLastModifiedDate = "[Sat, 24 Aug 2013 00:00:01 GMT]";
         }
