@@ -497,7 +497,7 @@ public class GathererController {
                         + player.getBitHas960DaysSub() + ",");
 
                 sbFields.append("prearr, prehw, arrartbook, hwartbookone, hwartbooktwo, hasencyclopedia, beforemeteor, beforethefall, soundtrack, saweternalbond, "
-                                + "sightseeing, arr_25_complete, comm50, moogleplush, topazcarubuncleplush, emeraldcarbuncleplush");
+                                + "sightseeing, arr_25_complete, comm50, moogleplush, topazcarubuncleplush, emeraldcarbuncleplush,");
                 sbValues.append(player.getBitHasPreOrderArr() + "," + player.getBitHasPreOrderHW() + ","
                                 + player.getBitHasArrArtbook() + "," + player.getBitHasHWArtbookOne() + ","
                                 + player.getBitHasHWArtbookTwo() + "," + player.getBitHasEncyclopediaEorzea() + ","
