@@ -1918,7 +1918,7 @@ public class Player {
             player.setIsLegacyPlayer(player.doesPlayerHaveMount("Legacy Chocobo"));
             player.setActive(player.isPlayerActiveInDateRange());
         } catch (IOException ioEx) {
-            throw new Exception("Character " + playerID + " does not exist.");
+            throw new Exception("Character " + playerID + " does not exist.: " + ioEx.getMessage());
         }
         return player;
     }
