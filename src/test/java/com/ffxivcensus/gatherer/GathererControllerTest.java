@@ -114,6 +114,7 @@ public class GathererControllerTest {
         int endId = 11887010;
         GathererController gathererController = new GathererController(startId, endId);
         gathererController.setTableName("tblplayers_test_3");
+        gathererController.setVerbose(true);
         try {
             gathererController.run();
         } catch (Exception e) {
