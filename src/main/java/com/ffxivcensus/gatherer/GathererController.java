@@ -188,7 +188,7 @@ public class GathererController {
         //Parameters specified should outweigh config
         this.dbUrl = "jdbc:" + dbUrl + "/" + dbName;
         if (this.dbIgnoreSSLWarn) {
-            this.dbUrl += "??useSSL=false";
+            this.dbUrl += "?useSSL=false";
         }
         this.dbUser = dbUser;
         this.dbPassword = dbPassword;
@@ -354,7 +354,7 @@ public class GathererController {
                 sbSQL.append("soundtrack BIT,saweternalbond BIT,sightseeing BIT,comm50 BIT,moogleplush BIT,");
                 sbSQL.append("topazcarubuncleplush BIT,emeraldcarbuncleplush BIT,");
                 sbSQL.append("hildibrand BIT, dideternalbond BIT, arrcollector BIT,");
-                sbSQL.append("kobold BIT, sahagin BIT, amaljaa BIT, sylph BIT, moogle BIT, vanuvanu BIT, vath BIT, ");
+                sbSQL.append("kobold BIT, sahagin BIT, amaljaa BIT, sylph BIT,");
                 sbSQL.append("arr_25_complete BIT,hw_complete BIT, hw_31_complete BIT, hw_33_complete BIT, legacy_player BIT");
             }
             if (this.storeMounts) {

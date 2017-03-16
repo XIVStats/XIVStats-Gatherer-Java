@@ -35,11 +35,6 @@ public class Player {
 
     private static final long ONE_DAY_IN_MILLIS=86400000;
 
-    /**
-     * Ignore dates from inside EXCLUDE_RANGE in minutes
-     */
-    private static final long EXCLUDE_RANGE= 5;
-
     private int id;
     private String realm;
     private String playerName;
