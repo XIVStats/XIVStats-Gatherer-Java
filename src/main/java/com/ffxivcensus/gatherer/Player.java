@@ -1871,7 +1871,7 @@ public class Player {
             player.setGender(getGenderFromPage(doc));
             player.setGrandCompany(getGrandCompanyFromPage(doc));
             player.setFreeCompany(getFreeCompanyFromPage(doc));
-            player.setDateImgLastModified(getDateLastUpdatedFromPage(doc));
+            player.setDateImgLastModified(getDateLastUpdatedFromPage(doc,playerID));
             player.setLevels(getLevelsFromPage(doc));
             player.setMounts(getMountsFromPage(doc));
             player.setMinions(getMinionsFromPage(doc));
@@ -2146,7 +2146,7 @@ public class Player {
      * @param doc the lodestone profile page to parse
      * @return the date on which the full body image was last modified.
      */
-    private static Date getDateLastUpdatedFromPage(Document doc) throws Exception {
+    private static Date getDateLastUpdatedFromPage(Document doc, int id) throws Exception {
         Date dateLastModified = new Date();
         //Get character image URL.
         String imgUrl = doc.getElementsByClass("bg_chara_264").get(0).getElementsByTag("img").get(0).attr("src");
@@ -2157,7 +2157,8 @@ public class Player {
 
             strLastModifiedDate = jsonResponse.getHeaders().get("Last-Modified").toString();
         } catch (UnirestException e) {
-            e.printStackTrace();
+            System.out.println("Setting last-active date to ARR launch date due to an an error loading character " + id + "'s profile image: " + e.getMessage());
+            strLastModifiedDate = "[Sat, 24 Aug 2013 00:00:01 GMT]";
         }
 
         strLastModifiedDate = strLastModifiedDate.replace("[", "");
@@ -2167,7 +2168,7 @@ public class Player {
         try {
             dateLastModified = dateFormat.parse(strLastModifiedDate);
         } catch (ParseException e) {
-            throw new Exception("Could not correctly parse date 'Last-Modified' header from full body image");
+            throw new Exception("Could not correctly parse date 'Last-Modified' header from full body image for character id" + id);
         }
         return dateLastModified;
     }
