@@ -1923,10 +1923,10 @@ public class Player {
             String strEx = org.apache.commons.lang.exception.ExceptionUtils.getStackTrace(ioEx);
             String statusCode = strEx.split("\\s+")[5].replace("Status=","").replace(",","");
             if(statusCode.equals("429")) {
-                //Generate random number 1-10 and sleep for it
+                //Generate random number 1-20 and sleep for it
                 Random rand = new Random();
 
-                int randomNum = rand.nextInt((10 - 1) + 1) + 1;
+                int randomNum = rand.nextInt((20 - 1) + 1) + 1;
                 System.out.println("Experiencing rate limiting (HTTP 429) while fetching id " + playerID + ", waiting " + randomNum + "ms then retrying...");
                 TimeUnit.MILLISECONDS.sleep(randomNum);
                 player = Player.getPlayer(playerID);
