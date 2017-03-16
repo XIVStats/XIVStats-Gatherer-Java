@@ -6,7 +6,7 @@
 
     <groupId>com.ffxivcensus.gatherer</groupId>
     <artifactId>XIVStats-Gatherer-Java</artifactId>
-    <version>v1.3.2</version>
+    <version>v1.3.3</version>
     <name>XIVStats Lodestone Gatherer</name>
     <url>https://github.com/xivstats</url>
 
@@ -179,6 +179,11 @@
             <groupId>com.mashape.unirest</groupId>
             <artifactId>unirest-java</artifactId>
             <version>1.4.9</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+            <version>2.6</version>
         </dependency>
     </dependencies>
 

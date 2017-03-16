@@ -15,7 +15,7 @@ import com.mysql.jdbc.exceptions.jdbc4.MySQLNonTransientConnectionException;
  */
 public class Gatherer implements Runnable {
 
-    GathererController parent;
+    private GathererController parent;
 
     /**
      * Default constructor
@@ -31,6 +31,9 @@ public class Gatherer implements Runnable {
         int nextID = parent.getNextID();
         while (nextID != -1) { //While we still have IDs to parse
             try {
+                if(parent.isVerbose()) {
+                    System.out.println("Starting evaluation of player ID: " +nextID);
+                }
                 //Parse players and write them to DB
                 String out = parent.writeToDB(Player.getPlayer(nextID));
                 if (!parent.isQuiet()) { //If not running in quiet mode

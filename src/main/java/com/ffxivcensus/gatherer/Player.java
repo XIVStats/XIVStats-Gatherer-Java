@@ -10,12 +10,15 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Random;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
 
 /**
@@ -1864,14 +1867,14 @@ public class Player {
 
         try {
             //Fetch the specified URL
-            doc = Jsoup.connect(url).get();
+            doc = Jsoup.connect(url).timeout(5000).get();
             player.setPlayerName(getNameFromPage(doc));
             player.setRealm(getRealmFromPage(doc));
             player.setRace(getRaceFromPage(doc));
             player.setGender(getGenderFromPage(doc));
             player.setGrandCompany(getGrandCompanyFromPage(doc));
             player.setFreeCompany(getFreeCompanyFromPage(doc));
-            player.setDateImgLastModified(getDateLastUpdatedFromPage(doc));
+            player.setDateImgLastModified(getDateLastUpdatedFromPage(doc,playerID));
             player.setLevels(getLevelsFromPage(doc));
             player.setMounts(getMountsFromPage(doc));
             player.setMinions(getMinionsFromPage(doc));
@@ -1917,7 +1920,19 @@ public class Player {
             player.setIsLegacyPlayer(player.doesPlayerHaveMount("Legacy Chocobo"));
             player.setActive(player.isPlayerActiveInDateRange());
         } catch (IOException ioEx) {
-            throw new Exception("Character " + playerID + " does not exist.");
+            String strEx = org.apache.commons.lang.exception.ExceptionUtils.getStackTrace(ioEx);
+            String statusCode = strEx.split("\\s+")[5].replace("Status=","").replace(",","");
+            if(statusCode.equals("429")) {
+                //Generate random number 1-20 and sleep for it
+                Random rand = new Random();
+
+                int randomNum = rand.nextInt((20 - 1) + 1) + 1;
+                System.out.println("Experiencing rate limiting (HTTP 429) while fetching id " + playerID + ", waiting " + randomNum + "ms then retrying...");
+                TimeUnit.MILLISECONDS.sleep(randomNum);
+                player = Player.getPlayer(playerID);
+            } else {
+                throw new Exception("Character " + playerID + " does not exist. Status: " + statusCode);
+            }
         }
         return player;
     }
@@ -2146,7 +2161,7 @@ public class Player {
      * @param doc the lodestone profile page to parse
      * @return the date on which the full body image was last modified.
      */
-    private static Date getDateLastUpdatedFromPage(Document doc) throws Exception {
+    private static Date getDateLastUpdatedFromPage(Document doc, int id) throws Exception {
         Date dateLastModified = new Date();
         //Get character image URL.
         String imgUrl = doc.getElementsByClass("bg_chara_264").get(0).getElementsByTag("img").get(0).attr("src");
@@ -2156,8 +2171,10 @@ public class Player {
             HttpResponse<JsonNode> jsonResponse = Unirest.head(imgUrl).asJson();
 
             strLastModifiedDate = jsonResponse.getHeaders().get("Last-Modified").toString();
-        } catch (UnirestException e) {
-            e.printStackTrace();
+        }
+        catch (Exception e) {
+            System.out.println("Setting last-active date to ARR launch date due to an an error loading character " + id + "'s profile image: " + e.getMessage());
+            strLastModifiedDate = "[Sat, 24 Aug 2013 00:00:01 GMT]";
         }
 
         strLastModifiedDate = strLastModifiedDate.replace("[", "");
@@ -2167,7 +2184,7 @@ public class Player {
         try {
             dateLastModified = dateFormat.parse(strLastModifiedDate);
         } catch (ParseException e) {
-            throw new Exception("Could not correctly parse date 'Last-Modified' header from full body image");
+            throw new Exception("Could not correctly parse date 'Last-Modified' header from full body image for character id" + id);
         }
         return dateLastModified;
     }

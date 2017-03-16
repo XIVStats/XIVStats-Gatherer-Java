@@ -114,6 +114,8 @@ public class GathererControllerTest {
         int endId = 11887010;
         GathererController gathererController = new GathererController(startId, endId);
         gathererController.setTableName("tblplayers_test_3");
+        gathererController.setVerbose(true);
+        gathererController.setThreadLimit(40);
         try {
             gathererController.run();
         } catch (Exception e) {
@@ -207,7 +209,7 @@ public class GathererControllerTest {
         int startId = 1557260;
         int endId = 1558260;
 
-        GathererController gathererController = new GathererController(startId, endId, false, true, false, false, false, dbHost, dbName, dbUser, dbPassword, 71, "_test", true);
+        GathererController gathererController = new GathererController(startId, endId, false, true, false, false, false, dbHost, dbName, dbUser, dbPassword, 50, "_test", true);
         try {
             gathererController.run();
         } catch (Exception e) {
@@ -231,12 +233,12 @@ public class GathererControllerTest {
         assertTrue(addedIDsCerberus.contains(1557648));
         assertTrue(addedIDsCerberus.contains(1558244));
 
-        //Test for ids that will exist on shiva (realm of end char)
-        assertTrue(addedIDsShiva.contains(endId));
+
         assertTrue(addedIDsShiva.contains(1557297));
 
         //Test for ids that will exist on Moogle
         assertTrue(addedIDsMoogle.contains(1557265));
+        assertTrue(addedIDsMoogle.contains(endId));
         assertTrue(addedIDsMoogle.contains(1557301));
 
         //Test that gatherer has not written records that don't exist on cerberus

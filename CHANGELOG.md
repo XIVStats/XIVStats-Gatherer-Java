@@ -1,3 +1,7 @@
+v1.3.3
+======
+* If the Gatherer experiences a HTTP error code `429` (Too many requests), it will pause for 1-20 milliseconds and retry via  recursive method call.
+
 v1.3.2
 ======
 * New reputation columns accidentally deleted from CREATE TABLE script.

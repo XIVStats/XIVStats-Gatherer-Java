@@ -14,6 +14,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 /**
  * GathererController class of character gathering program. This class makes calls to fetch records from the lodestone, and then
@@ -429,7 +431,20 @@ public class GathererController {
 
         //Start up threads
         for (Thread thread : threads) {
+            if(this.isVerbose()) {
+                System.out.println("Starting thread with id " + thread.getId());
+            }
             thread.start();
+            try {
+                //Generate random number 1-10 and sleep for it
+                Random rand = new Random();
+
+                int randomNum = rand.nextInt((10 - 1) + 1) + 1;
+
+                TimeUnit.MILLISECONDS.sleep(randomNum);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
 
         //Spin down threads
