@@ -1,3 +1,7 @@
+v1.3.2
+======
+* New reputation columns accidentally deleted from CREATE TABLE script.
+
 v1.3.1
 ======
 * Resolved bug with mismatching number of column headers and values in SQL inserts
