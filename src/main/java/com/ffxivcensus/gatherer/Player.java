@@ -1865,7 +1865,7 @@ public class Player {
 
         try {
             //Fetch the specified URL
-            doc = Jsoup.connect(url).get();
+            doc = Jsoup.connect(url).timeout(5000).get();
             player.setPlayerName(getNameFromPage(doc));
             player.setRealm(getRealmFromPage(doc));
             player.setRace(getRaceFromPage(doc));
@@ -1918,7 +1918,10 @@ public class Player {
             player.setIsLegacyPlayer(player.doesPlayerHaveMount("Legacy Chocobo"));
             player.setActive(player.isPlayerActiveInDateRange());
         } catch (IOException ioEx) {
-            throw new Exception("Character " + playerID + " does not exist.: " + ioEx.getMessage());
+            String strEx = org.apache.commons.lang.exception.ExceptionUtils.getStackTrace(ioEx);
+            String[] words = strEx.split("\\s+");
+            words[5] = words[5].replace("Status=","").replace(",","");
+            throw new Exception("Character " + playerID + " does not exist. Status: " +  words[5]);
         }
         return player;
     }
