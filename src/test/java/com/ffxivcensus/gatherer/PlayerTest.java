@@ -163,7 +163,7 @@ public class PlayerTest {
      * Perform a test of the getPlayer method using character #501646 (Omega Venom, Cerberus) to test data that could
      * not be tested with other tests.
      *
-     * @throws Exception exception thrown when reading non-existant character.
+     * @throws Exception exception thrown when reading non-existent character.
      */
     @org.junit.Test
     public void testGetVeteranPlayer() throws Exception {
