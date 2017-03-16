@@ -430,7 +430,9 @@ public class GathererController {
 
         //Start up threads
         for (Thread thread : threads) {
-            System.out.println("Starting thread with id " + thread.getId());
+            if(this.isVerbose()) {
+                System.out.println("Starting thread with id " + thread.getId());
+            }
             thread.start();
             try {
                 TimeUnit.MILLISECONDS.sleep(10);
