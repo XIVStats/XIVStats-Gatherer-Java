@@ -1,3 +1,7 @@
+v1.3.4
+======
+* Changed 'wait time' for retries to increase depending on number of attempts made to load page.
+
 v1.3.3
 ======
 * If the Gatherer experiences a HTTP error code `429` (Too many requests), it will pause for 1-20 milliseconds and retry via  recursive method call.
