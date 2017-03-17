@@ -1853,10 +1853,11 @@ public class Player {
      * Fetch a player from the lodestone specified by ID.
      *
      * @param playerID the ID of the player to fetch
+     * @param attempt the number of times this character has been attempted.
      * @return the player object matching the specified ID.
      * @throws Exception exception thrown if more class levels returned than anticipated.
      */
-    public static Player getPlayer(int playerID) throws Exception {
+    public static Player getPlayer(int playerID, int attempt) throws Exception {
         //Initialize player object to return
         Player player = new Player(playerID);
         //Declare HTML document
@@ -1923,13 +1924,14 @@ public class Player {
             String strEx = org.apache.commons.lang.exception.ExceptionUtils.getStackTrace(ioEx);
             String statusCode = strEx.split("\\s+")[5].replace("Status=","").replace(",","");
             if(statusCode.equals("429")) {
-                //Generate random number 1-20 and sleep for it
+                //Generate random number 1->20*attempt no and sleep for it
                 Random rand = new Random();
-
-                int randomNum = rand.nextInt((20 - 1) + 1) + 1;
+                int max = attempt * 20;
+                int min = (attempt - 1) + 1;
+                int randomNum = rand.nextInt(max - min + 1) + min;
                 System.out.println("Experiencing rate limiting (HTTP 429) while fetching id " + playerID + ", waiting " + randomNum + "ms then retrying...");
                 TimeUnit.MILLISECONDS.sleep(randomNum);
-                player = Player.getPlayer(playerID);
+                player = Player.getPlayer(playerID, attempt++);
             } else {
                 throw new Exception("Character " + playerID + " does not exist. Status: " + statusCode);
             }
