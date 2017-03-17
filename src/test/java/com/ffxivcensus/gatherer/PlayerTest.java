@@ -21,7 +21,7 @@ public class PlayerTest {
     @org.junit.Test
     public void testGetPlayer() throws Exception {
         //Fetch object to test against (Aelia Sokoto, Cerberus)
-        Player playerOne = Player.getPlayer(2356533);
+        Player playerOne = Player.getPlayer(2356533,1);
 
         //NOTE: All of the following tests assume various pieces of information
         //Testing information that is very unlikely to change
@@ -167,7 +167,7 @@ public class PlayerTest {
      */
     @org.junit.Test
     public void testGetVeteranPlayer() throws Exception {
-        Player player = Player.getPlayer(501646);
+        Player player = Player.getPlayer(501646,1);
 
         //Player has 960 days sub, make sure recorded correctly
         assertTrue(player.isHas960DaysSub());
@@ -187,7 +187,7 @@ public class PlayerTest {
      */
     @org.junit.Test
     public void testUnplayedPlayer() throws Exception {
-        Player player = Player.getPlayer(13002142);
+        Player player = Player.getPlayer(13002142,1);
 
         //Test grand company
         assertEquals("none", player.getGrandCompany());
@@ -240,7 +240,7 @@ public class PlayerTest {
      */
     @org.junit.Test
     public void testGetPlayerNoGCHasFC() throws Exception {
-        Player player = Player.getPlayer(1);
+        Player player = Player.getPlayer(1,1);
 
         //Verify that grand company is "None"
         assertEquals("none", player.getGrandCompany());
@@ -254,7 +254,7 @@ public class PlayerTest {
      */
     @org.junit.Test
     public void testGetPlayerNoFCHasGC() throws Exception {
-        Player player = Player.getPlayer(11886920);
+        Player player = Player.getPlayer(11886920,1);
 
         //Test that GC is maelstrom
         assertEquals("Maelstrom", player.getGrandCompany());
@@ -270,7 +270,7 @@ public class PlayerTest {
      */
     @org.junit.Test
     public void testGetPlayerWithAllCollectibles() throws Exception {
-        Player player = Player.getPlayer(71);
+        Player player = Player.getPlayer(71,1);
 
         assertEquals(player.getBitHasArrArtbook(), 1);
         assertEquals(player.getBitHasBeforeMeteor(), 1);
@@ -287,7 +287,7 @@ public class PlayerTest {
     public void testGetPlayerInvalid() {
         try {
             //Try to get a character that doesn't exist
-            Player player = Player.getPlayer(2356539);
+            Player player = Player.getPlayer(2356539,1);
             //If no exception thrown fail
             fail("Character should not exist");
         } catch (Exception e) {
