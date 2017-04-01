@@ -1972,8 +1972,7 @@ public class Player {
      */
     private static String getRealmFromPage(Document doc) {
         //Get elements in the player name area
-        Elements elements = doc.getElementsByClass("player_name_txt");
-        String realmName = elements.get(0).getElementsByTag("span").text().replace("(", "").replace(")", "");
+        String realmName = doc.getElementsByClass("frame__chara__world").get(0).text().replace("(", "").replace(")", "");
         //Return the realm name (contained in span)
         return realmName;
     }
@@ -1985,7 +1984,7 @@ public class Player {
      * @return the race of the character.
      */
     private static String getRaceFromPage(Document doc) {
-        return doc.getElementsByClass("chara_profile_title").get(0).text().split(Pattern.quote("/"))[0].trim();
+        return doc.getElementsByClass("character-block__name").get(0).textNodes().get(0).text().trim();
     }
 
     /**
@@ -1995,8 +1994,8 @@ public class Player {
      * @return the gender of the character.
      */
     private static String getGenderFromPage(Document doc) {
-        String[] parts = doc.getElementsByClass("chara_profile_title").get(0).text().split(Pattern.quote("/"));
-        String gender = parts[2].trim();
+        String[] parts = doc.getElementsByClass("character-block__name").get(0).text().split(Pattern.quote("/"));
+        String gender = parts[1].trim();
         if (gender.equals("♂")) {
             return "male";
         } else if (gender.equals("♀")) {
@@ -2016,23 +2015,20 @@ public class Player {
         String gc = null;
         String fc = null;
         //Get all elements with class chara_profile_box_info
-        Elements elements = doc.getElementsByClass("txt_name");
-
-        //Checks to see if optional FC has been added
+        Elements elements = doc.getElementsByClass("character-block__box");
         if (elements.size() == 5) {
-            fc = elements.get(4).getElementsByTag("a").text();
+            gc = elements.get(3).getElementsByClass("character-block__name").get(0).text().split("/")[0].trim();
         }
-
-        if (elements.size() == 5) { //If GC and FC present
-            gc = elements.get(3).text().split(Pattern.quote("/"))[0];
-        } else if (elements.size() == 4) { //If only GC present
-            gc = elements.get(3).text().split(Pattern.quote("/"))[0];
-            if (!gc.equals("Immortal Flames") && !gc.equals("Order of the Twin Adder") && !gc.equals("Maelstrom")) { //If not a valid GC
+        else if(elements.size() == 4) {
+            if (elements.get(3).getElementsByClass("character__freecompany__name").size() > 0) { //If box is fc
                 gc = "none";
+            } else {
+                gc = elements.get(3).getElementsByClass("character-block__name").get(0).text().split("/")[0].trim();
             }
-        } else if (elements.size() == 3) {
+        } else {
             gc = "none";
         }
+
         return gc;
     }
 
@@ -2046,21 +2042,19 @@ public class Player {
         String gc = null;
         String fc = null;
         //Get all elements with class chara_profile_box_info
-        Elements elements = doc.getElementsByClass("txt_name");
+        Elements elements = doc.getElementsByClass("character-block__box");
 
         //Checks to see if optional FC has been added
         if (elements.size() == 5) {
-            fc = elements.get(4).getElementsByTag("a").text();
+            fc = elements.get(4).getElementsByClass("character__freecompany__name").get(0).getElementsByTag("a").text();
         } else if (elements.size() == 4) { //If only 4 elements present
-            //Assume that gc is what is in slot 3
-            gc = elements.get(3).text().split(Pattern.quote("/"))[0];
-            if (!gc.equals("Immortal Flames") && !gc.equals("Order of the Twin Adder") && !gc.equals("Maelstrom")) { //If not a valid GC
-                gc = "none";
-                fc = elements.get(3).text().split(Pattern.quote("/"))[0];
-            } else {
-                fc= "none";
+
+            if (elements.get(3).getElementsByClass("character__freecompany__name").size() > 0) { //If box is fc
+                fc = elements.get(3).getElementsByClass("character__freecompany__name").get(0).getElementsByTag("a").text();
+            } else { //Else must not be gc
+                fc = "none";
             }
-        } else if (elements.size() == 3) {
+        } else {
             fc = "none";
         }
         return fc;
@@ -2076,32 +2070,19 @@ public class Player {
     private static int[] getLevelsFromPage(Document doc) throws Exception {
         //Initialize array list in which to store levels (in order displayed on lodestone)
         ArrayList levels = new ArrayList();
-        //Get the html of the table for levels
-        Elements table = doc.getElementsByClass("class_list").select("tr");
-        //I
+        Elements discipleBoxes = doc.getElementsByClass("character__job");
 
-        for (Element e : table) { //For each row of table
-            //Select the first level
-            String lvlOne = e.select("td:eq(1)").text();
-            //Initialize var to store second
-            String lvlTwo = null;
-
-            if (e.select("td").size() > 3) {
-                //Second level
-                lvlTwo = e.select("td:eq(4)").text();
+        for (int i = 0; i < discipleBoxes.size(); i++) {
+            Elements levelBoxes = discipleBoxes.get(i).getElementsByClass("character__job__level");
+            for (Element levelBox : levelBoxes) {
+                String strLvl = levelBox.text();
+                if (strLvl.equals("-")) {
+                    levels.add(0);
+                } else {
+                    levels.add(Integer.parseInt(strLvl));
+                }
             }
-
-            if (lvlOne.equals("-")) {//If a dash
-                levels.add(0);
-            } else {
-                levels.add(Integer.parseInt(lvlOne));
-            }
-
-            if (lvlTwo.equals("-")) {
-                levels.add(0);
-            } else if (!lvlTwo.equals("")) {
-                levels.add(Integer.parseInt(lvlTwo));
-            }
+            System.out.print(levelBoxes.size());
         }
 
         //Initialize int array
@@ -2126,14 +2107,17 @@ public class Player {
      * @return the set of strings representing the player's minions.
      */
     private static ArrayList getMinionsFromPage(Document doc) {
-        //Get minion box element
-        Element minionBox = doc.getElementsByClass("minion_box").get(1);
-        //Get minions
-        Elements minionSet = minionBox.getElementsByTag("a");
+
         //Initialize array in which to store minions
         ArrayList minions = new ArrayList();
-        for (int index = 0; index < minionSet.size(); index++) { //For each minion link store into array
-            minions.add(minionSet.get(index).attr("title"));
+        //Get minion box element
+        Elements minionBoxes = doc.getElementsByClass("character__minion");
+        if (minionBoxes.size() > 0) {
+            //Get minions
+            Elements minionSet = minionBoxes.get(0).getElementsByTag("li");
+            for (int index = 0; index < minionSet.size(); index++) { //For each minion link store into array
+                minions.add(minionSet.get(index).getElementsByTag("div").attr("data-tooltip"));
+            }
         }
         return minions;
     }
@@ -2146,14 +2130,18 @@ public class Player {
      * @return the set of strings representing the player's mounts.
      */
     private static ArrayList getMountsFromPage(Document doc) {
-        //Get minion box element
-        Element minionBox = doc.getElementsByClass("minion_box").get(0);
-        //Get mounts
-        Elements mountSet = minionBox.getElementsByTag("a");
+
         //Initialize array in which to store minions
         ArrayList mounts = new ArrayList();
-        for (int index = 0; index < mountSet.size(); index++) { //For each mount link store into array
-            mounts.add(mountSet.get(index).attr("title"));
+
+        //Get minion box element
+        Elements minionBoxes = doc.getElementsByClass("character__mounts");
+        //Get mounts
+        if (minionBoxes.size() > 0) {
+            Elements mountSet = minionBoxes.get(0).getElementsByTag("li");
+            for (int index = 0; index < mountSet.size(); index++) { //For each mount link store into array
+                mounts.add(mountSet.get(index).getElementsByTag("div").attr("data-tooltip"));
+            }
         }
         return mounts;
     }
@@ -2166,7 +2154,7 @@ public class Player {
     private static Date getDateLastUpdatedFromPage(Document doc, int id) throws Exception {
         Date dateLastModified = new Date();
         //Get character image URL.
-        String imgUrl = doc.getElementsByClass("bg_chara_264").get(0).getElementsByTag("img").get(0).attr("src");
+        String imgUrl = doc.getElementsByClass("character__detail__image").get(0).getElementsByTag("a").get(0).getElementsByTag("img").get(0).attr("src");
         String strLastModifiedDate = "";
 
         try {
