@@ -2082,7 +2082,6 @@ public class Player {
                     levels.add(Integer.parseInt(strLvl));
                 }
             }
-            System.out.print(levelBoxes.size());
         }
 
         //Initialize int array
