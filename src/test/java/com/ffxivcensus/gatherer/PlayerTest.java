@@ -226,7 +226,6 @@ public class PlayerTest {
         assertEquals(player.getBitHasARRCollectors(), 0);
         //Tricky to test this - testing here that it was at the very least set to some value other than what it is set to a value other than that which it is initialized
         assertTrue(player.getDateImgLastModified() != new Date());
-        assertFalse(player.isActive());
 
         //Test get minions method
         assertTrue(player.getMinions().size() == 0);
