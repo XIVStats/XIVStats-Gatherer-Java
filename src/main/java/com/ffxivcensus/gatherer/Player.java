@@ -80,6 +80,7 @@ public class Player {
     private boolean has960DaysSub;
     private boolean hasPreOrderArr;
     private boolean hasPreOrderHW;
+    private boolean hasPreOrderSB;
     private boolean hasARRArtbook;
     private boolean hasHWArtbookOne;
     private boolean hasHWArtbookTwo;
@@ -106,6 +107,7 @@ public class Player {
     private boolean hasVanuVanu;
     private boolean hasVath;
     private boolean hasCompletedHW;
+    private boolean hasCompletedSB;
     private boolean hasCompleted3pt1;
     private boolean hasCompleted3pt3;
     private boolean isLegacyPlayer;
@@ -1965,6 +1967,7 @@ public class Player {
             player.setHas960DaysSub(player.doesPlayerHaveMinion("Wind-up Firion"));
             player.setHasPreOrderArr(player.doesPlayerHaveMinion("Cait Sith Doll"));
             player.setHasPreOrderHW(player.doesPlayerHaveMinion("Chocobo Chick Courier"));
+            player.setHasPreOrderSB(player.doesPlayerHaveMinion("Wind-up Red Mage"));
             player.setHasARRArtbook(player.doesPlayerHaveMinion("Model Enterprise"));
             player.setHasHWArtbookOne(player.doesPlayerHaveMinion("Wind-Up Relm"));
             player.setHasHWArtbookTwo(player.doesPlayerHaveMinion("Wind-Up Hraesvelgr"));
@@ -1993,6 +1996,10 @@ public class Player {
             player.setHasVanuVanu(player.doesPlayerHaveMount("Sanuwa"));
             player.setHasVath(player.doesPlayerHaveMount("Kongamato"));
             player.setHasCompletedHW(player.doesPlayerHaveMount("Midgardsormr"));
+            // Main Scenario quest doesn't drop a minion, so instead assume players will at least play one of the Level 70 dungeons and eventually get the minion
+            player.setHasCompletedSB(player.doesPlayerHaveMinion("Ivon Coeurlfist Doll") ||
+            		player.doesPlayerHaveMinion("Dress-up Yugiri") ||
+            		player.doesPlayerHaveMinion("Wind-up Exdeath"));
             player.setIsLegacyPlayer(player.doesPlayerHaveMount("Legacy Chocobo"));
             player.setActive(player.isPlayerActiveInDateRange());
         } catch (IOException ioEx) {
@@ -2488,4 +2495,52 @@ public class Player {
     public void setHasVath(boolean hasVath) {
         this.hasVath = hasVath;
     }
+
+    /**
+     * Get whether player has pre-ordered Stormblood.
+     * @return whether player pre-ordered Stormblood.
+     */
+	public boolean isHasPreOrderSB() {
+		return hasPreOrderSB;
+	}
+
+    /**
+     * Get whether player has pre-ordered Stormblood.
+     * @return whether player pre-ordered Stormblood.
+     */
+	public int getBitHasPreOrderSB() {
+		return isHasPreOrderSB() ? 1 : 0;
+	}
+
+	/**
+	 * Set whether player has pre-ordered Stormblood.
+	 * @param hasPreOrderSB whether player pre-ordered Stromblood.
+	 */
+	public void setHasPreOrderSB(boolean hasPreOrderSB) {
+		this.hasPreOrderSB = hasPreOrderSB;
+	}
+
+	/**
+	 * Get whether player has completed Stormblood.
+	 * @return whether player has completed Stromblood.
+	 */
+	public boolean isHasCompletedSB() {
+		return hasCompletedSB;
+	}
+
+	/**
+	 * Get whether player has completed Stormblood.
+	 * @return whether player has completed Stromblood.
+	 */
+	public int getBitHasCompletedSB() {
+		return isHasCompletedSB() ? 1 : 0;
+	}
+
+	/**
+	 * Set whether player has completed Stromblood.
+	 * @param hasCompletedSB whether player has completed Stormblood.
+	 */
+	public void setHasCompletedSB(boolean hasCompletedSB) {
+		this.hasCompletedSB = hasCompletedSB;
+	}
 }
