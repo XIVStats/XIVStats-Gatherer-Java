@@ -499,7 +499,7 @@ public class GathererController {
                             + "," + player.getLvlAstrologian() + "," + player.getLvlDarkKnight() + "," + player.getLvlMachinist()
                             + ",");
 
-            sbFields.append("level_scholar, level_redmage, level_samurai");
+            sbFields.append("level_scholar, level_redmage, level_samurai,");
             sbValues.append(player.getLvlScholar() + "," + player.getLvlRedMage() + "," + player.getLvlSamurai() + ",");
 
             sbFields.append("level_carpenter, level_blacksmith, level_armorer, level_goldsmith, level_leatherworker, level_weaver, level_alchemist,");
@@ -581,6 +581,7 @@ public class GathererController {
             sbValues.append(");");
 
             String strSQL = sbFields.toString() + sbValues.toString();
+            System.out.println(strSQL);
             st.executeUpdate(strSQL);
             if(!this.quiet || this.isVerbose()) {
                 strOut = "Character " + player.getId() + " written to database successfully.";
