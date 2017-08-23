@@ -351,13 +351,13 @@ public class GathererController {
             if (this.storeProgression) {
                 sbSQL.append(",");
                 sbSQL.append("p30days BIT, p60days BIT, p90days BIT, p180days BIT, p270days BIT,p360days BIT,p450days BIT,p630days BIT,p960days BIT,");
-                sbSQL.append("prearr BIT,prehw BIT, arrartbook BIT, hwartbookone BIT, hwartbooktwo BIT, hasencyclopedia BIT, ");
+                sbSQL.append("prearr BIT, prehw BIT, presb BIT, arrartbook BIT, hwartbookone BIT, hwartbooktwo BIT, hasencyclopedia BIT, ");
                 sbSQL.append("beforemeteor BIT, beforethefall BIT, ps4collectors BIT, ");
                 sbSQL.append("soundtrack BIT,saweternalbond BIT,sightseeing BIT,comm50 BIT,moogleplush BIT,");
                 sbSQL.append("topazcarubuncleplush BIT,emeraldcarbuncleplush BIT,");
                 sbSQL.append("hildibrand BIT, dideternalbond BIT, arrcollector BIT,");
                 sbSQL.append("kobold BIT, sahagin BIT, amaljaa BIT, sylph BIT,  moogle BIT, vanuvanu BIT, vath BIT,");
-                sbSQL.append("arr_25_complete BIT,hw_complete BIT, hw_31_complete BIT, hw_33_complete BIT, legacy_player BIT");
+                sbSQL.append("arr_25_complete BIT,hw_complete BIT, hw_31_complete BIT, hw_33_complete BIT, sb_complete BIT, legacy_player BIT");
             }
             if (this.storeMounts) {
                 sbSQL.append(",mounts TEXT");
@@ -518,9 +518,9 @@ public class GathererController {
                         + player.getBitHas450DaysSub() + "," + player.getBitHas630DaysSub() + ","
                         + player.getBitHas960DaysSub() + ",");
 
-                sbFields.append("prearr, prehw, arrartbook, hwartbookone, hwartbooktwo, hasencyclopedia, beforemeteor, beforethefall, soundtrack, saweternalbond, "
+                sbFields.append("prearr, prehw, presb, arrartbook, hwartbookone, hwartbooktwo, hasencyclopedia, beforemeteor, beforethefall, soundtrack, saweternalbond, "
                                 + "sightseeing, arr_25_complete, comm50, moogleplush, topazcarubuncleplush, emeraldcarbuncleplush,");
-                sbValues.append(player.getBitHasPreOrderArr() + "," + player.getBitHasPreOrderHW() + ","
+                sbValues.append(player.getBitHasPreOrderArr() + "," + player.getBitHasPreOrderHW() + "," + player.getBitHasPreOrderSB() + ","
                                 + player.getBitHasArrArtbook() + "," + player.getBitHasHWArtbookOne() + ","
                                 + player.getBitHasHWArtbookTwo() + "," + player.getBitHasEncyclopediaEorzea() + ","
                                 + player.getBitHasBeforeMeteor() + ","
@@ -531,13 +531,13 @@ public class GathererController {
                                 + player.getBitHasEmeraldCarbunclePlush() + ",");
 
                 sbFields.append("hildibrand, ps4collectors, dideternalbond, arrcollector, kobold, sahagin, amaljaa, "
-                                + "sylph, moogle, vanuvanu, vath, hw_complete, hw_31_complete, hw_33_complete, legacy_player");
+                                + "sylph, moogle, vanuvanu, vath, hw_complete, hw_31_complete, hw_33_complete, sb_complete, legacy_player");
                 sbValues.append(player.getBitHasCompletedHildibrand() + "," + player.getBitHasPS4Collectors() + ","
                         + player.getBitHasEternalBond() + "," + player.getBitHasARRCollectors() + ","
                         + player.getBitHasKobold() + "," + player.getBitHasSahagin() + "," + player.getBitHasAmaljaa() + ","
                         + player.getBitHasSylph() + "," + player.getBitHasMoogle() + "," + player.getBitHasVanuVanu() + ","
                         + player.getBitHasVath() + "," + player.getBitHasCompletedHW() + ","
-                        + player.getBitHasCompleted3pt1() + "," + player.getBitHasCompleted3pt3() + ","
+                        + player.getBitHasCompleted3pt1() + "," + player.getBitHasCompleted3pt3() + "," + player.getBitHasCompletedSB() +","
                         + player.getBitIsLegacyPlayer());
 
             }
