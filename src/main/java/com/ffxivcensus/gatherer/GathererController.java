@@ -345,9 +345,9 @@ public class GathererController {
             sbSQL.append(" (id INTEGER PRIMARY KEY,name TEXT,realm TEXT,race TEXT,gender TEXT,grand_company TEXT,free_company TEXT,");
             sbSQL.append("level_gladiator INTEGER,level_pugilist INTEGER,level_marauder INTEGER,level_lancer INTEGER,level_archer INTEGER,");
             sbSQL.append("level_rogue INTEGER,level_conjurer INTEGER,level_thaumaturge INTEGER,level_arcanist INTEGER,level_darkknight INTEGER, level_machinist INTEGER,");
-            sbSQL.append("level_astrologian INTEGER,level_carpenter INTEGER,level_blacksmith INTEGER,level_armorer INTEGER,level_goldsmith INTEGER,");
-            sbSQL.append("level_leatherworker INTEGER,level_weaver INTEGER,level_alchemist INTEGER,level_culinarian INTEGER,level_miner INTEGER,");
-            sbSQL.append("level_botanist INTEGER,level_fisher INTEGER");
+            sbSQL.append("level_astrologian INTEGER, level_scholar INTEGER, level_redmage INTEGER, level_samurai INTEGER, level_carpenter INTEGER, level_blacksmith INTEGER,");
+            sbSQL.append("level_armorer INTEGER,level_goldsmith INTEGER,level_leatherworker INTEGER,level_weaver INTEGER,level_alchemist INTEGER,level_culinarian INTEGER,");
+            sbSQL.append("level_miner INTEGER,level_botanist INTEGER,level_fisher INTEGER");
             if (this.storeProgression) {
                 sbSQL.append(",");
                 sbSQL.append("p30days BIT, p60days BIT, p90days BIT, p180days BIT, p270days BIT,p360days BIT,p450days BIT,p630days BIT,p960days BIT,");
@@ -494,13 +494,16 @@ public class GathererController {
                             + "," + player.getLvlLancer() + "," + player.getLvlArcher() + "," + player.getLvlRogue() + ",");
 
             sbFields.append("level_conjurer, level_thaumaturge, level_arcanist, level_astrologian, level_darkknight," +
-                            " level_machinist, level_carpenter,");
+                            " level_machinist,");
             sbValues.append(player.getLvlConjurer() + "," + player.getLvlThaumaturge() + "," + player.getLvlArcanist()
                             + "," + player.getLvlAstrologian() + "," + player.getLvlDarkKnight() + "," + player.getLvlMachinist()
-                            + "," + player.getLvlCarpenter() + ",");
+                            + ",");
+
+            sbFields.append("level_scholar, level_redmage, level_samurai");
+            sbValues.append(player.getLvlScholar() + "," + player.getLvlRedMage() + "," + player.getLvlSamurai() + ",");
 
             sbFields.append("level_blacksmith, level_armorer, level_goldsmith, level_leatherworker, level_weaver, level_alchemist,");
-            sbValues.append(player.getLvlBlacksmith() + "," + player.getLvlArmorer() + "," + player.getLvlGoldsmith()
+            sbValues.append(player.getLvlCarpenter() + "," + player.getLvlBlacksmith() + "," + player.getLvlArmorer() + "," + player.getLvlGoldsmith()
                             + "," + player.getLvlLeatherworker() + "," + player.getLvlWeaver() + "," + player.getLvlAlchemist()
                             + ",");
 
