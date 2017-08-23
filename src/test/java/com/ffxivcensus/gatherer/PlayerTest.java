@@ -36,22 +36,29 @@ public class PlayerTest {
         assertEquals("End of Days", playerOne.getFreeCompany());
 
         //Test classes - levels based on those at time of test creation
-        //Disciples of War
+        // Tank
         assertTrue(playerOne.getLvlGladiator() >= 60);
-        assertTrue(playerOne.getLvlPugilist() >= 60);
         assertTrue(playerOne.getLvlMarauder() >= 60);
+        assertTrue(playerOne.getLvlDarkKnight() >= 60);
+        
+        // Melee DPS
+        assertTrue(playerOne.getLvlPugilist() >= 60);
         assertTrue(playerOne.getLvlLancer() >= 60);
-        assertTrue(playerOne.getLvlArcher() >= 52);
         assertTrue(playerOne.getLvlRogue() >= 56);
-
-        //Disciples of Magic
-        assertTrue(playerOne.getLvlConjurer() >= 60);
+        assertTrue(playerOne.getLvlSamurai() >= 70);
+        
+        // Ranged Physical DPS
+        assertTrue(playerOne.getLvlArcher() >= 52);
+        assertTrue(playerOne.getLvlMachinist() >= 60);
+        
+        // Ranged Magical DPS
         assertTrue(playerOne.getLvlThaumaturge() >= 60);
         assertTrue(playerOne.getLvlArcanist() >= 60);
-
-        //Extra Jobs
-        assertTrue(playerOne.getLvlDarkKnight() >= 60);
-        assertTrue(playerOne.getLvlMachinist() >= 60);
+        assertTrue(playerOne.getLvlRedMage() >= 70);
+        
+        // Healer
+        assertTrue(playerOne.getLvlConjurer() >= 60);
+        assertTrue(playerOne.getLvlScholar() >= 67);
         assertTrue(playerOne.getLvlAstrologian() >= 60);
 
         //Disciples of the hand
