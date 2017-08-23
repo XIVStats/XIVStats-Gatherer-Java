@@ -75,7 +75,7 @@ Follow these steps to setup XIVStats-Gatherer-Java:
   |-d            | --database            | String         | database name                                                        |
   |-D            | --do-not-store-date   | none           | do not store date of last player activity                            |
   |-f            | --finish              | integer        | the character id to conclude character run at (inclusive)            |
-  |-F            | --print-failures      | none           |  print records that don't exist                                      |
+  |-F            | --print-failures      | none           | print records that don't exist                                      |
   |-h            | --help                | none           | display help message                                                 |
   |-m            | --store-mounts        | none           | store mount data set for each player into the database               |
   |-P            | --store-minions       | none           | store minion data set for each player into the database              |
@@ -134,6 +134,9 @@ The database table ```tblplayers``` has the following structure:
 |level_darkknight      |int      |N/A                             |
 |level_machinist       |int      |N/A                             |
 |level_astrologian     |int      |N/A                             |
+|level_scholar         |int      |N/A                             |
+|level_redmage         |int      |N/A                             |
+|level_samurai         |int      |N/A                             |
 |level_carpenter       |int      |N/A                             |
 |level_blacksmith      |int      |N/A                             |
 |level_armorer         |int      |N/A                             |
@@ -156,6 +159,7 @@ The database table ```tblplayers``` has the following structure:
 |p960days              |bit      |Minion - Wind-up Firion         |
 |prearr                |bit      |Minion - Cait Sith Doll         |
 |prehw                 |bit      |Minion - Chocobo Chick Courier  |
+|presb                 |bit      |Minion - Wind-up Red Mage       |
 |arrartbook            |bit      |Minion - Model Enterprise       |
 |hwartbookone          |bit      |Minion - Wind-Up Relm           |
 |hwartbooktw           |bit      |Minion - Wind-Up Hraesvelgr     |
@@ -184,6 +188,9 @@ The database table ```tblplayers``` has the following structure:
 |hw_complete           |bit      |Mount - Midgardsormr            |
 |hw_31_complete        |bit      |Minion - Wind-up Haurchefant    |
 |hw_33_complete        |bit      |Minion - Wind-up Aymeric        |
+|sb_complete           |bit      |Minion - Ivan Coeurlfist Doll   |
+|                      |         |Minion - Dress-up Yugiri        |
+|                      |         |Wind-up Exdeath                 |
 |legacy_player         |bit      |Mount - Legacy Chocobo          |
 |*mounts*              |*text*   |*N/A*                           |
 |*minions*             |*text*   |*N/A*                           |
