@@ -3,14 +3,12 @@ package com.ffxivcensus.gatherer;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
-import com.mashape.unirest.http.exceptions.UnirestException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -57,6 +55,9 @@ public class Player {
     private int lvlDarkKnight;
     private int lvlMachinist;
     private int lvlAstrologian;
+    private int lvlScholar;
+    private int lvlRedMage;
+    private int lvlSamurai;
     private int lvlCarpenter;
     private int lvlBlacksmith;
     private int lvlArmorer;
@@ -531,6 +532,60 @@ public class Player {
     public void setLvlAstrologian(int lvlAstrologian) {
         this.lvlAstrologian = lvlAstrologian;
     }
+
+    /**
+     * Get the player's scholar level.
+     * 
+     * @return the player's scholar level
+     */
+	public int getLvlScholar() {
+		return lvlScholar;
+	}
+
+	/**
+	 * Sets the player's scholar level.
+	 * 
+	 * @param lvlScholar the player's scholar level
+	 */
+	public void setLvlScholar(int lvlScholar) {
+		this.lvlScholar = lvlScholar;
+	}
+
+	/**
+	 * Get the player's red mage level.
+	 * 
+	 * @return the player's red mage level.
+	 */
+	public int getLvlRedMage() {
+		return lvlRedMage;
+	}
+
+	/**
+	 * Sets the player's red mage level.
+	 * 
+	 * @param lvlRedMage the player's red mage level.
+	 */
+	public void setLvlRedMage(int lvlRedMage) {
+		this.lvlRedMage = lvlRedMage;
+	}
+
+	/**
+	 * Gets the player's samurai level.
+	 * 
+	 * @return the player's samurai level.
+	 */
+	public int getLvlSamurai() {
+		return lvlSamurai;
+	}
+
+	/**
+	 * Sets the player's samurai level.
+	 * 
+	 * @param lvlSamurai the player's samurai level.
+	 */
+	public void setLvlSamurai(int lvlSamurai) {
+		this.lvlSamurai = lvlSamurai;
+	}
 
     /**
      * Get the player's carpenter level.
@@ -1764,33 +1819,53 @@ public class Player {
 
     /**
      * Set player class levels.
+     * 
+     * As of 4.0, this is now parsed in the order:
+     * - Gladiator
+     * - Marauder
+     * - Dark Knight
+     * - Monk
+     * - Dragoon
+     * - Ninja
+     * - Samurai
+     * - White Mage
+     * - Scholar
+     * - Astrologian
+     * - Bard
+     * - Machinist
+     * - Black Mage
+     * - Summoner
+     * - Red Mage 
      *
      * @param arrLevels integer array of classes in order displayed on lodestone.
      */
     public void setLevels(int[] arrLevels) {
         this.setLvlGladiator(arrLevels[0]);
-        this.setLvlPugilist(arrLevels[1]);
-        this.setLvlMarauder(arrLevels[2]);
-        this.setLvlLancer(arrLevels[3]);
-        this.setLvlArcher(arrLevels[4]);
+        this.setLvlMarauder(arrLevels[1]);
+        this.setLvlDarkKnight(arrLevels[2]);
+        this.setLvlPugilist(arrLevels[3]);
+        this.setLvlLancer(arrLevels[4]);
         this.setLvlRogue(arrLevels[5]);
-        this.setLvlConjurer(arrLevels[6]);
-        this.setLvlThaumaturge(arrLevels[7]);
-        this.setLvlArcanist(arrLevels[8]);
-        this.setLvlDarkKnight(arrLevels[9]);
-        this.setLvlMachinist(arrLevels[10]);
-        this.setLvlAstrologian(arrLevels[11]);
-        this.setLvlCarpenter(arrLevels[12]);
-        this.setLvlBlacksmith(arrLevels[13]);
-        this.setLvlArmorer(arrLevels[14]);
-        this.setLvlGoldsmith(arrLevels[15]);
-        this.setLvlLeatherworker(arrLevels[16]);
-        this.setLvlWeaver(arrLevels[17]);
-        this.setLvlAlchemist(arrLevels[18]);
-        this.setLvlCulinarian(arrLevels[19]);
-        this.setLvlMiner(arrLevels[20]);
-        this.setLvlBotanist(arrLevels[21]);
-        this.setLvlFisher(arrLevels[22]);
+        this.setLvlSamurai(arrLevels[6]);
+        this.setLvlConjurer(arrLevels[7]);
+        this.setLvlScholar(arrLevels[8]);
+        this.setLvlAstrologian(arrLevels[9]);
+        this.setLvlArcher(arrLevels[10]);
+        this.setLvlMachinist(arrLevels[11]);
+        this.setLvlThaumaturge(arrLevels[12]);
+        this.setLvlArcanist(arrLevels[13]);
+        this.setLvlRedMage(arrLevels[14]);
+        this.setLvlCarpenter(arrLevels[15]);
+        this.setLvlBlacksmith(arrLevels[16]);
+        this.setLvlArmorer(arrLevels[17]);
+        this.setLvlGoldsmith(arrLevels[18]);
+        this.setLvlLeatherworker(arrLevels[19]);
+        this.setLvlWeaver(arrLevels[20]);
+        this.setLvlAlchemist(arrLevels[21]);
+        this.setLvlCulinarian(arrLevels[22]);
+        this.setLvlMiner(arrLevels[23]);
+        this.setLvlBotanist(arrLevels[24]);
+        this.setLvlFisher(arrLevels[25]);
     }
 
     /**
@@ -2092,8 +2167,9 @@ public class Player {
         }
 
         //Check if levels array is larger than this system is programmed for
-        if (arrLevels.length > 23) {
-            throw new Exception("Error: More class levels found than anticipated (23). The class definitions need to be updated.");
+        // As of 4.0, this is now 26 - SCH and SMN are 2 jobs, + SAM & RDM
+        if (arrLevels.length > 26) {
+            throw new Exception("Error: More class levels found (" + arrLevels.length + ") than anticipated (26). The class definitions need to be updated.");
         }
 
         return arrLevels;
