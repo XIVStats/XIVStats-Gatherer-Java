@@ -188,7 +188,7 @@ The database table ```tblplayers``` has the following structure:
 |hw_complete           |bit      |Mount - Midgardsormr            |
 |hw_31_complete        |bit      |Minion - Wind-up Haurchefant    |
 |hw_33_complete        |bit      |Minion - Wind-up Aymeric        |
-|sb_complete           |bit      |Minion - Ivan Coeurlfist Doll   |
+|sb_complete           |bit      |Minion - Ivon Coeurlfist Doll   |
 |                      |         |Minion - Dress-up Yugiri        |
 |                      |         |Wind-up Exdeath                 |
 |legacy_player         |bit      |Mount - Legacy Chocobo          |
