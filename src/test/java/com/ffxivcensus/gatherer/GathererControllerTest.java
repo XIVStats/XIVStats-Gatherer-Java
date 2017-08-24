@@ -16,6 +16,8 @@ import org.xml.sax.SAXException;
 import com.ffxivcensus.gatherer.config.ApplicationConfig;
 import com.ffxivcensus.gatherer.config.ConfigurationBuilder;
 import com.ffxivcensus.gatherer.player.PlayerBeanDAO;
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
 
 /**
  * Test the core functionality of the program, including CLI parameters.
@@ -36,14 +38,25 @@ public class GathererControllerTest {
     public void setUpDB() throws Exception {
         ApplicationConfig config = ConfigurationBuilder.createBuilder().loadXMLConfiguration().getConfiguration();
 
-        PlayerBeanDAO dao = new PlayerBeanDAO(config);
+        HikariConfig hikariConfig = new HikariConfig();
+        hikariConfig.setJdbcUrl("jdbc:" + config.getDbUrl() + "/" + config.getDbName());
+        hikariConfig.setUsername(config.getDbUser());
+        hikariConfig.setPassword(config.getDbPassword());
+        hikariConfig.setMaximumPoolSize(config.getThreadLimit());
+        hikariConfig.addDataSourceProperty("useSSL", !config.isDbIgnoreSSLWarn());
+
+        HikariDataSource dataSource = new HikariDataSource(hikariConfig);
+
+        PlayerBeanDAO dao = new PlayerBeanDAO(config, dataSource);
 
         dao.dropTable("tblplayers_test");
         dao.dropTable("tblplayers_test_two");
 
         for(String strRealm : GathererController.getRealms()) {
-            dao.dropTable("DROP TABLE tbl" + strRealm + ";");
+            dao.dropTable("DROP TABLE tbl" + strRealm.toLowerCase() + "_test;");
         }
+
+        dataSource.close();
     }
 
     /**
@@ -68,7 +81,17 @@ public class GathererControllerTest {
             gathererController.run();
         } catch(Exception e) {
         }
-        PlayerBeanDAO dao = new PlayerBeanDAO(config);
+
+        HikariConfig hikariConfig = new HikariConfig();
+        hikariConfig.setJdbcUrl("jdbc:" + config.getDbUrl() + "/" + config.getDbName());
+        hikariConfig.setUsername(config.getDbUser());
+        hikariConfig.setPassword(config.getDbPassword());
+        hikariConfig.setMaximumPoolSize(config.getThreadLimit());
+        hikariConfig.addDataSourceProperty("useSSL", !config.isDbIgnoreSSLWarn());
+
+        HikariDataSource dataSource = new HikariDataSource(hikariConfig);
+
+        PlayerBeanDAO dao = new PlayerBeanDAO(config, dataSource);
 
         List<Integer> addedIDs = dao.getAdded(config.getTableName(), config.getStartId(), config.getEndId());
 
@@ -84,6 +107,8 @@ public class GathererControllerTest {
         // Test that gatherer has not 'overrun'
         assertFalse(addedIDs.contains(11887011));
         assertFalse(addedIDs.contains(11886901));
+
+        dataSource.close();
     }
 
     /**
@@ -132,7 +157,16 @@ public class GathererControllerTest {
         } catch(Exception e) {
         }
 
-        PlayerBeanDAO dao = new PlayerBeanDAO(config);
+        HikariConfig hikariConfig = new HikariConfig();
+        hikariConfig.setJdbcUrl("jdbc:" + config.getDbUrl() + "/" + config.getDbName());
+        hikariConfig.setUsername(config.getDbUser());
+        hikariConfig.setPassword(config.getDbPassword());
+        hikariConfig.setMaximumPoolSize(config.getThreadLimit());
+        hikariConfig.addDataSourceProperty("useSSL", !config.isDbIgnoreSSLWarn());
+
+        HikariDataSource dataSource = new HikariDataSource(hikariConfig);
+
+        PlayerBeanDAO dao = new PlayerBeanDAO(config, dataSource);
 
         // Test that records were successfully written to db
         List<Integer> addedIDs = dao.getAdded(config.getTableName(), config.getStartId(), config.getEndId());
@@ -150,6 +184,7 @@ public class GathererControllerTest {
         assertFalse(addedIDs.contains(config.getStartId() - 1));
         assertFalse(addedIDs.contains(config.getEndId() + 1));
 
+        dataSource.close();
     }
 
     /**
@@ -180,7 +215,17 @@ public class GathererControllerTest {
         assertEquals(gathererController.getThreadLimit(), gathererController.getThreadLimit());
 
         // Test that records were successfully written to db
-        PlayerBeanDAO dao = new PlayerBeanDAO(config);
+
+        HikariConfig hikariConfig = new HikariConfig();
+        hikariConfig.setJdbcUrl("jdbc:" + config.getDbUrl() + "/" + config.getDbName());
+        hikariConfig.setUsername(config.getDbUser());
+        hikariConfig.setPassword(config.getDbPassword());
+        hikariConfig.setMaximumPoolSize(config.getThreadLimit());
+        hikariConfig.addDataSourceProperty("useSSL", !config.isDbIgnoreSSLWarn());
+
+        HikariDataSource dataSource = new HikariDataSource(hikariConfig);
+
+        PlayerBeanDAO dao = new PlayerBeanDAO(config, dataSource);
 
         List<Integer> addedIDsCerberus = dao.getAdded("tblcerberus_test", config.getStartId(), config.getEndId());
         List<Integer> addedIDsShiva = dao.getAdded("tblshiva_test", config.getStartId(), config.getEndId());
@@ -201,6 +246,7 @@ public class GathererControllerTest {
         // Test that gatherer has not written records that don't exist on cerberus
         assertFalse(addedIDsCerberus.contains(config.getEndId()));
 
+        dataSource.close();
     }
 
     /**
