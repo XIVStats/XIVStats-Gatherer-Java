@@ -1,11 +1,11 @@
 package com.ffxivcensus.gatherer;
 
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Object class to represent a Character/Player. This class specifies the attributes and behaviour of a player object.
- * 
+ *
  * @author Matthew Hillier
  * @since v1.0
  * @see PlayerBuilder
@@ -86,8 +86,8 @@ public class PlayerBean {
     private boolean hasCompleted3pt1;
     private boolean hasCompleted3pt3;
     private boolean isLegacyPlayer;
-    private ArrayList minions;
-    private ArrayList mounts;
+    private List<String> minions;
+    private List<String> mounts;
     private Date dateImgLastModified;
     private boolean isActive;
 
@@ -98,7 +98,7 @@ public class PlayerBean {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(final int id) {
         this.id = id;
     }
 
@@ -106,7 +106,7 @@ public class PlayerBean {
         return realm;
     }
 
-    public void setRealm(String realm) {
+    public void setRealm(final String realm) {
         this.realm = realm;
     }
 
@@ -114,7 +114,7 @@ public class PlayerBean {
         return playerName;
     }
 
-    public void setPlayerName(String playerName) {
+    public void setPlayerName(final String playerName) {
         this.playerName = playerName;
     }
 
@@ -122,7 +122,7 @@ public class PlayerBean {
         return race;
     }
 
-    public void setRace(String race) {
+    public void setRace(final String race) {
         this.race = race;
     }
 
@@ -130,7 +130,7 @@ public class PlayerBean {
         return gender;
     }
 
-    public void setGender(String gender) {
+    public void setGender(final String gender) {
         this.gender = gender;
     }
 
@@ -138,7 +138,7 @@ public class PlayerBean {
         return grandCompany;
     }
 
-    public void setGrandCompany(String grandCompany) {
+    public void setGrandCompany(final String grandCompany) {
         this.grandCompany = grandCompany;
     }
 
@@ -146,7 +146,7 @@ public class PlayerBean {
         return freeCompany;
     }
 
-    public void setFreeCompany(String freeCompany) {
+    public void setFreeCompany(final String freeCompany) {
         this.freeCompany = freeCompany;
     }
 
@@ -154,7 +154,7 @@ public class PlayerBean {
         return lvlGladiator;
     }
 
-    public void setLvlGladiator(int lvlGladiator) {
+    public void setLvlGladiator(final int lvlGladiator) {
         this.lvlGladiator = lvlGladiator;
     }
 
@@ -162,7 +162,7 @@ public class PlayerBean {
         return lvlPugilist;
     }
 
-    public void setLvlPugilist(int lvlPugilist) {
+    public void setLvlPugilist(final int lvlPugilist) {
         this.lvlPugilist = lvlPugilist;
     }
 
@@ -170,7 +170,7 @@ public class PlayerBean {
         return lvlMarauder;
     }
 
-    public void setLvlMarauder(int lvlMarauder) {
+    public void setLvlMarauder(final int lvlMarauder) {
         this.lvlMarauder = lvlMarauder;
     }
 
@@ -178,7 +178,7 @@ public class PlayerBean {
         return lvlLancer;
     }
 
-    public void setLvlLancer(int lvlLancer) {
+    public void setLvlLancer(final int lvlLancer) {
         this.lvlLancer = lvlLancer;
     }
 
@@ -186,7 +186,7 @@ public class PlayerBean {
         return lvlArcher;
     }
 
-    public void setLvlArcher(int lvlArcher) {
+    public void setLvlArcher(final int lvlArcher) {
         this.lvlArcher = lvlArcher;
     }
 
@@ -194,7 +194,7 @@ public class PlayerBean {
         return lvlRogue;
     }
 
-    public void setLvlRogue(int lvlRogue) {
+    public void setLvlRogue(final int lvlRogue) {
         this.lvlRogue = lvlRogue;
     }
 
@@ -202,7 +202,7 @@ public class PlayerBean {
         return lvlConjurer;
     }
 
-    public void setLvlConjurer(int lvlConjurer) {
+    public void setLvlConjurer(final int lvlConjurer) {
         this.lvlConjurer = lvlConjurer;
     }
 
@@ -210,7 +210,7 @@ public class PlayerBean {
         return lvlThaumaturge;
     }
 
-    public void setLvlThaumaturge(int lvlThaumaturge) {
+    public void setLvlThaumaturge(final int lvlThaumaturge) {
         this.lvlThaumaturge = lvlThaumaturge;
     }
 
@@ -218,7 +218,7 @@ public class PlayerBean {
         return lvlArcanist;
     }
 
-    public void setLvlArcanist(int lvlArcanist) {
+    public void setLvlArcanist(final int lvlArcanist) {
         this.lvlArcanist = lvlArcanist;
     }
 
@@ -226,7 +226,7 @@ public class PlayerBean {
         return lvlDarkKnight;
     }
 
-    public void setLvlDarkKnight(int lvlDarkKnight) {
+    public void setLvlDarkKnight(final int lvlDarkKnight) {
         this.lvlDarkKnight = lvlDarkKnight;
     }
 
@@ -234,7 +234,7 @@ public class PlayerBean {
         return lvlMachinist;
     }
 
-    public void setLvlMachinist(int lvlMachinist) {
+    public void setLvlMachinist(final int lvlMachinist) {
         this.lvlMachinist = lvlMachinist;
     }
 
@@ -242,7 +242,7 @@ public class PlayerBean {
         return lvlAstrologian;
     }
 
-    public void setLvlAstrologian(int lvlAstrologian) {
+    public void setLvlAstrologian(final int lvlAstrologian) {
         this.lvlAstrologian = lvlAstrologian;
     }
 
@@ -250,7 +250,7 @@ public class PlayerBean {
         return lvlScholar;
     }
 
-    public void setLvlScholar(int lvlScholar) {
+    public void setLvlScholar(final int lvlScholar) {
         this.lvlScholar = lvlScholar;
     }
 
@@ -258,7 +258,7 @@ public class PlayerBean {
         return lvlRedMage;
     }
 
-    public void setLvlRedMage(int lvlRedMage) {
+    public void setLvlRedMage(final int lvlRedMage) {
         this.lvlRedMage = lvlRedMage;
     }
 
@@ -266,7 +266,7 @@ public class PlayerBean {
         return lvlSamurai;
     }
 
-    public void setLvlSamurai(int lvlSamurai) {
+    public void setLvlSamurai(final int lvlSamurai) {
         this.lvlSamurai = lvlSamurai;
     }
 
@@ -274,7 +274,7 @@ public class PlayerBean {
         return lvlCarpenter;
     }
 
-    public void setLvlCarpenter(int lvlCarpenter) {
+    public void setLvlCarpenter(final int lvlCarpenter) {
         this.lvlCarpenter = lvlCarpenter;
     }
 
@@ -282,7 +282,7 @@ public class PlayerBean {
         return lvlBlacksmith;
     }
 
-    public void setLvlBlacksmith(int lvlBlacksmith) {
+    public void setLvlBlacksmith(final int lvlBlacksmith) {
         this.lvlBlacksmith = lvlBlacksmith;
     }
 
@@ -290,7 +290,7 @@ public class PlayerBean {
         return lvlArmorer;
     }
 
-    public void setLvlArmorer(int lvlArmorer) {
+    public void setLvlArmorer(final int lvlArmorer) {
         this.lvlArmorer = lvlArmorer;
     }
 
@@ -298,7 +298,7 @@ public class PlayerBean {
         return lvlGoldsmith;
     }
 
-    public void setLvlGoldsmith(int lvlGoldsmith) {
+    public void setLvlGoldsmith(final int lvlGoldsmith) {
         this.lvlGoldsmith = lvlGoldsmith;
     }
 
@@ -306,7 +306,7 @@ public class PlayerBean {
         return lvlLeatherworker;
     }
 
-    public void setLvlLeatherworker(int lvlLeatherworker) {
+    public void setLvlLeatherworker(final int lvlLeatherworker) {
         this.lvlLeatherworker = lvlLeatherworker;
     }
 
@@ -314,7 +314,7 @@ public class PlayerBean {
         return lvlWeaver;
     }
 
-    public void setLvlWeaver(int lvlWeaver) {
+    public void setLvlWeaver(final int lvlWeaver) {
         this.lvlWeaver = lvlWeaver;
     }
 
@@ -322,7 +322,7 @@ public class PlayerBean {
         return lvlAlchemist;
     }
 
-    public void setLvlAlchemist(int lvlAlchemist) {
+    public void setLvlAlchemist(final int lvlAlchemist) {
         this.lvlAlchemist = lvlAlchemist;
     }
 
@@ -330,7 +330,7 @@ public class PlayerBean {
         return lvlCulinarian;
     }
 
-    public void setLvlCulinarian(int lvlCulinarian) {
+    public void setLvlCulinarian(final int lvlCulinarian) {
         this.lvlCulinarian = lvlCulinarian;
     }
 
@@ -338,7 +338,7 @@ public class PlayerBean {
         return lvlMiner;
     }
 
-    public void setLvlMiner(int lvlMiner) {
+    public void setLvlMiner(final int lvlMiner) {
         this.lvlMiner = lvlMiner;
     }
 
@@ -346,7 +346,7 @@ public class PlayerBean {
         return lvlBotanist;
     }
 
-    public void setLvlBotanist(int lvlBotanist) {
+    public void setLvlBotanist(final int lvlBotanist) {
         this.lvlBotanist = lvlBotanist;
     }
 
@@ -354,7 +354,7 @@ public class PlayerBean {
         return lvlFisher;
     }
 
-    public void setLvlFisher(int lvlFisher) {
+    public void setLvlFisher(final int lvlFisher) {
         this.lvlFisher = lvlFisher;
     }
 
@@ -362,7 +362,7 @@ public class PlayerBean {
         return has30DaysSub;
     }
 
-    public void setHas30DaysSub(boolean has30DaysSub) {
+    public void setHas30DaysSub(final boolean has30DaysSub) {
         this.has30DaysSub = has30DaysSub;
     }
 
@@ -370,7 +370,7 @@ public class PlayerBean {
         return has60DaysSub;
     }
 
-    public void setHas60DaysSub(boolean has60DaysSub) {
+    public void setHas60DaysSub(final boolean has60DaysSub) {
         this.has60DaysSub = has60DaysSub;
     }
 
@@ -378,7 +378,7 @@ public class PlayerBean {
         return has90DaysSub;
     }
 
-    public void setHas90DaysSub(boolean has90DaysSub) {
+    public void setHas90DaysSub(final boolean has90DaysSub) {
         this.has90DaysSub = has90DaysSub;
     }
 
@@ -386,7 +386,7 @@ public class PlayerBean {
         return has180DaysSub;
     }
 
-    public void setHas180DaysSub(boolean has180DaysSub) {
+    public void setHas180DaysSub(final boolean has180DaysSub) {
         this.has180DaysSub = has180DaysSub;
     }
 
@@ -394,7 +394,7 @@ public class PlayerBean {
         return has270DaysSub;
     }
 
-    public void setHas270DaysSub(boolean has270DaysSub) {
+    public void setHas270DaysSub(final boolean has270DaysSub) {
         this.has270DaysSub = has270DaysSub;
     }
 
@@ -402,7 +402,7 @@ public class PlayerBean {
         return has360DaysSub;
     }
 
-    public void setHas360DaysSub(boolean has360DaysSub) {
+    public void setHas360DaysSub(final boolean has360DaysSub) {
         this.has360DaysSub = has360DaysSub;
     }
 
@@ -410,7 +410,7 @@ public class PlayerBean {
         return has450DaysSub;
     }
 
-    public void setHas450DaysSub(boolean has450DaysSub) {
+    public void setHas450DaysSub(final boolean has450DaysSub) {
         this.has450DaysSub = has450DaysSub;
     }
 
@@ -418,7 +418,7 @@ public class PlayerBean {
         return has630DaysSub;
     }
 
-    public void setHas630DaysSub(boolean has630DaysSub) {
+    public void setHas630DaysSub(final boolean has630DaysSub) {
         this.has630DaysSub = has630DaysSub;
     }
 
@@ -426,7 +426,7 @@ public class PlayerBean {
         return has960DaysSub;
     }
 
-    public void setHas960DaysSub(boolean has960DaysSub) {
+    public void setHas960DaysSub(final boolean has960DaysSub) {
         this.has960DaysSub = has960DaysSub;
     }
 
@@ -434,7 +434,7 @@ public class PlayerBean {
         return hasPreOrderArr;
     }
 
-    public void setHasPreOrderArr(boolean hasPreOrderArr) {
+    public void setHasPreOrderArr(final boolean hasPreOrderArr) {
         this.hasPreOrderArr = hasPreOrderArr;
     }
 
@@ -442,7 +442,7 @@ public class PlayerBean {
         return hasPreOrderHW;
     }
 
-    public void setHasPreOrderHW(boolean hasPreOrderHW) {
+    public void setHasPreOrderHW(final boolean hasPreOrderHW) {
         this.hasPreOrderHW = hasPreOrderHW;
     }
 
@@ -450,7 +450,7 @@ public class PlayerBean {
         return hasPreOrderSB;
     }
 
-    public void setHasPreOrderSB(boolean hasPreOrderSB) {
+    public void setHasPreOrderSB(final boolean hasPreOrderSB) {
         this.hasPreOrderSB = hasPreOrderSB;
     }
 
@@ -458,7 +458,7 @@ public class PlayerBean {
         return hasARRArtbook;
     }
 
-    public void setHasARRArtbook(boolean hasARRArtbook) {
+    public void setHasARRArtbook(final boolean hasARRArtbook) {
         this.hasARRArtbook = hasARRArtbook;
     }
 
@@ -466,7 +466,7 @@ public class PlayerBean {
         return hasHWArtbookOne;
     }
 
-    public void setHasHWArtbookOne(boolean hasHWArtbookOne) {
+    public void setHasHWArtbookOne(final boolean hasHWArtbookOne) {
         this.hasHWArtbookOne = hasHWArtbookOne;
     }
 
@@ -474,7 +474,7 @@ public class PlayerBean {
         return hasHWArtbookTwo;
     }
 
-    public void setHasHWArtbookTwo(boolean hasHWArtbookTwo) {
+    public void setHasHWArtbookTwo(final boolean hasHWArtbookTwo) {
         this.hasHWArtbookTwo = hasHWArtbookTwo;
     }
 
@@ -482,7 +482,7 @@ public class PlayerBean {
         return hasEncyclopediaEorzea;
     }
 
-    public void setHasEncyclopediaEorzea(boolean hasEncyclopediaEorzea) {
+    public void setHasEncyclopediaEorzea(final boolean hasEncyclopediaEorzea) {
         this.hasEncyclopediaEorzea = hasEncyclopediaEorzea;
     }
 
@@ -490,7 +490,7 @@ public class PlayerBean {
         return hasBeforeMeteor;
     }
 
-    public void setHasBeforeMeteor(boolean hasBeforeMeteor) {
+    public void setHasBeforeMeteor(final boolean hasBeforeMeteor) {
         this.hasBeforeMeteor = hasBeforeMeteor;
     }
 
@@ -498,7 +498,7 @@ public class PlayerBean {
         return hasBeforeTheFall;
     }
 
-    public void setHasBeforeTheFall(boolean hasBeforeTheFall) {
+    public void setHasBeforeTheFall(final boolean hasBeforeTheFall) {
         this.hasBeforeTheFall = hasBeforeTheFall;
     }
 
@@ -506,7 +506,7 @@ public class PlayerBean {
         return hasSoundtrack;
     }
 
-    public void setHasSoundtrack(boolean hasSoundtrack) {
+    public void setHasSoundtrack(final boolean hasSoundtrack) {
         this.hasSoundtrack = hasSoundtrack;
     }
 
@@ -514,7 +514,7 @@ public class PlayerBean {
         return hasAttendedEternalBond;
     }
 
-    public void setHasAttendedEternalBond(boolean hasAttendedEternalBond) {
+    public void setHasAttendedEternalBond(final boolean hasAttendedEternalBond) {
         this.hasAttendedEternalBond = hasAttendedEternalBond;
     }
 
@@ -522,7 +522,7 @@ public class PlayerBean {
         return hasCompletedHWSightseeing;
     }
 
-    public void setHasCompletedHWSightseeing(boolean hasCompletedHWSightseeing) {
+    public void setHasCompletedHWSightseeing(final boolean hasCompletedHWSightseeing) {
         this.hasCompletedHWSightseeing = hasCompletedHWSightseeing;
     }
 
@@ -530,7 +530,7 @@ public class PlayerBean {
         return hasCompleted2pt5;
     }
 
-    public void setHasCompleted2pt5(boolean hasCompleted2pt5) {
+    public void setHasCompleted2pt5(final boolean hasCompleted2pt5) {
         this.hasCompleted2pt5 = hasCompleted2pt5;
     }
 
@@ -538,7 +538,7 @@ public class PlayerBean {
         return hasFiftyComms;
     }
 
-    public void setHasFiftyComms(boolean hasFiftyComms) {
+    public void setHasFiftyComms(final boolean hasFiftyComms) {
         this.hasFiftyComms = hasFiftyComms;
     }
 
@@ -546,7 +546,7 @@ public class PlayerBean {
         return hasMooglePlush;
     }
 
-    public void setHasMooglePlush(boolean hasMooglePlush) {
+    public void setHasMooglePlush(final boolean hasMooglePlush) {
         this.hasMooglePlush = hasMooglePlush;
     }
 
@@ -554,7 +554,7 @@ public class PlayerBean {
         return hasTopazCarbunclePlush;
     }
 
-    public void setHasTopazCarbunclePlush(boolean hasTopazCarbunclePlush) {
+    public void setHasTopazCarbunclePlush(final boolean hasTopazCarbunclePlush) {
         this.hasTopazCarbunclePlush = hasTopazCarbunclePlush;
     }
 
@@ -562,7 +562,7 @@ public class PlayerBean {
         return hasEmeraldCarbunclePlush;
     }
 
-    public void setHasEmeraldCarbunclePlush(boolean hasEmeraldCarbunclePlush) {
+    public void setHasEmeraldCarbunclePlush(final boolean hasEmeraldCarbunclePlush) {
         this.hasEmeraldCarbunclePlush = hasEmeraldCarbunclePlush;
     }
 
@@ -570,7 +570,7 @@ public class PlayerBean {
         return hasCompletedHildibrand;
     }
 
-    public void setHasCompletedHildibrand(boolean hasCompletedHildibrand) {
+    public void setHasCompletedHildibrand(final boolean hasCompletedHildibrand) {
         this.hasCompletedHildibrand = hasCompletedHildibrand;
     }
 
@@ -578,7 +578,7 @@ public class PlayerBean {
         return hasPS4Collectors;
     }
 
-    public void setHasPS4Collectors(boolean hasPS4Collectors) {
+    public void setHasPS4Collectors(final boolean hasPS4Collectors) {
         this.hasPS4Collectors = hasPS4Collectors;
     }
 
@@ -586,7 +586,7 @@ public class PlayerBean {
         return hasEternalBond;
     }
 
-    public void setHasEternalBond(boolean hasEternalBond) {
+    public void setHasEternalBond(final boolean hasEternalBond) {
         this.hasEternalBond = hasEternalBond;
     }
 
@@ -594,7 +594,7 @@ public class PlayerBean {
         return hasARRCollectors;
     }
 
-    public void setHasARRCollectors(boolean hasARRCollectors) {
+    public void setHasARRCollectors(final boolean hasARRCollectors) {
         this.hasARRCollectors = hasARRCollectors;
     }
 
@@ -602,7 +602,7 @@ public class PlayerBean {
         return hasKobold;
     }
 
-    public void setHasKobold(boolean hasKobold) {
+    public void setHasKobold(final boolean hasKobold) {
         this.hasKobold = hasKobold;
     }
 
@@ -610,7 +610,7 @@ public class PlayerBean {
         return hasSahagin;
     }
 
-    public void setHasSahagin(boolean hasSahagin) {
+    public void setHasSahagin(final boolean hasSahagin) {
         this.hasSahagin = hasSahagin;
     }
 
@@ -618,7 +618,7 @@ public class PlayerBean {
         return hasAmaljaa;
     }
 
-    public void setHasAmaljaa(boolean hasAmaljaa) {
+    public void setHasAmaljaa(final boolean hasAmaljaa) {
         this.hasAmaljaa = hasAmaljaa;
     }
 
@@ -626,7 +626,7 @@ public class PlayerBean {
         return hasSylph;
     }
 
-    public void setHasSylph(boolean hasSylph) {
+    public void setHasSylph(final boolean hasSylph) {
         this.hasSylph = hasSylph;
     }
 
@@ -634,7 +634,7 @@ public class PlayerBean {
         return hasMoogle;
     }
 
-    public void setHasMoogle(boolean hasMoogle) {
+    public void setHasMoogle(final boolean hasMoogle) {
         this.hasMoogle = hasMoogle;
     }
 
@@ -642,7 +642,7 @@ public class PlayerBean {
         return hasVanuVanu;
     }
 
-    public void setHasVanuVanu(boolean hasVanuVanu) {
+    public void setHasVanuVanu(final boolean hasVanuVanu) {
         this.hasVanuVanu = hasVanuVanu;
     }
 
@@ -650,7 +650,7 @@ public class PlayerBean {
         return hasVath;
     }
 
-    public void setHasVath(boolean hasVath) {
+    public void setHasVath(final boolean hasVath) {
         this.hasVath = hasVath;
     }
 
@@ -658,7 +658,7 @@ public class PlayerBean {
         return hasCompletedHW;
     }
 
-    public void setHasCompletedHW(boolean hasCompletedHW) {
+    public void setHasCompletedHW(final boolean hasCompletedHW) {
         this.hasCompletedHW = hasCompletedHW;
     }
 
@@ -666,7 +666,7 @@ public class PlayerBean {
         return hasCompletedSB;
     }
 
-    public void setHasCompletedSB(boolean hasCompletedSB) {
+    public void setHasCompletedSB(final boolean hasCompletedSB) {
         this.hasCompletedSB = hasCompletedSB;
     }
 
@@ -674,7 +674,7 @@ public class PlayerBean {
         return hasCompleted3pt1;
     }
 
-    public void setHasCompleted3pt1(boolean hasCompleted3pt1) {
+    public void setHasCompleted3pt1(final boolean hasCompleted3pt1) {
         this.hasCompleted3pt1 = hasCompleted3pt1;
     }
 
@@ -682,7 +682,7 @@ public class PlayerBean {
         return hasCompleted3pt3;
     }
 
-    public void setHasCompleted3pt3(boolean hasCompleted3pt3) {
+    public void setHasCompleted3pt3(final boolean hasCompleted3pt3) {
         this.hasCompleted3pt3 = hasCompleted3pt3;
     }
 
@@ -690,23 +690,23 @@ public class PlayerBean {
         return isLegacyPlayer;
     }
 
-    public void setLegacyPlayer(boolean isLegacyPlayer) {
+    public void setLegacyPlayer(final boolean isLegacyPlayer) {
         this.isLegacyPlayer = isLegacyPlayer;
     }
 
-    public ArrayList getMinions() {
+    public List<String> getMinions() {
         return minions;
     }
 
-    public void setMinions(ArrayList minions) {
+    public void setMinions(final List<String> minions) {
         this.minions = minions;
     }
 
-    public ArrayList getMounts() {
+    public List<String> getMounts() {
         return mounts;
     }
 
-    public void setMounts(ArrayList mounts) {
+    public void setMounts(final List<String> mounts) {
         this.mounts = mounts;
     }
 
@@ -714,7 +714,7 @@ public class PlayerBean {
         return dateImgLastModified;
     }
 
-    public void setDateImgLastModified(Date dateImgLastModified) {
+    public void setDateImgLastModified(final Date dateImgLastModified) {
         this.dateImgLastModified = dateImgLastModified;
     }
 
@@ -722,7 +722,7 @@ public class PlayerBean {
         return isActive;
     }
 
-    public void setActive(boolean isActive) {
+    public void setActive(final boolean isActive) {
         this.isActive = isActive;
     }
 }

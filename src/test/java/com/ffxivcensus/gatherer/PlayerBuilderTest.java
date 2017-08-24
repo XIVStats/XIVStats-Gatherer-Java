@@ -1,8 +1,13 @@
 package com.ffxivcensus.gatherer;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
 import java.util.Date;
 
-import static org.junit.Assert.*;
+import org.junit.Test;
 
 /**
  * JUnit test class to test the methods of the Player class.
@@ -18,7 +23,7 @@ public class PlayerBuilderTest {
      *
      * @throws Exception exception thrown when reading non-existant character.
      */
-    @org.junit.Test
+    @Test
     public void testGetPlayer() throws Exception {
         // Fetch object to test against (Aelia Sokoto, Cerberus)
         PlayerBean playerOne = PlayerBuilder.getPlayer(2356533, 1);
@@ -145,7 +150,7 @@ public class PlayerBuilderTest {
      *
      * @throws Exception exception thrown when reading non-existent character.
      */
-    @org.junit.Test
+    @Test
     public void testGetVeteranPlayer() throws Exception {
         PlayerBean player = PlayerBuilder.getPlayer(501646, 1);
 
@@ -162,7 +167,7 @@ public class PlayerBuilderTest {
      *
      * @throws Exception Exception exception thrown when reading non-existant character.
      */
-    @org.junit.Test
+    @Test
     public void testUnplayedPlayer() throws Exception {
         PlayerBean player = PlayerBuilder.getPlayer(13002142, 1);
 
@@ -215,7 +220,7 @@ public class PlayerBuilderTest {
      *
      * @throws Exception Exception exception thrown when reading non-existant character.
      */
-    @org.junit.Test
+    @Test
     public void testGetPlayerNoGCHasFC() throws Exception {
         PlayerBean player = PlayerBuilder.getPlayer(1, 1);
 
@@ -229,7 +234,7 @@ public class PlayerBuilderTest {
      *
      * @throws Exception Exception exception thrown when reading non-existant character.
      */
-    @org.junit.Test
+    @Test
     public void testGetPlayerNoFCHasGC() throws Exception {
         PlayerBean player = PlayerBuilder.getPlayer(11886920, 1);
 
@@ -244,7 +249,7 @@ public class PlayerBuilderTest {
      *
      * @throws Exception exception thrown when reading non-existant character.
      */
-    @org.junit.Test
+    @Test
     public void testGetPlayerWithAllCollectibles() throws Exception {
         PlayerBean player = PlayerBuilder.getPlayer(71, 1);
 
@@ -259,7 +264,7 @@ public class PlayerBuilderTest {
     /**
      * Perform a test of the getPlayer method, using character #2356539, which should not exist.
      */
-    @org.junit.Test
+    @Test
     public void testGetPlayerInvalid() {
         try {
             // Try to get a character that doesn't exist

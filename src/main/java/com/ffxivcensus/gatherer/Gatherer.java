@@ -15,14 +15,14 @@ import com.mysql.jdbc.exceptions.jdbc4.MySQLNonTransientConnectionException;
  */
 public class Gatherer implements Runnable {
 
-    private GathererController parent;
+    private final GathererController parent;
 
-    private int playerId;
+    private final int playerId;
 
     /**
      * Default constructor
      */
-    public Gatherer(GathererController parent, int playerId) {
+    public Gatherer(final GathererController parent, final int playerId) {
         this.parent = parent;
         this.playerId = playerId;
     }
@@ -30,6 +30,7 @@ public class Gatherer implements Runnable {
     /**
      * Run the Gatherer.
      */
+    @Override
     public void run() {
         try {
             if(parent.isVerbose()) {
