@@ -8,6 +8,9 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 
+import com.ffxivcensus.gatherer.config.ApplicationConfig;
+import com.ffxivcensus.gatherer.config.ConfigurationBuilder;
+
 /**
  * Class to run instance of GatherController from the CLI.
  * 
@@ -39,88 +42,20 @@ public class Console {
             CommandLineParser parser = new DefaultParser();
             CommandLine cmd = parser.parse(options, args);
 
-            int startID = -1;
-            int endID = -1;
+            ApplicationConfig config = ConfigurationBuilder.createBuilder()
+                                                           .loadXMLConfiguration()
+                                                           .loadCommandLineConfiguration(options, args)
+                                                           .getConfiguration();
 
-            // Start id flag
-            if(cmd.hasOption("s")) {
-                startID = Integer.parseInt(cmd.getOptionValue("s"));
-            }
-
-            // Finish id flag
-            if(cmd.hasOption("f")) {
-                endID = Integer.parseInt(cmd.getOptionValue("f"));
-            }
-
-            GathererController gatherer = new GathererController(startID, endID);
+            GathererController gatherer = new GathererController(config);
 
             // Help flag
             if(cmd.hasOption("h")) {
                 formatter.printHelp(usage, options);
+            } else {
+                gatherer.run();
             }
 
-            // Store minions flag value
-            gatherer.setStoreMinions(cmd.hasOption("P"));
-
-            // Store mounts flag value
-            gatherer.setStoreMounts(cmd.hasOption("m"));
-
-            // Store progression
-            gatherer.setStoreProgression(!cmd.hasOption("b"));
-
-            // Store whether player is active
-            gatherer.setStorePlayerActive(!cmd.hasOption("a"));
-
-            // Store player active date
-            gatherer.setStoreActiveDate(!cmd.hasOption("D"));
-
-            // Database URL
-            if(cmd.hasOption("d") && cmd.hasOption("U")) {
-                gatherer.setDbUrl("jdbc:" + cmd.getOptionValue("U") + "/" + cmd.getOptionValue("d"));
-            } else if(cmd.hasOption("d")) {
-                gatherer.setDbUrl("jdbc:mysql://localhost:3306/" + cmd.getOptionValue("d"));
-            }
-
-            // Database user
-            if(cmd.hasOption("u")) {
-                gatherer.setDbUser(cmd.getOptionValue("u"));
-            }
-
-            // Database password
-            if(cmd.hasOption("p")) {
-                gatherer.setDbPassword(cmd.getOptionValue("p"));
-            }
-
-            gatherer.setDbIgnoreSSLWarn(cmd.hasOption("i"));
-
-            // Program threads
-            if(cmd.hasOption("t")) {
-                gatherer.setThreadLimit(Integer.parseInt(cmd.getOptionValue("t")));
-            }
-
-            // Database table
-            if(cmd.hasOption("T")) {
-                gatherer.setTableName(cmd.getOptionValue("T"));
-            }
-
-            // Verbose mode
-            gatherer.setQuiet(cmd.hasOption("q"));
-
-            // Debug mode
-            gatherer.setVerbose(cmd.hasOption("v"));
-
-            // Fail print
-            gatherer.setPrintFails(cmd.hasOption("F"));
-
-            // Split tables
-            gatherer.setSplitTables(cmd.hasOption("S"));
-
-            // Set suffix
-            if(cmd.hasOption("x")) {
-                gatherer.setTableSuffix(cmd.getOptionValue("x"));
-            }
-
-            gatherer.run();
             return gatherer;
         } catch(ParseException pEx) {
             formatter.printHelp(usage, options);

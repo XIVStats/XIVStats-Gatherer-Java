@@ -5,8 +5,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
 import java.io.PrintStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -16,16 +14,10 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
+import com.ffxivcensus.gatherer.config.ApplicationConfig;
+import com.ffxivcensus.gatherer.config.ConfigurationBuilder;
 
 /**
  * JUnit test class to run tests
@@ -36,60 +28,30 @@ import org.xml.sax.SAXException;
  * @since v1.0
  */
 public class ConsoleTest {
-    /**
-     * The JDBC URL of the database to modify
-     */
-    private static String dbUrl;
-    /**
-     * The Username of user of the SQL server user to use.
-     */
-    private static String dbUser;
-    /**
-     * The password for the user, to use.
-     */
-    private static String dbPassword;
-    /**
-     * The database to use
-     */
-    private static String dbName;
-    /**
-     * Hostname of database, e.g. mysql://host.example.com:3306
-     */
-    private static String dbHost;
 
     /**
      * Before running drop the table.
      */
     @BeforeClass
-    public static void setUpBaseClass() {
+    public static void setUpBaseClass() throws Exception {
 
-        try {
-            readConfig();
-            StringBuilder sbSQL = new StringBuilder();
-            // DROP existing test tables
-            sbSQL.append("DROP TABLE  tblplayers_test;");
-            sbSQL.append(" DROP TABLE tblplayers_test_two;");
+        StringBuilder sbSQL = new StringBuilder();
+        // DROP existing test tables
+        sbSQL.append("DROP TABLE  tblplayers_test;");
+        sbSQL.append(" DROP TABLE tblplayers_test_two;");
 
-            for(String strRealm : GathererController.getRealms()) {
-                sbSQL.append(" DROP TABLE " + strRealm + ";");
-            }
-
-            java.sql.Connection conn = openConnection();
-            try {
-                Statement stmt = conn.createStatement();
-                stmt.executeUpdate(sbSQL.toString());
-            } catch(SQLException e) {
-
-            }
-            closeConnection(conn);
-
-        } catch(ParserConfigurationException e) {
-            e.printStackTrace();
-        } catch(IOException e) {
-            e.printStackTrace();
-        } catch(SAXException e) {
-            e.printStackTrace();
+        for(String strRealm : GathererController.getRealms()) {
+            sbSQL.append(" DROP TABLE " + strRealm + ";");
         }
+
+        java.sql.Connection conn = openConnection();
+        try {
+            Statement stmt = conn.createStatement();
+            stmt.executeUpdate(sbSQL.toString());
+        } catch(SQLException e) {
+
+        }
+        closeConnection(conn);
 
     }
 
@@ -125,8 +87,15 @@ public class ConsoleTest {
      */
     @Test
     public void testConsole() throws Exception {
+        ApplicationConfig config = ConfigurationBuilder.createBuilder().loadXMLConfiguration().getConfiguration();
 
-        String[] args = {"-is", "0", "-f", "100", "-t", "10", "-T", "tblplayers_test", "-d", dbName, "-U", dbHost, "-bPq"};
+        String[] args = {"-is", "0",
+                         "-f", "100",
+                         "-t", "10",
+                         "-T", "tblplayers_test",
+                         "-d", config.getDbName(),
+                         "-U", config.getDbUrl(),
+                         "-bPq"};
 
         GathererController gc = Console.run(args);
         // Test that options have set attributes correctly
@@ -161,9 +130,16 @@ public class ConsoleTest {
      */
     @Test
     public void testConsoleFullOptions() throws Exception {
+        ApplicationConfig config = ConfigurationBuilder.createBuilder().loadXMLConfiguration().getConfiguration();
 
-        String[] args = {"--start=100", "--finish=200", "--threads", "32", "-v", "-d", dbName, "-U", dbHost, "-u", dbUser, "-p",
-                         dbPassword};
+        String[] args = {"--start=100",
+                         "--finish=200",
+                         "--threads", "32",
+                         "-v",
+                         "-d", config.getDbName(),
+                         "-U", config.getDbUrl(),
+                         "-u", config.getDbUser(),
+                         "-p", config.getDbPassword()};
         GathererController gc = Console.run(args);
 
         assertEquals(gc.getStartId(), 100);
@@ -210,7 +186,8 @@ public class ConsoleTest {
 
     @Test
     public void testMain() {
-        String[] args = {"-s", "1100", "-f", "1400"};
+        String[] args = {"-s", "1100",
+                         "-f", "1400"};
         Console.main(args);
         // Check output
         assertFalse(outContent.toString().contains("does not exist."));
@@ -218,7 +195,8 @@ public class ConsoleTest {
 
     @Test
     public void testDefault() {
-        String[] args = {"-s", "500", "-f", "600"};
+        String[] args = {"-s", "500",
+                         "-f", "600"};
         Console.run(args);
         // Check output
         assertFalse(outContent.toString().contains("does not exist."));
@@ -226,7 +204,9 @@ public class ConsoleTest {
 
     @Test
     public void testPrintFails() {
-        String[] args = {"-s", "700", "-f", "800", "-qF"};
+        String[] args = {"-s", "700",
+                         "-f", "800",
+                         "-qF"};
         Console.run(args);
         // Check output
         assertFalse(outContent.toString().contains("written to database successfully."));
@@ -235,7 +215,10 @@ public class ConsoleTest {
 
     @Test
     public void testSplitTables() {
-        String[] args = {"-s", "900", "-f", "1000", "-x", "_test", "-S"};
+        String[] args = {"-s", "900",
+                         "-f", "1000",
+                         "-x", "_test",
+                         "-S"};
         GathererController gc = Console.run(args);
         assertTrue(gc.isSplitTables());
         assertEquals(gc.getTableSuffix(), "_test");
@@ -249,9 +232,11 @@ public class ConsoleTest {
      * @return the opened connection
      * @throws SQLException exception thrown if unable to connect
      */
-    private static java.sql.Connection openConnection() {
+    private static java.sql.Connection openConnection() throws Exception {
+        ApplicationConfig config = ConfigurationBuilder.createBuilder().loadXMLConfiguration().getConfiguration();
         try {
-            java.sql.Connection connection = DriverManager.getConnection(dbUrl, dbUser, dbPassword);
+            String connString = "jdbc:" + config.getDbUrl() + "/" + config.getDbName();
+            java.sql.Connection connection = DriverManager.getConnection(connString, config.getDbUser(), config.getDbPassword());
             return connection;
         } catch(SQLException sqlEx) {
             System.out.println("Connection failed! Please see output console");
@@ -272,35 +257,6 @@ public class ConsoleTest {
         } catch(SQLException sqlEx) {
             System.out.println("Cannot close connection! Has it already been closed");
         }
-    }
-
-    /**
-     * Read configuration from config.xml
-     *
-     * @throws ParserConfigurationException Indicates a serious configuration error.
-     * @throws IOException Indicates an error reading the file specified.
-     * @throws SAXException Indicates an error parsing XML.
-     */
-    public static void readConfig() throws ParserConfigurationException, IOException, SAXException {
-        // Set config file location
-        File xmlFile = new File("config.xml");
-        // Initialize parsers
-        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-        // Parse the file
-        Document doc = dBuilder.parse(xmlFile);
-
-        // Read out db config
-        NodeList nodesJDBC = doc.getElementsByTagName("jdbc");
-        Element elementJDBC = (Element) nodesJDBC.item(0);
-
-        String url = "jdbc:" + elementJDBC.getElementsByTagName("url").item(0).getTextContent() + "/"
-                     + elementJDBC.getElementsByTagName("database").item(0).getTextContent();
-        dbUrl = url;
-        dbHost = elementJDBC.getElementsByTagName("url").item(0).getTextContent();
-        dbUser = elementJDBC.getElementsByTagName("username").item(0).getTextContent();
-        dbPassword = elementJDBC.getElementsByTagName("password").item(0).getTextContent();
-        dbName = elementJDBC.getElementsByTagName("database").item(0).getTextContent();
     }
 
     /**

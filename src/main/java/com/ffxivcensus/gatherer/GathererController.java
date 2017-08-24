@@ -1,7 +1,5 @@
 package com.ffxivcensus.gatherer;
 
-import java.io.File;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -9,18 +7,10 @@ import java.sql.Statement;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-
 import org.apache.commons.lang.BooleanUtils;
 import org.apache.commons.lang.StringUtils;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
-
 import com.ffxivcensus.gatherer.config.ApplicationConfig;
+import com.ffxivcensus.gatherer.config.ConfigurationBuilder;
 
 /**
  * GathererController class of character gathering program. This class makes calls to fetch records from the lodestone, and then
@@ -47,130 +37,12 @@ public class GathererController {
                                             "Ultima", "Ultros", "Unicorn", "Valefor", "Yojimbo", "Zalera", "Zeromus", "Zodiark"};
 
     /**
-     * Constructor for GathererController using simply start id and end id. Read other configuration options from config.
-     * <p>
-     * Other options should be should be established using setters.
-     *
-     * @param startId the character id to start gatherer run at (inclusive).
-     * @param endId the character id to end the gather run at (inclusive).
+     * Constructs a new {@link GathererController} and configures with the provided {@link ApplicationConfig}.
+     * 
+     * @param config Configuration Bean
      */
-    public GathererController(final int startId, final int endId) {
-        this.appConfig.setStartId(startId);
-        this.appConfig.setEndId(endId);
-        appConfig.setStoreMinions(false);
-        appConfig.setStoreMounts(false);
-        appConfig.setStoreProgression(true);
-        appConfig.setTableName("tblplayers");
-        appConfig.setSplitTables(false);
-        appConfig.setTableSuffix("");
-        appConfig.setTableName("tblplayers");
-        appConfig.setQuiet(true);
-        appConfig.setVerbose(false);
-        appConfig.setPrintFails(false);
-
-        // Read in config
-        try {
-            readConfig();
-        } catch(Exception ex) {
-            System.out.println("No config found - please set variables via setters.");
-        }
-    }
-
-    /**
-     * Constructor for GathererController taking additional parameters to set configuration of gatherer controller instance.
-     *
-     * @param startId the character id to start gatherer run at (inclusive).
-     * @param endId the character if to end the gatherer run at (inclusive).
-     * @param quiet whether to provide console output indicating progress in adding characters.
-     * @param verbose whether to provide console output indicating IDs where characters were not found.
-     * @param storeMinions whether to store a player's minions to a comma delimited list in DB.
-     * @param storeMounts whether to store a player's mounts to a comma delimited list in DB.
-     * @param storeProgression whether to store boolean values indicating character achivements/progress in DB.
-     * @param dbUrl the URL of the database server to connect to (e.g. mysql://localhost:3307).
-     * @param dbName the name of the database to use to store character records.
-     * @param dbUser the username of the SQL server user to connect to the database with.
-     * @param dbPassword the password of the SQL server user to connect to the database with.
-     * @param threads the number of threads to run the program with.
-     * @param tableName the name of the SQL table to write character records to.
-     */
-    public GathererController(final int startId, final int endId, final boolean quiet, final boolean verbose, final boolean storeMinions,
-                              final boolean storeMounts, final boolean storeProgression, final String dbUrl, final String dbName,
-                              final String dbUser, final String dbPassword, final int threads, final String tableName) {
-        this.appConfig.setStartId(startId);
-        this.appConfig.setEndId(endId);
-        this.appConfig.setStoreMinions(storeMinions);
-        this.appConfig.setStoreMounts(storeMounts);
-        this.appConfig.setStoreProgression(storeProgression);
-        this.appConfig.setQuiet(quiet);
-        this.appConfig.setVerbose(verbose);
-        appConfig.setPrintFails(false);
-
-        // Read in config
-        try {
-            readConfig();
-        } catch(Exception ex) {
-        }
-
-        // Parameters specified should outweigh config
-        this.appConfig.setDbUrl("jdbc:" + dbUrl + "/" + dbName);
-        if(appConfig.isDbIgnoreSSLWarn()) {
-            this.appConfig.setDbUrl(this.appConfig.getDbUrl() + "?useSSL=false");
-        }
-        this.appConfig.setDbUser(dbUser);
-        this.appConfig.setDbPassword(dbPassword);
-        appConfig.setThreadLimit(threads);
-        this.appConfig.setTableName(tableName);
-        appConfig.setTableSuffix("");
-    }
-
-    /**
-     * Constructor for GathererController taking additional parameters to set configuration of gatherer controller instance.
-     * To be used when you want to split the single table into a table for each realm.
-     *
-     * @param startId the character id to start gatherer run at (inclusive).
-     * @param endId the character if to end the gatherer run at (inclusive).
-     * @param quiet whether to provide console output indicating progress in adding characters.
-     * @param verbose whether to provide console output indicating IDs where characters were not found.
-     * @param storeMinions whether to store a player's minions to a comma delimited list in DB.
-     * @param storeMounts whether to store a player's mounts to a comma delimited list in DB.
-     * @param storeProgression whether to store boolean values indicating character achivements/progress in DB.
-     * @param dbUrl the URL of the database server to connect to (e.g. mysql://localhost:3307).
-     * @param dbName the name of the database to use to store character records.
-     * @param dbUser the username of the SQL server user to connect to the database with.
-     * @param dbPassword the password of the SQL server user to connect to the database with.
-     * @param threads the number of threads to run the program with.
-     * @param tableSuffix the suffix to apply to all tables created, e.g. 23012016
-     * @param splitTables whether to split up the single player table into one for each realm/server.
-     */
-    public GathererController(final int startId, final int endId, final boolean quiet, final boolean verbose, final boolean storeMinions,
-                              final boolean storeMounts, final boolean storeProgression, final String dbUrl, final String dbName,
-                              final String dbUser, final String dbPassword, final int threads, final String tableSuffix,
-                              final boolean splitTables) {
-        this.appConfig.setStartId(startId);
-        this.appConfig.setEndId(endId);
-        this.appConfig.setStoreMinions(storeMinions);
-        this.appConfig.setStoreMounts(storeMounts);
-        this.appConfig.setStoreProgression(storeProgression);
-        this.appConfig.setQuiet(quiet);
-        this.appConfig.setVerbose(verbose);
-        appConfig.setPrintFails(false);
-
-        // Read in config
-        try {
-            readConfig();
-        } catch(Exception ex) {
-        }
-
-        // Parameters specified should outweigh config
-        this.appConfig.setDbUrl("jdbc:" + dbUrl + "/" + dbName);
-        this.appConfig.setDbUser(dbUser);
-        this.appConfig.setDbPassword(dbPassword);
-        appConfig.setThreadLimit(threads);
-        appConfig.setTableName("tblplayers");
-        this.appConfig.setTableSuffix(tableSuffix);
-        this.appConfig.setSplitTables(splitTables);
-        appConfig.setStoreActiveDate(true);
-        appConfig.setStorePlayerActive(true);
+    public GathererController(final ApplicationConfig config) {
+        this.appConfig = config;
     }
 
     /**
@@ -203,7 +75,8 @@ public class GathererController {
                 if(appConfig.getStartId() > appConfig.getEndId()) {
                     System.out.println("Error: The finish id argument needs to be greater than the start id argument");
                 } else { // Else pass values into poll method
-                    System.out.println("Starting parse of range " + appConfig.getStartId() + " to " + appConfig.getEndId() + " using " + appConfig.getThreadLimit() + " threads");
+                    System.out.println("Starting parse of range " + appConfig.getStartId() + " to " + appConfig.getEndId() + " using "
+                                       + appConfig.getThreadLimit() + " threads");
                     gatherRange();
                     // Get current time
                     long endTime = System.currentTimeMillis();
@@ -212,8 +85,8 @@ public class GathererController {
                     long hours = minutes / 60;
                     long days = hours / 24;
                     String time = days + " Days, " + hours % 24 + " hrs, " + minutes % 60 + " mins, " + seconds % 60 + " secs";
-                    System.out.println("Run completed, " + ((appConfig.getEndId() - appConfig.getStartId()) + 1) + " character IDs scanned in " + time + " ("
-                                       + appConfig.getThreadLimit() + " threads)");
+                    System.out.println("Run completed, " + ((appConfig.getEndId() - appConfig.getStartId()) + 1)
+                                       + " character IDs scanned in " + time + " (" + appConfig.getThreadLimit() + " threads)");
 
                 }
 
@@ -310,38 +183,6 @@ public class GathererController {
             e.printStackTrace();
         }
         closeConnection(conn);
-    }
-
-    /**
-     * Read configuration from config.xml
-     *
-     * @throws ParserConfigurationException Indicates a serious configuration error.
-     * @throws IOException Indicates an error reading the file specified.
-     * @throws SAXException Indicates an error parsing XML.
-     */
-    private void readConfig() throws ParserConfigurationException, IOException, SAXException {
-        // Set config file location
-        File xmlFile = new File("config.xml");
-        // Initialize parsers
-        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-        // Parse the file
-        Document doc = dBuilder.parse(xmlFile);
-
-        // Read out db config
-        NodeList nodesJDBC = doc.getElementsByTagName("jdbc");
-        Element elementJDBC = (Element) nodesJDBC.item(0);
-
-        String url = "jdbc:" + elementJDBC.getElementsByTagName("url").item(0).getTextContent() + "/"
-                     + elementJDBC.getElementsByTagName("database").item(0).getTextContent();
-        appConfig.setDbUrl(url);
-        appConfig.setDbUser(elementJDBC.getElementsByTagName("username").item(0).getTextContent());
-        appConfig.setDbPassword(elementJDBC.getElementsByTagName("password").item(0).getTextContent());
-
-        // Read out execution config
-        NodeList nodesExecConf = doc.getElementsByTagName("execution");
-        Element elementExecConf = (Element) nodesExecConf.item(0);
-        appConfig.setThreadLimit(Integer.parseInt(elementExecConf.getElementsByTagName("threads").item(0).getTextContent()));
     }
 
     /**
@@ -511,7 +352,11 @@ public class GathererController {
      */
     protected Connection openConnection() {
         try {
-            Connection connection = DriverManager.getConnection(appConfig.getDbUrl(), appConfig.getDbUser(), appConfig.getDbPassword());
+            String connString = "jdbc:" + appConfig.getDbUrl() + "/" + appConfig.getDbName();
+            if(appConfig.isDbIgnoreSSLWarn()) {
+                connString += "?useSSL=false";
+            }
+            Connection connection = DriverManager.getConnection(connString, appConfig.getDbUser(), appConfig.getDbPassword());
             return connection;
         } catch(SQLException sqlEx) {
             System.out.println("Connection failed! Please see output console");
