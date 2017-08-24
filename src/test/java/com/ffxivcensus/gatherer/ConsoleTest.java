@@ -6,11 +6,14 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+
 import org.junit.BeforeClass;
 import org.junit.Test;
 import com.ffxivcensus.gatherer.config.ApplicationConfig;
 import com.ffxivcensus.gatherer.config.ConfigurationBuilder;
 import com.ffxivcensus.gatherer.player.PlayerBeanDAO;
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
 
 /**
  * JUnit test class to run tests
@@ -29,15 +32,25 @@ public class ConsoleTest {
     public static void setUpBaseClass() throws Exception {
         ApplicationConfig config = ConfigurationBuilder.createBuilder().loadXMLConfiguration().getConfiguration();
 
-        PlayerBeanDAO dao = new PlayerBeanDAO(config);
+        HikariConfig hikariConfig = new HikariConfig();
+        hikariConfig.setJdbcUrl("jdbc:" + config.getDbUrl() + "/" + config.getDbName());
+        hikariConfig.setUsername(config.getDbUser());
+        hikariConfig.setPassword(config.getDbPassword());
+        hikariConfig.setMaximumPoolSize(config.getThreadLimit());
+        hikariConfig.addDataSourceProperty("useSSL", !config.isDbIgnoreSSLWarn());
+
+        HikariDataSource dataSource = new HikariDataSource(hikariConfig);
+
+        PlayerBeanDAO dao = new PlayerBeanDAO(config, dataSource);
 
         dao.dropTable("tblplayers_test");
         dao.dropTable("tblplayers_test_two");
 
         for(String strRealm : GathererController.getRealms()) {
-            dao.dropTable("DROP TABLE " + strRealm + ";");
+            dao.dropTable("DROP TABLE tbl" + strRealm.toLowerCase() + "_test;");
         }
 
+        dataSource.close();
     }
 
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();

@@ -1,12 +1,13 @@
 package com.ffxivcensus.gatherer.player;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.sql.DataSource;
 
 import org.apache.commons.lang.BooleanUtils;
 import org.apache.commons.lang.StringUtils;
@@ -21,9 +22,11 @@ import com.ffxivcensus.gatherer.config.ApplicationConfig;
 public class PlayerBeanDAO {
 
     private ApplicationConfig appConfig;
+    private DataSource dataSource;
 
-    public PlayerBeanDAO(final ApplicationConfig appConfig) {
+    public PlayerBeanDAO(final ApplicationConfig appConfig, final DataSource dataSource) {
         this.appConfig = appConfig;
+        this.dataSource = dataSource;
     }
 
     /**
@@ -265,12 +268,7 @@ public class PlayerBeanDAO {
      */
     protected Connection openConnection() {
         try {
-            String connString = "jdbc:" + appConfig.getDbUrl() + "/" + appConfig.getDbName();
-            if(appConfig.isDbIgnoreSSLWarn()) {
-                connString += "?useSSL=false";
-            }
-            Connection connection = DriverManager.getConnection(connString, appConfig.getDbUser(), appConfig.getDbPassword());
-            return connection;
+            return dataSource.getConnection();
         } catch(SQLException sqlEx) {
             System.out.println("Connection failed! Please see output console");
             sqlEx.printStackTrace();

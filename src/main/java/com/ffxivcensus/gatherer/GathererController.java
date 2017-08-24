@@ -1,14 +1,13 @@
 package com.ffxivcensus.gatherer;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import com.ffxivcensus.gatherer.config.ApplicationConfig;
 import com.ffxivcensus.gatherer.player.PlayerBeanDAO;
 import com.ffxivcensus.gatherer.player.PlayerBuilder;
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
 
 /**
  * GathererController class of character gathering program. This class makes calls to fetch records from the lodestone, and then
@@ -22,6 +21,7 @@ import com.ffxivcensus.gatherer.player.PlayerBuilder;
 public class GathererController {
 
     private ApplicationConfig appConfig = new ApplicationConfig();
+    private HikariDataSource dataSource;
     /**
      * List of playable realms (used when splitting tables).
      */
@@ -41,6 +41,7 @@ public class GathererController {
      */
     public GathererController(final ApplicationConfig config) {
         this.appConfig = config;
+
     }
 
     /**
@@ -61,8 +62,16 @@ public class GathererController {
             throw new Exception("Program not (correctly) configured");
         } else { // Else configured correctly
             try {
+                HikariConfig hikariConfig = new HikariConfig();
+                hikariConfig.setJdbcUrl("jdbc:" + appConfig.getDbUrl() + "/" + appConfig.getDbName());
+                hikariConfig.setUsername(appConfig.getDbUser());
+                hikariConfig.setPassword(appConfig.getDbPassword());
+                hikariConfig.setMaximumPoolSize(appConfig.getThreadLimit());
+                hikariConfig.addDataSourceProperty("useSSL", !appConfig.isDbIgnoreSSLWarn());
 
-                PlayerBeanDAO dao = new PlayerBeanDAO(appConfig);
+                this.dataSource = new HikariDataSource(hikariConfig);
+
+                PlayerBeanDAO dao = new PlayerBeanDAO(appConfig, dataSource);
 
                 if(appConfig.isSplitTables()) { // If specified to split tables
                     for(String realm : realms) { // Create a table for each realm
@@ -92,6 +101,10 @@ public class GathererController {
 
             } catch(Exception ex) {
                 ex.printStackTrace();
+            } finally {
+                if(dataSource != null) {
+                    dataSource.close();
+                }
             }
         }
     }
@@ -142,7 +155,7 @@ public class GathererController {
         ExecutorService executor = Executors.newFixedThreadPool(appConfig.getThreadLimit());
 
         while(nextID <= appConfig.getEndId()) {
-            Gatherer worker = new Gatherer(this, new PlayerBeanDAO(appConfig), nextID);
+            Gatherer worker = new Gatherer(this, new PlayerBeanDAO(appConfig, dataSource), nextID);
             executor.execute(worker);
 
             nextID++;
@@ -151,41 +164,6 @@ public class GathererController {
         executor.shutdown();
         while(!executor.isTerminated()) {
             // Wait patiently for the executor to finish off everything submitted
-        }
-    }
-
-    /**
-     * Open a connection to database.
-     *
-     * @return the opened connection
-     * @throws SQLException exception thrown if unable to connect
-     */
-    protected Connection openConnection() {
-        try {
-            String connString = "jdbc:" + appConfig.getDbUrl() + "/" + appConfig.getDbName();
-            if(appConfig.isDbIgnoreSSLWarn()) {
-                connString += "?useSSL=false";
-            }
-            Connection connection = DriverManager.getConnection(connString, appConfig.getDbUser(), appConfig.getDbPassword());
-            return connection;
-        } catch(SQLException sqlEx) {
-            System.out.println("Connection failed! Please see output console");
-            sqlEx.printStackTrace();
-            return null;
-        }
-    }
-
-    /**
-     * Close the specified connection.
-     *
-     * @param conn the connection to throw
-     * @throws SQLException exception thrown if unable to close connection.
-     */
-    protected void closeConnection(final Connection conn) {
-        try {
-            conn.close();
-        } catch(SQLException sqlEx) {
-            System.out.println("Cannot close connection! Has it already been closed");
         }
     }
 
