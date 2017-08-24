@@ -23,10 +23,10 @@ import static org.junit.Assert.*;
  * Test the core functionality of the program, including CLI parameters.
  *
  * @author Peter Reid
- * @see com.ffxivcensus.gatherer.Player
+ * @see com.ffxivcensus.gatherer.PlayerBuilder
  * @see com.ffxivcensus.gatherer.Gatherer
  * @see com.ffxivcensus.gatherer.GathererController
- * @see com.ffxivcensus.gatherer.PlayerTest
+ * @see com.ffxivcensus.gatherer.PlayerBuilderTest
  * @since v1.0
  */
 public class GathererControllerTest {

@@ -9,7 +9,7 @@ import com.mysql.jdbc.exceptions.jdbc4.MySQLNonTransientConnectionException;
  *
  * @author Peter Reid
  * @since v1.0
- * @see Player
+ * @see PlayerBuilder
  * @see GathererController
  * @see java.lang.Runnable
  */
@@ -36,7 +36,7 @@ public class Gatherer implements Runnable {
                 System.out.println("Starting evaluation of player ID: " + playerId);
             }
             // Parse players and write them to DB
-            String out = parent.writeToDB(Player.getPlayer(playerId, 1));
+            String out = parent.writeToDB(PlayerBuilder.getPlayer(playerId, 1));
             if(!parent.isQuiet()) { // If not running in quiet mode
                 System.out.println(out);
             }
@@ -50,7 +50,7 @@ public class Gatherer implements Runnable {
             }
             // Then attempt to write again
             try {
-                String out = parent.writeToDB(Player.getPlayer(playerId, 1));
+                String out = parent.writeToDB(PlayerBuilder.getPlayer(playerId, 1));
                 if(!parent.isQuiet()) {
                     System.out.println(out);
                 }

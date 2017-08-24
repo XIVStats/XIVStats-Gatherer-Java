@@ -1,5 +1,7 @@
 package com.ffxivcensus.gatherer;
 
+import org.apache.commons.lang.BooleanUtils;
+import org.apache.commons.lang.StringUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -26,12 +28,12 @@ import java.util.concurrent.TimeUnit;
  *
  * @author Peter Reid
  * @since v1.0
- * @see Player
+ * @see PlayerBuilder
  * @see Gatherer
  */
 public class GathererController {
 
-    //Configuration options
+    // Configuration options
     /**
      * The JDBC URL of the database to modify
      */
@@ -113,13 +115,14 @@ public class GathererController {
     /**
      * List of playable realms (used when splitting tables).
      */
-    private final static String[] realms = {"Adamantoise", "Aegis", "Alexander", "Anima", "Asura", "Atomos", "Bahamut",
-            "Balmung", "Behemoth", "Belias", "Brynhildr", "Cactuar", "Carbuncle", "Cerberus", "Chocobo", "Coeurl",
-            "Diabolos", "Durandal", "Excalibur", "Exodus", "Faerie", "Famfrit", "Fenrir", "Garuda", "Gilgamesh",
-            "Goblin", "Gungnir", "Hades", "Hyperion", "Ifrit", "Ixion", "Jenova", "Kujata", "Lamia", "Leviathan",
-            "Lich", "Louisoix", "Malboro", "Mandragora", "Masamune", "Mateus", "Midgardsormr", "Moogle", "Odin", "Omega", "Pandaemonium",
-            "Phoenix", "Ragnarok", "Ramuh", "Ridill", "Sargatanas", "Shinryu", "Shiva", "Siren", "Tiamat", "Titan",
-            "Tonberry", "Typhon", "Ultima", "Ultros", "Unicorn", "Valefor", "Yojimbo", "Zalera", "Zeromus", "Zodiark"};
+    private final static String[] realms = {"Adamantoise", "Aegis", "Alexander", "Anima", "Asura", "Atomos", "Bahamut", "Balmung",
+                                            "Behemoth", "Belias", "Brynhildr", "Cactuar", "Carbuncle", "Cerberus", "Chocobo", "Coeurl",
+                                            "Diabolos", "Durandal", "Excalibur", "Exodus", "Faerie", "Famfrit", "Fenrir", "Garuda",
+                                            "Gilgamesh", "Goblin", "Gungnir", "Hades", "Hyperion", "Ifrit", "Ixion", "Jenova", "Kujata",
+                                            "Lamia", "Leviathan", "Lich", "Louisoix", "Malboro", "Mandragora", "Masamune", "Mateus",
+                                            "Midgardsormr", "Moogle", "Odin", "Omega", "Pandaemonium", "Phoenix", "Ragnarok", "Ramuh",
+                                            "Ridill", "Sargatanas", "Shinryu", "Shiva", "Siren", "Tiamat", "Titan", "Tonberry", "Typhon",
+                                            "Ultima", "Ultros", "Unicorn", "Valefor", "Yojimbo", "Zalera", "Zeromus", "Zodiark"};
 
     /**
      * Safety limit for thread count - user cannot exceed this limit.
@@ -132,7 +135,7 @@ public class GathererController {
      * Other options should be should be established using setters.
      *
      * @param startId the character id to start gatherer run at (inclusive).
-     * @param endId   the character id to end the gather run at (inclusive).
+     * @param endId the character id to end the gather run at (inclusive).
      */
     public GathererController(int startId, int endId) {
         this.startId = startId;
@@ -148,10 +151,10 @@ public class GathererController {
         this.verbose = false;
         this.printFails = false;
 
-        //Read in config
+        // Read in config
         try {
             this.readConfig();
-        } catch (Exception ex) {
+        } catch(Exception ex) {
             System.out.println("No config found - please set variables via setters.");
         }
     }
@@ -173,8 +176,9 @@ public class GathererController {
      * @param threads the number of threads to run the program with.
      * @param tableName the name of the SQL table to write character records to.
      */
-    public GathererController(int startId, int endId, boolean quiet, boolean verbose, boolean storeMinions, boolean storeMounts, boolean storeProgression,
-                              String dbUrl, String dbName, String dbUser, String dbPassword, int threads, String tableName) {
+    public GathererController(int startId, int endId, boolean quiet, boolean verbose, boolean storeMinions, boolean storeMounts,
+                              boolean storeProgression, String dbUrl, String dbName, String dbUser, String dbPassword, int threads,
+                              String tableName) {
         this.startId = startId;
         this.endId = endId;
         this.storeMinions = storeMinions;
@@ -184,15 +188,15 @@ public class GathererController {
         this.verbose = verbose;
         this.printFails = false;
 
-        //Read in config
+        // Read in config
         try {
             this.readConfig();
-        } catch (Exception ex) {
+        } catch(Exception ex) {
         }
 
-        //Parameters specified should outweigh config
+        // Parameters specified should outweigh config
         this.dbUrl = "jdbc:" + dbUrl + "/" + dbName;
-        if (this.dbIgnoreSSLWarn) {
+        if(this.dbIgnoreSSLWarn) {
             this.dbUrl += "?useSSL=false";
         }
         this.dbUser = dbUser;
@@ -204,7 +208,6 @@ public class GathererController {
 
     /**
      * Constructor for GathererController taking additional parameters to set configuration of gatherer controller instance.
-     *
      * To be used when you want to split the single table into a table for each realm.
      *
      * @param startId the character id to start gatherer run at (inclusive).
@@ -222,8 +225,8 @@ public class GathererController {
      * @param tableSuffix the suffix to apply to all tables created, e.g. 23012016
      * @param splitTables whether to split up the single player table into one for each realm/server.
      */
-    public GathererController(int startId, int endId, boolean quiet, boolean verbose, boolean storeMinions, boolean storeMounts, boolean storeProgression,
-                              String dbUrl, String dbName, String dbUser, String dbPassword, int threads,
+    public GathererController(int startId, int endId, boolean quiet, boolean verbose, boolean storeMinions, boolean storeMounts,
+                              boolean storeProgression, String dbUrl, String dbName, String dbUser, String dbPassword, int threads,
                               String tableSuffix, boolean splitTables) {
         this.startId = startId;
         this.endId = endId;
@@ -234,13 +237,13 @@ public class GathererController {
         this.verbose = verbose;
         this.printFails = false;
 
-        //Read in config
+        // Read in config
         try {
             this.readConfig();
-        } catch (Exception ex) {
+        } catch(Exception ex) {
         }
 
-        //Parameters specified should outweigh config
+        // Parameters specified should outweigh config
         this.dbUrl = "jdbc:" + dbUrl + "/" + dbName;
         this.dbUser = dbUser;
         this.dbPassword = dbPassword;
@@ -254,47 +257,49 @@ public class GathererController {
 
     /**
      * Start the gatherer controller instance up.
+     * 
      * @throws Exception Exception thrown if system is incorrectly configured.
      */
     public void run() throws Exception {
-        //Store start time
+        // Store start time
         long startTime = System.currentTimeMillis();
 
-        //If user attempts to exceed the maximum no. of threads - overwrite their input and set to MAX_THREADS
-        if (this.threadLimit > MAX_THREADS){
+        // If user attempts to exceed the maximum no. of threads - overwrite their input and set to MAX_THREADS
+        if(this.threadLimit > MAX_THREADS) {
             this.threadLimit = MAX_THREADS;
         }
 
-        if (isConfigured().length() > 0) { //If not configured
+        if(isConfigured().length() > 0) { // If not configured
             throw new Exception("Program not (correctly) configured");
-        } else { //Else configured correctly
+        } else { // Else configured correctly
             try {
 
-                if(splitTables) { //If specified to split tables
-                    for (String realm : realms) { //Create a table for each realm
-                        this.createTable("tbl"+realm.toLowerCase()+tableSuffix);
+                if(splitTables) { // If specified to split tables
+                    for(String realm : realms) { // Create a table for each realm
+                        this.createTable("tbl" + realm.toLowerCase() + tableSuffix);
                     }
-                } else{ //Else just create a single table
+                } else { // Else just create a single table
                     this.createTable(tableName);
                 }
 
-                if (startId > endId) {
+                if(startId > endId) {
                     System.out.println("Error: The finish id argument needs to be greater than the start id argument");
-                } else { //Else pass values into poll method
+                } else { // Else pass values into poll method
                     System.out.println("Starting parse of range " + startId + " to " + endId + " using " + threadLimit + " threads");
                     gatherRange();
-                    //Get current time
+                    // Get current time
                     long endTime = System.currentTimeMillis();
                     long seconds = (endTime - startTime) / 1000;
                     long minutes = seconds / 60;
                     long hours = minutes / 60;
                     long days = hours / 24;
                     String time = days + " Days, " + hours % 24 + " hrs, " + minutes % 60 + " mins, " + seconds % 60 + " secs";
-                    System.out.println("Run completed, " + ((endId - startId) + 1) + " character IDs scanned in " + time + " (" + threadLimit + " threads)");
+                    System.out.println("Run completed, " + ((endId - startId) + 1) + " character IDs scanned in " + time + " ("
+                                       + threadLimit + " threads)");
 
                 }
 
-            } catch (Exception ex) {
+            } catch(Exception ex) {
                 ex.printStackTrace();
             }
         }
@@ -302,31 +307,32 @@ public class GathererController {
 
     /**
      * Determine whether the instance is correctly configured.
+     * 
      * @return string containing warnings/errors in configuration.
      */
     public String isConfigured() {
         boolean configured = true;
         StringBuilder sbOut = new StringBuilder();
-        if ( this.startId < 0) {
+        if(this.startId < 0) {
             sbOut.append("Start ID must be configured to a positive numerical value\n");
             configured = false;
         }
-        if ( this.endId < 0) {
+        if(this.endId < 0) {
             sbOut.append("End ID must be configured to a positive numerical value\n");
             configured = false;
         }
-        if (this.dbUrl == null || dbUrl.length() <= 5) {
+        if(this.dbUrl == null || dbUrl.length() <= 5) {
             sbOut.append("Database URL has not been configured correctly\n");
             configured = false;
         }
-        if (this.dbUser == null || dbUser.length() == 0) {
+        if(this.dbUser == null || dbUser.length() == 0) {
             sbOut.append("Database User has not been configured correctly\n");
             configured = false;
         }
-        if (this.dbPassword == null || dbPassword.length() == 0) {
+        if(this.dbPassword == null || dbPassword.length() == 0) {
             sbOut.append("Database Password has not been configured correctly\n");
         }
-        if (this.tableName == null || this.tableName.length() == 0){
+        if(this.tableName == null || this.tableName.length() == 0) {
             sbOut.append("Table name has not been configured correctly\n");
         }
         return sbOut.toString();
@@ -334,11 +340,12 @@ public class GathererController {
 
     /**
      * Create the table to write character records to.
+     * 
      * @param tableName the name of the table to setup.
      */
     private void createTable(String tableName) {
-        //Create DB table if it doesn't exist
-        //Open connection
+        // Create DB table if it doesn't exist
+        // Open connection
         Connection conn = openConnection();
         try {
             Statement st = conn.createStatement();
@@ -351,7 +358,7 @@ public class GathererController {
             sbSQL.append("level_astrologian INTEGER, level_scholar INTEGER, level_redmage INTEGER, level_samurai INTEGER, level_carpenter INTEGER, level_blacksmith INTEGER,");
             sbSQL.append("level_armorer INTEGER,level_goldsmith INTEGER,level_leatherworker INTEGER,level_weaver INTEGER,level_alchemist INTEGER,level_culinarian INTEGER,");
             sbSQL.append("level_miner INTEGER,level_botanist INTEGER,level_fisher INTEGER");
-            if (this.storeProgression) {
+            if(this.storeProgression) {
                 sbSQL.append(",");
                 sbSQL.append("p30days BIT, p60days BIT, p90days BIT, p180days BIT, p270days BIT,p360days BIT,p450days BIT,p630days BIT,p960days BIT,");
                 sbSQL.append("prearr BIT, prehw BIT, presb BIT, arrartbook BIT, hwartbookone BIT, hwartbooktwo BIT, hasencyclopedia BIT, ");
@@ -362,10 +369,10 @@ public class GathererController {
                 sbSQL.append("kobold BIT, sahagin BIT, amaljaa BIT, sylph BIT,  moogle BIT, vanuvanu BIT, vath BIT,");
                 sbSQL.append("arr_25_complete BIT,hw_complete BIT, hw_31_complete BIT, hw_33_complete BIT, legacy_player BIT");
             }
-            if (this.storeMounts) {
+            if(this.storeMounts) {
                 sbSQL.append(",mounts TEXT");
             }
-            if (this.storeMinions) {
+            if(this.storeMinions) {
                 sbSQL.append(",minions TEXT");
             }
             if(this.storeActiveDate) {
@@ -379,7 +386,7 @@ public class GathererController {
             sbSQL.append(");");
 
             st.executeUpdate(sbSQL.toString());
-        } catch (SQLException e) {
+        } catch(SQLException e) {
             e.printStackTrace();
         }
         closeConnection(conn);
@@ -389,51 +396,51 @@ public class GathererController {
      * Read configuration from config.xml
      *
      * @throws ParserConfigurationException Indicates a serious configuration error.
-     * @throws IOException                  Indicates an error reading the file specified.
-     * @throws SAXException                 Indicates an error parsing XML.
+     * @throws IOException Indicates an error reading the file specified.
+     * @throws SAXException Indicates an error parsing XML.
      */
     private void readConfig() throws ParserConfigurationException, IOException, SAXException {
-        //Set config file location
+        // Set config file location
         File xmlFile = new File("config.xml");
-        //Initialize parsers
+        // Initialize parsers
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-        //Parse the file
+        // Parse the file
         Document doc = dBuilder.parse(xmlFile);
 
-        //Read out db config
+        // Read out db config
         NodeList nodesJDBC = doc.getElementsByTagName("jdbc");
         Element elementJDBC = (Element) nodesJDBC.item(0);
 
         String url = "jdbc:" + elementJDBC.getElementsByTagName("url").item(0).getTextContent() + "/"
-                    + elementJDBC.getElementsByTagName("database").item(0).getTextContent();
+                     + elementJDBC.getElementsByTagName("database").item(0).getTextContent();
         dbUrl = url;
         dbUser = elementJDBC.getElementsByTagName("username").item(0).getTextContent();
         dbPassword = elementJDBC.getElementsByTagName("password").item(0).getTextContent();
 
-        //Read out execution config
+        // Read out execution config
         NodeList nodesExecConf = doc.getElementsByTagName("execution");
         Element elementExecConf = (Element) nodesExecConf.item(0);
-        threadLimit  = Integer.parseInt(elementExecConf.getElementsByTagName("threads").item(0).getTextContent());
+        threadLimit = Integer.parseInt(elementExecConf.getElementsByTagName("threads").item(0).getTextContent());
     }
 
     /**
      * Method to gather data for characters in specified range.
      */
     private void gatherRange() {
-        //Set next ID
+        // Set next ID
         nextID = startId;
 
         // Setup an executor service that respects the max thread limit
         ExecutorService executor = Executors.newFixedThreadPool(threadLimit);
-        
+
         while(nextID <= endId) {
             Gatherer worker = new Gatherer(this, nextID);
             executor.execute(worker);
-            
+
             nextID++;
         }
-        
+
         executor.shutdown();
         while(!executor.isTerminated()) {
             // Wait patiently for the executor to finish off everything submitted
@@ -443,22 +450,22 @@ public class GathererController {
     /**
      * Write a player record to database
      */
-    protected String writeToDB(Player player) {
+    protected String writeToDB(PlayerBean player) {
         String strOut = "";
-        //Open connection
+        // Open connection
         Connection conn = openConnection();
         try {
             Statement st = conn.createStatement();
 
-            //Declare string builders to build up components of statement
+            // Declare string builders to build up components of statement
             StringBuilder sbFields = new StringBuilder();
             StringBuilder sbValues = new StringBuilder();
 
-            //Set default table name
+            // Set default table name
             String tableName;
-            //Determine table to write to
-            if (splitTables){
-                tableName = "tbl" + player.getRealm().toLowerCase() +  tableSuffix;
+            // Determine table to write to
+            if(splitTables) {
+                tableName = "tbl" + player.getRealm().toLowerCase() + tableSuffix;
             } else {
                 tableName = this.tableName + tableSuffix;
             }
@@ -467,79 +474,78 @@ public class GathererController {
             sbValues.append(" VALUES (");
 
             sbFields.append("id, name, realm, race, gender, grand_company,free_company,");
-            sbValues.append(player.getId() + ",\"" + player.getPlayerName() + "\",\"" + player.getRealm() + "\",\""
-                            + player.getRace() + "\",'" + player.getGender() + "','" + player.getGrandCompany() + "',\""
-                            + player.getFreeCompany() + "\",");
+            sbValues.append(player.getId() + ",\"" + player.getPlayerName() + "\",\"" + player.getRealm() + "\",\"" + player.getRace()
+                            + "\",'" + player.getGender() + "','" + player.getGrandCompany() + "',\"" + player.getFreeCompany() + "\",");
 
             sbFields.append("level_gladiator, level_pugilist, level_marauder,level_lancer, level_archer, level_rogue,");
-            sbValues.append(player.getLvlGladiator() + "," + player.getLvlPugilist() + "," + player.getLvlMarauder()
-                            + "," + player.getLvlLancer() + "," + player.getLvlArcher() + "," + player.getLvlRogue() + ",");
+            sbValues.append(player.getLvlGladiator() + "," + player.getLvlPugilist() + "," + player.getLvlMarauder() + ","
+                            + player.getLvlLancer() + "," + player.getLvlArcher() + "," + player.getLvlRogue() + ",");
 
-            sbFields.append("level_conjurer, level_thaumaturge, level_arcanist, level_astrologian, level_darkknight," +
-                            " level_machinist,");
-            sbValues.append(player.getLvlConjurer() + "," + player.getLvlThaumaturge() + "," + player.getLvlArcanist()
-                            + "," + player.getLvlAstrologian() + "," + player.getLvlDarkKnight() + "," + player.getLvlMachinist()
-                            + ",");
+            sbFields.append("level_conjurer, level_thaumaturge, level_arcanist, level_astrologian, level_darkknight,"
+                            + " level_machinist,");
+            sbValues.append(player.getLvlConjurer() + "," + player.getLvlThaumaturge() + "," + player.getLvlArcanist() + ","
+                            + player.getLvlAstrologian() + "," + player.getLvlDarkKnight() + "," + player.getLvlMachinist() + ",");
 
             sbFields.append("level_scholar, level_redmage, level_samurai,");
             sbValues.append(player.getLvlScholar() + "," + player.getLvlRedMage() + "," + player.getLvlSamurai() + ",");
 
             sbFields.append("level_carpenter, level_blacksmith, level_armorer, level_goldsmith, level_leatherworker, level_weaver, level_alchemist,");
-            sbValues.append(player.getLvlCarpenter() + "," + player.getLvlBlacksmith() + "," + player.getLvlArmorer() + "," + player.getLvlGoldsmith()
-                            + "," + player.getLvlLeatherworker() + "," + player.getLvlWeaver() + "," + player.getLvlAlchemist()
-                            + ",");
+            sbValues.append(player.getLvlCarpenter() + "," + player.getLvlBlacksmith() + "," + player.getLvlArmorer() + ","
+                            + player.getLvlGoldsmith() + "," + player.getLvlLeatherworker() + "," + player.getLvlWeaver() + ","
+                            + player.getLvlAlchemist() + ",");
 
             sbFields.append("level_culinarian, level_miner, level_botanist, level_fisher");
-            sbValues.append(player.getLvlCulinarian() + "," + player.getLvlMiner() + "," + player.getLvlBotanist() + "," + player.getLvlFisher());
+            sbValues.append(player.getLvlCulinarian() + "," + player.getLvlMiner() + "," + player.getLvlBotanist() + ","
+                            + player.getLvlFisher());
 
-            if(this.storeProgression){
+            if(this.storeProgression) {
                 sbFields.append(",");
                 sbValues.append(",");
 
                 sbFields.append("p30days, p60days, p90days, p180days, p270days, p360days, p450days, p630days, p960days,");
-                sbValues.append(player.getBitHas30DaysSub() + "," + player.getBitHas60DaysSub() + ","
-                        + player.getBitHas90DaysSub() + "," + player.getBitHas180DaysSub() + ","
-                        + player.getBitHas270DaysSub() + "," + player.getBitHas360DaysSub() + ","
-                        + player.getBitHas450DaysSub() + "," + player.getBitHas630DaysSub() + ","
-                        + player.getBitHas960DaysSub() + ",");
+                sbValues.append(booleanToInt(player.isHas30DaysSub()) + "," + booleanToInt(player.isHas60DaysSub()) + ","
+                                + booleanToInt(player.isHas90DaysSub()) + "," + booleanToInt(player.isHas180DaysSub()) + ","
+                                + booleanToInt(player.isHas270DaysSub()) + "," + booleanToInt(player.isHas360DaysSub()) + ","
+                                + booleanToInt(player.isHas450DaysSub()) + "," + booleanToInt(player.isHas630DaysSub()) + ","
+                                + booleanToInt(player.isHas960DaysSub()) + ",");
 
                 sbFields.append("prearr, prehw, presb, arrartbook, hwartbookone, hwartbooktwo, hasencyclopedia, beforemeteor, beforethefall, soundtrack, saweternalbond, "
                                 + "sightseeing, arr_25_complete, comm50, moogleplush, topazcarubuncleplush, emeraldcarbuncleplush,");
-                sbValues.append(player.getBitHasPreOrderArr() + "," + player.getBitHasPreOrderHW() + "," + player.getBitHasPreOrderSB() + ","
-                                + player.getBitHasArrArtbook() + "," + player.getBitHasHWArtbookOne() + ","
-                                + player.getBitHasHWArtbookTwo() + "," + player.getBitHasEncyclopediaEorzea() + ","
-                                + player.getBitHasBeforeMeteor() + ","
-                                + player.getBitHasBeforeTheFall() + "," + player.getBitHasSoundTrack() + ","
-                                + player.getBitHasAttendedEternalBond() + "," + player.getBitHasCompletedHWSightseeing()
-                                + "," + player.getBitHasCompleted2pt5() + "," + player.getBitHasFiftyComms() + ","
-                                + player.getBitHasMooglePlush() + "," + player.getBitHasTopazCarbunclePlush() + ","
-                                + player.getBitHasEmeraldCarbunclePlush() + ",");
+                sbValues.append(booleanToInt(player.isHasPreOrderArr()) + "," + booleanToInt(player.isHasPreOrderHW()) + ","
+                                + booleanToInt(player.isHasPreOrderSB()) + "," + booleanToInt(player.isHasARRArtbook()) + ","
+                                + booleanToInt(player.isHasHWArtbookOne()) + "," + booleanToInt(player.isHasHWArtbookTwo()) + ","
+                                + booleanToInt(player.isHasEncyclopediaEorzea()) + "," + booleanToInt(player.isHasBeforeMeteor()) + ","
+                                + booleanToInt(player.isHasBeforeTheFall()) + "," + booleanToInt(player.isHasSoundtrack()) + ","
+                                + booleanToInt(player.isHasAttendedEternalBond()) + "," + booleanToInt(player.isHasCompletedHWSightseeing())
+                                + "," + booleanToInt(player.isHasCompleted2pt5()) + "," + booleanToInt(player.isHasFiftyComms()) + ","
+                                + booleanToInt(player.isHasMooglePlush()) + "," + booleanToInt(player.isHasTopazCarbunclePlush()) + ","
+                                + booleanToInt(player.isHasEmeraldCarbunclePlush()) + ",");
 
                 sbFields.append("hildibrand, ps4collectors, dideternalbond, arrcollector, kobold, sahagin, amaljaa, "
                                 + "sylph, moogle, vanuvanu, vath, hw_complete, hw_31_complete, hw_33_complete, legacy_player");
-                sbValues.append(player.getBitHasCompletedHildibrand() + "," + player.getBitHasPS4Collectors() + ","
-                        + player.getBitHasEternalBond() + "," + player.getBitHasARRCollectors() + ","
-                        + player.getBitHasKobold() + "," + player.getBitHasSahagin() + "," + player.getBitHasAmaljaa() + ","
-                        + player.getBitHasSylph() + "," + player.getBitHasMoogle() + "," + player.getBitHasVanuVanu() + ","
-                        + player.getBitHasVath() + "," + player.getBitHasCompletedHW() + ","
-                        + player.getBitHasCompleted3pt1() + "," + player.getBitHasCompleted3pt3() + ","
-                        + player.getBitIsLegacyPlayer());
+                sbValues.append(booleanToInt(player.isHasCompletedHildibrand()) + "," + booleanToInt(player.isHasPS4Collectors()) + ","
+                                + booleanToInt(player.isHasEternalBond()) + "," + booleanToInt(player.isHasARRCollectors()) + ","
+                                + booleanToInt(player.isHasKobold()) + "," + booleanToInt(player.isHasSahagin()) + ","
+                                + booleanToInt(player.isHasAmaljaa()) + "," + booleanToInt(player.isHasSylph()) + ","
+                                + booleanToInt(player.isHasMoogle()) + "," + booleanToInt(player.isHasVanuVanu()) + ","
+                                + booleanToInt(player.isHasVath()) + "," + booleanToInt(player.isHasCompletedHW()) + ","
+                                + booleanToInt(player.isHasCompleted3pt1()) + "," + booleanToInt(player.isHasCompleted3pt3()) + ","
+                                + booleanToInt(player.isHasCompletedSB()) + "," + booleanToInt(player.isLegacyPlayer()));
 
             }
 
-            if(this.storeMinions){
+            if(this.storeMinions) {
                 sbFields.append(",");
                 sbValues.append(",");
                 sbFields.append("minions");
-                sbValues.append("\"" + player.getMinionsString() + "\"");
+                sbValues.append("\"" + StringUtils.join(player.getMinions(), ",") + "\"");
             }
-            if(this.storeMounts){
+            if(this.storeMounts) {
                 sbFields.append(",");
                 sbValues.append(",");
                 sbFields.append("mounts");
-                sbValues.append("\"" + player.getMountsString() + "\"");
+                sbValues.append("\"" + StringUtils.join(player.getMounts(), ",") + "\"");
             }
-
 
             if(this.storeActiveDate) {
                 sbFields.append(",");
@@ -556,7 +562,7 @@ public class GathererController {
                 sbFields.append(",");
                 sbValues.append(",");
                 sbFields.append("is_active");
-                sbValues.append(player.getBitIsActive());
+                sbValues.append(booleanToInt(player.isActive()));
             }
 
             sbFields.append(")");
@@ -569,10 +575,14 @@ public class GathererController {
                 strOut = "Character " + player.getId() + " written to database successfully.";
             }
             closeConnection(conn);
-        } catch (SQLException e) {
+        } catch(SQLException e) {
             e.printStackTrace();
         }
         return strOut;
+    }
+
+    private int booleanToInt(final boolean value) {
+        return BooleanUtils.toInteger(value);
     }
 
     /**
@@ -585,7 +595,7 @@ public class GathererController {
         try {
             Connection connection = DriverManager.getConnection(dbUrl, dbUser, dbPassword);
             return connection;
-        } catch (SQLException sqlEx) {
+        } catch(SQLException sqlEx) {
             System.out.println("Connection failed! Please see output console");
             sqlEx.printStackTrace();
             return null;
@@ -601,7 +611,7 @@ public class GathererController {
     protected void closeConnection(Connection conn) {
         try {
             conn.close();
-        } catch (SQLException sqlEx) {
+        } catch(SQLException sqlEx) {
             System.out.println("Cannot close connection! Has it already been closed");
         }
     }
@@ -626,6 +636,7 @@ public class GathererController {
 
     /**
      * Get the maximum number of threads allowed for the Gatherer Controller instance.
+     * 
      * @return the maximum number of threads allowed.
      */
     public int getThreadLimit() {
@@ -634,6 +645,7 @@ public class GathererController {
 
     /**
      * Set the maximum number of threads allowed for the gatherer controller instance
+     * 
      * @param threadLimit the maximum number of threads allowed.
      */
     public void setThreadLimit(int threadLimit) {
@@ -642,6 +654,7 @@ public class GathererController {
 
     /**
      * Get whether each character's minion set will be written to the database.
+     * 
      * @return whether each character's minion set will be written to DB.
      */
     public boolean isStoreMinions() {
@@ -650,6 +663,7 @@ public class GathererController {
 
     /**
      * Set whether to store each character's minion set to the database.
+     * 
      * @param storeMinions whether to store each character's minion set to the database.
      */
     public void setStoreMinions(boolean storeMinions) {
@@ -658,6 +672,7 @@ public class GathererController {
 
     /**
      * Get whether each character's mount set will be written to the database.
+     * 
      * @return whether each character's mount set will be written to DB.
      */
     public boolean isStoreMounts() {
@@ -666,6 +681,7 @@ public class GathererController {
 
     /**
      * Set whether each character's mount set will be written to the database.
+     * 
      * @param storeMounts whether each character's mount set will be written to DB.
      */
     public void setStoreMounts(boolean storeMounts) {
@@ -674,6 +690,7 @@ public class GathererController {
 
     /**
      * Get whether to store boolean values indicating character progression in the database.
+     * 
      * @return whether to store boolean values indicating character progression in the database.
      */
     public boolean isStoreProgression() {
@@ -682,6 +699,7 @@ public class GathererController {
 
     /**
      * Set whether to store boolean values indicating character progression in the database.
+     * 
      * @param storeProgression whether to store boolean values indicating character progression in the database.
      */
     public void setStoreProgression(boolean storeProgression) {
@@ -690,6 +708,7 @@ public class GathererController {
 
     /**
      * Get the name of the table that character records will be written to.
+     * 
      * @return the name of the table that character records will be written to.
      */
     public String getTableName() {
@@ -698,6 +717,7 @@ public class GathererController {
 
     /**
      * Set the name of the table that character records will be written to.
+     * 
      * @param tableName the name of the table that character records will be written to.
      */
     public void setTableName(String tableName) {
@@ -706,6 +726,7 @@ public class GathererController {
 
     /**
      * Whether the single player table is being split up into one table for each realm.
+     * 
      * @return whether the single player table is being split up into one table for each realm.
      */
     public boolean isSplitTables() {
@@ -714,6 +735,7 @@ public class GathererController {
 
     /**
      * Set whether the single player table should be split up into one table for each realm.
+     * 
      * @param splitTables whether the single player table is being split up into one table for each realm.
      */
     public void setSplitTables(boolean splitTables) {
@@ -722,6 +744,7 @@ public class GathererController {
 
     /**
      * Get the suffix to append to all tables.
+     * 
      * @return the suffix to append to all tables.
      */
     public String getTableSuffix() {
@@ -730,6 +753,7 @@ public class GathererController {
 
     /**
      * Set the suffix to append to all tables.
+     * 
      * @param tableSuffix the suffix to append to all tables.
      */
     public void setTableSuffix(String tableSuffix) {
@@ -738,6 +762,7 @@ public class GathererController {
 
     /**
      * Set whether to run the program in quiet mode (no console output).
+     * 
      * @return whether to run the program in quiet mode
      */
     public boolean isQuiet() {
@@ -746,6 +771,7 @@ public class GathererController {
 
     /**
      * Set whether to run the program in quiet mode (print each successfully written record).
+     * 
      * @param quiet whether to run the program in quiet mode.
      */
     public void setQuiet(boolean quiet) {
@@ -754,6 +780,7 @@ public class GathererController {
 
     /**
      * Set whether to print an output when records don't exist.
+     * 
      * @return whether to print an output when records don't exist.
      */
     public boolean isVerbose() {
@@ -762,13 +789,16 @@ public class GathererController {
 
     /**
      * Set whether to print an output when records don't exist.
+     * 
      * @param verbose whether to print an output when records don't exist.
      */
     public void setVerbose(boolean verbose) {
         this.verbose = verbose;
     }
+
     /**
      * Get list of realms to create tables for
+     * 
      * @return array of realm names
      */
     public static String[] getRealms() {
@@ -777,6 +807,7 @@ public class GathererController {
 
     /**
      * Set the SQL server database url.
+     * 
      * @param dbUrl the SQL server database url.
      */
     public void setDbUrl(String dbUrl) {
@@ -785,6 +816,7 @@ public class GathererController {
 
     /**
      * Set the SQL server database user.
+     * 
      * @param dbUser the SQL server database user.
      */
     public void setDbUser(String dbUser) {
@@ -793,6 +825,7 @@ public class GathererController {
 
     /**
      * Set the SQL Server user password.
+     * 
      * @param dbPassword the SQL Server user password.
      */
     public void setDbPassword(String dbPassword) {
@@ -801,6 +834,7 @@ public class GathererController {
 
     /**
      * Get the 'safety limit' of threads that is set in the program.
+     * 
      * @return the thread 'safety limit'
      */
     public static int getMaxThreads() {
@@ -809,6 +843,7 @@ public class GathererController {
 
     /**
      * Get whether to print record write fails
+     * 
      * @return whether to print record write fails
      */
     public boolean isPrintFails() {
@@ -817,6 +852,7 @@ public class GathererController {
 
     /**
      * Set whether to print record write fails
+     * 
      * @param printFails whether to print record write fails
      */
     public void setPrintFails(boolean printFails) {
@@ -825,6 +861,7 @@ public class GathererController {
 
     /**
      * Set whether to store the last active date of a character
+     * 
      * @param storeActiveDate whether to store the last active date of a character
      */
     public void setStoreActiveDate(boolean storeActiveDate) {
@@ -833,6 +870,7 @@ public class GathererController {
 
     /**
      * Set whether to store a boolean value indicating player activity
+     * 
      * @param storePlayerActive whether to store a boolean value indicating player activity
      */
     public void setStorePlayerActive(boolean storePlayerActive) {
@@ -841,6 +879,7 @@ public class GathererController {
 
     /**
      * Set whether to ignore database ssl verification warnings
+     * 
      * @param dbIgnoreSSLWarn whether to ignore database ssl verification warnings
      */
     public void setDbIgnoreSSLWarn(boolean dbIgnoreSSLWarn) {
