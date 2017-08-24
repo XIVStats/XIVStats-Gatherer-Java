@@ -195,30 +195,12 @@ public class GathererController {
     }
 
     /**
-     * Set the maximum number of threads allowed for the gatherer controller instance
-     *
-     * @param threadLimit the maximum number of threads allowed.
-     */
-    public void setThreadLimit(final int threadLimit) {
-        this.appConfig.setThreadLimit(threadLimit);
-    }
-
-    /**
      * Get whether each character's minion set will be written to the database.
      *
      * @return whether each character's minion set will be written to DB.
      */
     public boolean isStoreMinions() {
         return appConfig.isStoreMinions();
-    }
-
-    /**
-     * Set whether to store each character's minion set to the database.
-     *
-     * @param storeMinions whether to store each character's minion set to the database.
-     */
-    public void setStoreMinions(final boolean storeMinions) {
-        this.appConfig.setStoreMinions(storeMinions);
     }
 
     /**
@@ -231,30 +213,12 @@ public class GathererController {
     }
 
     /**
-     * Set whether each character's mount set will be written to the database.
-     *
-     * @param storeMounts whether each character's mount set will be written to DB.
-     */
-    public void setStoreMounts(final boolean storeMounts) {
-        this.appConfig.setStoreMounts(storeMounts);
-    }
-
-    /**
      * Get whether to store boolean values indicating character progression in the database.
      *
      * @return whether to store boolean values indicating character progression in the database.
      */
     public boolean isStoreProgression() {
         return appConfig.isStoreProgression();
-    }
-
-    /**
-     * Set whether to store boolean values indicating character progression in the database.
-     *
-     * @param storeProgression whether to store boolean values indicating character progression in the database.
-     */
-    public void setStoreProgression(final boolean storeProgression) {
-        this.appConfig.setStoreProgression(storeProgression);
     }
 
     /**
@@ -267,30 +231,12 @@ public class GathererController {
     }
 
     /**
-     * Set the name of the table that character records will be written to.
-     *
-     * @param tableName the name of the table that character records will be written to.
-     */
-    public void setTableName(final String tableName) {
-        this.appConfig.setTableName(tableName);
-    }
-
-    /**
      * Whether the single player table is being split up into one table for each realm.
      *
      * @return whether the single player table is being split up into one table for each realm.
      */
     public boolean isSplitTables() {
         return appConfig.isSplitTables();
-    }
-
-    /**
-     * Set whether the single player table should be split up into one table for each realm.
-     *
-     * @param splitTables whether the single player table is being split up into one table for each realm.
-     */
-    public void setSplitTables(final boolean splitTables) {
-        this.appConfig.setSplitTables(splitTables);
     }
 
     /**
@@ -303,30 +249,12 @@ public class GathererController {
     }
 
     /**
-     * Set the suffix to append to all tables.
-     *
-     * @param tableSuffix the suffix to append to all tables.
-     */
-    public void setTableSuffix(final String tableSuffix) {
-        this.appConfig.setTableSuffix(tableSuffix);
-    }
-
-    /**
      * Set whether to run the program in quiet mode (no console output).
      *
      * @return whether to run the program in quiet mode
      */
     public boolean isQuiet() {
         return appConfig.isQuiet();
-    }
-
-    /**
-     * Set whether to run the program in quiet mode (print each successfully written record).
-     *
-     * @param quiet whether to run the program in quiet mode.
-     */
-    public void setQuiet(final boolean quiet) {
-        this.appConfig.setQuiet(quiet);
     }
 
     /**
@@ -339,15 +267,6 @@ public class GathererController {
     }
 
     /**
-     * Set whether to print an output when records don't exist.
-     *
-     * @param verbose whether to print an output when records don't exist.
-     */
-    public void setVerbose(final boolean verbose) {
-        this.appConfig.setVerbose(verbose);
-    }
-
-    /**
      * Get list of realms to create tables for
      *
      * @return array of realm names
@@ -357,74 +276,11 @@ public class GathererController {
     }
 
     /**
-     * Set the SQL server database url.
-     *
-     * @param dbUrl the SQL server database url.
-     */
-    public void setDbUrl(final String dbUrl) {
-        this.appConfig.setDbUrl(dbUrl);
-    }
-
-    /**
-     * Set the SQL server database user.
-     *
-     * @param dbUser the SQL server database user.
-     */
-    public void setDbUser(final String dbUser) {
-        this.appConfig.setDbUser(dbUser);
-    }
-
-    /**
-     * Set the SQL Server user password.
-     *
-     * @param dbPassword the SQL Server user password.
-     */
-    public void setDbPassword(final String dbPassword) {
-        this.appConfig.setDbPassword(dbPassword);
-    }
-
-    /**
      * Get whether to print record write fails
      *
      * @return whether to print record write fails
      */
     public boolean isPrintFails() {
         return appConfig.isPrintFails();
-    }
-
-    /**
-     * Set whether to print record write fails
-     *
-     * @param printFails whether to print record write fails
-     */
-    public void setPrintFails(final boolean printFails) {
-        this.appConfig.setPrintFails(printFails);
-    }
-
-    /**
-     * Set whether to store the last active date of a character
-     *
-     * @param storeActiveDate whether to store the last active date of a character
-     */
-    public void setStoreActiveDate(final boolean storeActiveDate) {
-        this.appConfig.setStoreActiveDate(storeActiveDate);
-    }
-
-    /**
-     * Set whether to store a boolean value indicating player activity
-     *
-     * @param storePlayerActive whether to store a boolean value indicating player activity
-     */
-    public void setStorePlayerActive(final boolean storePlayerActive) {
-        this.appConfig.setStorePlayerActive(storePlayerActive);
-    }
-
-    /**
-     * Set whether to ignore database ssl verification warnings
-     *
-     * @param dbIgnoreSSLWarn whether to ignore database ssl verification warnings
-     */
-    public void setDbIgnoreSSLWarn(final boolean dbIgnoreSSLWarn) {
-        this.appConfig.setDbIgnoreSSLWarn(dbIgnoreSSLWarn);
     }
 }
