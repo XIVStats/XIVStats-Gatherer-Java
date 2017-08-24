@@ -70,3 +70,6 @@ xivstats.properties
 
 #Ignore Maven target dir
 target/
+.settings/
+.classpath
+.project
