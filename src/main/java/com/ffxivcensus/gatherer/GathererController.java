@@ -57,10 +57,6 @@ public class GathererController {
      */
     private int endId = -1;
     /**
-     * The next ID to be gathered.
-     */
-    private int nextID = -1;
-    /**
      * User-defined limit for thread count.
      */
     private int threadLimit;
@@ -430,7 +426,7 @@ public class GathererController {
      */
     private void gatherRange() {
         // Set next ID
-        nextID = startId;
+        int nextID = startId;
 
         // Setup an executor service that respects the max thread limit
         ExecutorService executor = Executors.newFixedThreadPool(threadLimit);
