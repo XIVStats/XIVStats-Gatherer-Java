@@ -1,23 +1,31 @@
 package com.ffxivcensus.gatherer;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintStream;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
-import java.io.PrintStream;
-import java.sql.*;
-import java.util.ArrayList;
-
-import static org.junit.Assert.*;
 
 /**
  * JUnit test class to run tests
@@ -58,11 +66,11 @@ public class ConsoleTest {
         try {
             readConfig();
             StringBuilder sbSQL = new StringBuilder();
-            //DROP existing test tables
+            // DROP existing test tables
             sbSQL.append("DROP TABLE  tblplayers_test;");
             sbSQL.append(" DROP TABLE tblplayers_test_two;");
 
-            for (String strRealm : GathererController.getRealms()) {
+            for(String strRealm : GathererController.getRealms()) {
                 sbSQL.append(" DROP TABLE " + strRealm + ";");
             }
 
@@ -70,16 +78,16 @@ public class ConsoleTest {
             try {
                 Statement stmt = conn.createStatement();
                 stmt.executeUpdate(sbSQL.toString());
-            } catch (SQLException e) {
+            } catch(SQLException e) {
 
             }
             closeConnection(conn);
 
-        } catch (ParserConfigurationException e) {
+        } catch(ParserConfigurationException e) {
             e.printStackTrace();
-        } catch (IOException e) {
+        } catch(IOException e) {
             e.printStackTrace();
-        } catch (SAXException e) {
+        } catch(SAXException e) {
             e.printStackTrace();
         }
 
@@ -100,7 +108,6 @@ public class ConsoleTest {
         System.setErr(null);
     }
 
-
     /**
      * Make a run of the console application with the following options.
      * <ul>
@@ -119,14 +126,14 @@ public class ConsoleTest {
     @Test
     public void testConsole() throws Exception {
 
-        String[] args = {"-is", "0", "-f", "100", "-t", "10", "-T", "tblplayers_test", "-d", dbName,"-U",dbHost, "-bPq"};
+        String[] args = {"-is", "0", "-f", "100", "-t", "10", "-T", "tblplayers_test", "-d", dbName, "-U", dbHost, "-bPq"};
 
         GathererController gc = Console.run(args);
-        //Test that options have set attributes correctly
-        assertFalse(gc.isStoreProgression()); //b
-        assertTrue(gc.isStoreMinions()); //P
-        assertTrue(gc.isQuiet()); //q
-        assertFalse(gc.isVerbose()); //q
+        // Test that options have set attributes correctly
+        assertFalse(gc.isStoreProgression()); // b
+        assertTrue(gc.isStoreMinions()); // P
+        assertTrue(gc.isQuiet()); // q
+        assertFalse(gc.isVerbose()); // q
         assertEquals("tblplayers_test", gc.getTableName());
         assertEquals(gc.getStartId(), 0);
         assertEquals(gc.getEndId(), 100);
@@ -155,7 +162,8 @@ public class ConsoleTest {
     @Test
     public void testConsoleFullOptions() throws Exception {
 
-        String[] args = {"--start=100", "--finish=200", "--threads", "32", "-v", "-d", dbName, "-U", dbHost, "-u", dbUser, "-p", dbPassword};
+        String[] args = {"--start=100", "--finish=200", "--threads", "32", "-v", "-d", dbName, "-U", dbHost, "-u", dbUser, "-p",
+                         dbPassword};
         GathererController gc = Console.run(args);
 
         assertEquals(gc.getStartId(), 100);
@@ -164,16 +172,15 @@ public class ConsoleTest {
         assertTrue(gc.isVerbose());
     }
 
-
     @Test
     public void TestConsoleHelpDefault() throws Exception {
 
         String strHelp = "usage: java -jar XIVStats-Gatherer-Java.jar [-abimqvxDFPS] -s startid -f";
 
-        //Test for a help dialog displayed upon failure
+        // Test for a help dialog displayed upon failure
         String[] args = {""};
-        GathererController gc = Console.run(args);
-        //Check output
+        Console.run(args);
+        // Check output
         assertTrue(outContent.toString().contains(strHelp));
     }
 
@@ -181,10 +188,10 @@ public class ConsoleTest {
     public void TestConsoleHelpOnFail() throws Exception {
 
         String strHelp = "usage: java -jar XIVStats-Gatherer-Java.jar [-abimqvxDFPS] -s startid -f";
-        //Test for a help dialog displayed upon failure
+        // Test for a help dialog displayed upon failure
         String[] args = {"-s 0"};
-        GathererController gc = Console.run(args);
-        //Check output
+        Console.run(args);
+        // Check output
         assertTrue(outContent.toString().contains(strHelp));
 
     }
@@ -194,10 +201,10 @@ public class ConsoleTest {
 
         String strHelp = "usage: java -jar XIVStats-Gatherer-Java.jar [-abimqvxDFPS] -s startid -f";
 
-        //First test for a user requested help dialog
+        // First test for a user requested help dialog
         String[] args = {"--help"};
-        GathererController gc = Console.run(args);
-        //Check output
+        Console.run(args);
+        // Check output
         assertTrue(outContent.toString().contains(strHelp));
     }
 
@@ -205,23 +212,23 @@ public class ConsoleTest {
     public void testMain() {
         String[] args = {"-s", "1100", "-f", "1400"};
         Console.main(args);
-        //Check output
+        // Check output
         assertFalse(outContent.toString().contains("does not exist."));
     }
 
     @Test
     public void testDefault() {
         String[] args = {"-s", "500", "-f", "600"};
-        GathererController gc = Console.run(args);
-        //Check output
+        Console.run(args);
+        // Check output
         assertFalse(outContent.toString().contains("does not exist."));
     }
 
     @Test
     public void testPrintFails() {
         String[] args = {"-s", "700", "-f", "800", "-qF"};
-        GathererController gc = Console.run(args);
-        //Check output
+        Console.run(args);
+        // Check output
         assertFalse(outContent.toString().contains("written to database successfully."));
         assertTrue(outContent.toString().contains("does not exist."));
     }
@@ -234,7 +241,7 @@ public class ConsoleTest {
         assertEquals(gc.getTableSuffix(), "_test");
     }
 
-    //Utility methods
+    // Utility methods
 
     /**
      * Open a connection to database.
@@ -246,7 +253,7 @@ public class ConsoleTest {
         try {
             java.sql.Connection connection = DriverManager.getConnection(dbUrl, dbUser, dbPassword);
             return connection;
-        } catch (SQLException sqlEx) {
+        } catch(SQLException sqlEx) {
             System.out.println("Connection failed! Please see output console");
             sqlEx.printStackTrace();
             return null;
@@ -259,10 +266,10 @@ public class ConsoleTest {
      * @param conn the connection to throw
      * @throws SQLException exception thrown if unable to close connection.
      */
-    private static void closeConnection(java.sql.Connection conn) {
+    private static void closeConnection(final java.sql.Connection conn) {
         try {
             conn.close();
-        } catch (SQLException sqlEx) {
+        } catch(SQLException sqlEx) {
             System.out.println("Cannot close connection! Has it already been closed");
         }
     }
@@ -271,23 +278,24 @@ public class ConsoleTest {
      * Read configuration from config.xml
      *
      * @throws ParserConfigurationException Indicates a serious configuration error.
-     * @throws IOException                  Indicates an error reading the file specified.
-     * @throws SAXException                 Indicates an error parsing XML.
+     * @throws IOException Indicates an error reading the file specified.
+     * @throws SAXException Indicates an error parsing XML.
      */
     public static void readConfig() throws ParserConfigurationException, IOException, SAXException {
-        //Set config file location
+        // Set config file location
         File xmlFile = new File("config.xml");
-        //Initialize parsers
+        // Initialize parsers
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-        //Parse the file
+        // Parse the file
         Document doc = dBuilder.parse(xmlFile);
 
-        //Read out db config
+        // Read out db config
         NodeList nodesJDBC = doc.getElementsByTagName("jdbc");
         Element elementJDBC = (Element) nodesJDBC.item(0);
 
-        String url = "jdbc:" + elementJDBC.getElementsByTagName("url").item(0).getTextContent() + "/" + elementJDBC.getElementsByTagName("database").item(0).getTextContent();
+        String url = "jdbc:" + elementJDBC.getElementsByTagName("url").item(0).getTextContent() + "/"
+                     + elementJDBC.getElementsByTagName("database").item(0).getTextContent();
         dbUrl = url;
         dbHost = elementJDBC.getElementsByTagName("url").item(0).getTextContent();
         dbUser = elementJDBC.getElementsByTagName("username").item(0).getTextContent();
@@ -298,11 +306,11 @@ public class ConsoleTest {
     /**
      * Execute a SQL query and return the results.
      *
-     * @param conn   the SQL connection to use.
+     * @param conn the SQL connection to use.
      * @param strSQL the SQL statement to execute.
      * @return the result set of added rows.
      */
-    public static ResultSet executeStatement(Connection conn, String strSQL) {
+    public static ResultSet executeStatement(final Connection conn, final String strSQL) {
         ResultSet rs;
         try {
             Statement stmt = conn.createStatement();
@@ -310,7 +318,7 @@ public class ConsoleTest {
 
             return rs;
 
-        } catch (SQLException e) {
+        } catch(SQLException e) {
             e.printStackTrace();
         }
         return null;
@@ -319,20 +327,20 @@ public class ConsoleTest {
     /**
      * Get an array list containing the added IDs returned by executing a SQL statement.
      *
-     * @param conn   the SQL connection to use.
+     * @param conn the SQL connection to use.
      * @param strSQL the SQL statement to execute
      * @return an array list of the IDs successfully added to DB.
      */
-    public static ArrayList getAdded(Connection conn, String strSQL) {
+    public static List<Integer> getAdded(final Connection conn, final String strSQL) {
         ResultSet rs;
-        ArrayList addedIDs = new ArrayList();
+        List<Integer> addedIDs = new ArrayList<>();
         rs = executeStatement(conn, strSQL);
-        //Convert dataset to array list
+        // Convert dataset to array list
         try {
-            while (rs.next()) {
+            while(rs.next()) {
                 addedIDs.add(rs.getInt(1));
             }
-        } catch (SQLException e) {
+        } catch(SQLException e) {
             e.printStackTrace();
         }
         return addedIDs;

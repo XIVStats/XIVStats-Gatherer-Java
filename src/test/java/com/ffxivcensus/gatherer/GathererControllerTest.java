@@ -1,23 +1,30 @@
 package com.ffxivcensus.gatherer;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import java.io.File;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
-import java.io.PrintStream;
-import java.sql.*;
-import java.util.ArrayList;
-
-import static org.junit.Assert.*;
 
 /**
  * Test the core functionality of the program, including CLI parameters.
@@ -57,11 +64,11 @@ public class GathererControllerTest {
         try {
             readConfig();
 
-        } catch (ParserConfigurationException e) {
+        } catch(ParserConfigurationException e) {
             e.printStackTrace();
-        } catch (IOException e) {
+        } catch(IOException e) {
             e.printStackTrace();
-        } catch (SAXException e) {
+        } catch(SAXException e) {
             e.printStackTrace();
         }
     }
@@ -69,14 +76,14 @@ public class GathererControllerTest {
     /**
      * Before running each test, drop tables and pipe output into buffer
      */
-    @org.junit.Before
+    @Before
     public void setUpDB() {
         StringBuilder sbSQL = new StringBuilder();
-        //DROP existing test tables
+        // DROP existing test tables
         sbSQL.append("DROP TABLE  tblplayers_test;");
         sbSQL.append("DROP TABLE tblplayers_test_two;");
 
-        for (String strRealm : GathererController.getRealms()) {
+        for(String strRealm : GathererController.getRealms()) {
             sbSQL.append("DROP TABLE " + strRealm + ";");
         }
 
@@ -84,7 +91,7 @@ public class GathererControllerTest {
         try {
             Statement stmt = conn.createStatement();
             stmt.executeUpdate(sbSQL.toString());
-        } catch (SQLException e) {
+        } catch(SQLException e) {
 
         }
         closeConnection(conn);
@@ -97,7 +104,7 @@ public class GathererControllerTest {
      * @throws SAXException
      * @throws ParserConfigurationException
      */
-    @org.junit.Test
+    @Test
     public void testRunBasic() throws IOException, SAXException, ParserConfigurationException {
         int startId = 11886902;
         int endId = 11887010;
@@ -107,25 +114,25 @@ public class GathererControllerTest {
         gathererController.setThreadLimit(40);
         try {
             gathererController.run();
-        } catch (Exception e) {
+        } catch(Exception e) {
         }
-        //Test that records were successfully written to db
+        // Test that records were successfully written to db
         java.sql.Connection conn = openConnection();
         String strSQL = "SELECT * FROM " + gathererController.getTableName() + " WHERE `id`>=" + startId + " AND `id`<=" + endId + ";";
-        ArrayList addedIDs = getAdded(conn, strSQL);
+        List<Integer> addedIDs = getAdded(conn, strSQL);
 
         closeConnection(conn);
 
-        //Test for IDs we know exist
+        // Test for IDs we know exist
         assertTrue(addedIDs.contains(11886902));
         assertTrue(addedIDs.contains(11886903));
         assertTrue(addedIDs.contains(11886990));
         assertTrue(addedIDs.contains(11887010));
 
-        //Test that gatherer has not written records that don't exist
+        // Test that gatherer has not written records that don't exist
         assertFalse(addedIDs.contains(11886909));
 
-        //Test that gatherer has not 'overrun'
+        // Test that gatherer has not 'overrun'
         assertFalse(addedIDs.contains(11887011));
         assertFalse(addedIDs.contains(11886901));
     }
@@ -133,20 +140,20 @@ public class GathererControllerTest {
     /**
      * Run the program with invalid parameters.
      */
-    @org.junit.Test
+    @Test
     public void testRunBasicInvalidParams() {
         int startId = 11887010;
         int endId = 11886902;
 
-        //Store start time
+        // Store start time
         long startTime = System.currentTimeMillis();
         GathererController gathererController = new GathererController(startId, endId);
         try {
             gathererController.run();
-        } catch (Exception e) {
+        } catch(Exception e) {
         }
         long endTime = System.currentTimeMillis();
-        //Program will close in less than 3 seconds if invalid params supplied
+        // Program will close in less than 3 seconds if invalid params supplied
         assertTrue((endTime - startTime) <= 3000);
 
     }
@@ -155,33 +162,34 @@ public class GathererControllerTest {
      * Perform a test run of GathererController with values passed in via
      * constructor.
      */
-    @org.junit.Test
+    @Test
     public void testRunAdvancedOptions() {
         int startId = 1557260;
         int endId = 1558260;
 
-        GathererController gathererController = new GathererController(startId, endId, true, false, true, true, true, dbHost, dbName, dbUser, dbPassword, 32, "tblplayers_test_two");
+        GathererController gathererController = new GathererController(startId, endId, true, false, true, true, true, dbHost, dbName,
+                                                                       dbUser, dbPassword, 32, "tblplayers_test_two");
         try {
             gathererController.run();
-        } catch (Exception e) {
+        } catch(Exception e) {
         }
 
-        //Test that records were successfully written to db
+        // Test that records were successfully written to db
         java.sql.Connection conn = openConnection();
         String strSQL = "SELECT * FROM tblplayers_test_two WHERE `id`>=" + startId + " AND `id`<=" + endId + ";";
-        ArrayList addedIDs = getAdded(conn, strSQL);
+        List<Integer> addedIDs = getAdded(conn, strSQL);
         closeConnection(conn);
 
-        //Test for IDs we know exist
+        // Test for IDs we know exist
         assertTrue(addedIDs.contains(startId));
         assertTrue(addedIDs.contains(endId));
         assertTrue(addedIDs.contains(1557362));
         assertTrue(addedIDs.contains(1557495));
 
-        //Test that gatherer has not written records that don't exist
+        // Test that gatherer has not written records that don't exist
         assertFalse(addedIDs.contains(1558259));
 
-        //Test that gatherer has not 'overrun'
+        // Test that gatherer has not 'overrun'
         assertFalse(addedIDs.contains(startId - 1));
         assertFalse(addedIDs.contains(endId + 1));
 
@@ -190,47 +198,46 @@ public class GathererControllerTest {
     /**
      * Invoke a test run in which the single characters table is being split
      * across several tables, one for each realm.
-     *
      * Also testing non-verbose mode, debug output (print non-existant records).
      */
-    @org.junit.Test
+    @Test
     public void testRunSplitTables() {
         int startId = 1557260;
         int endId = 1558260;
 
-        GathererController gathererController = new GathererController(startId, endId, false, true, false, false, false, dbHost, dbName, dbUser, dbPassword, 50, "_test", true);
+        GathererController gathererController = new GathererController(startId, endId, false, true, false, false, false, dbHost, dbName,
+                                                                       dbUser, dbPassword, 50, "_test", true);
         try {
             gathererController.run();
-        } catch (Exception e) {
+        } catch(Exception e) {
         }
         assertEquals(gathererController.getThreadLimit(), gathererController.getThreadLimit());
 
-        //Test that records were successfully written to db
+        // Test that records were successfully written to db
         java.sql.Connection conn = openConnection();
         String strSQLCerberus = "SELECT * FROM tblcerberus_test WHERE `id`>=" + startId + " AND `id`<=" + endId + ";";
-        ArrayList addedIDsCerberus = getAdded(conn, strSQLCerberus);
+        List<Integer> addedIDsCerberus = getAdded(conn, strSQLCerberus);
 
         String strSQLShiva = "SELECT * FROM tblshiva_test WHERE `id`>=" + startId + " AND `id`<=" + endId + ";";
-        ArrayList addedIDsShiva = getAdded(conn, strSQLShiva);
+        List<Integer> addedIDsShiva = getAdded(conn, strSQLShiva);
 
         String strSQLMoogle = "SELECT * FROM tblmoogle_test WHERE `id`>=" + startId + " AND `id`<=" + endId + ";";
-        ArrayList addedIDsMoogle = getAdded(conn, strSQLMoogle);
+        List<Integer> addedIDsMoogle = getAdded(conn, strSQLMoogle);
         closeConnection(conn);
 
-        //Test for IDs we know exist in cerberus (realm of startID char)
+        // Test for IDs we know exist in cerberus (realm of startID char)
         assertTrue(addedIDsCerberus.contains(startId));
         assertTrue(addedIDsCerberus.contains(1557648));
         assertTrue(addedIDsCerberus.contains(1558244));
 
-
         assertTrue(addedIDsShiva.contains(1557297));
 
-        //Test for ids that will exist on Moogle
+        // Test for ids that will exist on Moogle
         assertTrue(addedIDsMoogle.contains(1557265));
         assertTrue(addedIDsMoogle.contains(endId));
         assertTrue(addedIDsMoogle.contains(1557301));
 
-        //Test that gatherer has not written records that don't exist on cerberus
+        // Test that gatherer has not written records that don't exist on cerberus
         assertFalse(addedIDsCerberus.contains(endId));
 
     }
@@ -238,13 +245,13 @@ public class GathererControllerTest {
     /**
      * Invoke a test run using options that will cause the program not to run.
      */
-    @org.junit.Test
+    @Test
     public void testRunMisconfigured() {
         int startId = -1;
         int endId = -1;
 
         GathererController gathererController = new GathererController(startId, endId);
-        //Set invalid options
+        // Set invalid options
         gathererController.setDbUser("");
         gathererController.setDbPassword("");
         gathererController.setDbUrl("mysq");
@@ -252,7 +259,7 @@ public class GathererControllerTest {
 
         try {
             gathererController.run();
-        } catch (Exception e) {
+        } catch(Exception e) {
             assertEquals("Program not (correctly) configured", e.getMessage());
         }
         String strOut = gathererController.isConfigured();
@@ -265,13 +272,13 @@ public class GathererControllerTest {
 
     }
 
-    @org.junit.Test
+    @Test
     public void testRunMisconfiguredTwo() {
         int startId = 0;
         int endId = 100;
 
         GathererController gathererController = new GathererController(startId, endId);
-        //Set invalid options
+        // Set invalid options
         gathererController.setDbUser(null);
         gathererController.setDbPassword(null);
         gathererController.setDbUrl(null);
@@ -285,7 +292,7 @@ public class GathererControllerTest {
 
     }
 
-    //Utility methods
+    // Utility methods
     /**
      * Open a connection to database.
      *
@@ -296,7 +303,7 @@ public class GathererControllerTest {
         try {
             java.sql.Connection connection = DriverManager.getConnection(dbUrl, dbUser, dbPassword);
             return connection;
-        } catch (SQLException sqlEx) {
+        } catch(SQLException sqlEx) {
             System.out.println("Connection failed! Please see output console");
             sqlEx.printStackTrace();
             return null;
@@ -309,10 +316,10 @@ public class GathererControllerTest {
      * @param conn the connection to throw
      * @throws SQLException exception thrown if unable to close connection.
      */
-    private static void closeConnection(java.sql.Connection conn) {
+    private static void closeConnection(final java.sql.Connection conn) {
         try {
             conn.close();
-        } catch (SQLException sqlEx) {
+        } catch(SQLException sqlEx) {
             System.out.println("Cannot close connection! Has it already been closed");
         }
     }
@@ -321,24 +328,25 @@ public class GathererControllerTest {
      * Read configuration from config.xml
      *
      * @throws ParserConfigurationException Indicates a serious configuration
-     * error.
+     *             error.
      * @throws IOException Indicates an error reading the file specified.
      * @throws SAXException Indicates an error parsing XML.
      */
     public static void readConfig() throws ParserConfigurationException, IOException, SAXException {
-        //Set config file location
+        // Set config file location
         File xmlFile = new File("config.xml");
-        //Initialize parsers
+        // Initialize parsers
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-        //Parse the file
+        // Parse the file
         Document doc = dBuilder.parse(xmlFile);
 
-        //Read out db config
+        // Read out db config
         NodeList nodesJDBC = doc.getElementsByTagName("jdbc");
         Element elementJDBC = (Element) nodesJDBC.item(0);
 
-        String url = "jdbc:" + elementJDBC.getElementsByTagName("url").item(0).getTextContent() + "/" + elementJDBC.getElementsByTagName("database").item(0).getTextContent();
+        String url = "jdbc:" + elementJDBC.getElementsByTagName("url").item(0).getTextContent() + "/"
+                     + elementJDBC.getElementsByTagName("database").item(0).getTextContent();
         dbUrl = url;
         dbUser = elementJDBC.getElementsByTagName("username").item(0).getTextContent();
         dbPassword = elementJDBC.getElementsByTagName("password").item(0).getTextContent();
@@ -353,7 +361,7 @@ public class GathererControllerTest {
      * @param strSQL the SQL statement to execute.
      * @return the result set of added rows.
      */
-    public static ResultSet executeStatement(Connection conn, String strSQL) {
+    public static ResultSet executeStatement(final Connection conn, final String strSQL) {
         ResultSet rs;
         try {
             Statement stmt = conn.createStatement();
@@ -361,7 +369,7 @@ public class GathererControllerTest {
 
             return rs;
 
-        } catch (SQLException e) {
+        } catch(SQLException e) {
             e.printStackTrace();
         }
         return null;
@@ -375,16 +383,16 @@ public class GathererControllerTest {
      * @param strSQL the SQL statement to execute
      * @return an array list of the IDs successfully added to DB.
      */
-    public static ArrayList getAdded(Connection conn, String strSQL) {
+    public static List<Integer> getAdded(final Connection conn, final String strSQL) {
         ResultSet rs;
-        ArrayList addedIDs = new ArrayList();
+        List<Integer> addedIDs = new ArrayList<>();
         rs = executeStatement(conn, strSQL);
-        //Convert dataset to array list
+        // Convert dataset to array list
         try {
-            while (rs.next()) {
+            while(rs.next()) {
                 addedIDs.add(rs.getInt(1));
             }
-        } catch (SQLException e) {
+        } catch(SQLException e) {
             e.printStackTrace();
         }
         return addedIDs;
