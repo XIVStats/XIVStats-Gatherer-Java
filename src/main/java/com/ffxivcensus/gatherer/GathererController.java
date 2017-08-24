@@ -20,6 +20,8 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import com.ffxivcensus.gatherer.config.ApplicationConfig;
+
 /**
  * GathererController class of character gathering program. This class makes calls to fetch records from the lodestone, and then
  * subsequently writes them to the database. It also specifies the parameters to run the program with.
@@ -31,81 +33,7 @@ import org.xml.sax.SAXException;
  */
 public class GathererController {
 
-    // Configuration options
-    /**
-     * The JDBC URL of the database to modify
-     */
-    private String dbUrl;
-    /**
-     * The Username of user of the SQL server user to use.
-     */
-    private String dbUser;
-    /**
-     * The password for the user, to use.
-     */
-    private String dbPassword;
-    /**
-     * Whether to ignore database SSL verification warnings
-     */
-    private boolean dbIgnoreSSLWarn;
-    /**
-     * The character ID to start the gatherer at.
-     */
-    private int startId = -1;
-    /**
-     * The character ID to end the gatherer at.
-     */
-    private int endId = -1;
-    /**
-     * User-defined limit for thread count.
-     */
-    private int threadLimit;
-
-    /**
-     * Boolean value indicating whether to store a comma delimited list of minions to database.
-     */
-    private boolean storeMinions;
-    /**
-     * Boolean value indicating whether to store a comma delimited list of mounts to database.
-     */
-    private boolean storeMounts;
-    /**
-     * Boolean value indicating whether to store bit fields indicating player achievements/progress.
-     */
-    private boolean storeProgression;
-    /**
-     * String field to store the table name to write records to (if not splitting tables).
-     */
-    private String tableName;
-    /**
-     * Boolean field indicating whether to split character records across multiple tables, with one table for each realm/server.
-     */
-    private boolean splitTables;
-    /**
-     * Suffix to be appended to all tables e.g. 15012016
-     */
-    private String tableSuffix;
-    /**
-     * Whether to provide console output.
-     */
-    private boolean quiet;
-    /**
-     * Whether to output all console output.
-     */
-    private boolean verbose;
-    /**
-     * Whether to output failed records
-     */
-    private boolean printFails;
-    /**
-     * Whether to store player activity dates
-     */
-    private boolean storeActiveDate;
-    /**
-     * Whether to store player activity bit
-     */
-    private boolean storePlayerActive;
-
+    private ApplicationConfig appConfig = new ApplicationConfig();
     /**
      * List of playable realms (used when splitting tables).
      */
@@ -119,11 +47,6 @@ public class GathererController {
                                             "Ultima", "Ultros", "Unicorn", "Valefor", "Yojimbo", "Zalera", "Zeromus", "Zodiark"};
 
     /**
-     * Safety limit for thread count - user cannot exceed this limit.
-     */
-    private final static int MAX_THREADS = 64;
-
-    /**
      * Constructor for GathererController using simply start id and end id. Read other configuration options from config.
      * <p>
      * Other options should be should be established using setters.
@@ -132,18 +55,18 @@ public class GathererController {
      * @param endId the character id to end the gather run at (inclusive).
      */
     public GathererController(final int startId, final int endId) {
-        this.startId = startId;
-        this.endId = endId;
-        storeMinions = false;
-        storeMounts = false;
-        storeProgression = true;
-        tableName = "tblplayers";
-        splitTables = false;
-        tableSuffix = "";
-        tableName = "tblplayers";
-        quiet = true;
-        verbose = false;
-        printFails = false;
+        this.appConfig.setStartId(startId);
+        this.appConfig.setEndId(endId);
+        appConfig.setStoreMinions(false);
+        appConfig.setStoreMounts(false);
+        appConfig.setStoreProgression(true);
+        appConfig.setTableName("tblplayers");
+        appConfig.setSplitTables(false);
+        appConfig.setTableSuffix("");
+        appConfig.setTableName("tblplayers");
+        appConfig.setQuiet(true);
+        appConfig.setVerbose(false);
+        appConfig.setPrintFails(false);
 
         // Read in config
         try {
@@ -173,14 +96,14 @@ public class GathererController {
     public GathererController(final int startId, final int endId, final boolean quiet, final boolean verbose, final boolean storeMinions,
                               final boolean storeMounts, final boolean storeProgression, final String dbUrl, final String dbName,
                               final String dbUser, final String dbPassword, final int threads, final String tableName) {
-        this.startId = startId;
-        this.endId = endId;
-        this.storeMinions = storeMinions;
-        this.storeMounts = storeMounts;
-        this.storeProgression = storeProgression;
-        this.quiet = quiet;
-        this.verbose = verbose;
-        printFails = false;
+        this.appConfig.setStartId(startId);
+        this.appConfig.setEndId(endId);
+        this.appConfig.setStoreMinions(storeMinions);
+        this.appConfig.setStoreMounts(storeMounts);
+        this.appConfig.setStoreProgression(storeProgression);
+        this.appConfig.setQuiet(quiet);
+        this.appConfig.setVerbose(verbose);
+        appConfig.setPrintFails(false);
 
         // Read in config
         try {
@@ -189,15 +112,15 @@ public class GathererController {
         }
 
         // Parameters specified should outweigh config
-        this.dbUrl = "jdbc:" + dbUrl + "/" + dbName;
-        if(dbIgnoreSSLWarn) {
-            this.dbUrl += "?useSSL=false";
+        this.appConfig.setDbUrl("jdbc:" + dbUrl + "/" + dbName);
+        if(appConfig.isDbIgnoreSSLWarn()) {
+            this.appConfig.setDbUrl(this.appConfig.getDbUrl() + "?useSSL=false");
         }
-        this.dbUser = dbUser;
-        this.dbPassword = dbPassword;
-        threadLimit = threads;
-        this.tableName = tableName;
-        tableSuffix = "";
+        this.appConfig.setDbUser(dbUser);
+        this.appConfig.setDbPassword(dbPassword);
+        appConfig.setThreadLimit(threads);
+        this.appConfig.setTableName(tableName);
+        appConfig.setTableSuffix("");
     }
 
     /**
@@ -223,14 +146,14 @@ public class GathererController {
                               final boolean storeMounts, final boolean storeProgression, final String dbUrl, final String dbName,
                               final String dbUser, final String dbPassword, final int threads, final String tableSuffix,
                               final boolean splitTables) {
-        this.startId = startId;
-        this.endId = endId;
-        this.storeMinions = storeMinions;
-        this.storeMounts = storeMounts;
-        this.storeProgression = storeProgression;
-        this.quiet = quiet;
-        this.verbose = verbose;
-        printFails = false;
+        this.appConfig.setStartId(startId);
+        this.appConfig.setEndId(endId);
+        this.appConfig.setStoreMinions(storeMinions);
+        this.appConfig.setStoreMounts(storeMounts);
+        this.appConfig.setStoreProgression(storeProgression);
+        this.appConfig.setQuiet(quiet);
+        this.appConfig.setVerbose(verbose);
+        appConfig.setPrintFails(false);
 
         // Read in config
         try {
@@ -239,15 +162,15 @@ public class GathererController {
         }
 
         // Parameters specified should outweigh config
-        this.dbUrl = "jdbc:" + dbUrl + "/" + dbName;
-        this.dbUser = dbUser;
-        this.dbPassword = dbPassword;
-        threadLimit = threads;
-        tableName = "tblplayers";
-        this.tableSuffix = tableSuffix;
-        this.splitTables = splitTables;
-        storeActiveDate = true;
-        storePlayerActive = true;
+        this.appConfig.setDbUrl("jdbc:" + dbUrl + "/" + dbName);
+        this.appConfig.setDbUser(dbUser);
+        this.appConfig.setDbPassword(dbPassword);
+        appConfig.setThreadLimit(threads);
+        appConfig.setTableName("tblplayers");
+        this.appConfig.setTableSuffix(tableSuffix);
+        this.appConfig.setSplitTables(splitTables);
+        appConfig.setStoreActiveDate(true);
+        appConfig.setStorePlayerActive(true);
     }
 
     /**
@@ -260,8 +183,8 @@ public class GathererController {
         long startTime = System.currentTimeMillis();
 
         // If user attempts to exceed the maximum no. of threads - overwrite their input and set to MAX_THREADS
-        if(threadLimit > MAX_THREADS) {
-            threadLimit = MAX_THREADS;
+        if(appConfig.getThreadLimit() > ApplicationConfig.MAX_THREADS) {
+            appConfig.setThreadLimit(ApplicationConfig.MAX_THREADS);
         }
 
         if(isConfigured().length() > 0) { // If not configured
@@ -269,18 +192,18 @@ public class GathererController {
         } else { // Else configured correctly
             try {
 
-                if(splitTables) { // If specified to split tables
+                if(appConfig.isSplitTables()) { // If specified to split tables
                     for(String realm : realms) { // Create a table for each realm
-                        createTable("tbl" + realm.toLowerCase() + tableSuffix);
+                        createTable("tbl" + realm.toLowerCase() + appConfig.getTableSuffix());
                     }
                 } else { // Else just create a single table
-                    createTable(tableName);
+                    createTable(appConfig.getTableName());
                 }
 
-                if(startId > endId) {
+                if(appConfig.getStartId() > appConfig.getEndId()) {
                     System.out.println("Error: The finish id argument needs to be greater than the start id argument");
                 } else { // Else pass values into poll method
-                    System.out.println("Starting parse of range " + startId + " to " + endId + " using " + threadLimit + " threads");
+                    System.out.println("Starting parse of range " + appConfig.getStartId() + " to " + appConfig.getEndId() + " using " + appConfig.getThreadLimit() + " threads");
                     gatherRange();
                     // Get current time
                     long endTime = System.currentTimeMillis();
@@ -289,8 +212,8 @@ public class GathererController {
                     long hours = minutes / 60;
                     long days = hours / 24;
                     String time = days + " Days, " + hours % 24 + " hrs, " + minutes % 60 + " mins, " + seconds % 60 + " secs";
-                    System.out.println("Run completed, " + ((endId - startId) + 1) + " character IDs scanned in " + time + " ("
-                                       + threadLimit + " threads)");
+                    System.out.println("Run completed, " + ((appConfig.getEndId() - appConfig.getStartId()) + 1) + " character IDs scanned in " + time + " ("
+                                       + appConfig.getThreadLimit() + " threads)");
 
                 }
 
@@ -308,27 +231,27 @@ public class GathererController {
     public String isConfigured() {
         boolean configured = true;
         StringBuilder sbOut = new StringBuilder();
-        if(startId < 0) {
+        if(appConfig.getStartId() < 0) {
             sbOut.append("Start ID must be configured to a positive numerical value\n");
             configured = false;
         }
-        if(endId < 0) {
+        if(appConfig.getEndId() < 0) {
             sbOut.append("End ID must be configured to a positive numerical value\n");
             configured = false;
         }
-        if(dbUrl == null || dbUrl.length() <= 5) {
+        if(appConfig.getDbUrl() == null || appConfig.getDbUrl().length() <= 5) {
             sbOut.append("Database URL has not been configured correctly\n");
             configured = false;
         }
-        if(dbUser == null || dbUser.length() == 0) {
+        if(appConfig.getDbUser() == null || appConfig.getDbUser().length() == 0) {
             sbOut.append("Database User has not been configured correctly\n");
             configured = false;
         }
-        if(dbPassword == null || dbPassword.length() == 0) {
+        if(appConfig.getDbPassword() == null || appConfig.getDbPassword().length() == 0) {
             sbOut.append("Database Password has not been configured correctly\n");
             configured = false;
         }
-        if(tableName == null || tableName.length() == 0) {
+        if(appConfig.getTableName() == null || appConfig.getTableName().length() == 0) {
             sbOut.append("Table name has not been configured correctly\n");
             configured = false;
         }
@@ -355,7 +278,7 @@ public class GathererController {
             sbSQL.append("level_astrologian INTEGER, level_scholar INTEGER, level_redmage INTEGER, level_samurai INTEGER, level_carpenter INTEGER, level_blacksmith INTEGER,");
             sbSQL.append("level_armorer INTEGER,level_goldsmith INTEGER,level_leatherworker INTEGER,level_weaver INTEGER,level_alchemist INTEGER,level_culinarian INTEGER,");
             sbSQL.append("level_miner INTEGER,level_botanist INTEGER,level_fisher INTEGER");
-            if(storeProgression) {
+            if(appConfig.isStoreProgression()) {
                 sbSQL.append(",");
                 sbSQL.append("p30days BIT, p60days BIT, p90days BIT, p180days BIT, p270days BIT,p360days BIT,p450days BIT,p630days BIT,p960days BIT,");
                 sbSQL.append("prearr BIT, prehw BIT, presb BIT, arrartbook BIT, hwartbookone BIT, hwartbooktwo BIT, hasencyclopedia BIT, ");
@@ -366,17 +289,17 @@ public class GathererController {
                 sbSQL.append("kobold BIT, sahagin BIT, amaljaa BIT, sylph BIT,  moogle BIT, vanuvanu BIT, vath BIT,");
                 sbSQL.append("arr_25_complete BIT,hw_complete BIT, hw_31_complete BIT, hw_33_complete BIT, legacy_player BIT");
             }
-            if(storeMounts) {
+            if(appConfig.isStoreMounts()) {
                 sbSQL.append(",mounts TEXT");
             }
-            if(storeMinions) {
+            if(appConfig.isStoreMinions()) {
                 sbSQL.append(",minions TEXT");
             }
-            if(storeActiveDate) {
+            if(appConfig.isStoreActiveDate()) {
                 sbSQL.append(",");
                 sbSQL.append("date_active DATE");
             }
-            if(storePlayerActive) {
+            if(appConfig.isStorePlayerActive()) {
                 sbSQL.append(",");
                 sbSQL.append("is_active BIT");
             }
@@ -411,14 +334,14 @@ public class GathererController {
 
         String url = "jdbc:" + elementJDBC.getElementsByTagName("url").item(0).getTextContent() + "/"
                      + elementJDBC.getElementsByTagName("database").item(0).getTextContent();
-        dbUrl = url;
-        dbUser = elementJDBC.getElementsByTagName("username").item(0).getTextContent();
-        dbPassword = elementJDBC.getElementsByTagName("password").item(0).getTextContent();
+        appConfig.setDbUrl(url);
+        appConfig.setDbUser(elementJDBC.getElementsByTagName("username").item(0).getTextContent());
+        appConfig.setDbPassword(elementJDBC.getElementsByTagName("password").item(0).getTextContent());
 
         // Read out execution config
         NodeList nodesExecConf = doc.getElementsByTagName("execution");
         Element elementExecConf = (Element) nodesExecConf.item(0);
-        threadLimit = Integer.parseInt(elementExecConf.getElementsByTagName("threads").item(0).getTextContent());
+        appConfig.setThreadLimit(Integer.parseInt(elementExecConf.getElementsByTagName("threads").item(0).getTextContent()));
     }
 
     /**
@@ -426,12 +349,12 @@ public class GathererController {
      */
     private void gatherRange() {
         // Set next ID
-        int nextID = startId;
+        int nextID = appConfig.getStartId();
 
         // Setup an executor service that respects the max thread limit
-        ExecutorService executor = Executors.newFixedThreadPool(threadLimit);
+        ExecutorService executor = Executors.newFixedThreadPool(appConfig.getThreadLimit());
 
-        while(nextID <= endId) {
+        while(nextID <= appConfig.getEndId()) {
             Gatherer worker = new Gatherer(this, nextID);
             executor.execute(worker);
 
@@ -461,10 +384,10 @@ public class GathererController {
             // Set default table name
             String tableName;
             // Determine table to write to
-            if(splitTables) {
-                tableName = "tbl" + player.getRealm().toLowerCase() + tableSuffix;
+            if(appConfig.isSplitTables()) {
+                tableName = "tbl" + player.getRealm().toLowerCase() + appConfig.getTableSuffix();
             } else {
-                tableName = this.tableName + tableSuffix;
+                tableName = this.appConfig.getTableName() + appConfig.getTableSuffix();
             }
 
             sbFields.append("INSERT IGNORE INTO ").append(tableName).append(" (");
@@ -495,7 +418,7 @@ public class GathererController {
             sbValues.append(player.getLvlCulinarian() + "," + player.getLvlMiner() + "," + player.getLvlBotanist() + ","
                             + player.getLvlFisher());
 
-            if(storeProgression) {
+            if(appConfig.isStoreProgression()) {
                 sbFields.append(",");
                 sbValues.append(",");
 
@@ -531,20 +454,20 @@ public class GathererController {
 
             }
 
-            if(storeMinions) {
+            if(appConfig.isStoreMinions()) {
                 sbFields.append(",");
                 sbValues.append(",");
                 sbFields.append("minions");
                 sbValues.append("\"" + StringUtils.join(player.getMinions(), ",") + "\"");
             }
-            if(storeMounts) {
+            if(appConfig.isStoreMounts()) {
                 sbFields.append(",");
                 sbValues.append(",");
                 sbFields.append("mounts");
                 sbValues.append("\"" + StringUtils.join(player.getMounts(), ",") + "\"");
             }
 
-            if(storeActiveDate) {
+            if(appConfig.isStoreActiveDate()) {
                 sbFields.append(",");
                 sbValues.append(",");
                 sbFields.append("date_active");
@@ -553,7 +476,7 @@ public class GathererController {
                 String sqlDate = sdf.format(player.getDateImgLastModified());
                 sbValues.append("\"" + sqlDate + "\"");
             }
-            if(storePlayerActive) {
+            if(appConfig.isStorePlayerActive()) {
                 sbFields.append(",");
                 sbValues.append(",");
                 sbFields.append("is_active");
@@ -566,7 +489,7 @@ public class GathererController {
             String strSQL = sbFields.toString() + sbValues.toString();
 
             st.executeUpdate(strSQL);
-            if(!quiet || isVerbose()) {
+            if(!appConfig.isQuiet() || isVerbose()) {
                 strOut = "Character " + player.getId() + " written to database successfully.";
             }
             closeConnection(conn);
@@ -588,7 +511,7 @@ public class GathererController {
      */
     protected Connection openConnection() {
         try {
-            Connection connection = DriverManager.getConnection(dbUrl, dbUser, dbPassword);
+            Connection connection = DriverManager.getConnection(appConfig.getDbUrl(), appConfig.getDbUser(), appConfig.getDbPassword());
             return connection;
         } catch(SQLException sqlEx) {
             System.out.println("Connection failed! Please see output console");
@@ -617,7 +540,7 @@ public class GathererController {
      * @return the first character ID to be processed
      */
     public int getStartId() {
-        return startId;
+        return appConfig.getStartId();
     }
 
     /**
@@ -626,7 +549,7 @@ public class GathererController {
      * @return the last character ID due to be processed.
      */
     public int getEndId() {
-        return endId;
+        return appConfig.getEndId();
     }
 
     /**
@@ -635,7 +558,7 @@ public class GathererController {
      * @return the maximum number of threads allowed.
      */
     public int getThreadLimit() {
-        return threadLimit;
+        return appConfig.getThreadLimit();
     }
 
     /**
@@ -644,7 +567,7 @@ public class GathererController {
      * @param threadLimit the maximum number of threads allowed.
      */
     public void setThreadLimit(final int threadLimit) {
-        this.threadLimit = threadLimit;
+        this.appConfig.setThreadLimit(threadLimit);
     }
 
     /**
@@ -653,7 +576,7 @@ public class GathererController {
      * @return whether each character's minion set will be written to DB.
      */
     public boolean isStoreMinions() {
-        return storeMinions;
+        return appConfig.isStoreMinions();
     }
 
     /**
@@ -662,7 +585,7 @@ public class GathererController {
      * @param storeMinions whether to store each character's minion set to the database.
      */
     public void setStoreMinions(final boolean storeMinions) {
-        this.storeMinions = storeMinions;
+        this.appConfig.setStoreMinions(storeMinions);
     }
 
     /**
@@ -671,7 +594,7 @@ public class GathererController {
      * @return whether each character's mount set will be written to DB.
      */
     public boolean isStoreMounts() {
-        return storeMounts;
+        return appConfig.isStoreMounts();
     }
 
     /**
@@ -680,7 +603,7 @@ public class GathererController {
      * @param storeMounts whether each character's mount set will be written to DB.
      */
     public void setStoreMounts(final boolean storeMounts) {
-        this.storeMounts = storeMounts;
+        this.appConfig.setStoreMounts(storeMounts);
     }
 
     /**
@@ -689,7 +612,7 @@ public class GathererController {
      * @return whether to store boolean values indicating character progression in the database.
      */
     public boolean isStoreProgression() {
-        return storeProgression;
+        return appConfig.isStoreProgression();
     }
 
     /**
@@ -698,7 +621,7 @@ public class GathererController {
      * @param storeProgression whether to store boolean values indicating character progression in the database.
      */
     public void setStoreProgression(final boolean storeProgression) {
-        this.storeProgression = storeProgression;
+        this.appConfig.setStoreProgression(storeProgression);
     }
 
     /**
@@ -707,7 +630,7 @@ public class GathererController {
      * @return the name of the table that character records will be written to.
      */
     public String getTableName() {
-        return tableName;
+        return appConfig.getTableName();
     }
 
     /**
@@ -716,7 +639,7 @@ public class GathererController {
      * @param tableName the name of the table that character records will be written to.
      */
     public void setTableName(final String tableName) {
-        this.tableName = tableName;
+        this.appConfig.setTableName(tableName);
     }
 
     /**
@@ -725,7 +648,7 @@ public class GathererController {
      * @return whether the single player table is being split up into one table for each realm.
      */
     public boolean isSplitTables() {
-        return splitTables;
+        return appConfig.isSplitTables();
     }
 
     /**
@@ -734,7 +657,7 @@ public class GathererController {
      * @param splitTables whether the single player table is being split up into one table for each realm.
      */
     public void setSplitTables(final boolean splitTables) {
-        this.splitTables = splitTables;
+        this.appConfig.setSplitTables(splitTables);
     }
 
     /**
@@ -743,7 +666,7 @@ public class GathererController {
      * @return the suffix to append to all tables.
      */
     public String getTableSuffix() {
-        return tableSuffix;
+        return appConfig.getTableSuffix();
     }
 
     /**
@@ -752,7 +675,7 @@ public class GathererController {
      * @param tableSuffix the suffix to append to all tables.
      */
     public void setTableSuffix(final String tableSuffix) {
-        this.tableSuffix = tableSuffix;
+        this.appConfig.setTableSuffix(tableSuffix);
     }
 
     /**
@@ -761,7 +684,7 @@ public class GathererController {
      * @return whether to run the program in quiet mode
      */
     public boolean isQuiet() {
-        return quiet;
+        return appConfig.isQuiet();
     }
 
     /**
@@ -770,7 +693,7 @@ public class GathererController {
      * @param quiet whether to run the program in quiet mode.
      */
     public void setQuiet(final boolean quiet) {
-        this.quiet = quiet;
+        this.appConfig.setQuiet(quiet);
     }
 
     /**
@@ -779,7 +702,7 @@ public class GathererController {
      * @return whether to print an output when records don't exist.
      */
     public boolean isVerbose() {
-        return verbose;
+        return appConfig.isVerbose();
     }
 
     /**
@@ -788,7 +711,7 @@ public class GathererController {
      * @param verbose whether to print an output when records don't exist.
      */
     public void setVerbose(final boolean verbose) {
-        this.verbose = verbose;
+        this.appConfig.setVerbose(verbose);
     }
 
     /**
@@ -806,7 +729,7 @@ public class GathererController {
      * @param dbUrl the SQL server database url.
      */
     public void setDbUrl(final String dbUrl) {
-        this.dbUrl = dbUrl;
+        this.appConfig.setDbUrl(dbUrl);
     }
 
     /**
@@ -815,7 +738,7 @@ public class GathererController {
      * @param dbUser the SQL server database user.
      */
     public void setDbUser(final String dbUser) {
-        this.dbUser = dbUser;
+        this.appConfig.setDbUser(dbUser);
     }
 
     /**
@@ -824,16 +747,7 @@ public class GathererController {
      * @param dbPassword the SQL Server user password.
      */
     public void setDbPassword(final String dbPassword) {
-        this.dbPassword = dbPassword;
-    }
-
-    /**
-     * Get the 'safety limit' of threads that is set in the program.
-     *
-     * @return the thread 'safety limit'
-     */
-    public static int getMaxThreads() {
-        return MAX_THREADS;
+        this.appConfig.setDbPassword(dbPassword);
     }
 
     /**
@@ -842,7 +756,7 @@ public class GathererController {
      * @return whether to print record write fails
      */
     public boolean isPrintFails() {
-        return printFails;
+        return appConfig.isPrintFails();
     }
 
     /**
@@ -851,7 +765,7 @@ public class GathererController {
      * @param printFails whether to print record write fails
      */
     public void setPrintFails(final boolean printFails) {
-        this.printFails = printFails;
+        this.appConfig.setPrintFails(printFails);
     }
 
     /**
@@ -860,7 +774,7 @@ public class GathererController {
      * @param storeActiveDate whether to store the last active date of a character
      */
     public void setStoreActiveDate(final boolean storeActiveDate) {
-        this.storeActiveDate = storeActiveDate;
+        this.appConfig.setStoreActiveDate(storeActiveDate);
     }
 
     /**
@@ -869,7 +783,7 @@ public class GathererController {
      * @param storePlayerActive whether to store a boolean value indicating player activity
      */
     public void setStorePlayerActive(final boolean storePlayerActive) {
-        this.storePlayerActive = storePlayerActive;
+        this.appConfig.setStorePlayerActive(storePlayerActive);
     }
 
     /**
@@ -878,6 +792,6 @@ public class GathererController {
      * @param dbIgnoreSSLWarn whether to ignore database ssl verification warnings
      */
     public void setDbIgnoreSSLWarn(final boolean dbIgnoreSSLWarn) {
-        this.dbIgnoreSSLWarn = dbIgnoreSSLWarn;
+        this.appConfig.setDbIgnoreSSLWarn(dbIgnoreSSLWarn);
     }
 }
