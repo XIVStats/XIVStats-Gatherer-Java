@@ -17,54 +17,51 @@ public class Gatherer implements Runnable {
 
     private GathererController parent;
 
+    private int playerId;
+
     /**
      * Default constructor
      */
-    public Gatherer(GathererController parent) {
+    public Gatherer(GathererController parent, int playerId) {
         this.parent = parent;
+        this.playerId = playerId;
     }
 
     /**
      * Run the Gatherer.
      */
     public void run() {
-        int nextID = parent.getNextID();
-        while (nextID != -1) { //While we still have IDs to parse
+        try {
+            if(parent.isVerbose()) {
+                System.out.println("Starting evaluation of player ID: " + playerId);
+            }
+            // Parse players and write them to DB
+            String out = parent.writeToDB(Player.getPlayer(playerId, 1));
+            if(!parent.isQuiet()) { // If not running in quiet mode
+                System.out.println(out);
+            }
+        } catch(MySQLNonTransientConnectionException failWriteEx) { // If record fails to write due to too many connections
+            System.out.println("Error: Record write failure, reattempting write");
+            // Wait a second
             try {
-                if(parent.isVerbose()) {
-                    System.out.println("Starting evaluation of player ID: " +nextID);
-                }
-                //Parse players and write them to DB
-                String out = parent.writeToDB(Player.getPlayer(nextID, 1));
-                if (!parent.isQuiet()) { //If not running in quiet mode
+                Thread.currentThread().wait(1);
+            } catch(InterruptedException e) {
+                e.printStackTrace();
+            }
+            // Then attempt to write again
+            try {
+                String out = parent.writeToDB(Player.getPlayer(playerId, 1));
+                if(!parent.isQuiet()) {
                     System.out.println(out);
                 }
-            } catch (MySQLNonTransientConnectionException failWriteEx) { //If record fails to write due to too many connections
-                System.out.println("Error: Record write failure, reattempting write");
-                //Wait a second
-                try {
-                    Thread.currentThread().wait(1);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                //Then attempt to write again
-                try {
-                    String out = parent.writeToDB(Player.getPlayer(nextID,1));
-                    if (!parent.isQuiet()) {
-                        System.out.println(out);
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            } catch (Exception e) {
-                if (parent.isVerbose() || parent.isPrintFails()) {
-                    System.out.println(e.getMessage());
-                }
+            } catch(Exception e) {
+                e.printStackTrace();
             }
-            //Get the nextID
-            nextID = parent.getNextID();
+        } catch(Exception e) {
+            if(parent.isVerbose() || parent.isPrintFails()) {
+                System.out.println(e.getMessage());
+            }
         }
     }
 
 }
-

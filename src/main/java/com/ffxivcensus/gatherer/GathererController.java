@@ -15,6 +15,9 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Random;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -418,44 +421,23 @@ public class GathererController {
      * Method to gather data for characters in specified range.
      */
     private void gatherRange() {
-
         //Set next ID
         nextID = startId;
 
-        //Start up up new threads up to limit
-        //Create array to store thread references into
-        Thread[] threads = new Thread[threadLimit];
-        for (int index = 0; index < threadLimit; index++) {
-            threads[index] = new Thread(new Gatherer(this));
+        // Setup an executor service that respects the max thread limit
+        ExecutorService executor = Executors.newFixedThreadPool(threadLimit);
+        
+        while(nextID <= endId) {
+            Gatherer worker = new Gatherer(this, nextID);
+            executor.execute(worker);
+            
+            nextID++;
         }
-
-        //Start up threads
-        for (Thread thread : threads) {
-            if(this.isVerbose()) {
-                System.out.println("Starting thread with id " + thread.getId());
-            }
-            thread.start();
-            try {
-                //Generate random number 1-10 and sleep for it
-                Random rand = new Random();
-
-                int randomNum = rand.nextInt((10 - 1) + 1) + 1;
-
-                TimeUnit.MILLISECONDS.sleep(randomNum);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+        
+        executor.shutdown();
+        while(!executor.isTerminated()) {
+            // Wait patiently for the executor to finish off everything submitted
         }
-
-        //Spin down threads
-        for (Thread thread : threads) {
-            try {
-                thread.join();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-
     }
 
     /**
@@ -621,22 +603,6 @@ public class GathererController {
             conn.close();
         } catch (SQLException sqlEx) {
             System.out.println("Cannot close connection! Has it already been closed");
-        }
-    }
-
-    /**
-     * Get the next character ID to be parsed.
-     *
-     * @return the next character ID to be parsed.
-     */
-    public int getNextID() {
-        if (nextID <= endId) {
-            int next = nextID;
-            //Increment id
-            nextID++;
-            return next;
-        } else {
-            return -1;
         }
     }
 
