@@ -143,10 +143,6 @@ public class PlayerTest {
         assertEquals(1, playerOne.getBitHasSylph());
         assertTrue(playerOne.isHasCompletedHW());
         assertEquals(1, playerOne.getBitHasCompletedHW());
-        // Currently no way to definitively tell player has completed the SB Main Scenario
-        // Currently assumes minion drop from Kugane, Temple of the Fist or Delta V4
-        assertTrue(playerOne.isHasCompletedSB());
-        assertEquals(1, playerOne.getBitHasCompletedSB());
         assertTrue(playerOne.isHasCompleted3pt1());
         assertEquals(1, playerOne.getBitHasCompleted3pt1());
         assertFalse(playerOne.getIsLegacyPlayer());
