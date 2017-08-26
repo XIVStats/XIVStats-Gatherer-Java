@@ -30,6 +30,8 @@ public class ConsoleTest {
      */
     @BeforeClass
     public static void setUpBaseClass() throws Exception {
+        originalOut = System.out;
+        originalErr = System.err;
         ApplicationConfig config = ConfigurationBuilder.createBuilder().loadXMLConfiguration().getConfiguration();
 
         HikariConfig hikariConfig = new HikariConfig();
@@ -53,6 +55,8 @@ public class ConsoleTest {
         dataSource.close();
     }
 
+    private static PrintStream originalOut;
+    private static PrintStream originalErr;
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
     private final ByteArrayOutputStream errContent = new ByteArrayOutputStream();
 
@@ -64,8 +68,8 @@ public class ConsoleTest {
 
     @org.junit.After
     public void cleanUpStreams() {
-        System.setOut(null);
-        System.setErr(null);
+        System.setOut(originalOut);
+        System.setErr(originalErr);
     }
 
     /**

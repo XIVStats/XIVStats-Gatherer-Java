@@ -88,7 +88,7 @@ public class PlayerBeanDAO {
         try(Connection conn = openConnection();
             Statement st = conn.createStatement()) {
             StringBuilder sbSQL = new StringBuilder();
-            sbSQL.append("DROP TABLE ");
+            sbSQL.append("DROP TABLE IF EXISTS ");
             sbSQL.append(tableName);
             sbSQL.append(";");
 
@@ -245,7 +245,7 @@ public class PlayerBeanDAO {
             sbValues.append(");");
 
             String strSQL = sbFields.toString() + sbValues.toString();
-            System.out.println(strSQL);
+
             st.executeUpdate(strSQL);
             if(!appConfig.isQuiet() || appConfig.isVerbose()) {
                 strOut = "Character " + player.getId() + " written to database successfully.";
