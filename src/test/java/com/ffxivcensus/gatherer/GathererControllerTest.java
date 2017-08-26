@@ -52,9 +52,6 @@ public class GathererControllerTest {
      */
     private static String dbHost;
 
-    private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-    private final ByteArrayOutputStream errContent = new ByteArrayOutputStream();
-
     @BeforeClass
     public static void setUpBaseClass() {
         try {
@@ -74,8 +71,6 @@ public class GathererControllerTest {
      */
     @org.junit.Before
     public void setUpDB() {
-        System.setOut(new PrintStream(outContent));
-        System.setErr(new PrintStream(errContent));
         StringBuilder sbSQL = new StringBuilder();
         //DROP existing test tables
         sbSQL.append("DROP TABLE  tblplayers_test;");
@@ -93,12 +88,6 @@ public class GathererControllerTest {
 
         }
         closeConnection(conn);
-    }
-
-    @org.junit.After
-    public void cleanUpStreams() {
-        System.setOut(null);
-        System.setErr(null);
     }
 
     /**
