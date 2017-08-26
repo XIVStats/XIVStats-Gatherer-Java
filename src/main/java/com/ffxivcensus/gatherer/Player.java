@@ -107,7 +107,6 @@ public class Player {
     private boolean hasVanuVanu;
     private boolean hasVath;
     private boolean hasCompletedHW;
-    private boolean hasCompletedSB;
     private boolean hasCompleted3pt1;
     private boolean hasCompleted3pt3;
     private boolean isLegacyPlayer;
@@ -1996,10 +1995,6 @@ public class Player {
             player.setHasVanuVanu(player.doesPlayerHaveMount("Sanuwa"));
             player.setHasVath(player.doesPlayerHaveMount("Kongamato"));
             player.setHasCompletedHW(player.doesPlayerHaveMount("Midgardsormr"));
-            // Main Scenario quest doesn't drop a minion, so instead assume players will at least play one of the Level 70 dungeons and eventually get the minion
-            player.setHasCompletedSB(player.doesPlayerHaveMinion("Ivon Coeurlfist Doll") ||
-            		player.doesPlayerHaveMinion("Dress-up Yugiri") ||
-            		player.doesPlayerHaveMinion("Wind-up Exdeath"));
             player.setIsLegacyPlayer(player.doesPlayerHaveMount("Legacy Chocobo"));
             player.setActive(player.isPlayerActiveInDateRange());
         } catch (IOException ioEx) {
@@ -2518,29 +2513,5 @@ public class Player {
 	 */
 	public void setHasPreOrderSB(boolean hasPreOrderSB) {
 		this.hasPreOrderSB = hasPreOrderSB;
-	}
-
-	/**
-	 * Get whether player has completed Stormblood.
-	 * @return whether player has completed Stromblood.
-	 */
-	public boolean isHasCompletedSB() {
-		return hasCompletedSB;
-	}
-
-	/**
-	 * Get whether player has completed Stormblood.
-	 * @return whether player has completed Stromblood.
-	 */
-	public int getBitHasCompletedSB() {
-		return isHasCompletedSB() ? 1 : 0;
-	}
-
-	/**
-	 * Set whether player has completed Stromblood.
-	 * @param hasCompletedSB whether player has completed Stormblood.
-	 */
-	public void setHasCompletedSB(boolean hasCompletedSB) {
-		this.hasCompletedSB = hasCompletedSB;
 	}
 }

@@ -357,7 +357,7 @@ public class GathererController {
                 sbSQL.append("topazcarubuncleplush BIT,emeraldcarbuncleplush BIT,");
                 sbSQL.append("hildibrand BIT, dideternalbond BIT, arrcollector BIT,");
                 sbSQL.append("kobold BIT, sahagin BIT, amaljaa BIT, sylph BIT,  moogle BIT, vanuvanu BIT, vath BIT,");
-                sbSQL.append("arr_25_complete BIT,hw_complete BIT, hw_31_complete BIT, hw_33_complete BIT, sb_complete BIT, legacy_player BIT");
+                sbSQL.append("arr_25_complete BIT,hw_complete BIT, hw_31_complete BIT, hw_33_complete BIT, legacy_player BIT");
             }
             if (this.storeMounts) {
                 sbSQL.append(",mounts TEXT");
@@ -534,13 +534,13 @@ public class GathererController {
                                 + player.getBitHasEmeraldCarbunclePlush() + ",");
 
                 sbFields.append("hildibrand, ps4collectors, dideternalbond, arrcollector, kobold, sahagin, amaljaa, "
-                                + "sylph, moogle, vanuvanu, vath, hw_complete, hw_31_complete, hw_33_complete, sb_complete, legacy_player");
+                                + "sylph, moogle, vanuvanu, vath, hw_complete, hw_31_complete, hw_33_complete, legacy_player");
                 sbValues.append(player.getBitHasCompletedHildibrand() + "," + player.getBitHasPS4Collectors() + ","
                         + player.getBitHasEternalBond() + "," + player.getBitHasARRCollectors() + ","
                         + player.getBitHasKobold() + "," + player.getBitHasSahagin() + "," + player.getBitHasAmaljaa() + ","
                         + player.getBitHasSylph() + "," + player.getBitHasMoogle() + "," + player.getBitHasVanuVanu() + ","
                         + player.getBitHasVath() + "," + player.getBitHasCompletedHW() + ","
-                        + player.getBitHasCompleted3pt1() + "," + player.getBitHasCompleted3pt3() + "," + player.getBitHasCompletedSB() +","
+                        + player.getBitHasCompleted3pt1() + "," + player.getBitHasCompleted3pt3() + ","
                         + player.getBitIsLegacyPlayer());
 
             }
@@ -581,7 +581,7 @@ public class GathererController {
             sbValues.append(");");
 
             String strSQL = sbFields.toString() + sbValues.toString();
-            System.out.println(strSQL);
+
             st.executeUpdate(strSQL);
             if(!this.quiet || this.isVerbose()) {
                 strOut = "Character " + player.getId() + " written to database successfully.";

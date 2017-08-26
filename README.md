@@ -75,7 +75,7 @@ Follow these steps to setup XIVStats-Gatherer-Java:
   |-d            | --database            | String         | database name                                                        |
   |-D            | --do-not-store-date   | none           | do not store date of last player activity                            |
   |-f            | --finish              | integer        | the character id to conclude character run at (inclusive)            |
-  |-F            | --print-failures      | none           | print records that don't exist                                      |
+  |-F            | --print-failures      | none           | print records that don't exist                                       |
   |-h            | --help                | none           | display help message                                                 |
   |-m            | --store-mounts        | none           | store mount data set for each player into the database               |
   |-P            | --store-minions       | none           | store minion data set for each player into the database              |
@@ -188,9 +188,6 @@ The database table ```tblplayers``` has the following structure:
 |hw_complete           |bit      |Mount - Midgardsormr            |
 |hw_31_complete        |bit      |Minion - Wind-up Haurchefant    |
 |hw_33_complete        |bit      |Minion - Wind-up Aymeric        |
-|sb_complete           |bit      |Minion - Ivon Coeurlfist Doll   |
-|                      |         |Minion - Dress-up Yugiri        |
-|                      |         |Wind-up Exdeath                 |
 |legacy_player         |bit      |Mount - Legacy Chocobo          |
 |*mounts*              |*text*   |*N/A*                           |
 |*minions*             |*text*   |*N/A*                           |
