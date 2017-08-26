@@ -90,7 +90,7 @@ public class PlayerBeanDAO {
             StringBuilder sbSQL = new StringBuilder();
             sbSQL.append("DROP TABLE ");
             sbSQL.append(tableName);
-            sbSQL.append(");");
+            sbSQL.append(";");
 
             st.executeUpdate(sbSQL.toString());
         } catch(SQLException e) {
