@@ -1,7 +1,5 @@
 # XIV Stats Gatherer (Java) #
 
-> This repo has not yet been updated to work with the FFXIV Stormblood expansion - [please see this ongoing issue](https://github.com/XIVStats/XIVStats/issues/19).
-
 [![Build Status](https://mygitlab.org:4043/job/XIVStats/job/XIVStats-Gatherer-Java/job/master/badge/icon)](https://mygitlab.org:4043/job/XIVStats/job/XIVStats-Gatherer-Java/job/master/)
 [![codecov.io](https://codecov.io/github/XIVStats/XIVStats-Gatherer-Java/coverage.svg?branch=master)](https://codecov.io/github/XIVStats/XIVStats-Gatherer-Java?branch=master)
 
