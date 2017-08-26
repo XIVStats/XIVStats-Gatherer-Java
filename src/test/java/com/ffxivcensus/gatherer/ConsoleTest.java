@@ -47,7 +47,7 @@ public class ConsoleTest {
         dao.dropTable("tblplayers_test_two");
 
         for(String strRealm : GathererController.getRealms()) {
-            dao.dropTable("DROP TABLE tbl" + strRealm.toLowerCase() + "_test;");
+            dao.dropTable("tbl" + strRealm.toLowerCase() + "_test");
         }
 
         dataSource.close();
