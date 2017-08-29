@@ -39,7 +39,9 @@ public class ConsoleTest {
         hikariConfig.setUsername(config.getDbUser());
         hikariConfig.setPassword(config.getDbPassword());
         hikariConfig.setMaximumPoolSize(config.getThreadLimit());
-        hikariConfig.addDataSourceProperty("useSSL", !config.isDbIgnoreSSLWarn());
+        if(config.isDbIgnoreSSLWarn()) {
+            hikariConfig.addDataSourceProperty("useSSL", false);
+        }
 
         HikariDataSource dataSource = new HikariDataSource(hikariConfig);
 
