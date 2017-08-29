@@ -43,8 +43,9 @@ public class GathererControllerTest {
         hikariConfig.setUsername(config.getDbUser());
         hikariConfig.setPassword(config.getDbPassword());
         hikariConfig.setMaximumPoolSize(config.getThreadLimit());
-        hikariConfig.addDataSourceProperty("useSSL", !config.isDbIgnoreSSLWarn());
-
+        if(config.isDbIgnoreSSLWarn()) {
+            hikariConfig.addDataSourceProperty("useSSL", false);
+        }
         HikariDataSource dataSource = new HikariDataSource(hikariConfig);
 
         PlayerBeanDAO dao = new PlayerBeanDAO(config, dataSource);
@@ -53,7 +54,7 @@ public class GathererControllerTest {
         dao.dropTable("tblplayers_test_two");
 
         for(String strRealm : GathererController.getRealms()) {
-            dao.dropTable("DROP TABLE tbl" + strRealm.toLowerCase() + "_test;");
+            dao.dropTable("tbl" + strRealm.toLowerCase() + "_test");
         }
 
         dataSource.close();
@@ -87,7 +88,9 @@ public class GathererControllerTest {
         hikariConfig.setUsername(config.getDbUser());
         hikariConfig.setPassword(config.getDbPassword());
         hikariConfig.setMaximumPoolSize(config.getThreadLimit());
-        hikariConfig.addDataSourceProperty("useSSL", !config.isDbIgnoreSSLWarn());
+        if(config.isDbIgnoreSSLWarn()) {
+            hikariConfig.addDataSourceProperty("useSSL", false);
+        }
 
         HikariDataSource dataSource = new HikariDataSource(hikariConfig);
 
@@ -162,7 +165,9 @@ public class GathererControllerTest {
         hikariConfig.setUsername(config.getDbUser());
         hikariConfig.setPassword(config.getDbPassword());
         hikariConfig.setMaximumPoolSize(config.getThreadLimit());
-        hikariConfig.addDataSourceProperty("useSSL", !config.isDbIgnoreSSLWarn());
+        if(config.isDbIgnoreSSLWarn()) {
+            hikariConfig.addDataSourceProperty("useSSL", false);
+        }
 
         HikariDataSource dataSource = new HikariDataSource(hikariConfig);
 
@@ -221,7 +226,9 @@ public class GathererControllerTest {
         hikariConfig.setUsername(config.getDbUser());
         hikariConfig.setPassword(config.getDbPassword());
         hikariConfig.setMaximumPoolSize(config.getThreadLimit());
-        hikariConfig.addDataSourceProperty("useSSL", !config.isDbIgnoreSSLWarn());
+        if(config.isDbIgnoreSSLWarn()) {
+            hikariConfig.addDataSourceProperty("useSSL", false);
+        }
 
         HikariDataSource dataSource = new HikariDataSource(hikariConfig);
 

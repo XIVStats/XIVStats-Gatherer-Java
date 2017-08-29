@@ -67,7 +67,9 @@ public class GathererController {
                 hikariConfig.setUsername(appConfig.getDbUser());
                 hikariConfig.setPassword(appConfig.getDbPassword());
                 hikariConfig.setMaximumPoolSize(appConfig.getThreadLimit());
-                hikariConfig.addDataSourceProperty("useSSL", !appConfig.isDbIgnoreSSLWarn());
+                if(appConfig.isDbIgnoreSSLWarn()) {
+                    hikariConfig.addDataSourceProperty("useSSL", false);
+                }
 
                 this.dataSource = new HikariDataSource(hikariConfig);
 
