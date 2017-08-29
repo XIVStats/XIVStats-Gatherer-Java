@@ -1,5 +1,7 @@
 package com.ffxivcensus.gatherer;
 
+import com.ffxivcensus.gatherer.player.PlayerBeanDAO;
+import com.ffxivcensus.gatherer.player.PlayerBuilder;
 import com.mysql.jdbc.exceptions.jdbc4.MySQLNonTransientConnectionException;
 
 /**
@@ -18,13 +20,15 @@ public class Gatherer implements Runnable {
     private final GathererController parent;
 
     private final int playerId;
+    private final PlayerBeanDAO dao;
 
     /**
      * Default constructor
      */
-    public Gatherer(final GathererController parent, final int playerId) {
+    public Gatherer(final GathererController parent, final PlayerBeanDAO playerBeanDAO, final int playerId) {
         this.parent = parent;
         this.playerId = playerId;
+        this.dao = playerBeanDAO;
     }
 
     /**
@@ -37,7 +41,7 @@ public class Gatherer implements Runnable {
                 System.out.println("Starting evaluation of player ID: " + playerId);
             }
             // Parse players and write them to DB
-            String out = parent.writeToDB(PlayerBuilder.getPlayer(playerId, 1));
+            String out = dao.saveRecord(PlayerBuilder.getPlayer(playerId, 1));
             if(!parent.isQuiet()) { // If not running in quiet mode
                 System.out.println(out);
             }
@@ -51,7 +55,7 @@ public class Gatherer implements Runnable {
             }
             // Then attempt to write again
             try {
-                String out = parent.writeToDB(PlayerBuilder.getPlayer(playerId, 1));
+                String out = dao.saveRecord(PlayerBuilder.getPlayer(playerId, 1));
                 if(!parent.isQuiet()) {
                     System.out.println(out);
                 }

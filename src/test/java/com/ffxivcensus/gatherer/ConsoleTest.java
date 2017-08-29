@@ -6,18 +6,11 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
-
 import org.junit.BeforeClass;
 import org.junit.Test;
 import com.ffxivcensus.gatherer.config.ApplicationConfig;
 import com.ffxivcensus.gatherer.config.ConfigurationBuilder;
+import com.ffxivcensus.gatherer.player.PlayerBeanDAO;
 
 /**
  * JUnit test class to run tests
@@ -34,24 +27,16 @@ public class ConsoleTest {
      */
     @BeforeClass
     public static void setUpBaseClass() throws Exception {
+        ApplicationConfig config = ConfigurationBuilder.createBuilder().loadXMLConfiguration().getConfiguration();
 
-        StringBuilder sbSQL = new StringBuilder();
-        // DROP existing test tables
-        sbSQL.append("DROP TABLE  tblplayers_test;");
-        sbSQL.append(" DROP TABLE tblplayers_test_two;");
+        PlayerBeanDAO dao = new PlayerBeanDAO(config);
+
+        dao.dropTable("tblplayers_test");
+        dao.dropTable("tblplayers_test_two");
 
         for(String strRealm : GathererController.getRealms()) {
-            sbSQL.append(" DROP TABLE " + strRealm + ";");
+            dao.dropTable("DROP TABLE " + strRealm + ";");
         }
-
-        java.sql.Connection conn = openConnection();
-        try {
-            Statement stmt = conn.createStatement();
-            stmt.executeUpdate(sbSQL.toString());
-        } catch(SQLException e) {
-
-        }
-        closeConnection(conn);
 
     }
 
@@ -222,83 +207,5 @@ public class ConsoleTest {
         GathererController gc = Console.run(args);
         assertTrue(gc.isSplitTables());
         assertEquals(gc.getTableSuffix(), "_test");
-    }
-
-    // Utility methods
-
-    /**
-     * Open a connection to database.
-     *
-     * @return the opened connection
-     * @throws SQLException exception thrown if unable to connect
-     */
-    private static java.sql.Connection openConnection() throws Exception {
-        ApplicationConfig config = ConfigurationBuilder.createBuilder().loadXMLConfiguration().getConfiguration();
-        try {
-            String connString = "jdbc:" + config.getDbUrl() + "/" + config.getDbName();
-            java.sql.Connection connection = DriverManager.getConnection(connString, config.getDbUser(), config.getDbPassword());
-            return connection;
-        } catch(SQLException sqlEx) {
-            System.out.println("Connection failed! Please see output console");
-            sqlEx.printStackTrace();
-            return null;
-        }
-    }
-
-    /**
-     * Close the specified connection.
-     *
-     * @param conn the connection to throw
-     * @throws SQLException exception thrown if unable to close connection.
-     */
-    private static void closeConnection(final java.sql.Connection conn) {
-        try {
-            conn.close();
-        } catch(SQLException sqlEx) {
-            System.out.println("Cannot close connection! Has it already been closed");
-        }
-    }
-
-    /**
-     * Execute a SQL query and return the results.
-     *
-     * @param conn the SQL connection to use.
-     * @param strSQL the SQL statement to execute.
-     * @return the result set of added rows.
-     */
-    public static ResultSet executeStatement(final Connection conn, final String strSQL) {
-        ResultSet rs;
-        try {
-            Statement stmt = conn.createStatement();
-            rs = stmt.executeQuery(strSQL);
-
-            return rs;
-
-        } catch(SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    /**
-     * Get an array list containing the added IDs returned by executing a SQL statement.
-     *
-     * @param conn the SQL connection to use.
-     * @param strSQL the SQL statement to execute
-     * @return an array list of the IDs successfully added to DB.
-     */
-    public static List<Integer> getAdded(final Connection conn, final String strSQL) {
-        ResultSet rs;
-        List<Integer> addedIDs = new ArrayList<>();
-        rs = executeStatement(conn, strSQL);
-        // Convert dataset to array list
-        try {
-            while(rs.next()) {
-                addedIDs.add(rs.getInt(1));
-            }
-        } catch(SQLException e) {
-            e.printStackTrace();
-        }
-        return addedIDs;
     }
 }

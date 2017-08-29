@@ -1,4 +1,4 @@
-package com.ffxivcensus.gatherer;
+package com.ffxivcensus.gatherer.player;
 
 import java.util.Date;
 import java.util.List;
