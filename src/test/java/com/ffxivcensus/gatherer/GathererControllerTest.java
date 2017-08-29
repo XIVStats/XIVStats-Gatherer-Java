@@ -5,12 +5,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -21,12 +15,13 @@ import org.xml.sax.SAXException;
 
 import com.ffxivcensus.gatherer.config.ApplicationConfig;
 import com.ffxivcensus.gatherer.config.ConfigurationBuilder;
+import com.ffxivcensus.gatherer.player.PlayerBeanDAO;
 
 /**
  * Test the core functionality of the program, including CLI parameters.
  *
  * @author Peter Reid
- * @see com.ffxivcensus.gatherer.PlayerBuilder
+ * @see com.ffxivcensus.gatherer.player.PlayerBuilder
  * @see com.ffxivcensus.gatherer.Gatherer
  * @see com.ffxivcensus.gatherer.GathererController
  * @see com.ffxivcensus.gatherer.PlayerBuilderTest
@@ -39,23 +34,16 @@ public class GathererControllerTest {
      */
     @Before
     public void setUpDB() throws Exception {
-        StringBuilder sbSQL = new StringBuilder();
-        // DROP existing test tables
-        sbSQL.append("DROP TABLE tblplayers_test;");
-        sbSQL.append("DROP TABLE tblplayers_test_two;");
+        ApplicationConfig config = ConfigurationBuilder.createBuilder().loadXMLConfiguration().getConfiguration();
+
+        PlayerBeanDAO dao = new PlayerBeanDAO(config);
+
+        dao.dropTable("tblplayers_test");
+        dao.dropTable("tblplayers_test_two");
 
         for(String strRealm : GathererController.getRealms()) {
-            sbSQL.append("DROP TABLE " + strRealm + ";");
+            dao.dropTable("DROP TABLE tbl" + strRealm + ";");
         }
-
-        java.sql.Connection conn = openConnection();
-        try {
-            Statement stmt = conn.createStatement();
-            stmt.executeUpdate(sbSQL.toString());
-        } catch(SQLException e) {
-
-        }
-        closeConnection(conn);
     }
 
     /**
@@ -80,13 +68,9 @@ public class GathererControllerTest {
             gathererController.run();
         } catch(Exception e) {
         }
-        // Test that records were successfully written to db
-        java.sql.Connection conn = openConnection();
-        String strSQL = "SELECT * FROM " + gathererController.getTableName() + " WHERE `id`>=" + config.getStartId() + " AND `id`<="
-                        + config.getEndId() + ";";
-        List<Integer> addedIDs = getAdded(conn, strSQL);
+        PlayerBeanDAO dao = new PlayerBeanDAO(config);
 
-        closeConnection(conn);
+        List<Integer> addedIDs = dao.getAdded(config.getTableName(), config.getStartId(), config.getEndId());
 
         // Test for IDs we know exist
         assertTrue(addedIDs.contains(11886902));
@@ -148,11 +132,10 @@ public class GathererControllerTest {
         } catch(Exception e) {
         }
 
+        PlayerBeanDAO dao = new PlayerBeanDAO(config);
+
         // Test that records were successfully written to db
-        java.sql.Connection conn = openConnection();
-        String strSQL = "SELECT * FROM tblplayers_test_two WHERE `id`>=" + config.getStartId() + " AND `id`<=" + config.getEndId() + ";";
-        List<Integer> addedIDs = getAdded(conn, strSQL);
-        closeConnection(conn);
+        List<Integer> addedIDs = dao.getAdded(config.getTableName(), config.getStartId(), config.getEndId());
 
         // Test for IDs we know exist
         assertTrue(addedIDs.contains(config.getStartId()));
@@ -197,17 +180,11 @@ public class GathererControllerTest {
         assertEquals(gathererController.getThreadLimit(), gathererController.getThreadLimit());
 
         // Test that records were successfully written to db
-        java.sql.Connection conn = openConnection();
-        String strSQLCerberus = "SELECT * FROM tblcerberus_test WHERE `id`>=" + config.getStartId() + " AND `id`<=" + config.getEndId()
-                                + ";";
-        List<Integer> addedIDsCerberus = getAdded(conn, strSQLCerberus);
+        PlayerBeanDAO dao = new PlayerBeanDAO(config);
 
-        String strSQLShiva = "SELECT * FROM tblshiva_test WHERE `id`>=" + config.getStartId() + " AND `id`<=" + config.getEndId() + ";";
-        List<Integer> addedIDsShiva = getAdded(conn, strSQLShiva);
-
-        String strSQLMoogle = "SELECT * FROM tblmoogle_test WHERE `id`>=" + config.getStartId() + " AND `id`<=" + config.getEndId() + ";";
-        List<Integer> addedIDsMoogle = getAdded(conn, strSQLMoogle);
-        closeConnection(conn);
+        List<Integer> addedIDsCerberus = dao.getAdded("tblcerberus_test", config.getStartId(), config.getEndId());
+        List<Integer> addedIDsShiva = dao.getAdded("tblshiva_test", config.getStartId(), config.getEndId());
+        List<Integer> addedIDsMoogle = dao.getAdded("tblmoogle_test", config.getStartId(), config.getEndId());
 
         // Test for IDs we know exist in cerberus (realm of startID char)
         assertTrue(addedIDsCerberus.contains(config.getStartId()));
@@ -274,83 +251,5 @@ public class GathererControllerTest {
         assertTrue(strOut.contains("Database Password has not been configured correctly"));
         assertTrue(strOut.contains("Table name has not been configured correctly"));
 
-    }
-
-    // Utility methods
-    /**
-     * Open a connection to database.
-     *
-     * @return the opened connection
-     * @throws SQLException exception thrown if unable to connect
-     */
-    private static java.sql.Connection openConnection() throws Exception {
-        ApplicationConfig config = ConfigurationBuilder.createBuilder().loadXMLConfiguration().getConfiguration();
-        try {
-            String connString = "jdbc:" + config.getDbUrl() + "/" + config.getDbName();
-            java.sql.Connection connection = DriverManager.getConnection(connString, config.getDbUser(), config.getDbPassword());
-            return connection;
-        } catch(SQLException sqlEx) {
-            System.out.println("Connection failed! Please see output console");
-            sqlEx.printStackTrace();
-            return null;
-        }
-    }
-
-    /**
-     * Close the specified connection.
-     *
-     * @param conn the connection to throw
-     * @throws SQLException exception thrown if unable to close connection.
-     */
-    private static void closeConnection(final java.sql.Connection conn) {
-        try {
-            conn.close();
-        } catch(SQLException sqlEx) {
-            System.out.println("Cannot close connection! Has it already been closed");
-        }
-    }
-
-    /**
-     * Execute a SQL query and return the results.
-     *
-     * @param conn the SQL connection to use.
-     * @param strSQL the SQL statement to execute.
-     * @return the result set of added rows.
-     */
-    public static ResultSet executeStatement(final Connection conn, final String strSQL) {
-        ResultSet rs;
-        try {
-            Statement stmt = conn.createStatement();
-            rs = stmt.executeQuery(strSQL);
-
-            return rs;
-
-        } catch(SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    /**
-     * Get an array list containing the added IDs returned by executing a SQL
-     * statement.
-     *
-     * @param conn the SQL connection to use.
-     * @param strSQL the SQL statement to execute
-     * @return an array list of the IDs successfully added to DB.
-     */
-    public static List<Integer> getAdded(final Connection conn, final String strSQL) {
-        ResultSet rs;
-        List<Integer> addedIDs = new ArrayList<>();
-        rs = executeStatement(conn, strSQL);
-        // Convert dataset to array list
-        try {
-            while(rs.next()) {
-                addedIDs.add(rs.getInt(1));
-            }
-        } catch(SQLException e) {
-            e.printStackTrace();
-        }
-        return addedIDs;
     }
 }

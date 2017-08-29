@@ -1,4 +1,4 @@
-package com.ffxivcensus.gatherer;
+package com.ffxivcensus.gatherer.player;
 
 import java.io.IOException;
 import java.text.DateFormat;
@@ -17,6 +17,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import com.ffxivcensus.gatherer.Gatherer;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;

@@ -9,6 +9,9 @@ import java.util.Date;
 
 import org.junit.Test;
 
+import com.ffxivcensus.gatherer.player.PlayerBean;
+import com.ffxivcensus.gatherer.player.PlayerBuilder;
+
 /**
  * JUnit test class to test the methods of the Player class.
  *
