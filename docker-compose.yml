@@ -1,0 +1,17 @@
+version: '2.0'
+services:
+    mysql:
+      image: mysql
+      environment:
+        - MYSQL_ROOT_PASSWORD=gatherer1234
+      ports:
+        - 3306:3306
+    gatherer:
+      image: bhits/java-jar-runner
+      volumes:
+        - ./target/XIVStats-Gatherer-Java-v1.4.0.jar
+      environment:
+        - JAR_FILE=XIVStats-Gatherer-Java-v1.4.0.jar
+      command: -s 0 -f 1000 -U mariadb:3306 -u root -p gatherer1234
+      links:
+        - mysql:mysql
