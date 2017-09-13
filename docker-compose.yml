@@ -7,11 +7,13 @@ services:
       ports:
         - 3306:3306
     gatherer:
-      image: bhits/java-jar-runner
+      image: bhits/java-jar-runner:8u102-jre
       volumes:
-        - ./target/XIVStats-Gatherer-Java-v1.4.0.jar
+        - ./target/XIVStats-Gatherer-Java-v1.4.0-jar-with-dependencies.jar:/usr/local/java/XIVStats-Gatherer-Java-v1.4.0-jar-with-dependencies.jar
       environment:
-        - JAR_FILE=XIVStats-Gatherer-Java-v1.4.0.jar
-      command: -s 0 -f 1000 -U mariadb:3306 -u root -p gatherer1234
+        - JAR_FILE=/usr/local/java/XIVStats-Gatherer-Java-v1.4.0-jar-with-dependencies.jar
+      command: -s 0 -f 1000 -U mysql://mysql:3306 -u root -p gatherer1234 -d dbplayers -t 64
       links:
-        - mysql:mysql
+        - mysql
+      depends_on:
+        - mysql
