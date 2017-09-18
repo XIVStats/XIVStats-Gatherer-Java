@@ -7,13 +7,24 @@ services:
         - MYSQL_DATABASE=dbplayers
       ports:
         - 3306:3306
-    gatherer:
+    gatherer1:
       image: bhits/java-jar-runner:8u102-jre
       volumes:
         - ./target/XIVStats-Gatherer-Java-v1.4.0-jar-with-dependencies.jar:/usr/local/java/XIVStats-Gatherer-Java-v1.4.0-jar-with-dependencies.jar
       environment:
         - JAR_FILE=/usr/local/java/XIVStats-Gatherer-Java-v1.4.0-jar-with-dependencies.jar
-      command: -s 0 -f 1000 -U mysql://mysql:3306 -u root -p gatherer1234 -d dbplayers -t 64
+      command: -s 0 -f 10000 -U mysql://mysql:3306 -u root -p gatherer1234 -d dbplayers -i -t 64
+      links:
+        - mysql
+      depends_on:
+        - mysql
+    gatherer2:
+      image: bhits/java-jar-runner:8u102-jre
+      volumes:
+        - ./target/XIVStats-Gatherer-Java-v1.4.0-jar-with-dependencies.jar:/usr/local/java/XIVStats-Gatherer-Java-v1.4.0-jar-with-dependencies.jar
+      environment:
+        - JAR_FILE=/usr/local/java/XIVStats-Gatherer-Java-v1.4.0-jar-with-dependencies.jar
+      command: -s 10001 -f 20000 -U mysql://mysql:3306 -u root -p gatherer1234 -d dbplayers -i -t 64
       links:
         - mysql
       depends_on:
