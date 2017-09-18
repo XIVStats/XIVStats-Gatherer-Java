@@ -4,6 +4,7 @@ services:
       image: mysql
       environment:
         - MYSQL_ROOT_PASSWORD=gatherer1234
+        - MYSQL_DATABASE=dbplayers
       ports:
         - 3306:3306
     gatherer:
