@@ -1,4 +1,4 @@
-package com.ffxivcensus.gatherer;
+package com.ffxivcensus.gatherer.player;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -16,7 +16,7 @@ import com.ffxivcensus.gatherer.player.PlayerBuilder;
  * JUnit test class to test the methods of the Player class.
  *
  * @author Peter Reid
- * @see com.ffxivcensus.gatherer.PlayerBuilderTest
+ * @see com.ffxivcensus.gatherer.player.PlayerBuilderTest
  * @since v1.0
  */
 public class PlayerBuilderTest {
