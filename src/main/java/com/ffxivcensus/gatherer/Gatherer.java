@@ -3,6 +3,8 @@ package com.ffxivcensus.gatherer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.ffxivcensus.gatherer.player.CharacterStatus;
+import com.ffxivcensus.gatherer.player.PlayerBean;
 import com.ffxivcensus.gatherer.player.PlayerBeanDAO;
 import com.ffxivcensus.gatherer.player.PlayerBuilder;
 import com.mysql.jdbc.exceptions.jdbc4.MySQLNonTransientConnectionException;
@@ -41,8 +43,12 @@ public class Gatherer implements Runnable {
         try {
             LOG.debug("Starting evaluation of player ID: " + playerId);
             // Parse players and write them to DB
-            String out = dao.saveRecord(PlayerBuilder.getPlayer(playerId, 1));
-            LOG.debug(out);
+            PlayerBean player = PlayerBuilder.getPlayer(playerId, 1);
+            // Currently ignore deleted characters (404)
+            if(!CharacterStatus.DELETED.equals(player.getCharacterStatus())) {
+		        String out = dao.saveRecord(player);
+		        LOG.debug(out);
+            }
         } catch(MySQLNonTransientConnectionException failWriteEx) { // If record fails to write due to too many connections
             LOG.trace("Error: Record write failure, reattempting write");
             // Wait a second

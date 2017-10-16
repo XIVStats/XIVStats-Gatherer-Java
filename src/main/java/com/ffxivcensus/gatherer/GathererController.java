@@ -118,27 +118,27 @@ public class GathererController {
     public boolean isConfigured() {
         boolean configured = true;
         if(appConfig.getStartId() < 0) {
-            LOG.error("Start ID must be configured to a positive numerical value\n");
+            LOG.error("Start ID must be configured to a positive numerical value");
             configured = false;
         }
         if(appConfig.getEndId() < 0) {
-            LOG.error("End ID must be configured to a positive numerical value\n");
+            LOG.error("End ID must be configured to a positive numerical value");
             configured = false;
         }
         if(appConfig.getDbUrl() == null || appConfig.getDbUrl().length() <= 5) {
-            LOG.error("Database URL has not been configured correctly\n");
+            LOG.error("Database URL has not been configured correctly");
             configured = false;
         }
         if(appConfig.getDbUser() == null || appConfig.getDbUser().length() == 0) {
-            LOG.error("Database User has not been configured correctly\n");
+            LOG.error("Database User has not been configured correctly");
             configured = false;
         }
         if(appConfig.getDbPassword() == null || appConfig.getDbPassword().length() == 0) {
-            LOG.error("Database Password has not been configured correctly\n");
+            LOG.error("Database Password has not been configured correctly");
             configured = false;
         }
         if(appConfig.getTableName() == null || appConfig.getTableName().length() == 0) {
-            LOG.error("Table name has not been configured correctly\n");
+            LOG.error("Table name has not been configured correctly");
             configured = false;
         }
         return configured;

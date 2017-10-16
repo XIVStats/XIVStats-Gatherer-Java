@@ -90,6 +90,7 @@ public class PlayerBean {
     private List<String> mounts;
     private Date dateImgLastModified;
     private boolean isActive;
+    private CharacterStatus characterStatus = CharacterStatus.ACTIVE;
 
     public PlayerBean() {
     }
@@ -725,4 +726,12 @@ public class PlayerBean {
     public void setActive(final boolean isActive) {
         this.isActive = isActive;
     }
+
+	public CharacterStatus getCharacterStatus() {
+		return characterStatus;
+	}
+
+	public void setCharacterStatus(final CharacterStatus characterStatus) {
+		this.characterStatus = characterStatus;
+	}
 }

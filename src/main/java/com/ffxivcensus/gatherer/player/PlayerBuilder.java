@@ -12,6 +12,8 @@ import java.util.Random;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
 
+import org.apache.http.HttpStatus;
+import org.jsoup.HttpStatusException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -189,22 +191,27 @@ public class PlayerBuilder {
                                      || doesPlayerHaveMinion(player, "Wind-up Exdeath"));
             player.setLegacyPlayer(doesPlayerHaveMount(player, "Legacy Chocobo"));
             player.setActive(isPlayerActiveInDateRange(player));
-        } catch(IOException ioEx) {
-            String strEx = org.apache.commons.lang.exception.ExceptionUtils.getStackTrace(ioEx);
-            String statusCode = strEx.split("\\s+")[5].replace("Status=", "").replace(",", "");
-            if(statusCode.equals("429")) {
-                // Generate random number 1->20*attempt no and sleep for it
-                Random rand = new Random();
-                int max = attempt * 20;
-                int min = (attempt - 1) + 1;
-                int randomNum = rand.nextInt(max - min + 1) + min;
-                LOG.trace("Experiencing rate limiting (HTTP 429) while fetching id " + playerID + " (attempt " + attempt
-                                   + "), waiting " + randomNum + "ms then retrying...");
-                TimeUnit.MILLISECONDS.sleep(randomNum);
-                player = PlayerBuilder.getPlayer(playerID, ++attempt);
-            } else {
-                throw new Exception("Character " + playerID + " does not exist. Status: " + statusCode);
-            }
+            player.setCharacterStatus(player.isActive() ? CharacterStatus.ACTIVE : CharacterStatus.INACTIVE);
+        } catch(HttpStatusException httpe) {
+        		switch(httpe.getStatusCode()) {
+        			case 429:
+                    // Generate random number 1->20*attempt no and sleep for it
+                    Random rand = new Random();
+                    int max = attempt * 20;
+                    int min = (attempt - 1) + 1;
+                    int randomNum = rand.nextInt(max - min + 1) + min;
+                    LOG.trace("Experiencing rate limiting (HTTP 429) while fetching id " + playerID + " (attempt " + attempt
+                                       + "), waiting " + randomNum + "ms then retrying...");
+                    TimeUnit.MILLISECONDS.sleep(randomNum);
+                    player = PlayerBuilder.getPlayer(playerID, ++attempt);
+        				break;
+        			case HttpStatus.SC_NOT_FOUND:
+        				LOG.info("Character " + playerID + " does not exist. (404)");
+        				player.setCharacterStatus(CharacterStatus.DELETED);
+        				break;
+    				default:
+    					throw new Exception("Unexpected HTTP Status Code: " + httpe.getStatusCode(), httpe);
+        		}
         }
         return player;
     }
