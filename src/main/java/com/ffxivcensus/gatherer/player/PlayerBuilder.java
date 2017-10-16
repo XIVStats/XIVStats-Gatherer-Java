@@ -16,6 +16,8 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.ffxivcensus.gatherer.Gatherer;
 import com.mashape.unirest.http.HttpResponse;
@@ -32,6 +34,7 @@ import com.mashape.unirest.http.Unirest;
  */
 public class PlayerBuilder {
 
+	private static final Logger LOG = LoggerFactory.getLogger(PlayerBuilder.class);
     /**
      * Number of days inactivity before character is considered inactive
      */
@@ -195,7 +198,7 @@ public class PlayerBuilder {
                 int max = attempt * 20;
                 int min = (attempt - 1) + 1;
                 int randomNum = rand.nextInt(max - min + 1) + min;
-                System.out.println("Experiencing rate limiting (HTTP 429) while fetching id " + playerID + " (attempt " + attempt
+                LOG.trace("Experiencing rate limiting (HTTP 429) while fetching id " + playerID + " (attempt " + attempt
                                    + "), waiting " + randomNum + "ms then retrying...");
                 TimeUnit.MILLISECONDS.sleep(randomNum);
                 player = PlayerBuilder.getPlayer(playerID, ++attempt);
@@ -430,7 +433,7 @@ public class PlayerBuilder {
 
             strLastModifiedDate = jsonResponse.getHeaders().get("Last-Modified").toString();
         } catch(Exception e) {
-            System.out.println("Setting last-active date to ARR launch date due to an an error loading character " + id
+            LOG.warn("Setting last-active date to ARR launch date due to an an error loading character " + id
                                + "'s profile image: " + e.getMessage());
             strLastModifiedDate = "[Sat, 24 Aug 2013 00:00:01 GMT]";
         }

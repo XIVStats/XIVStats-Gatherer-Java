@@ -1,5 +1,8 @@
 package com.ffxivcensus.gatherer;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.ffxivcensus.gatherer.player.PlayerBeanDAO;
 import com.ffxivcensus.gatherer.player.PlayerBuilder;
 import com.mysql.jdbc.exceptions.jdbc4.MySQLNonTransientConnectionException;
@@ -16,6 +19,8 @@ import com.mysql.jdbc.exceptions.jdbc4.MySQLNonTransientConnectionException;
  * @see java.lang.Runnable
  */
 public class Gatherer implements Runnable {
+	
+	private static final Logger LOG = LoggerFactory.getLogger(Gatherer.class);
 
     private final int playerId;
     private final PlayerBeanDAO dao;
@@ -34,27 +39,26 @@ public class Gatherer implements Runnable {
     @Override
     public void run() {
         try {
-            System.out.println("Starting evaluation of player ID: " + playerId);
+            LOG.debug("Starting evaluation of player ID: " + playerId);
             // Parse players and write them to DB
             String out = dao.saveRecord(PlayerBuilder.getPlayer(playerId, 1));
-            System.out.println(out);
+            LOG.debug(out);
         } catch(MySQLNonTransientConnectionException failWriteEx) { // If record fails to write due to too many connections
-            System.out.println("Error: Record write failure, reattempting write");
+            LOG.trace("Error: Record write failure, reattempting write");
             // Wait a second
             try {
                 Thread.currentThread().wait(1);
             } catch(InterruptedException e) {
-                e.printStackTrace();
             }
             // Then attempt to write again
             try {
                 String out = dao.saveRecord(PlayerBuilder.getPlayer(playerId, 1));
-                System.out.println(out);
+                LOG.debug(out);
             } catch(Exception e) {
-                e.printStackTrace();
+                LOG.error(e.getMessage(), e);
             }
         } catch(Exception e) {
-            System.out.println(e.getMessage());
+            LOG.error(e.getMessage(), e);
         }
     }
 

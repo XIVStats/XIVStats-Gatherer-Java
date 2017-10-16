@@ -7,6 +7,8 @@ import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.ffxivcensus.gatherer.config.ApplicationConfig;
 import com.ffxivcensus.gatherer.config.ConfigurationBuilder;
@@ -19,6 +21,8 @@ import com.ffxivcensus.gatherer.config.ConfigurationBuilder;
  * @since v1.0
  */
 public class Console {
+	
+	private static final Logger LOG = LoggerFactory.getLogger(Console.class);
 
     public static void main(final String[] args) {
         run(args);
@@ -49,12 +53,11 @@ public class Console {
                                                            .loadCommandLineConfiguration(options, args)
                                                            .getConfiguration();
 
-            gatherer = new GathererController(config);
-
             // Help flag
             if(cmd.hasOption("h")) {
                 formatter.printHelp(usage, options);
             } else {
+                gatherer = new GathererController(config);
                 gatherer.run();
             }
 
@@ -62,7 +65,7 @@ public class Console {
         } catch(ParseException pEx) {
             formatter.printHelp(usage, options);
         } catch(Exception e) {
-            e.printStackTrace();
+            LOG.error(e.getMessage(), e);
         }
         return gatherer;
     }
