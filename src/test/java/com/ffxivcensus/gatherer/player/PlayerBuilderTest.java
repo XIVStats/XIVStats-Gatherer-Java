@@ -271,9 +271,8 @@ public class PlayerBuilderTest {
     public void testGetPlayerInvalid() {
         try {
             // Try to get a character that doesn't exist
-            PlayerBuilder.getPlayer(2356539, 1);
-            // If no exception thrown fail
-            fail("Character should not exist");
+            PlayerBean player = PlayerBuilder.getPlayer(2356539, 1);
+            assertEquals("Character should be marked as DELETED", CharacterStatus.DELETED, player.getCharacterStatus());
         } catch(Exception e) {
 
         }
