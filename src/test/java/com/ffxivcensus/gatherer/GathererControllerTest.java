@@ -25,7 +25,7 @@ import com.zaxxer.hikari.HikariDataSource;
  * @see com.ffxivcensus.gatherer.player.PlayerBuilder
  * @see com.ffxivcensus.gatherer.Gatherer
  * @see com.ffxivcensus.gatherer.GathererController
- * @see com.ffxivcensus.gatherer.PlayerBuilderTest
+ * @see com.ffxivcensus.gatherer.player.PlayerBuilderTest
  * @since v1.0
  */
 public class GathererControllerTest {
