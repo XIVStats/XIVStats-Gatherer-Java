@@ -12,6 +12,8 @@ import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -35,7 +37,7 @@ import com.ffxivcensus.gatherer.GathererController;
  * @author matthew.hillier
  */
 public class ConfigurationBuilder {
-
+	private static final Logger LOG = LoggerFactory.getLogger(ConfigurationBuilder.class);
     private ApplicationConfig configuration;
 
     /**
@@ -90,7 +92,7 @@ public class ConfigurationBuilder {
             Element elementExecConf = (Element) nodesExecConf.item(0);
             configuration.setThreadLimit(Integer.parseInt(elementExecConf.getElementsByTagName("threads").item(0).getTextContent()));
         } else {
-            System.err.println("Configuration: No config.xml file found. Failing over to defaults.");
+            LOG.error("Configuration: No config.xml file found. Failing over to defaults.");
         }
 
         return new ConfigurationBuilder(configuration);

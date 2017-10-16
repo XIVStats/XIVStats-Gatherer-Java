@@ -11,6 +11,8 @@ import javax.sql.DataSource;
 
 import org.apache.commons.lang.BooleanUtils;
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.ffxivcensus.gatherer.config.ApplicationConfig;
 
@@ -21,6 +23,7 @@ import com.ffxivcensus.gatherer.config.ApplicationConfig;
  */
 public class PlayerBeanDAO {
 
+	private static final Logger LOG = LoggerFactory.getLogger(PlayerBeanDAO.class);
     private ApplicationConfig appConfig;
     private DataSource dataSource;
 
@@ -231,8 +234,7 @@ public class PlayerBeanDAO {
         try {
             return dataSource.getConnection();
         } catch(SQLException sqlEx) {
-            System.out.println("Connection failed! Please see output console");
-            sqlEx.printStackTrace();
+            LOG.error("Connection failed! Please see output console", sqlEx);
             return null;
         }
     }

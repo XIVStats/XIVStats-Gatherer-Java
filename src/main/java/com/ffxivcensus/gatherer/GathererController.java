@@ -3,6 +3,9 @@ package com.ffxivcensus.gatherer;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.ffxivcensus.gatherer.config.ApplicationConfig;
 import com.ffxivcensus.gatherer.player.PlayerBeanDAO;
 import com.ffxivcensus.gatherer.player.PlayerBuilder;
@@ -20,6 +23,7 @@ import com.zaxxer.hikari.HikariDataSource;
  */
 public class GathererController {
 
+	private static final Logger LOG = LoggerFactory.getLogger(GathererController.class);
     private ApplicationConfig appConfig = new ApplicationConfig();
     private HikariDataSource dataSource;
     /**
@@ -58,7 +62,7 @@ public class GathererController {
             appConfig.setThreadLimit(ApplicationConfig.MAX_THREADS);
         }
 
-        if(isConfigured().length() > 0) { // If not configured
+        if(!isConfigured()) { // If not configured
             throw new Exception("Program not (correctly) configured");
         } else { // Else configured correctly
             try {
@@ -79,9 +83,9 @@ public class GathererController {
                 dao.createTable(appConfig.getTableName());
 
                 if(appConfig.getStartId() > appConfig.getEndId()) {
-                    System.out.println("Error: The finish id argument needs to be greater than the start id argument");
+                    LOG.error("Error: The finish id argument needs to be greater than the start id argument");
                 } else { // Else pass values into poll method
-                    System.out.println("Starting parse of range " + appConfig.getStartId() + " to " + appConfig.getEndId() + " using "
+                    LOG.info("Starting parse of range " + appConfig.getStartId() + " to " + appConfig.getEndId() + " using "
                                        + appConfig.getThreadLimit() + " threads");
                     gatherRange();
                     // Get current time
@@ -91,7 +95,7 @@ public class GathererController {
                     long hours = minutes / 60;
                     long days = hours / 24;
                     String time = days + " Days, " + hours % 24 + " hrs, " + minutes % 60 + " mins, " + seconds % 60 + " secs";
-                    System.out.println("Run completed, " + ((appConfig.getEndId() - appConfig.getStartId()) + 1)
+                    LOG.info("Run completed, " + ((appConfig.getEndId() - appConfig.getStartId()) + 1)
                                        + " character IDs scanned in " + time + " (" + appConfig.getThreadLimit() + " threads)");
 
                 }
@@ -111,34 +115,33 @@ public class GathererController {
      *
      * @return string containing warnings/errors in configuration.
      */
-    public String isConfigured() {
+    public boolean isConfigured() {
         boolean configured = true;
-        StringBuilder sbOut = new StringBuilder();
         if(appConfig.getStartId() < 0) {
-            sbOut.append("Start ID must be configured to a positive numerical value\n");
+            LOG.error("Start ID must be configured to a positive numerical value\n");
             configured = false;
         }
         if(appConfig.getEndId() < 0) {
-            sbOut.append("End ID must be configured to a positive numerical value\n");
+            LOG.error("End ID must be configured to a positive numerical value\n");
             configured = false;
         }
         if(appConfig.getDbUrl() == null || appConfig.getDbUrl().length() <= 5) {
-            sbOut.append("Database URL has not been configured correctly\n");
+            LOG.error("Database URL has not been configured correctly\n");
             configured = false;
         }
         if(appConfig.getDbUser() == null || appConfig.getDbUser().length() == 0) {
-            sbOut.append("Database User has not been configured correctly\n");
+            LOG.error("Database User has not been configured correctly\n");
             configured = false;
         }
         if(appConfig.getDbPassword() == null || appConfig.getDbPassword().length() == 0) {
-            sbOut.append("Database Password has not been configured correctly\n");
+            LOG.error("Database Password has not been configured correctly\n");
             configured = false;
         }
         if(appConfig.getTableName() == null || appConfig.getTableName().length() == 0) {
-            sbOut.append("Table name has not been configured correctly\n");
+            LOG.error("Table name has not been configured correctly\n");
             configured = false;
         }
-        return sbOut.toString();
+        return configured;
     }
 
     /**
@@ -161,6 +164,10 @@ public class GathererController {
         executor.shutdown();
         while(!executor.isTerminated()) {
             // Wait patiently for the executor to finish off everything submitted
+        		if(Thread.interrupted()) {
+        			// Unless there's an interrupt, in which case shut down gracefully
+        			executor.shutdownNow();
+        		}
         }
     }
 

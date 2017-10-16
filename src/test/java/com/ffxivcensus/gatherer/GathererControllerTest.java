@@ -175,12 +175,7 @@ public class GathererControllerTest {
         } catch(Exception e) {
             assertEquals("Program not (correctly) configured", e.getMessage());
         }
-        String strOut = gathererController.isConfigured();
-        assertTrue(strOut.contains("Start ID must be configured to a positive numerical value"));
-        assertTrue(strOut.contains("End ID must be configured to a positive numerical value"));
-        assertTrue(strOut.contains("Database URL has not been configured correctly"));
-        assertTrue(strOut.contains("Database User has not been configured correctly"));
-        assertTrue(strOut.contains("Database Password has not been configured correctly"));
+        assertFalse(gathererController.isConfigured());
 
     }
 
@@ -196,10 +191,7 @@ public class GathererControllerTest {
 
         GathererController gathererController = new GathererController(config);
 
-        String strOut = gathererController.isConfigured();
-        assertTrue(strOut.contains("Database URL has not been configured correctly"));
-        assertTrue(strOut.contains("Database User has not been configured correctly"));
-        assertTrue(strOut.contains("Database Password has not been configured correctly"));
+        assertFalse(gathererController.isConfigured());
 
     }
 }
