@@ -17,8 +17,6 @@ import com.mysql.jdbc.exceptions.jdbc4.MySQLNonTransientConnectionException;
  */
 public class Gatherer implements Runnable {
 
-    private final GathererController parent;
-
     private final int playerId;
     private final PlayerBeanDAO dao;
 
@@ -26,7 +24,6 @@ public class Gatherer implements Runnable {
      * Default constructor
      */
     public Gatherer(final GathererController parent, final PlayerBeanDAO playerBeanDAO, final int playerId) {
-        this.parent = parent;
         this.playerId = playerId;
         this.dao = playerBeanDAO;
     }
@@ -37,14 +34,10 @@ public class Gatherer implements Runnable {
     @Override
     public void run() {
         try {
-            if(parent.isVerbose()) {
-                System.out.println("Starting evaluation of player ID: " + playerId);
-            }
+            System.out.println("Starting evaluation of player ID: " + playerId);
             // Parse players and write them to DB
             String out = dao.saveRecord(PlayerBuilder.getPlayer(playerId, 1));
-            if(!parent.isQuiet()) { // If not running in quiet mode
-                System.out.println(out);
-            }
+            System.out.println(out);
         } catch(MySQLNonTransientConnectionException failWriteEx) { // If record fails to write due to too many connections
             System.out.println("Error: Record write failure, reattempting write");
             // Wait a second
@@ -56,16 +49,12 @@ public class Gatherer implements Runnable {
             // Then attempt to write again
             try {
                 String out = dao.saveRecord(PlayerBuilder.getPlayer(playerId, 1));
-                if(!parent.isQuiet()) {
-                    System.out.println(out);
-                }
+                System.out.println(out);
             } catch(Exception e) {
                 e.printStackTrace();
             }
         } catch(Exception e) {
-            if(parent.isVerbose() || parent.isPrintFails()) {
-                System.out.println(e.getMessage());
-            }
+            System.out.println(e.getMessage());
         }
     }
 

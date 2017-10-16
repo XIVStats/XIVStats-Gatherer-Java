@@ -47,50 +47,19 @@ public class PlayerBeanDAO {
             sbSQL.append("level_rogue INTEGER,level_conjurer INTEGER,level_thaumaturge INTEGER,level_arcanist INTEGER,level_darkknight INTEGER, level_machinist INTEGER,");
             sbSQL.append("level_astrologian INTEGER, level_scholar INTEGER, level_redmage INTEGER, level_samurai INTEGER, level_carpenter INTEGER, level_blacksmith INTEGER,");
             sbSQL.append("level_armorer INTEGER,level_goldsmith INTEGER,level_leatherworker INTEGER,level_weaver INTEGER,level_alchemist INTEGER,level_culinarian INTEGER,");
-            sbSQL.append("level_miner INTEGER,level_botanist INTEGER,level_fisher INTEGER");
-            if(appConfig.isStoreProgression()) {
-                sbSQL.append(",");
-                sbSQL.append("p30days BIT, p60days BIT, p90days BIT, p180days BIT, p270days BIT,p360days BIT,p450days BIT,p630days BIT,p960days BIT,");
-                sbSQL.append("prearr BIT, prehw BIT, presb BIT, arrartbook BIT, hwartbookone BIT, hwartbooktwo BIT, hasencyclopedia BIT, ");
-                sbSQL.append("beforemeteor BIT, beforethefall BIT, ps4collectors BIT, ");
-                sbSQL.append("soundtrack BIT,saweternalbond BIT,sightseeing BIT,comm50 BIT,moogleplush BIT,");
-                sbSQL.append("topazcarubuncleplush BIT,emeraldcarbuncleplush BIT,");
-                sbSQL.append("hildibrand BIT, dideternalbond BIT, arrcollector BIT,");
-                sbSQL.append("kobold BIT, sahagin BIT, amaljaa BIT, sylph BIT,  moogle BIT, vanuvanu BIT, vath BIT,");
-                sbSQL.append("arr_25_complete BIT,hw_complete BIT, hw_31_complete BIT, hw_33_complete BIT, sb_complete BIT, legacy_player BIT");
-            }
-            if(appConfig.isStoreMounts()) {
-                sbSQL.append(",mounts TEXT");
-            }
-            if(appConfig.isStoreMinions()) {
-                sbSQL.append(",minions TEXT");
-            }
-            if(appConfig.isStoreActiveDate()) {
-                sbSQL.append(",");
-                sbSQL.append("date_active DATE");
-            }
-            if(appConfig.isStorePlayerActive()) {
-                sbSQL.append(",");
-                sbSQL.append("is_active BIT");
-            }
-            sbSQL.append(");");
-
-            st.executeUpdate(sbSQL.toString());
-        } catch(SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void dropTable(final String tableName) {
-        // Create DB table if it doesn't exist
-        // Open connection
-
-        try(Connection conn = openConnection();
-            Statement st = conn.createStatement()) {
-            StringBuilder sbSQL = new StringBuilder();
-            sbSQL.append("DROP TABLE IF EXISTS ");
-            sbSQL.append(tableName);
-            sbSQL.append(";");
+            sbSQL.append("level_miner INTEGER,level_botanist INTEGER,level_fisher INTEGER,");
+            sbSQL.append("p30days BIT, p60days BIT, p90days BIT, p180days BIT, p270days BIT,p360days BIT,p450days BIT,p630days BIT,p960days BIT,");
+            sbSQL.append("prearr BIT, prehw BIT, presb BIT, arrartbook BIT, hwartbookone BIT, hwartbooktwo BIT, hasencyclopedia BIT, ");
+            sbSQL.append("beforemeteor BIT, beforethefall BIT, ps4collectors BIT, ");
+            sbSQL.append("soundtrack BIT,saweternalbond BIT,sightseeing BIT,comm50 BIT,moogleplush BIT,");
+            sbSQL.append("topazcarubuncleplush BIT,emeraldcarbuncleplush BIT,");
+            sbSQL.append("hildibrand BIT, dideternalbond BIT, arrcollector BIT,");
+            sbSQL.append("kobold BIT, sahagin BIT, amaljaa BIT, sylph BIT,  moogle BIT, vanuvanu BIT, vath BIT,");
+            sbSQL.append("arr_25_complete BIT,hw_complete BIT, hw_31_complete BIT, hw_33_complete BIT, sb_complete BIT, legacy_player BIT");
+            sbSQL.append(",mounts TEXT");
+            sbSQL.append(",minions TEXT,");
+            sbSQL.append("date_active DATE,");
+            sbSQL.append("is_active BIT);");
 
             st.executeUpdate(sbSQL.toString());
         } catch(SQLException e) {
@@ -140,13 +109,7 @@ public class PlayerBeanDAO {
             StringBuilder sbValues = new StringBuilder();
 
             // Set default table name
-            String tableName;
-            // Determine table to write to
-            if(appConfig.isSplitTables()) {
-                tableName = "tbl" + player.getRealm().toLowerCase() + appConfig.getTableSuffix();
-            } else {
-                tableName = this.appConfig.getTableName() + appConfig.getTableSuffix();
-            }
+            String tableName = this.appConfig.getTableName();
 
             sbFields.append("INSERT IGNORE INTO ").append(tableName).append(" (");
             sbValues.append(" VALUES (");
@@ -247,9 +210,7 @@ public class PlayerBeanDAO {
             String strSQL = sbFields.toString() + sbValues.toString();
 
             st.executeUpdate(strSQL);
-            if(!appConfig.isQuiet() || appConfig.isVerbose()) {
-                strOut = "Character " + player.getId() + " written to database successfully.";
-            }
+            strOut = "Character " + player.getId() + " written to database successfully.";
         } catch(SQLException e) {
             e.printStackTrace();
         }

@@ -73,20 +73,14 @@ Follow these steps to setup XIVStats-Gatherer-Java:
   |-d            | --database            | String         | database name                                                        |
   |-D            | --do-not-store-date   | none           | do not store date of last player activity                            |
   |-f            | --finish              | integer        | the character id to conclude character run at (inclusive)            |
-  |-F            | --print-failures      | none           | print records that don't exist                                       |
   |-h            | --help                | none           | display help message                                                 |
   |-m            | --store-mounts        | none           | store mount data set for each player into the database               |
   |-P            | --store-minions       | none           | store minion data set for each player into the database              |
   |-p            | --password            | String         | database user password                                               |
-  |-q            | --quiet               | none           | run program in quiet mode - no console output                        |
   |-s            | --start               | integer        | the character id to start from (inclusive)                           |
-  |-S            | --split-table         | none           | split table into several small tables                                |
   |-t            | --threads             | integer        | number of gatherer thrads to running                                 |
-  |-T            | --table               | String         | the table to write records to                                        |
   |-u            | --user                | String         | database user                                                        |
   |-U            | --url                 | String         | the database URL of the database server to connect to                |
-  |-v            | --verbose             | none           | run program in verbose mode - full console output                    |
-  |-x            | --suffix              | String         | suffix to append to all tables generated                             |
   
 
   Note: On Linux/Unix it is advised to run the program in Tmux/Screen or similar.
