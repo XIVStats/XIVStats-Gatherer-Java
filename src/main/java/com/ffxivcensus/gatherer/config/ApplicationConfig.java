@@ -51,18 +51,6 @@ public class ApplicationConfig {
      * Whether to ignore database SSL verification warnings
      */
     private boolean dbIgnoreSSLWarn = true;
-    /**
-     * String field to store the table name to write records to (if not splitting tables).
-     */
-    private String tableName = DEFAULT_TABLE_NAME;
-    /**
-     * Boolean field indicating whether to split character records across multiple tables, with one table for each realm/server.
-     */
-    private boolean splitTables;
-    /**
-     * Suffix to be appended to all tables e.g. 15012016
-     */
-    private String tableSuffix = "";
 
     ////////////////////////
     // Process Configuration
@@ -72,18 +60,6 @@ public class ApplicationConfig {
      * User-defined limit for thread count.
      */
     private int threadLimit;
-    /**
-     * Whether to provide console output.
-     */
-    private boolean quiet = true;
-    /**
-     * Whether to output all console output.
-     */
-    private boolean verbose;
-    /**
-     * Whether to output failed records
-     */
-    private boolean printFails;
 
     //////////////////////////
     // Gathering Configuration
@@ -163,27 +139,7 @@ public class ApplicationConfig {
     }
 
     public String getTableName() {
-        return tableName;
-    }
-
-    public void setTableName(String tableName) {
-        this.tableName = tableName;
-    }
-
-    public boolean isSplitTables() {
-        return splitTables;
-    }
-
-    public void setSplitTables(boolean splitTables) {
-        this.splitTables = splitTables;
-    }
-
-    public String getTableSuffix() {
-        return tableSuffix;
-    }
-
-    public void setTableSuffix(String tableSuffix) {
-        this.tableSuffix = tableSuffix;
+        return DEFAULT_TABLE_NAME;
     }
 
     ////////////////////////
@@ -196,30 +152,6 @@ public class ApplicationConfig {
 
     public void setThreadLimit(int threadLimit) {
         this.threadLimit = threadLimit;
-    }
-
-    public boolean isQuiet() {
-        return quiet;
-    }
-
-    public void setQuiet(boolean quiet) {
-        this.quiet = quiet;
-    }
-
-    public boolean isVerbose() {
-        return verbose;
-    }
-
-    public void setVerbose(boolean verbose) {
-        this.verbose = verbose;
-    }
-
-    public boolean isPrintFails() {
-        return printFails;
-    }
-
-    public void setPrintFails(boolean printFails) {
-        this.printFails = printFails;
     }
 
     //////////////////////////

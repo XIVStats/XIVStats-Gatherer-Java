@@ -76,13 +76,7 @@ public class GathererController {
 
                 PlayerBeanDAO dao = new PlayerBeanDAO(appConfig, dataSource);
 
-                if(appConfig.isSplitTables()) { // If specified to split tables
-                    for(String realm : realms) { // Create a table for each realm
-                        dao.createTable("tbl" + realm.toLowerCase() + appConfig.getTableSuffix());
-                    }
-                } else { // Else just create a single table
-                    dao.createTable(appConfig.getTableName());
-                }
+                dao.createTable(appConfig.getTableName());
 
                 if(appConfig.getStartId() > appConfig.getEndId()) {
                     System.out.println("Error: The finish id argument needs to be greater than the start id argument");
@@ -231,59 +225,5 @@ public class GathererController {
      */
     public String getTableName() {
         return appConfig.getTableName();
-    }
-
-    /**
-     * Whether the single player table is being split up into one table for each realm.
-     *
-     * @return whether the single player table is being split up into one table for each realm.
-     */
-    public boolean isSplitTables() {
-        return appConfig.isSplitTables();
-    }
-
-    /**
-     * Get the suffix to append to all tables.
-     *
-     * @return the suffix to append to all tables.
-     */
-    public String getTableSuffix() {
-        return appConfig.getTableSuffix();
-    }
-
-    /**
-     * Set whether to run the program in quiet mode (no console output).
-     *
-     * @return whether to run the program in quiet mode
-     */
-    public boolean isQuiet() {
-        return appConfig.isQuiet();
-    }
-
-    /**
-     * Set whether to print an output when records don't exist.
-     *
-     * @return whether to print an output when records don't exist.
-     */
-    public boolean isVerbose() {
-        return appConfig.isVerbose();
-    }
-
-    /**
-     * Get list of realms to create tables for
-     *
-     * @return array of realm names
-     */
-    public static String[] getRealms() {
-        return realms;
-    }
-
-    /**
-     * Get whether to print record write fails
-     *
-     * @return whether to print record write fails
-     */
-    public boolean isPrintFails() {
-        return appConfig.isPrintFails();
     }
 }

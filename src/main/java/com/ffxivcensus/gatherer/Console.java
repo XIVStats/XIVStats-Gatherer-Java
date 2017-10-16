@@ -35,8 +35,10 @@ public class Console {
         Options options = setupOptions();
 
         // Declare usage string
-        String usage = "java -jar XIVStats-Gatherer-Java.jar [-abimqvxDFPS] -s startid -f finishid [-d database-name] [-u database-user] [-p database-user-password] [-U database-url] [-T table] [-t threads]";
+        String usage = "java -jar XIVStats-Gatherer-Java.jar [-abimDP] -s startid -f finishid [-d database-name] [-u database-user] [-p database-user-password] [-U database-url] [-t threads]";
         HelpFormatter formatter = new HelpFormatter();
+        
+        GathererController gatherer = null;
 
         try {
             CommandLineParser parser = new DefaultParser();
@@ -47,7 +49,7 @@ public class Console {
                                                            .loadCommandLineConfiguration(options, args)
                                                            .getConfiguration();
 
-            GathererController gatherer = new GathererController(config);
+            gatherer = new GathererController(config);
 
             // Help flag
             if(cmd.hasOption("h")) {
@@ -62,7 +64,7 @@ public class Console {
         } catch(Exception e) {
             e.printStackTrace();
         }
-        return null;
+        return gatherer;
     }
 
     /**
@@ -96,14 +98,6 @@ public class Console {
                                    .desc("database user password").build();
         Option optThreads = Option.builder("t").longOpt("threads").argName("no-threads").hasArg().numberOfArgs(1)
                                   .desc("number of gatherer threads to run").build();
-        Option optTable = Option.builder("T").longOpt("table").hasArg().numberOfArgs(1).argName("table")
-                                .desc("the table to write records to").build();
-        Option optSplitTable = Option.builder("S").longOpt("split-table").desc("split tblplayers into multiple tables").build();
-        Option optQuiet = Option.builder("q").longOpt("quiet").desc("run program in quiet mode - no console output").build();
-        Option optVerbose = Option.builder("v").longOpt("verbose").desc("run program in verbose bug mode - full console output").build();
-        Option optFailPrint = Option.builder("F").longOpt("print-failures").desc("print records that don't exist").build();
-        Option optSuffix = Option.builder("x").longOpt("suffix").hasArg().numberOfArgs(1).argName("table-suffix")
-                                 .desc("suffix to append to all tables").build();
         Option optStoreActive = Option.builder("a").longOpt("do-not-store-activity")
                                       .desc("do not store boolean data indicating player activity in last 30 days").build();
         Option optStoreDate = Option.builder("D").longOpt("do-not-store-date").desc("do not store Date of last player activity").build();
@@ -122,12 +116,6 @@ public class Console {
         options.addOption(optThreads);
         options.addOption(optURL);
         options.addOption(optHelp);
-        options.addOption(optTable);
-        options.addOption(optSplitTable);
-        options.addOption(optQuiet);
-        options.addOption(optVerbose);
-        options.addOption(optFailPrint);
-        options.addOption(optSuffix);
         options.addOption(optStoreActive);
         options.addOption(optStoreDate);
         options.addOption(optIgnoreSSLVerify);

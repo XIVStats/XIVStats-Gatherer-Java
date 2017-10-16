@@ -159,28 +159,6 @@ public class ConfigurationBuilder {
             configuration.setThreadLimit(Integer.parseInt(cmd.getOptionValue("t")));
         }
 
-        // Database table
-        if(cmd.hasOption("T")) {
-            configuration.setTableName(cmd.getOptionValue("T"));
-        }
-
-        // Verbose mode
-        configuration.setQuiet(cmd.hasOption("q"));
-
-        // Debug mode
-        configuration.setVerbose(cmd.hasOption("v"));
-
-        // Fail print
-        configuration.setPrintFails(cmd.hasOption("F"));
-
-        // Split tables
-        configuration.setSplitTables(cmd.hasOption("S"));
-
-        // Set suffix
-        if(cmd.hasOption("x")) {
-            configuration.setTableSuffix(cmd.getOptionValue("x"));
-        }
-
         return new ConfigurationBuilder(configuration);
     }
 

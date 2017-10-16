@@ -9,7 +9,6 @@ import java.util.List;
 
 import javax.xml.parsers.ParserConfigurationException;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.xml.sax.SAXException;
 
@@ -32,35 +31,6 @@ import com.zaxxer.hikari.HikariDataSource;
 public class GathererControllerTest {
 
     /**
-     * Before running each test, drop tables and pipe output into buffer
-     */
-    @Before
-    public void setUpDB() throws Exception {
-        ApplicationConfig config = ConfigurationBuilder.createBuilder().loadXMLConfiguration().getConfiguration();
-
-        HikariConfig hikariConfig = new HikariConfig();
-        hikariConfig.setJdbcUrl("jdbc:" + config.getDbUrl() + "/" + config.getDbName());
-        hikariConfig.setUsername(config.getDbUser());
-        hikariConfig.setPassword(config.getDbPassword());
-        hikariConfig.setMaximumPoolSize(config.getThreadLimit());
-        if(config.isDbIgnoreSSLWarn()) {
-            hikariConfig.addDataSourceProperty("useSSL", false);
-        }
-        HikariDataSource dataSource = new HikariDataSource(hikariConfig);
-
-        PlayerBeanDAO dao = new PlayerBeanDAO(config, dataSource);
-
-        dao.dropTable("tblplayers_test");
-        dao.dropTable("tblplayers_test_two");
-
-        for(String strRealm : GathererController.getRealms()) {
-            dao.dropTable("tbl" + strRealm.toLowerCase() + "_test");
-        }
-
-        dataSource.close();
-    }
-
-    /**
      * Test gathering run of range from 11886902 to 11887010
      *
      * @throws IOException
@@ -73,8 +43,6 @@ public class GathererControllerTest {
 
         config.setStartId(11886902);
         config.setEndId(11887010);
-        config.setTableName("tblplayers_test_3");
-        config.setVerbose(true);
         config.setThreadLimit(40);
 
         GathererController gathererController = new GathererController(config);
@@ -147,12 +115,9 @@ public class GathererControllerTest {
 
         config.setStartId(1557260);
         config.setEndId(1558260);
-        config.setQuiet(true);
-        config.setVerbose(false);
         config.setStoreMinions(true);
         config.setStoreMounts(true);
         config.setStoreProgression(true);
-        config.setTableName("tblplayers_test_two");
 
         GathererController gathererController = new GathererController(config);
         try {
@@ -193,70 +158,6 @@ public class GathererControllerTest {
     }
 
     /**
-     * Invoke a test run in which the single characters table is being split
-     * across several tables, one for each realm.
-     * Also testing non-verbose mode, debug output (print non-existant records).
-     */
-    @Test
-    public void testRunSplitTables() throws Exception {
-        ApplicationConfig config = ConfigurationBuilder.createBuilder().loadXMLConfiguration().getConfiguration();
-
-        config.setStartId(1557260);
-        config.setEndId(1558260);
-        config.setQuiet(false);
-        config.setVerbose(true);
-        config.setStoreMinions(false);
-        config.setStoreMounts(false);
-        config.setStoreProgression(false);
-        config.setThreadLimit(50);
-        config.setTableSuffix("_test");
-        config.setSplitTables(true);
-
-        GathererController gathererController = new GathererController(config);
-        try {
-            gathererController.run();
-        } catch(Exception e) {
-        }
-        assertEquals(gathererController.getThreadLimit(), gathererController.getThreadLimit());
-
-        // Test that records were successfully written to db
-
-        HikariConfig hikariConfig = new HikariConfig();
-        hikariConfig.setJdbcUrl("jdbc:" + config.getDbUrl() + "/" + config.getDbName());
-        hikariConfig.setUsername(config.getDbUser());
-        hikariConfig.setPassword(config.getDbPassword());
-        hikariConfig.setMaximumPoolSize(config.getThreadLimit());
-        if(config.isDbIgnoreSSLWarn()) {
-            hikariConfig.addDataSourceProperty("useSSL", false);
-        }
-
-        HikariDataSource dataSource = new HikariDataSource(hikariConfig);
-
-        PlayerBeanDAO dao = new PlayerBeanDAO(config, dataSource);
-
-        List<Integer> addedIDsCerberus = dao.getAdded("tblcerberus_test", config.getStartId(), config.getEndId());
-        List<Integer> addedIDsShiva = dao.getAdded("tblshiva_test", config.getStartId(), config.getEndId());
-        List<Integer> addedIDsMoogle = dao.getAdded("tblmoogle_test", config.getStartId(), config.getEndId());
-
-        // Test for IDs we know exist in cerberus (realm of startID char)
-        assertTrue(addedIDsCerberus.contains(config.getStartId()));
-        assertTrue(addedIDsCerberus.contains(1557648));
-        assertTrue(addedIDsCerberus.contains(1558244));
-
-        assertTrue(addedIDsShiva.contains(1557297));
-
-        // Test for ids that will exist on Moogle
-        assertTrue(addedIDsMoogle.contains(1557265));
-        assertTrue(addedIDsMoogle.contains(config.getEndId()));
-        assertTrue(addedIDsMoogle.contains(1557301));
-
-        // Test that gatherer has not written records that don't exist on cerberus
-        assertFalse(addedIDsCerberus.contains(config.getEndId()));
-
-        dataSource.close();
-    }
-
-    /**
      * Invoke a test run using options that will cause the program not to run.
      */
     @Test
@@ -266,7 +167,6 @@ public class GathererControllerTest {
         config.setDbUser("");
         config.setDbPassword("");
         config.setDbUrl("mysq");
-        config.setTableName("");
 
         GathererController gathererController = new GathererController(config);
 
@@ -281,7 +181,6 @@ public class GathererControllerTest {
         assertTrue(strOut.contains("Database URL has not been configured correctly"));
         assertTrue(strOut.contains("Database User has not been configured correctly"));
         assertTrue(strOut.contains("Database Password has not been configured correctly"));
-        assertTrue(strOut.contains("Table name has not been configured correctly"));
 
     }
 
@@ -294,7 +193,6 @@ public class GathererControllerTest {
         config.setDbUser(null);
         config.setDbPassword(null);
         config.setDbUrl(null);
-        config.setTableName(null);
 
         GathererController gathererController = new GathererController(config);
 
@@ -302,7 +200,6 @@ public class GathererControllerTest {
         assertTrue(strOut.contains("Database URL has not been configured correctly"));
         assertTrue(strOut.contains("Database User has not been configured correctly"));
         assertTrue(strOut.contains("Database Password has not been configured correctly"));
-        assertTrue(strOut.contains("Table name has not been configured correctly"));
 
     }
 }
