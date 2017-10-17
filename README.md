@@ -84,6 +84,17 @@ Follow these steps to setup XIVStats-Gatherer-Java:
   
 
   Note: On Linux/Unix it is advised to run the program in Tmux/Screen or similar.
+  
+## Logging
+Running the JAR will generate 2 log files, in a ```/.ffxivcensus/``` folder in the user's home directory.
+There are 2 log files produced:
+- ```gatherer.log```
+    - A record of all debug logging generated during the gathering run
+- ```progress.log```
+    - A simple per-character result log to enable tracking of progress
+    - Note: A characters are threaded, there is no guarantee the characters will be presented in this log in logical order
+
+Logs are currently overwritten with each run, so in the even you wish to save a log file, please re-name or copy the desired file for later review.
 
 ## Bugs and feature requests
 
