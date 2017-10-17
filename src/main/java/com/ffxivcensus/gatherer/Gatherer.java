@@ -23,6 +23,7 @@ import com.mysql.jdbc.exceptions.jdbc4.MySQLNonTransientConnectionException;
 public class Gatherer implements Runnable {
 	
 	private static final Logger LOG = LoggerFactory.getLogger(Gatherer.class);
+	private static final Logger RESULT_LOG = LoggerFactory.getLogger(Gatherer.class.getName() + ".result");
 
     private final int playerId;
     private final PlayerBeanDAO dao;
@@ -49,6 +50,7 @@ public class Gatherer implements Runnable {
 		        String out = dao.saveRecord(player);
 		        LOG.debug(out);
             }
+            RESULT_LOG.info(playerId + " - " + player.getCharacterStatus().name());
         } catch(MySQLNonTransientConnectionException failWriteEx) { // If record fails to write due to too many connections
             LOG.trace("Error: Record write failure, reattempting write");
             // Wait a second
@@ -65,6 +67,7 @@ public class Gatherer implements Runnable {
             }
         } catch(Exception e) {
             LOG.error(e.getMessage(), e);
+            RESULT_LOG.debug(playerId + " - FAILED");
         }
     }
 
