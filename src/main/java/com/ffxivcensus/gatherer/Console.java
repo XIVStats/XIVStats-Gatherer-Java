@@ -1,5 +1,9 @@
 package com.ffxivcensus.gatherer;
 
+import java.io.IOException;
+
+import javax.xml.parsers.ParserConfigurationException;
+
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
@@ -9,6 +13,10 @@ import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.xml.sax.SAXException;
 
 import com.ffxivcensus.gatherer.config.ApplicationConfig;
 import com.ffxivcensus.gatherer.config.ConfigurationBuilder;
@@ -20,12 +28,14 @@ import com.ffxivcensus.gatherer.config.ConfigurationBuilder;
  * @see com.ffxivcensus.gatherer.GathererController
  * @since v1.0
  */
-public class Console {
-	
-	private static final Logger LOG = LoggerFactory.getLogger(Console.class);
+@SpringBootApplication
+public class Console implements CommandLineRunner {
+
+    private static final String CLI_USAGE = "java -jar XIVStats-Gatherer-Java.jar [-abimDP] -s startid -f finishid [-d database-name] [-u database-user] [-p database-user-password] [-U database-url] [-t threads]";
+    private static final Logger LOG = LoggerFactory.getLogger(Console.class);
 
     public static void main(final String[] args) {
-        run(args);
+        SpringApplication.run(Console.class, args);
     }
 
     /**
@@ -34,40 +44,54 @@ public class Console {
      * @param args arguments to supply to the system.
      * @return the gatherer controller built up.
      */
-    public static GathererController run(final String[] args) {
-        // create Options object
-        Options options = setupOptions();
-
-        // Declare usage string
-        String usage = "java -jar XIVStats-Gatherer-Java.jar [-abimDP] -s startid -f finishid [-d database-name] [-u database-user] [-p database-user-password] [-U database-url] [-t threads]";
-        HelpFormatter formatter = new HelpFormatter();
-        
-        GathererController gatherer = null;
-
+    public void run(final String... args) {
         try {
-            CommandLineParser parser = new DefaultParser();
-            CommandLine cmd = parser.parse(options, args);
+            ApplicationConfig config = buildConfig(setupOptions(), args);
 
-            ApplicationConfig config = ConfigurationBuilder.createBuilder()
-                                                           .loadXMLConfiguration()
-                                                           .loadCommandLineConfiguration(options, args)
-                                                           .getConfiguration();
+            GathererController gatherer = prepareGatherer(config, args);
 
-            // Help flag
-            if(cmd.hasOption("h")) {
-                formatter.printHelp(usage, options);
-            } else {
-                gatherer = new GathererController(config);
+            if(gatherer != null) {
                 gatherer.run();
             }
-
-            return gatherer;
         } catch(ParseException pEx) {
-            formatter.printHelp(usage, options);
+            new HelpFormatter().printHelp(CLI_USAGE, setupOptions());
         } catch(Exception e) {
             LOG.error(e.getMessage(), e);
         }
-        return gatherer;
+    }
+
+    /**
+     * Returns a completed configuration object, including both config file and command line options.
+     * 
+     * @param options Available Command-Line options.
+     * @param args Command-Line arguments.
+     * @return
+     * @throws ParseException
+     * @throws SAXException
+     * @throws IOException
+     * @throws ParserConfigurationException
+     */
+    protected ApplicationConfig buildConfig(final Options options, final String... args) throws ParseException, SAXException, IOException,
+                                                                                         ParserConfigurationException {
+        ApplicationConfig config = ConfigurationBuilder.createBuilder()
+                                                       .loadXMLConfiguration()
+                                                       .loadCommandLineConfiguration(options, args)
+                                                       .getConfiguration();
+
+        return config;
+    }
+
+    protected GathererController prepareGatherer(final ApplicationConfig config, final String... args) throws ParseException {
+        CommandLineParser parser = new DefaultParser();
+        CommandLine cmd = parser.parse(setupOptions(), args);
+        GathererController controller = null;
+        // Check for Help flag
+        if(cmd.hasOption("h")) {
+            new HelpFormatter().printHelp(CLI_USAGE, setupOptions());
+        } else {
+            controller = new GathererController(config);
+        }
+        return controller;
     }
 
     /**
