@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import org.apache.commons.cli.MissingOptionException;
 import org.junit.Assert;
 import org.junit.Test;
 import com.ffxivcensus.gatherer.config.ApplicationConfig;
@@ -36,22 +37,22 @@ public class ConsoleTest {
      */
     @Test
     public void testConsole() throws Exception {
-        ApplicationConfig config = ConfigurationBuilder.createBuilder().loadXMLConfiguration().getConfiguration();
-
         String[] args = {"-is", "0",
                          "-f", "100",
                          "-t", "10",
-                         "-d", config.getDbName(),
-                         "-U", config.getDbUrl(),
+                         "-d", "DatabaseName",
+                         "-U", "jdbc:mysql://test-server",
                          "-bP"};
 
-        GathererController gc = Console.run(args);
+        Console c = new Console();
+        ApplicationConfig config = c.buildConfig(Console.setupOptions(), args);
+
         // Test that options have set attributes correctly
-        assertFalse(gc.isStoreProgression()); // b
-        assertTrue(gc.isStoreMinions()); // P
-        assertEquals(gc.getStartId(), 0);
-        assertEquals(gc.getEndId(), 100);
-        assertEquals(gc.getThreadLimit(), 10);
+        assertFalse(config.isStoreProgression()); // b
+        assertTrue(config.isStoreMinions()); // P
+        assertEquals(config.getStartId(), 0);
+        assertEquals(config.getEndId(), 100);
+        assertEquals(config.getThreadLimit(), 10);
     }
 
     /**
@@ -68,46 +69,55 @@ public class ConsoleTest {
      */
     @Test
     public void testConsoleFullOptions() throws Exception {
-        ApplicationConfig config = ConfigurationBuilder.createBuilder().loadXMLConfiguration().getConfiguration();
-
         String[] args = {"--start=100",
                          "--finish=200",
                          "--threads", "32",
-                         "-d", config.getDbName(),
-                         "-U", config.getDbUrl(),
-                         "-u", config.getDbUser(),
-                         "-p", config.getDbPassword()};
-        GathererController gc = Console.run(args);
+                         "-d", "DatabaseName",
+                         "-U", "jdbc:mysql://test-server",
+                         "-u", "user",
+                         "-p", "password"};
 
-        assertEquals(gc.getStartId(), 100);
-        assertEquals(gc.getEndId(), 200);
-        assertEquals(gc.getThreadLimit(), 32);
+        Console c = new Console();
+        ApplicationConfig config = c.buildConfig(Console.setupOptions(), args);
+
+        assertEquals(100, config.getStartId());
+        assertEquals(200, config.getEndId());
+        assertEquals(32, config.getThreadLimit());
+        assertEquals("DatabaseName", config.getDbName());
+        assertEquals("jdbc:mysql://test-server", config.getDbUrl());
+        assertEquals("user", config.getDbUser());
+        assertEquals("password", config.getDbPassword());
     }
 
-    @Test
-    public void TestConsoleHelpDefault() throws Exception {
-        // Test for a help dialog displayed upon failure
-        String[] args = {""};
-        GathererController gc = Console.run(args);
-        // Check the Gatherer hasn't been initialized.
-        Assert.assertNull(gc);
-    }
-
-    @Test
-    public void TestConsoleHelpOnFail() throws Exception {
+    @Test(expected = MissingOptionException.class)
+    public void testFailOnMissingMandatoryOption() throws Exception {
         // Test for a help dialog displayed upon failure
         String[] args = {"-s 0"};
-        GathererController gc = Console.run(args);
+        Console c = new Console();
+        GathererController gc = c.prepareGatherer(c.buildConfig(Console.setupOptions(), args), args);
         // Check the Gatherer hasn't been initialized.
         Assert.assertNull(gc);
 
     }
 
-    @Test
-    public void TestConsoleHelp() throws Exception {
+    @Test(expected = MissingOptionException.class)
+    public void testHelpFromFail() throws Exception {
         // First test for a user requested help dialog
         String[] args = {"--help"};
-        GathererController gc = Console.run(args);
+        Console c = new Console();
+        GathererController gc = c.prepareGatherer(c.buildConfig(Console.setupOptions(), args), args);
+        // Check the Gatherer hasn't been initialized.
+        Assert.assertNull(gc);
+    }
+
+    @Test
+    public void testHelpFromParam() throws Exception {
+        // First test for a user requested help dialog
+        String[] args = {"-s=0",
+                         "-f=100",
+                         "--help"};
+        Console c = new Console();
+        GathererController gc = c.prepareGatherer(c.buildConfig(Console.setupOptions(), args), args);
         // Check the Gatherer hasn't been initialized.
         Assert.assertNull(gc);
     }
