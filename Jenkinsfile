@@ -17,7 +17,7 @@ try {
       $POM_VERSION = pom.version
       step([$class: 'JavadocArchiver', javadocDir: 'target/site/apidocs'])
       sh 'mkdir - p target/release'
-      sh 'cp target/*dependencies.jar target/release/XIVStats-Gatherer-Java.jar'
+      sh 'cp target/*.jar target/release/XIVStats-Gatherer-Java.jar'
       sh 'cp config_example.xml target/release'
       sh 'cd target/release && zip -r XIVStats-Gatherer-Java-$POM_VERSION.zip .'
       sh 'cd ../..'
