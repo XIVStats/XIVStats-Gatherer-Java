@@ -50,12 +50,21 @@ public class ConfigurationBuilder {
     }
 
     /**
+     * Returns a new {@link ConfigurationBuilder} object ready to work with the given {@link ApplicationConfig} bean.
+     * 
+     * @return New {@link ConfigurationBuilder} instance ready to use.
+     */
+    public static ConfigurationBuilder createBuilder(ApplicationConfig existingConfig) {
+        return new ConfigurationBuilder(existingConfig);
+    }
+
+    /**
      * Creates a new {@link ConfigurationBuilder} instance, passing in the given {@link ApplicationConfiguration} object.
      * This is private to ensure that other callers cannot intercept and replace the {@link ApplicationConfig} bean by accident.
      * 
      * @param configuration {@link ApplicationConfig} bean to be used with the new instance of the {@link ConfigurationBuilder}.
      */
-    private ConfigurationBuilder(ApplicationConfig configuration) {
+    public ConfigurationBuilder(ApplicationConfig configuration) {
         this.configuration = configuration;
     }
 
