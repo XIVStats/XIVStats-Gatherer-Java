@@ -1,9 +1,5 @@
 package com.ffxivcensus.gatherer;
 
-import java.io.IOException;
-
-import javax.xml.parsers.ParserConfigurationException;
-
 import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.ParseException;
 import org.slf4j.Logger;
@@ -12,10 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.xml.sax.SAXException;
-
-import com.ffxivcensus.gatherer.config.ApplicationConfig;
-import com.ffxivcensus.gatherer.config.ConfigurationBuilder;
 
 /**
  * Class to run instance of GatherController from the CLI.
@@ -28,12 +20,13 @@ import com.ffxivcensus.gatherer.config.ConfigurationBuilder;
 public class Console implements CommandLineRunner {
 
     private static final Logger LOG = LoggerFactory.getLogger(Console.class);
-    @Autowired
-    private ApplicationConfig config;
+    // Hold the command-line arguments so that we can reference them in Spring
+    public static String[] ARGS;
     @Autowired
     private GathererController controller;
 
     public static void main(final String[] args) {
+        ARGS = args;
         SpringApplication.run(Console.class, args);
     }
 
@@ -45,8 +38,6 @@ public class Console implements CommandLineRunner {
      */
     public void run(final String... args) {
         try {
-            applyCommandLineOptions(config, args);
-
             if(controller != null) {
                 controller.run();
             }
@@ -55,25 +46,6 @@ public class Console implements CommandLineRunner {
         } catch(Exception e) {
             LOG.error(e.getMessage(), e);
         }
-    }
-
-    /**
-     * Returns a completed configuration object, including both config file and command line options.
-     * 
-     * @param options Available Command-Line options.
-     * @param args Command-Line arguments.
-     * @return
-     * @throws ParseException
-     * @throws SAXException
-     * @throws IOException
-     * @throws ParserConfigurationException
-     */
-    protected ApplicationConfig applyCommandLineOptions(final ApplicationConfig config, final String... args) throws ParseException,
-                                                                                                              SAXException, IOException,
-                                                                                                              ParserConfigurationException {
-        return ConfigurationBuilder.createBuilder(config)
-                                   .loadCommandLineConfiguration(CLIConstants.setupOptions(), args)
-                                   .getConfiguration();
     }
 
 }
