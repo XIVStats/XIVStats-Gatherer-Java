@@ -1,42 +1,24 @@
-package com.ffxivcensus.gatherer;
+package com.ffxivcensus.gatherer.config;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import org.apache.commons.cli.MissingOptionException;
 import org.junit.Assert;
 import org.junit.Test;
-import com.ffxivcensus.gatherer.config.ApplicationConfig;
-import com.ffxivcensus.gatherer.config.ConfigurationBuilder;
 
-/**
- * JUnit test class to run tests
- *
- * @author Peter Reid
- * @see com.ffxivcensus.gatherer.Console
- * @see com.ffxivcensus.gatherer.GathererController
- * @since v1.0
- */
-public class ConsoleTest {
+import com.ffxivcensus.gatherer.CLIConstants;
+import com.ffxivcensus.gatherer.Console;
+import com.ffxivcensus.gatherer.GathererController;
+
+public class ConfigurationBuilderTest {
 
     /**
-     * Make a run of the console application with the following options.
-     * <ul>
-     * <li>Start ID = 0</li>
-     * <li>End ID = 100</li>
-     * <li>Thread limit = 10</li>
-     * <li>Table Name = tblplayers_test</li>
-     * <li>Log mounts</li>
-     * <li>Log minions</li>
-     * <li>Do not store progress indicators</li>
-     * <li>User specified DB name.</li>
-     * </ul>
+     * Test configuration from the Command Line
      *
      * @throws Exception
      */
     @Test
-    public void testConsole() throws Exception {
+    public void testValidCLIConfigPartial() throws Exception {
         String[] args = {"-is", "0",
                          "-f", "100",
                          "-t", "10",
@@ -44,8 +26,9 @@ public class ConsoleTest {
                          "-U", "jdbc:mysql://test-server",
                          "-bP"};
 
-        Console c = new Console();
-        ApplicationConfig config = c.buildConfig(Console.setupOptions(), args);
+        ApplicationConfig config = ConfigurationBuilder.createBuilder()
+                                                       .loadCommandLineConfiguration(CLIConstants.setupOptions(), args)
+                                                       .getConfiguration();
 
         // Test that options have set attributes correctly
         assertFalse(config.isStoreProgression()); // b
@@ -68,7 +51,7 @@ public class ConsoleTest {
      * @throws Exception
      */
     @Test
-    public void testConsoleFullOptions() throws Exception {
+    public void testValidCLIConfigFull() throws Exception {
         String[] args = {"--start=100",
                          "--finish=200",
                          "--threads", "32",
@@ -77,8 +60,9 @@ public class ConsoleTest {
                          "-u", "user",
                          "-p", "password"};
 
-        Console c = new Console();
-        ApplicationConfig config = c.buildConfig(Console.setupOptions(), args);
+        ApplicationConfig config = ConfigurationBuilder.createBuilder()
+                                                       .loadCommandLineConfiguration(CLIConstants.setupOptions(), args)
+                                                       .getConfiguration();
 
         assertEquals(100, config.getStartId());
         assertEquals(200, config.getEndId());
@@ -93,10 +77,10 @@ public class ConsoleTest {
     public void testFailOnMissingMandatoryOption() throws Exception {
         // Test for a help dialog displayed upon failure
         String[] args = {"-s 0"};
-        Console c = new Console();
-        GathererController gc = c.prepareGatherer(c.buildConfig(Console.setupOptions(), args), args);
-        // Check the Gatherer hasn't been initialized.
-        Assert.assertNull(gc);
+
+        ConfigurationBuilder.createBuilder()
+                            .loadCommandLineConfiguration(CLIConstants.setupOptions(), args)
+                            .getConfiguration();
 
     }
 
@@ -104,21 +88,10 @@ public class ConsoleTest {
     public void testHelpFromFail() throws Exception {
         // First test for a user requested help dialog
         String[] args = {"--help"};
-        Console c = new Console();
-        GathererController gc = c.prepareGatherer(c.buildConfig(Console.setupOptions(), args), args);
-        // Check the Gatherer hasn't been initialized.
-        Assert.assertNull(gc);
+
+        ConfigurationBuilder.createBuilder()
+                            .loadCommandLineConfiguration(CLIConstants.setupOptions(), args)
+                            .getConfiguration();
     }
 
-    @Test
-    public void testHelpFromParam() throws Exception {
-        // First test for a user requested help dialog
-        String[] args = {"-s=0",
-                         "-f=100",
-                         "--help"};
-        Console c = new Console();
-        GathererController gc = c.prepareGatherer(c.buildConfig(Console.setupOptions(), args), args);
-        // Check the Gatherer hasn't been initialized.
-        Assert.assertNull(gc);
-    }
 }
