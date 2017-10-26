@@ -3,8 +3,6 @@ package com.ffxivcensus.gatherer.player;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
 import java.util.Date;
 
 import org.junit.Test;
@@ -41,7 +39,7 @@ public class PlayerBuilderTest {
         assertEquals("Miqo'te", playerOne.getRace());
         assertEquals("female", playerOne.getGender());
         assertEquals("Maelstrom", playerOne.getGrandCompany());
-        //assertEquals("End of Days", playerOne.getFreeCompany());
+        // assertEquals("End of Days", playerOne.getFreeCompany());
 
         // Test classes - levels based on those at time of test creation
         // Tank

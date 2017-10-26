@@ -85,10 +85,8 @@ public class GathererControllerTest {
         config.setThreadLimit(40);
 
         GathererController gathererController = new GathererController(config, mockFactory, dataSource);
-        try {
-            gathererController.run();
-        } catch(Exception e) {
-        }
+
+        gathererController.run();
 
         PlayerBeanDAO dao = new PlayerBeanDAO(config, dataSource);
 
@@ -133,10 +131,8 @@ public class GathererControllerTest {
         config.setStoreProgression(true);
 
         GathererController gathererController = new GathererController(config, mockFactory, dataSource);
-        try {
-            gathererController.run();
-        } catch(Exception e) {
-        }
+
+        gathererController.run();
 
         PlayerBeanDAO dao = new PlayerBeanDAO(config, dataSource);
 
