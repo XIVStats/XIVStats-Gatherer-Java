@@ -5,6 +5,8 @@ import java.util.concurrent.Executors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.ffxivcensus.gatherer.config.ApplicationConfig;
 import com.ffxivcensus.gatherer.player.PlayerBeanDAO;
@@ -21,10 +23,11 @@ import com.zaxxer.hikari.HikariDataSource;
  * @see PlayerBuilder
  * @see Gatherer
  */
+@Service
 public class GathererController {
 
-	private static final Logger LOG = LoggerFactory.getLogger(GathererController.class);
-    private ApplicationConfig appConfig = new ApplicationConfig();
+    private static final Logger LOG = LoggerFactory.getLogger(GathererController.class);
+    private ApplicationConfig appConfig;
     private HikariDataSource dataSource;
     /**
      * List of playable realms (used when splitting tables).
@@ -43,7 +46,7 @@ public class GathererController {
      * 
      * @param config Configuration Bean
      */
-    public GathererController(final ApplicationConfig config) {
+    public GathererController(@Autowired final ApplicationConfig config) {
         this.appConfig = config;
 
     }
@@ -86,7 +89,7 @@ public class GathererController {
                     LOG.error("Error: The finish id argument needs to be greater than the start id argument");
                 } else { // Else pass values into poll method
                     LOG.info("Starting parse of range " + appConfig.getStartId() + " to " + appConfig.getEndId() + " using "
-                                       + appConfig.getThreadLimit() + " threads");
+                             + appConfig.getThreadLimit() + " threads");
                     gatherRange();
                     // Get current time
                     long endTime = System.currentTimeMillis();
@@ -96,7 +99,7 @@ public class GathererController {
                     long days = hours / 24;
                     String time = days + " Days, " + hours % 24 + " hrs, " + minutes % 60 + " mins, " + seconds % 60 + " secs";
                     LOG.info("Run completed, " + ((appConfig.getEndId() - appConfig.getStartId()) + 1)
-                                       + " character IDs scanned in " + time + " (" + appConfig.getThreadLimit() + " threads)");
+                             + " character IDs scanned in " + time + " (" + appConfig.getThreadLimit() + " threads)");
 
                 }
 
@@ -164,73 +167,10 @@ public class GathererController {
         executor.shutdown();
         while(!executor.isTerminated()) {
             // Wait patiently for the executor to finish off everything submitted
-        		if(Thread.interrupted()) {
-        			// Unless there's an interrupt, in which case shut down gracefully
-        			executor.shutdownNow();
-        		}
+            if(Thread.interrupted()) {
+                // Unless there's an interrupt, in which case shut down gracefully
+                executor.shutdownNow();
+            }
         }
-    }
-
-    /**
-     * Get the first ID to be processed.
-     *
-     * @return the first character ID to be processed
-     */
-    public int getStartId() {
-        return appConfig.getStartId();
-    }
-
-    /**
-     * Get the last ID to be processed.
-     *
-     * @return the last character ID due to be processed.
-     */
-    public int getEndId() {
-        return appConfig.getEndId();
-    }
-
-    /**
-     * Get the maximum number of threads allowed for the Gatherer Controller instance.
-     *
-     * @return the maximum number of threads allowed.
-     */
-    public int getThreadLimit() {
-        return appConfig.getThreadLimit();
-    }
-
-    /**
-     * Get whether each character's minion set will be written to the database.
-     *
-     * @return whether each character's minion set will be written to DB.
-     */
-    public boolean isStoreMinions() {
-        return appConfig.isStoreMinions();
-    }
-
-    /**
-     * Get whether each character's mount set will be written to the database.
-     *
-     * @return whether each character's mount set will be written to DB.
-     */
-    public boolean isStoreMounts() {
-        return appConfig.isStoreMounts();
-    }
-
-    /**
-     * Get whether to store boolean values indicating character progression in the database.
-     *
-     * @return whether to store boolean values indicating character progression in the database.
-     */
-    public boolean isStoreProgression() {
-        return appConfig.isStoreProgression();
-    }
-
-    /**
-     * Get the name of the table that character records will be written to.
-     *
-     * @return the name of the table that character records will be written to.
-     */
-    public String getTableName() {
-        return appConfig.getTableName();
     }
 }
