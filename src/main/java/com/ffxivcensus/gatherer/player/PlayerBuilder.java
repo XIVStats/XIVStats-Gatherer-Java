@@ -1,6 +1,5 @@
 package com.ffxivcensus.gatherer.player;
 
-import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -36,7 +35,7 @@ import com.mashape.unirest.http.Unirest;
  */
 public class PlayerBuilder {
 
-	private static final Logger LOG = LoggerFactory.getLogger(PlayerBuilder.class);
+    private static final Logger LOG = LoggerFactory.getLogger(PlayerBuilder.class);
     /**
      * Number of days inactivity before character is considered inactive
      */
@@ -193,25 +192,25 @@ public class PlayerBuilder {
             player.setActive(isPlayerActiveInDateRange(player));
             player.setCharacterStatus(player.isActive() ? CharacterStatus.ACTIVE : CharacterStatus.INACTIVE);
         } catch(HttpStatusException httpe) {
-        		switch(httpe.getStatusCode()) {
-        			case 429:
+            switch (httpe.getStatusCode()) {
+                case 429:
                     // Generate random number 1->20*attempt no and sleep for it
                     Random rand = new Random();
                     int max = attempt * 20;
                     int min = (attempt - 1) + 1;
                     int randomNum = rand.nextInt(max - min + 1) + min;
                     LOG.trace("Experiencing rate limiting (HTTP 429) while fetching id " + playerID + " (attempt " + attempt
-                                       + "), waiting " + randomNum + "ms then retrying...");
+                              + "), waiting " + randomNum + "ms then retrying...");
                     TimeUnit.MILLISECONDS.sleep(randomNum);
                     player = PlayerBuilder.getPlayer(playerID, ++attempt);
-        				break;
-        			case HttpStatus.SC_NOT_FOUND:
-        				LOG.info("Character " + playerID + " does not exist. (404)");
-        				player.setCharacterStatus(CharacterStatus.DELETED);
-        				break;
-    				default:
-    					throw new Exception("Unexpected HTTP Status Code: " + httpe.getStatusCode(), httpe);
-        		}
+                    break;
+                case HttpStatus.SC_NOT_FOUND:
+                    LOG.info("Character " + playerID + " does not exist. (404)");
+                    player.setCharacterStatus(CharacterStatus.DELETED);
+                    break;
+                default:
+                    throw new Exception("Unexpected HTTP Status Code: " + httpe.getStatusCode(), httpe);
+            }
         }
         return player;
     }
@@ -441,7 +440,7 @@ public class PlayerBuilder {
             strLastModifiedDate = jsonResponse.getHeaders().get("Last-Modified").toString();
         } catch(Exception e) {
             LOG.warn("Setting last-active date to ARR launch date due to an an error loading character " + id
-                               + "'s profile image: " + e.getMessage());
+                     + "'s profile image: " + e.getMessage());
             strLastModifiedDate = "[Sat, 24 Aug 2013 00:00:01 GMT]";
         }
 

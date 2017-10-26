@@ -3,12 +3,9 @@ package com.ffxivcensus.gatherer.config;
 import static org.junit.Assert.*;
 
 import org.apache.commons.cli.MissingOptionException;
-import org.junit.Assert;
 import org.junit.Test;
 
 import com.ffxivcensus.gatherer.CLIConstants;
-import com.ffxivcensus.gatherer.Console;
-import com.ffxivcensus.gatherer.GathererController;
 
 public class ConfigurationBuilderTest {
 

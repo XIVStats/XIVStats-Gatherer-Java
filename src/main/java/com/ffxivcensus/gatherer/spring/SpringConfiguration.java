@@ -2,7 +2,6 @@ package com.ffxivcensus.gatherer.spring;
 
 import java.io.IOException;
 
-import javax.sql.DataSource;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.springframework.context.annotation.Bean;
@@ -33,9 +32,9 @@ public class SpringConfiguration {
         return new Gatherer();
     }
 
-    @Bean(destroyMethod="close")
+    @Bean(destroyMethod = "close") // Should happen anyway, but worth calling out
     @Lazy // Assume lazy here so that this doesn't get created before the CLI options have been applied
-    public DataSource dataSource() throws ParserConfigurationException, IOException, SAXException {
+    public HikariDataSource dataSource() throws ParserConfigurationException, IOException, SAXException {
         ApplicationConfig appConfig = applicationConfig();
 
         HikariConfig hikariConfig = new HikariConfig();
