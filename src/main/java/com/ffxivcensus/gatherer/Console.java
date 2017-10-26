@@ -36,6 +36,8 @@ public class Console implements CommandLineRunner {
     private static final Logger LOG = LoggerFactory.getLogger(Console.class);
     @Autowired
     private ApplicationConfig config;
+    @Autowired
+    private GathererController controller;
 
     public static void main(final String[] args) {
         SpringApplication.run(Console.class, args);
@@ -50,11 +52,9 @@ public class Console implements CommandLineRunner {
     public void run(final String... args) {
         try {
             applyCommandLineOptions(config, args);
-
-            GathererController gatherer = prepareGatherer(config, args);
-
-            if(gatherer != null) {
-                gatherer.run();
+            
+            if(controller != null) {
+                controller.run();
             }
         } catch(ParseException pEx) {
             new HelpFormatter().printHelp(CLIConstants.CLI_USAGE, CLIConstants.setupOptions());
