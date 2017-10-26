@@ -3,6 +3,8 @@ package com.ffxivcensus.gatherer;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import javax.sql.DataSource;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +31,7 @@ public class GathererController {
     private static final Logger LOG = LoggerFactory.getLogger(GathererController.class);
     private final ApplicationConfig appConfig;
     private final GathererFactory gathererFactory;
-    private HikariDataSource dataSource;
+    private DataSource dataSource;
     /**
      * List of playable realms (used when splitting tables).
      */
@@ -47,9 +49,11 @@ public class GathererController {
      * 
      * @param config Configuration Bean
      */
-    public GathererController(@Autowired final ApplicationConfig config, @Autowired final GathererFactory gathererFactory) {
+    public GathererController(@Autowired final ApplicationConfig config, @Autowired final GathererFactory gathererFactory,
+                              @Autowired DataSource dataSource) {
         this.appConfig = config;
         this.gathererFactory = gathererFactory;
+        this.dataSource = dataSource;
     }
 
     /**
@@ -70,18 +74,6 @@ public class GathererController {
             throw new Exception("Program not (correctly) configured");
         } else { // Else configured correctly
             try {
-                HikariConfig hikariConfig = new HikariConfig();
-                hikariConfig.setJdbcUrl("jdbc:" + appConfig.getDbUrl() + "/" + appConfig.getDbName());
-                hikariConfig.setUsername(appConfig.getDbUser());
-                hikariConfig.setPassword(appConfig.getDbPassword());
-                hikariConfig.setMaximumPoolSize(appConfig.getThreadLimit());
-                hikariConfig.setInitializationFailTimeout(30000);
-                if(appConfig.isDbIgnoreSSLWarn()) {
-                    hikariConfig.addDataSourceProperty("useSSL", false);
-                }
-
-                this.dataSource = new HikariDataSource(hikariConfig);
-
                 PlayerBeanDAO dao = new PlayerBeanDAO(appConfig, dataSource);
 
                 dao.createTable(appConfig.getTableName());
@@ -105,11 +97,7 @@ public class GathererController {
                 }
 
             } catch(Exception ex) {
-                ex.printStackTrace();
-            } finally {
-                if(dataSource != null) {
-                    dataSource.close();
-                }
+                throw new Exception(ex);
             }
         }
     }
@@ -127,22 +115,6 @@ public class GathererController {
         }
         if(appConfig.getEndId() < 0) {
             LOG.error("End ID must be configured to a positive numerical value");
-            configured = false;
-        }
-        if(appConfig.getDbUrl() == null || appConfig.getDbUrl().length() <= 5) {
-            LOG.error("Database URL has not been configured correctly");
-            configured = false;
-        }
-        if(appConfig.getDbUser() == null || appConfig.getDbUser().length() == 0) {
-            LOG.error("Database User has not been configured correctly");
-            configured = false;
-        }
-        if(appConfig.getDbPassword() == null || appConfig.getDbPassword().length() == 0) {
-            LOG.error("Database Password has not been configured correctly");
-            configured = false;
-        }
-        if(appConfig.getTableName() == null || appConfig.getTableName().length() == 0) {
-            LOG.error("Table name has not been configured correctly");
             configured = false;
         }
         return configured;
