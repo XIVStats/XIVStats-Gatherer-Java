@@ -3,13 +3,18 @@ package com.ffxivcensus.gatherer;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.when;
 
 import java.io.IOException;
 import java.util.List;
 
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.xml.sax.SAXException;
 
 import com.ffxivcensus.gatherer.config.ApplicationConfig;
@@ -28,7 +33,16 @@ import com.zaxxer.hikari.HikariDataSource;
  * @see com.ffxivcensus.gatherer.player.PlayerBuilderTest
  * @since v1.0
  */
+@RunWith(MockitoJUnitRunner.class)
 public class GathererControllerTest {
+
+    @Mock
+    private GathererFactory mockFactory;
+
+    @Before
+    public void setUp() {
+        when(mockFactory.createGatherer()).thenReturn(new Gatherer());
+    }
 
     /**
      * Test gathering run of range from 11886902 to 11887010
@@ -45,7 +59,7 @@ public class GathererControllerTest {
         config.setEndId(11887010);
         config.setThreadLimit(40);
 
-        GathererController gathererController = new GathererController(config);
+        GathererController gathererController = new GathererController(config, mockFactory);
         try {
             gathererController.run();
         } catch(Exception e) {
@@ -94,7 +108,7 @@ public class GathererControllerTest {
 
         // Store start time
         long startTime = System.currentTimeMillis();
-        GathererController gathererController = new GathererController(config);
+        GathererController gathererController = new GathererController(config, mockFactory);
         try {
             gathererController.run();
         } catch(Exception e) {
@@ -119,7 +133,7 @@ public class GathererControllerTest {
         config.setStoreMounts(true);
         config.setStoreProgression(true);
 
-        GathererController gathererController = new GathererController(config);
+        GathererController gathererController = new GathererController(config, mockFactory);
         try {
             gathererController.run();
         } catch(Exception e) {
@@ -168,7 +182,7 @@ public class GathererControllerTest {
         config.setDbPassword("");
         config.setDbUrl("mysq");
 
-        GathererController gathererController = new GathererController(config);
+        GathererController gathererController = new GathererController(config, mockFactory);
 
         try {
             gathererController.run();
@@ -189,7 +203,7 @@ public class GathererControllerTest {
         config.setDbPassword(null);
         config.setDbUrl(null);
 
-        GathererController gathererController = new GathererController(config);
+        GathererController gathererController = new GathererController(config, mockFactory);
 
         assertFalse(gathererController.isConfigured());
 
