@@ -27,7 +27,8 @@ import com.zaxxer.hikari.HikariDataSource;
 public class GathererController {
 
     private static final Logger LOG = LoggerFactory.getLogger(GathererController.class);
-    private ApplicationConfig appConfig;
+    private final ApplicationConfig appConfig;
+    private final GathererFactory gathererFactory;
     private HikariDataSource dataSource;
     /**
      * List of playable realms (used when splitting tables).
@@ -46,9 +47,9 @@ public class GathererController {
      * 
      * @param config Configuration Bean
      */
-    public GathererController(@Autowired final ApplicationConfig config) {
+    public GathererController(@Autowired final ApplicationConfig config, @Autowired final GathererFactory gathererFactory) {
         this.appConfig = config;
-
+        this.gathererFactory = gathererFactory;
     }
 
     /**
@@ -158,7 +159,9 @@ public class GathererController {
         ExecutorService executor = Executors.newFixedThreadPool(appConfig.getThreadLimit());
 
         while(nextID <= appConfig.getEndId()) {
-            Gatherer worker = new Gatherer(this, new PlayerBeanDAO(appConfig, dataSource), nextID);
+            Gatherer worker = gathererFactory.createGatherer();
+            worker.setPlayerBeanDAO(new PlayerBeanDAO(appConfig, dataSource));
+            worker.setPlayerId(nextID);
             executor.execute(worker);
 
             nextID++;

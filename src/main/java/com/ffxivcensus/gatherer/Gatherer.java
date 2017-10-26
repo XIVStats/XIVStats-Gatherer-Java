@@ -21,20 +21,12 @@ import com.mysql.jdbc.exceptions.jdbc4.MySQLNonTransientConnectionException;
  * @see java.lang.Runnable
  */
 public class Gatherer implements Runnable {
-	
-	private static final Logger LOG = LoggerFactory.getLogger(Gatherer.class);
-	private static final Logger RESULT_LOG = LoggerFactory.getLogger(Gatherer.class.getName() + ".result");
 
-    private final int playerId;
-    private final PlayerBeanDAO dao;
+    private static final Logger LOG = LoggerFactory.getLogger(Gatherer.class);
+    private static final Logger RESULT_LOG = LoggerFactory.getLogger(Gatherer.class.getName() + ".result");
 
-    /**
-     * Default constructor
-     */
-    public Gatherer(final GathererController parent, final PlayerBeanDAO playerBeanDAO, final int playerId) {
-        this.playerId = playerId;
-        this.dao = playerBeanDAO;
-    }
+    private int playerId;
+    private PlayerBeanDAO dao;
 
     /**
      * Run the Gatherer.
@@ -42,15 +34,15 @@ public class Gatherer implements Runnable {
     @Override
     public void run() {
         try {
-            LOG.debug("Starting evaluation of player ID: " + playerId);
+            LOG.debug("Starting evaluation of player ID: " + getPlayerId());
             // Parse players and write them to DB
-            PlayerBean player = PlayerBuilder.getPlayer(playerId, 1);
+            PlayerBean player = PlayerBuilder.getPlayer(getPlayerId(), 1);
             // Currently ignore deleted characters (404)
             if(!CharacterStatus.DELETED.equals(player.getCharacterStatus())) {
-		        String out = dao.saveRecord(player);
-		        LOG.debug(out);
+                String out = getDao().saveRecord(player);
+                LOG.debug(out);
             }
-            RESULT_LOG.info(playerId + " - " + player.getCharacterStatus().name());
+            RESULT_LOG.info(getPlayerId() + " - " + player.getCharacterStatus().name());
         } catch(MySQLNonTransientConnectionException failWriteEx) { // If record fails to write due to too many connections
             LOG.trace("Error: Record write failure, reattempting write");
             // Wait a second
@@ -60,15 +52,31 @@ public class Gatherer implements Runnable {
             }
             // Then attempt to write again
             try {
-                String out = dao.saveRecord(PlayerBuilder.getPlayer(playerId, 1));
+                String out = getDao().saveRecord(PlayerBuilder.getPlayer(getPlayerId(), 1));
                 LOG.debug(out);
             } catch(Exception e) {
                 LOG.error(e.getMessage(), e);
             }
         } catch(Exception e) {
             LOG.error(e.getMessage(), e);
-            RESULT_LOG.debug(playerId + " - FAILED");
+            RESULT_LOG.debug(getPlayerId() + " - FAILED");
         }
+    }
+
+    public int getPlayerId() {
+        return playerId;
+    }
+
+    public void setPlayerId(final int playerId) {
+        this.playerId = playerId;
+    }
+
+    public PlayerBeanDAO getDao() {
+        return dao;
+    }
+
+    public void setPlayerBeanDAO(final PlayerBeanDAO playerBeanDAO) {
+        this.dao = playerBeanDAO;
     }
 
 }
