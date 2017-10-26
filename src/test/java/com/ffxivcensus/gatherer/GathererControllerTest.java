@@ -1,16 +1,19 @@
 package com.ffxivcensus.gatherer;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 
+import javax.sql.DataSource;
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.junit.AfterClass;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -36,12 +39,36 @@ import com.zaxxer.hikari.HikariDataSource;
 @RunWith(MockitoJUnitRunner.class)
 public class GathererControllerTest {
 
+    private ApplicationConfig config;
+    private static DataSource dataSource;
     @Mock
     private GathererFactory mockFactory;
 
+    @BeforeClass
+    public static void setUpClass() throws ParserConfigurationException, IOException, SAXException {
+        ApplicationConfig config = ConfigurationBuilder.createBuilder().loadXMLConfiguration().getConfiguration();
+
+        HikariConfig hikariConfig = new HikariConfig();
+        hikariConfig.setJdbcUrl("jdbc:" + config.getDbUrl() + "/" + config.getDbName());
+        hikariConfig.setUsername(config.getDbUser());
+        hikariConfig.setPassword(config.getDbPassword());
+        hikariConfig.setMaximumPoolSize(config.getThreadLimit());
+        if(config.isDbIgnoreSSLWarn()) {
+            hikariConfig.addDataSourceProperty("useSSL", false);
+        }
+
+        dataSource = new HikariDataSource(hikariConfig);
+    }
+
     @Before
-    public void setUp() {
+    public void setUp() throws ParserConfigurationException, IOException, SAXException {
+        config = ConfigurationBuilder.createBuilder().loadXMLConfiguration().getConfiguration();
         when(mockFactory.createGatherer()).thenReturn(new Gatherer());
+    }
+
+    @AfterClass
+    public static void tearDownClass() throws SQLException {
+        dataSource.unwrap(HikariDataSource.class).close();
     }
 
     /**
@@ -53,28 +80,15 @@ public class GathererControllerTest {
      */
     @Test
     public void testRunBasic() throws Exception {
-        ApplicationConfig config = ConfigurationBuilder.createBuilder().loadXMLConfiguration().getConfiguration();
-
         config.setStartId(11886902);
         config.setEndId(11887010);
         config.setThreadLimit(40);
 
-        GathererController gathererController = new GathererController(config, mockFactory);
+        GathererController gathererController = new GathererController(config, mockFactory, dataSource);
         try {
             gathererController.run();
         } catch(Exception e) {
         }
-
-        HikariConfig hikariConfig = new HikariConfig();
-        hikariConfig.setJdbcUrl("jdbc:" + config.getDbUrl() + "/" + config.getDbName());
-        hikariConfig.setUsername(config.getDbUser());
-        hikariConfig.setPassword(config.getDbPassword());
-        hikariConfig.setMaximumPoolSize(config.getThreadLimit());
-        if(config.isDbIgnoreSSLWarn()) {
-            hikariConfig.addDataSourceProperty("useSSL", false);
-        }
-
-        HikariDataSource dataSource = new HikariDataSource(hikariConfig);
 
         PlayerBeanDAO dao = new PlayerBeanDAO(config, dataSource);
 
@@ -92,31 +106,18 @@ public class GathererControllerTest {
         // Test that gatherer has not 'overrun'
         assertFalse(addedIDs.contains(11887011));
         assertFalse(addedIDs.contains(11886901));
-
-        dataSource.close();
     }
 
     /**
      * Run the program with invalid parameters.
      */
-    @Test
+    @Test(expected = Exception.class)
     public void testRunBasicInvalidParams() throws Exception {
-        ApplicationConfig config = ConfigurationBuilder.createBuilder().loadXMLConfiguration().getConfiguration();
-
         config.setStartId(11887010);
-        config.setEndId(11886902);
 
-        // Store start time
-        long startTime = System.currentTimeMillis();
-        GathererController gathererController = new GathererController(config, mockFactory);
-        try {
-            gathererController.run();
-        } catch(Exception e) {
-        }
-        long endTime = System.currentTimeMillis();
-        // Program will close in less than 3 seconds if invalid params supplied
-        assertTrue((endTime - startTime) <= 3000);
+        GathererController gathererController = new GathererController(config, mockFactory, dataSource);
 
+        gathererController.run();
     }
 
     /**
@@ -125,30 +126,17 @@ public class GathererControllerTest {
      */
     @Test
     public void testRunAdvancedOptions() throws Exception {
-        ApplicationConfig config = ConfigurationBuilder.createBuilder().loadXMLConfiguration().getConfiguration();
-
         config.setStartId(1557260);
         config.setEndId(1558260);
         config.setStoreMinions(true);
         config.setStoreMounts(true);
         config.setStoreProgression(true);
 
-        GathererController gathererController = new GathererController(config, mockFactory);
+        GathererController gathererController = new GathererController(config, mockFactory, dataSource);
         try {
             gathererController.run();
         } catch(Exception e) {
         }
-
-        HikariConfig hikariConfig = new HikariConfig();
-        hikariConfig.setJdbcUrl("jdbc:" + config.getDbUrl() + "/" + config.getDbName());
-        hikariConfig.setUsername(config.getDbUser());
-        hikariConfig.setPassword(config.getDbPassword());
-        hikariConfig.setMaximumPoolSize(config.getThreadLimit());
-        if(config.isDbIgnoreSSLWarn()) {
-            hikariConfig.addDataSourceProperty("useSSL", false);
-        }
-
-        HikariDataSource dataSource = new HikariDataSource(hikariConfig);
 
         PlayerBeanDAO dao = new PlayerBeanDAO(config, dataSource);
 
@@ -167,45 +155,5 @@ public class GathererControllerTest {
         // Test that gatherer has not 'overrun'
         assertFalse(addedIDs.contains(config.getStartId() - 1));
         assertFalse(addedIDs.contains(config.getEndId() + 1));
-
-        dataSource.close();
-    }
-
-    /**
-     * Invoke a test run using options that will cause the program not to run.
-     */
-    @Test
-    public void testRunMisconfigured() throws Exception {
-        ApplicationConfig config = ConfigurationBuilder.createBuilder().loadXMLConfiguration().getConfiguration();
-        // Set invalid options
-        config.setDbUser("");
-        config.setDbPassword("");
-        config.setDbUrl("mysq");
-
-        GathererController gathererController = new GathererController(config, mockFactory);
-
-        try {
-            gathererController.run();
-        } catch(Exception e) {
-            assertEquals("Program not (correctly) configured", e.getMessage());
-        }
-        assertFalse(gathererController.isConfigured());
-
-    }
-
-    @Test
-    public void testRunMisconfiguredTwo() throws Exception {
-        ApplicationConfig config = ConfigurationBuilder.createBuilder().loadXMLConfiguration().getConfiguration();
-        config.setStartId(0);
-        config.setEndId(100);
-        // Set invalid options
-        config.setDbUser(null);
-        config.setDbPassword(null);
-        config.setDbUrl(null);
-
-        GathererController gathererController = new GathererController(config, mockFactory);
-
-        assertFalse(gathererController.isConfigured());
-
     }
 }
