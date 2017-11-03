@@ -17,7 +17,9 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.mockito.invocation.InvocationOnMock;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.stubbing.Answer;
 import org.xml.sax.SAXException;
 
 import com.ffxivcensus.gatherer.config.ApplicationConfig;
@@ -25,6 +27,15 @@ import com.ffxivcensus.gatherer.config.ConfigurationBuilder;
 import com.ffxivcensus.gatherer.player.PlayerBeanDAO;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+
+import liquibase.Contexts;
+import liquibase.LabelExpression;
+import liquibase.Liquibase;
+import liquibase.database.Database;
+import liquibase.database.DatabaseFactory;
+import liquibase.database.jvm.JdbcConnection;
+import liquibase.exception.LiquibaseException;
+import liquibase.resource.ClassLoaderResourceAccessor;
 
 /**
  * Test the core functionality of the program, including CLI parameters.
@@ -45,7 +56,7 @@ public class GathererControllerTest {
     private GathererFactory mockFactory;
 
     @BeforeClass
-    public static void setUpClass() throws ParserConfigurationException, IOException, SAXException {
+    public static void setUpClass() throws ParserConfigurationException, IOException, SAXException, SQLException, LiquibaseException {
         ApplicationConfig config = ConfigurationBuilder.createBuilder().loadXMLConfiguration().getConfiguration();
 
         HikariConfig hikariConfig = new HikariConfig();
@@ -58,12 +69,25 @@ public class GathererControllerTest {
         }
 
         dataSource = new HikariDataSource(hikariConfig);
+
+        Database database = DatabaseFactory.getInstance().findCorrectDatabaseImplementation(new JdbcConnection(dataSource.getConnection()));
+
+        Liquibase liquibase = new Liquibase("db/changelog/db.changelog-master.yaml", new ClassLoaderResourceAccessor(), database);
+
+        liquibase.update(new Contexts(), new LabelExpression());
     }
 
     @Before
     public void setUp() throws ParserConfigurationException, IOException, SAXException {
         config = ConfigurationBuilder.createBuilder().loadXMLConfiguration().getConfiguration();
-        when(mockFactory.createGatherer()).thenReturn(new Gatherer());
+        when(mockFactory.createGatherer()).thenAnswer(new Answer<Gatherer>() {
+
+            @Override
+            public Gatherer answer(InvocationOnMock invocation) throws Throwable {
+                return new Gatherer();
+            }
+
+        });
     }
 
     @AfterClass
