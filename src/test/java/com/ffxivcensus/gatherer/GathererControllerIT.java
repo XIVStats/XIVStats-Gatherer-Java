@@ -2,12 +2,8 @@ package com.ffxivcensus.gatherer;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -18,13 +14,9 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Matchers;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.junit.MockitoJUnitRunner;
-import org.mockito.stubbing.Answer;
-import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.xml.sax.SAXException;
 
 import com.ffxivcensus.gatherer.config.ApplicationConfig;
@@ -52,15 +44,17 @@ import liquibase.resource.ClassLoaderResourceAccessor;
  * @see com.ffxivcensus.gatherer.player.PlayerBuilderIT
  * @since v1.0
  */
-@RunWith(MockitoJUnitRunner.class)
+@RunWith(SpringRunner.class)
+@SpringBootTest
 public class GathererControllerIT {
 
+    @Autowired
     private ApplicationConfig config;
     private static DataSource dataSource;
-    @Mock
-    private GathererFactory mockFactory;
-    @Mock
-    private JdbcTemplate jdbcTemplate;
+    @Autowired
+    private GathererController gathererController;
+    @Autowired
+    private PlayerBeanDAO dao;
 
     @BeforeClass
     public static void setUpClass() throws ParserConfigurationException, IOException, SAXException, SQLException, LiquibaseException {
@@ -86,17 +80,6 @@ public class GathererControllerIT {
 
     @Before
     public void setUp() throws ParserConfigurationException, IOException, SAXException {
-        config = ConfigurationBuilder.createBuilder().loadXMLConfiguration().getConfiguration();
-        when(mockFactory.createGatherer()).thenAnswer(new Answer<Gatherer>() {
-
-            @Override
-            public Gatherer answer(InvocationOnMock invocation) throws Throwable {
-                Gatherer gatherer = new Gatherer();
-                gatherer.setPlayerBeanDAO(new PlayerBeanDAO(config, jdbcTemplate));
-                return gatherer;
-            }
-
-        });
     }
 
     @AfterClass
@@ -117,26 +100,22 @@ public class GathererControllerIT {
         config.setEndId(11887010);
         config.setThreadLimit(40);
 
-        GathererController gathererController = new GathererController(config, mockFactory);
-
         gathererController.run();
 
-        verify(jdbcTemplate, Mockito.atLeastOnce()).update(Mockito.anyString(), Mockito.<Object>any());
+        List<Integer> addedIDs = dao.getAdded(11886902, 11887010);
 
-        // List<Integer> addedIDs = new ArrayList<Integer>();
-        //
-        // // Test for IDs we know exist
-        // assertTrue(addedIDs.contains(11886902));
-        // assertTrue(addedIDs.contains(11886903));
-        // assertTrue(addedIDs.contains(11886990));
-        // assertTrue(addedIDs.contains(11887010));
-        //
-        // // Test that gatherer has not written records that don't exist
-        // assertFalse(addedIDs.contains(11886909));
-        //
-        // // Test that gatherer has not 'overrun'
-        // assertFalse(addedIDs.contains(11887011));
-        // assertFalse(addedIDs.contains(11886901));
+        // Test for IDs we know exist
+        assertTrue(addedIDs.contains(11886902));
+        assertTrue(addedIDs.contains(11886903));
+        assertTrue(addedIDs.contains(11886990));
+        assertTrue(addedIDs.contains(11887010));
+
+        // Test that gatherer has not written records that don't exist
+        assertFalse(addedIDs.contains(11886909));
+
+        // Test that gatherer has not 'overrun'
+        assertFalse(addedIDs.contains(11887011));
+        assertFalse(addedIDs.contains(11886901));
     }
 
     /**
@@ -146,11 +125,7 @@ public class GathererControllerIT {
     public void testRunBasicInvalidParams() throws Exception {
         config.setStartId(11887010);
 
-        GathererController gathererController = new GathererController(config, mockFactory);
-
         gathererController.run();
-
-        verify(jdbcTemplate, Mockito.never()).update(Mockito.anyString(), Mockito.<Object>any());
     }
 
     /**
@@ -165,25 +140,21 @@ public class GathererControllerIT {
         config.setStoreMounts(true);
         config.setStoreProgression(true);
 
-        GathererController gathererController = new GathererController(config, mockFactory);
-
         gathererController.run();
 
-        verify(jdbcTemplate, Mockito.atLeastOnce()).update(Mockito.anyString(), Mockito.<Object>any());
+        List<Integer> addedIDs = dao.getAdded(1557260, 1558260);
 
-        // List<Integer> addedIDs = new ArrayList<Integer>();
-        //
-        // // Test for IDs we know exist
-        // assertTrue(addedIDs.contains(config.getStartId()));
-        // assertTrue(addedIDs.contains(config.getEndId()));
-        // assertTrue(addedIDs.contains(1557362));
-        // assertTrue(addedIDs.contains(1557495));
-        //
-        // // Test that gatherer has not written records that don't exist
-        // assertFalse(addedIDs.contains(1558259));
-        //
-        // // Test that gatherer has not 'overrun'
-        // assertFalse(addedIDs.contains(config.getStartId() - 1));
-        // assertFalse(addedIDs.contains(config.getEndId() + 1));
+        // Test for IDs we know exist
+        assertTrue(addedIDs.contains(config.getStartId()));
+        assertTrue(addedIDs.contains(config.getEndId()));
+        assertTrue(addedIDs.contains(1557362));
+        assertTrue(addedIDs.contains(1557495));
+
+        // Test that gatherer has not written records that don't exist
+        assertFalse(addedIDs.contains(1558259));
+
+        // Test that gatherer has not 'overrun'
+        assertFalse(addedIDs.contains(config.getStartId() - 1));
+        assertFalse(addedIDs.contains(config.getEndId() + 1));
     }
 }
