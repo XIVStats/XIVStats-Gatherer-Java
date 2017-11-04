@@ -76,7 +76,8 @@ public class Gatherer implements Runnable {
         return dao;
     }
 
-    public void setPlayerBeanDAO(@Autowired final PlayerBeanDAO playerBeanDAO) {
+    @Autowired
+    public void setPlayerBeanDAO(final PlayerBeanDAO playerBeanDAO) {
         this.dao = playerBeanDAO;
     }
 

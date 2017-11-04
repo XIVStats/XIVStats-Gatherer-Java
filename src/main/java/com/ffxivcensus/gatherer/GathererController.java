@@ -3,15 +3,12 @@ package com.ffxivcensus.gatherer;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import javax.sql.DataSource;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ffxivcensus.gatherer.config.ApplicationConfig;
-import com.ffxivcensus.gatherer.player.PlayerBeanDAO;
 import com.ffxivcensus.gatherer.player.PlayerBuilder;
 
 /**
@@ -29,7 +26,6 @@ public class GathererController {
     private static final Logger LOG = LoggerFactory.getLogger(GathererController.class);
     private final ApplicationConfig appConfig;
     private final GathererFactory gathererFactory;
-    private DataSource dataSource;
     /**
      * List of playable realms (used when splitting tables).
      */
@@ -47,11 +43,9 @@ public class GathererController {
      * 
      * @param config Configuration Bean
      */
-    public GathererController(@Autowired final ApplicationConfig config, @Autowired final GathererFactory gathererFactory,
-                              @Autowired DataSource dataSource) {
+    public GathererController(@Autowired final ApplicationConfig config, @Autowired final GathererFactory gathererFactory) {
         this.appConfig = config;
         this.gathererFactory = gathererFactory;
-        this.dataSource = dataSource;
     }
 
     /**
@@ -126,7 +120,6 @@ public class GathererController {
 
         while(nextID <= appConfig.getEndId()) {
             Gatherer worker = gathererFactory.createGatherer();
-            worker.setPlayerBeanDAO(new PlayerBeanDAO(appConfig, dataSource));
             worker.setPlayerId(nextID);
             executor.execute(worker);
 
