@@ -28,13 +28,13 @@ try {
     stage ('Test') {
       try {
         sh 'cp ~/xivstatsFiles/config.xml .'
-        sh 'mvn test'
+        sh 'mvn verify'
       }
       finally {
         sh 'rm config.xml'
         sh 'pip install --user codecov'
         sh 'codecov --token=96498141-ca0d-4144-af53-c04b593115ef'
-        step([$class: 'JUnitResultArchiver', testResults: 'target/surefire-reports/*.xml'])
+        step([$class: 'JUnitResultArchiver', testResults: 'target/*-reports/*.xml'])
       }
     }
 
