@@ -114,7 +114,7 @@ public class GathererControllerTest {
 
         PlayerBeanDAO dao = new PlayerBeanDAO(config, dataSource);
 
-        List<Integer> addedIDs = dao.getAdded(config.getTableName(), config.getStartId(), config.getEndId());
+        List<Integer> addedIDs = dao.getAdded(config.getStartId(), config.getEndId());
 
         // Test for IDs we know exist
         assertTrue(addedIDs.contains(11886902));
@@ -161,7 +161,7 @@ public class GathererControllerTest {
         PlayerBeanDAO dao = new PlayerBeanDAO(config, dataSource);
 
         // Test that records were successfully written to db
-        List<Integer> addedIDs = dao.getAdded(config.getTableName(), config.getStartId(), config.getEndId());
+        List<Integer> addedIDs = dao.getAdded(config.getStartId(), config.getEndId());
 
         // Test for IDs we know exist
         assertTrue(addedIDs.contains(config.getStartId()));

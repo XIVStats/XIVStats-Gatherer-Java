@@ -72,10 +72,6 @@ public class GathererController {
             throw new Exception("Program not (correctly) configured");
         } else { // Else configured correctly
             try {
-                PlayerBeanDAO dao = new PlayerBeanDAO(appConfig, dataSource);
-
-                dao.createTable(appConfig.getTableName());
-
                 if(appConfig.getStartId() > appConfig.getEndId()) {
                     LOG.error("Error: The finish id argument needs to be greater than the start id argument");
                 } else { // Else pass values into poll method

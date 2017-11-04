@@ -481,3 +481,9 @@ databaseChangeLog:
                   defaultValueNumeric: 0
                   constraints:
                     nullable: false
+  - changeSet:
+      id: 3
+      author: matthewhillier
+      changes:
+          - tagDatabase:
+              tag: 1.4.0

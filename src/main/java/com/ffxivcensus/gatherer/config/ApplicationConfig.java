@@ -138,10 +138,6 @@ public class ApplicationConfig {
         this.dbIgnoreSSLWarn = dbIgnoreSSLWarn;
     }
 
-    public String getTableName() {
-        return DEFAULT_TABLE_NAME;
-    }
-
     ////////////////////////
     // Process Configuration
     ////////////////////////
