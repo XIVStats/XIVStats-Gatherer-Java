@@ -18,6 +18,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
@@ -120,7 +121,7 @@ public class GathererControllerIT {
 
         gathererController.run();
 
-        verify(jdbcTemplate, Mockito.atLeastOnce()).update(Mockito.anyString());
+        verify(jdbcTemplate, Mockito.atLeastOnce()).update(Mockito.anyString(), Mockito.<Object>any());
 
         // List<Integer> addedIDs = new ArrayList<Integer>();
         //
@@ -148,6 +149,8 @@ public class GathererControllerIT {
         GathererController gathererController = new GathererController(config, mockFactory);
 
         gathererController.run();
+
+        verify(jdbcTemplate, Mockito.never()).update(Mockito.anyString(), Mockito.<Object>any());
     }
 
     /**
@@ -166,21 +169,21 @@ public class GathererControllerIT {
 
         gathererController.run();
 
-        verify(jdbcTemplate, Mockito.atLeastOnce()).update(Mockito.anyString());
+        verify(jdbcTemplate, Mockito.atLeastOnce()).update(Mockito.anyString(), Mockito.<Object>any());
 
-//        List<Integer> addedIDs = new ArrayList<Integer>();
-//
-//        // Test for IDs we know exist
-//        assertTrue(addedIDs.contains(config.getStartId()));
-//        assertTrue(addedIDs.contains(config.getEndId()));
-//        assertTrue(addedIDs.contains(1557362));
-//        assertTrue(addedIDs.contains(1557495));
-//
-//        // Test that gatherer has not written records that don't exist
-//        assertFalse(addedIDs.contains(1558259));
-//
-//        // Test that gatherer has not 'overrun'
-//        assertFalse(addedIDs.contains(config.getStartId() - 1));
-//        assertFalse(addedIDs.contains(config.getEndId() + 1));
+        // List<Integer> addedIDs = new ArrayList<Integer>();
+        //
+        // // Test for IDs we know exist
+        // assertTrue(addedIDs.contains(config.getStartId()));
+        // assertTrue(addedIDs.contains(config.getEndId()));
+        // assertTrue(addedIDs.contains(1557362));
+        // assertTrue(addedIDs.contains(1557495));
+        //
+        // // Test that gatherer has not written records that don't exist
+        // assertFalse(addedIDs.contains(1558259));
+        //
+        // // Test that gatherer has not 'overrun'
+        // assertFalse(addedIDs.contains(config.getStartId() - 1));
+        // assertFalse(addedIDs.contains(config.getEndId() + 1));
     }
 }
