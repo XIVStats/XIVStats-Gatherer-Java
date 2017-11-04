@@ -24,7 +24,7 @@ import com.ffxivcensus.gatherer.player.PlayerBuilder;
 public class GathererController {
 
     private static final Logger LOG = LoggerFactory.getLogger(GathererController.class);
-    private final ApplicationConfig appConfig;
+    private ApplicationConfig appConfig;
     private final GathererFactory gathererFactory;
     /**
      * List of playable realms (used when splitting tables).

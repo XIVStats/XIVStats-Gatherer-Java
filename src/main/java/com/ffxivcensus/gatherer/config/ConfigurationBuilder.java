@@ -37,7 +37,7 @@ import com.ffxivcensus.gatherer.GathererController;
  * @author matthew.hillier
  */
 public class ConfigurationBuilder {
-	private static final Logger LOG = LoggerFactory.getLogger(ConfigurationBuilder.class);
+    private static final Logger LOG = LoggerFactory.getLogger(ConfigurationBuilder.class);
     private ApplicationConfig configuration;
 
     /**
@@ -116,60 +116,61 @@ public class ConfigurationBuilder {
      * @throws ParseException May throw {@link ParseException} when reading the Command Line arguments
      */
     public ConfigurationBuilder loadCommandLineConfiguration(Options options, String[] args) throws ParseException {
-        CommandLineParser parser = new DefaultParser();
-        CommandLine cmd = parser.parse(options, args);
+        if(args != null) {
+            CommandLineParser parser = new DefaultParser();
+            CommandLine cmd = parser.parse(options, args);
 
-        // Start id flag
-        if(cmd.hasOption("s")) {
-            configuration.setStartId(Integer.parseInt(cmd.getOptionValue("s")));
+            // Start id flag
+            if(cmd.hasOption("s")) {
+                configuration.setStartId(Integer.parseInt(cmd.getOptionValue("s")));
+            }
+
+            // Finish id flag
+            if(cmd.hasOption("f")) {
+                configuration.setEndId(Integer.parseInt(cmd.getOptionValue("f")));
+            }
+
+            // Store minions flag value
+            configuration.setStoreMinions(cmd.hasOption("P"));
+
+            // Store mounts flag value
+            configuration.setStoreMounts(cmd.hasOption("m"));
+
+            // Store progression
+            configuration.setStoreProgression(!cmd.hasOption("b"));
+
+            // Store whether player is active
+            configuration.setStorePlayerActive(!cmd.hasOption("a"));
+
+            // Store player active date
+            configuration.setStoreActiveDate(!cmd.hasOption("D"));
+
+            // Database URL
+            if(cmd.hasOption("d") && cmd.hasOption("U")) {
+                configuration.setDbUrl(cmd.getOptionValue("U"));
+            }
+            // Database Name
+            if(cmd.hasOption("d")) {
+                configuration.setDbName(cmd.getOptionValue("d"));
+            }
+
+            // Database user
+            if(cmd.hasOption("u")) {
+                configuration.setDbUser(cmd.getOptionValue("u"));
+            }
+
+            // Database password
+            if(cmd.hasOption("p")) {
+                configuration.setDbPassword(cmd.getOptionValue("p"));
+            }
+
+            configuration.setDbIgnoreSSLWarn(cmd.hasOption("i"));
+
+            // Program threads
+            if(cmd.hasOption("t")) {
+                configuration.setThreadLimit(Integer.parseInt(cmd.getOptionValue("t")));
+            }
         }
-
-        // Finish id flag
-        if(cmd.hasOption("f")) {
-            configuration.setEndId(Integer.parseInt(cmd.getOptionValue("f")));
-        }
-
-        // Store minions flag value
-        configuration.setStoreMinions(cmd.hasOption("P"));
-
-        // Store mounts flag value
-        configuration.setStoreMounts(cmd.hasOption("m"));
-
-        // Store progression
-        configuration.setStoreProgression(!cmd.hasOption("b"));
-
-        // Store whether player is active
-        configuration.setStorePlayerActive(!cmd.hasOption("a"));
-
-        // Store player active date
-        configuration.setStoreActiveDate(!cmd.hasOption("D"));
-
-        // Database URL
-        if(cmd.hasOption("d") && cmd.hasOption("U")) {
-            configuration.setDbUrl(cmd.getOptionValue("U"));
-        }
-        // Database Name
-        if(cmd.hasOption("d")) {
-            configuration.setDbName(cmd.getOptionValue("d"));
-        }
-
-        // Database user
-        if(cmd.hasOption("u")) {
-            configuration.setDbUser(cmd.getOptionValue("u"));
-        }
-
-        // Database password
-        if(cmd.hasOption("p")) {
-            configuration.setDbPassword(cmd.getOptionValue("p"));
-        }
-
-        configuration.setDbIgnoreSSLWarn(cmd.hasOption("i"));
-
-        // Program threads
-        if(cmd.hasOption("t")) {
-            configuration.setThreadLimit(Integer.parseInt(cmd.getOptionValue("t")));
-        }
-
         return new ConfigurationBuilder(configuration);
     }
 
