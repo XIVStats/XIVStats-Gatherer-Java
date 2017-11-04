@@ -48,7 +48,7 @@ import liquibase.resource.ClassLoaderResourceAccessor;
  * @see com.ffxivcensus.gatherer.player.PlayerBuilder
  * @see com.ffxivcensus.gatherer.Gatherer
  * @see com.ffxivcensus.gatherer.GathererController
- * @see com.ffxivcensus.gatherer.player.PlayerBuilderTest
+ * @see com.ffxivcensus.gatherer.player.PlayerBuilderIT
  * @since v1.0
  */
 @RunWith(MockitoJUnitRunner.class)

@@ -14,10 +14,10 @@ import com.ffxivcensus.gatherer.player.PlayerBuilder;
  * JUnit test class to test the methods of the Player class.
  *
  * @author Peter Reid
- * @see com.ffxivcensus.gatherer.player.PlayerBuilderTest
+ * @see com.ffxivcensus.gatherer.player.PlayerBuilderIT
  * @since v1.0
  */
-public class PlayerBuilderTest {
+public class PlayerBuilderIT {
 
     /**
      * Perform a test of the getPlayer method, using character #2356533 (Aelia Sokoto, Cerberus) as the test character.
