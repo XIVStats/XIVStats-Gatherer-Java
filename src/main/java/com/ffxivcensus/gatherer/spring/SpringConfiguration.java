@@ -7,7 +7,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.apache.commons.cli.ParseException;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Lazy;
+import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Scope;
 import org.xml.sax.SAXException;
 
@@ -37,7 +37,7 @@ public class SpringConfiguration {
     }
 
     @Bean(destroyMethod = "close") // Should happen anyway, but worth calling out
-    @Lazy // Assume lazy here so that this doesn't get created before the CLI options have been applied
+    @Primary
     public HikariDataSource dataSource() throws ParserConfigurationException, IOException, SAXException, ParseException {
         ApplicationConfig appConfig = applicationConfig();
 

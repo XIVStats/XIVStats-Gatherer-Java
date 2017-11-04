@@ -2,6 +2,7 @@ package com.ffxivcensus.gatherer;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ffxivcensus.gatherer.player.CharacterStatus;
 import com.ffxivcensus.gatherer.player.PlayerBean;
@@ -75,7 +76,7 @@ public class Gatherer implements Runnable {
         return dao;
     }
 
-    public void setPlayerBeanDAO(final PlayerBeanDAO playerBeanDAO) {
+    public void setPlayerBeanDAO(@Autowired final PlayerBeanDAO playerBeanDAO) {
         this.dao = playerBeanDAO;
     }
 

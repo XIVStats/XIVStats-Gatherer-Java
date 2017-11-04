@@ -13,6 +13,8 @@ import org.apache.commons.lang.BooleanUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import com.ffxivcensus.gatherer.config.ApplicationConfig;
 
@@ -21,67 +23,28 @@ import com.ffxivcensus.gatherer.config.ApplicationConfig;
  * 
  * @author matthew.hillier
  */
+@Repository
 public class PlayerBeanDAO {
 
-	private static final Logger LOG = LoggerFactory.getLogger(PlayerBeanDAO.class);
+    private static final Logger LOG = LoggerFactory.getLogger(PlayerBeanDAO.class);
     private ApplicationConfig appConfig;
     private DataSource dataSource;
 
-    public PlayerBeanDAO(final ApplicationConfig appConfig, final DataSource dataSource) {
+    public PlayerBeanDAO(@Autowired final ApplicationConfig appConfig, @Autowired final DataSource dataSource) {
         this.appConfig = appConfig;
         this.dataSource = dataSource;
     }
 
     /**
-     * Create the table to write character records to.
-     *
-     * @param tableName the name of the table to setup.
-     */
-    public void createTable(final String tableName) {
-        // Create DB table if it doesn't exist
-        // Open connection
-        try(Connection conn = openConnection();
-            Statement st = conn.createStatement()) {
-            StringBuilder sbSQL = new StringBuilder();
-            sbSQL.append("CREATE TABLE IF NOT EXISTS ");
-            sbSQL.append(tableName);
-            sbSQL.append(" (id INTEGER PRIMARY KEY,name TEXT,realm TEXT,race TEXT,gender TEXT,grand_company TEXT,free_company TEXT,");
-            sbSQL.append("level_gladiator INTEGER,level_pugilist INTEGER,level_marauder INTEGER,level_lancer INTEGER,level_archer INTEGER,");
-            sbSQL.append("level_rogue INTEGER,level_conjurer INTEGER,level_thaumaturge INTEGER,level_arcanist INTEGER,level_darkknight INTEGER, level_machinist INTEGER,");
-            sbSQL.append("level_astrologian INTEGER, level_scholar INTEGER, level_redmage INTEGER, level_samurai INTEGER, level_carpenter INTEGER, level_blacksmith INTEGER,");
-            sbSQL.append("level_armorer INTEGER,level_goldsmith INTEGER,level_leatherworker INTEGER,level_weaver INTEGER,level_alchemist INTEGER,level_culinarian INTEGER,");
-            sbSQL.append("level_miner INTEGER,level_botanist INTEGER,level_fisher INTEGER,");
-            sbSQL.append("p30days BIT, p60days BIT, p90days BIT, p180days BIT, p270days BIT,p360days BIT,p450days BIT,p630days BIT,p960days BIT,");
-            sbSQL.append("prearr BIT, prehw BIT, presb BIT, arrartbook BIT, hwartbookone BIT, hwartbooktwo BIT, hasencyclopedia BIT, ");
-            sbSQL.append("beforemeteor BIT, beforethefall BIT, ps4collectors BIT, ");
-            sbSQL.append("soundtrack BIT,saweternalbond BIT,sightseeing BIT,comm50 BIT,moogleplush BIT,");
-            sbSQL.append("topazcarubuncleplush BIT,emeraldcarbuncleplush BIT,");
-            sbSQL.append("hildibrand BIT, dideternalbond BIT, arrcollector BIT,");
-            sbSQL.append("kobold BIT, sahagin BIT, amaljaa BIT, sylph BIT,  moogle BIT, vanuvanu BIT, vath BIT,");
-            sbSQL.append("arr_25_complete BIT,hw_complete BIT, hw_31_complete BIT, hw_33_complete BIT, sb_complete BIT, legacy_player BIT");
-            sbSQL.append(",mounts TEXT");
-            sbSQL.append(",minions TEXT,");
-            sbSQL.append("date_active DATE,");
-            sbSQL.append("is_active BIT);");
-
-            st.executeUpdate(sbSQL.toString());
-        } catch(SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
      * Get an array list containing the added IDs returned by executing a SQL
      * statement.
-     *
-     * @param conn the SQL connection to use.
-     * @param strSQL the SQL statement to execute
+     * 
      * @return an array list of the IDs successfully added to DB.
      */
-    public List<Integer> getAdded(final String tableName, final int startId, final int endId) {
+    public List<Integer> getAdded(final int startId, final int endId) {
         ResultSet rs;
         List<Integer> addedIDs = new ArrayList<>();
-        String sql = "SELECT * FROM " + tableName + " WHERE `id`>=" + startId + " AND `id`<=" + endId + ";";
+        String sql = "SELECT * FROM tblplayers WHERE `id`>=" + startId + " AND `id`<=" + endId + ";";
 
         // Convert dataset to array list
         try(Connection conn = openConnection();
@@ -112,7 +75,7 @@ public class PlayerBeanDAO {
             StringBuilder sbValues = new StringBuilder();
 
             // Set default table name
-            String tableName = this.appConfig.getTableName();
+            String tableName = "tblplayers";
 
             sbFields.append("INSERT IGNORE INTO ").append(tableName).append(" (");
             sbValues.append(" VALUES (");
