@@ -1,6 +1,7 @@
 package com.ffxivcensus.gatherer.player;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.apache.commons.lang.BooleanUtils;
@@ -34,9 +35,9 @@ public class PlayerBeanDAO {
      */
     public List<Integer> getAdded(final int startId, final int endId) {
         List<Integer> addedIDs = new ArrayList<>();
-        String sql = "SELECT * FROM tblplayers WHERE `id`>=" + startId + " AND `id`<=" + endId + ";";
+        String sql = "SELECT * FROM tblplayers WHERE `id`>= ? AND `id`<= ?;";
 
-        jdbcTemplate.query(sql, (rs, rowNum) -> addedIDs.add(rs.getInt("id")));
+        jdbcTemplate.query(sql, new Object[] {startId, endId}, (rs, rowNum) -> addedIDs.add(rs.getInt("id")));
 
         return addedIDs;
     }
@@ -49,110 +50,136 @@ public class PlayerBeanDAO {
 
         // Declare string builders to build up components of statement
         StringBuilder sbFields = new StringBuilder();
-        StringBuilder sbValues = new StringBuilder();
 
-        // Set default table name
-        String tableName = "tblplayers";
+        List<Object> values = new ArrayList<>();
 
-        sbFields.append("INSERT IGNORE INTO ").append(tableName).append(" (");
-        sbValues.append(" VALUES (");
+        sbFields.append("INSERT IGNORE INTO tblplayers (");
 
         sbFields.append("id, name, realm, race, gender, grand_company,free_company,");
-        sbValues.append(player.getId() + ",\"" + player.getPlayerName() + "\",\"" + player.getRealm() + "\",\"" + player.getRace()
-                        + "\",'" + player.getGender() + "','" + player.getGrandCompany() + "',\"" + player.getFreeCompany() + "\",");
+        values.add(player.getId());
+        values.add(player.getPlayerName());
+        values.add(player.getRealm());
+        values.add(player.getRace());
+        values.add(player.getGender());
+        values.add(player.getGrandCompany());
+        values.add(player.getFreeCompany());
 
         sbFields.append("level_gladiator, level_pugilist, level_marauder,level_lancer, level_archer, level_rogue,");
-        sbValues.append(player.getLvlGladiator() + "," + player.getLvlPugilist() + "," + player.getLvlMarauder() + ","
-                        + player.getLvlLancer() + "," + player.getLvlArcher() + "," + player.getLvlRogue() + ",");
+        values.add(player.getLvlGladiator());
+        values.add(player.getLvlPugilist());
+        values.add(player.getLvlMarauder());
+        values.add(player.getLvlLancer());
+        values.add(player.getLvlArcher());
+        values.add(player.getLvlRogue());
 
         sbFields.append("level_conjurer, level_thaumaturge, level_arcanist, level_astrologian, level_darkknight,"
                         + " level_machinist,");
-        sbValues.append(player.getLvlConjurer() + "," + player.getLvlThaumaturge() + "," + player.getLvlArcanist() + ","
-                        + player.getLvlAstrologian() + "," + player.getLvlDarkKnight() + "," + player.getLvlMachinist() + ",");
+        values.add(player.getLvlConjurer());
+        values.add(player.getLvlThaumaturge());
+        values.add(player.getLvlArcanist());
+        values.add(player.getLvlAstrologian());
+        values.add(player.getLvlDarkKnight());
+        values.add(player.getLvlMachinist());
 
         sbFields.append("level_scholar, level_redmage, level_samurai,");
-        sbValues.append(player.getLvlScholar() + "," + player.getLvlRedMage() + "," + player.getLvlSamurai() + ",");
+        values.add(player.getLvlScholar());
+        values.add(player.getLvlRedMage());
+        values.add(player.getLvlSamurai());
 
         sbFields.append("level_carpenter, level_blacksmith, level_armorer, level_goldsmith, level_leatherworker, level_weaver, level_alchemist,");
-        sbValues.append(player.getLvlCarpenter() + "," + player.getLvlBlacksmith() + "," + player.getLvlArmorer() + ","
-                        + player.getLvlGoldsmith() + "," + player.getLvlLeatherworker() + "," + player.getLvlWeaver() + ","
-                        + player.getLvlAlchemist() + ",");
+        values.add(player.getLvlCarpenter());
+        values.add(player.getLvlBlacksmith());
+        values.add(player.getLvlArmorer());
+        values.add(player.getLvlGoldsmith());
+        values.add(player.getLvlLeatherworker());
+        values.add(player.getLvlWeaver());
+        values.add(player.getLvlAlchemist());
 
         sbFields.append("level_culinarian, level_miner, level_botanist, level_fisher");
-        sbValues.append(player.getLvlCulinarian() + "," + player.getLvlMiner() + "," + player.getLvlBotanist() + ","
-                        + player.getLvlFisher());
+        values.add(player.getLvlCulinarian());
+        values.add(player.getLvlMiner());
+        values.add(player.getLvlBotanist());
+        values.add(player.getLvlFisher());
 
         if(appConfig.isStoreProgression()) {
-            sbFields.append(",");
-            sbValues.append(",");
-
-            sbFields.append("p30days, p60days, p90days, p180days, p270days, p360days, p450days, p630days, p960days,");
-            sbValues.append(booleanToInt(player.isHas30DaysSub()) + "," + booleanToInt(player.isHas60DaysSub()) + ","
-                            + booleanToInt(player.isHas90DaysSub()) + "," + booleanToInt(player.isHas180DaysSub()) + ","
-                            + booleanToInt(player.isHas270DaysSub()) + "," + booleanToInt(player.isHas360DaysSub()) + ","
-                            + booleanToInt(player.isHas450DaysSub()) + "," + booleanToInt(player.isHas630DaysSub()) + ","
-                            + booleanToInt(player.isHas960DaysSub()) + ",");
+            sbFields.append(", p30days, p60days, p90days, p180days, p270days, p360days, p450days, p630days, p960days,");
+            values.add(booleanToInt(player.isHas30DaysSub()));
+            values.add(booleanToInt(player.isHas60DaysSub()));
+            values.add(booleanToInt(player.isHas90DaysSub()));
+            values.add(booleanToInt(player.isHas180DaysSub()));
+            values.add(booleanToInt(player.isHas270DaysSub()));
+            values.add(booleanToInt(player.isHas360DaysSub()));
+            values.add(booleanToInt(player.isHas450DaysSub()));
+            values.add(booleanToInt(player.isHas630DaysSub()));
+            values.add(booleanToInt(player.isHas960DaysSub()));
 
             sbFields.append("prearr, prehw, presb, arrartbook, hwartbookone, hwartbooktwo, hasencyclopedia, beforemeteor, beforethefall, soundtrack, saweternalbond, "
                             + "sightseeing, arr_25_complete, comm50, moogleplush, topazcarubuncleplush, emeraldcarbuncleplush,");
-            sbValues.append(booleanToInt(player.isHasPreOrderArr()) + "," + booleanToInt(player.isHasPreOrderHW()) + ","
-                            + booleanToInt(player.isHasPreOrderSB()) + "," + booleanToInt(player.isHasARRArtbook()) + ","
-                            + booleanToInt(player.isHasHWArtbookOne()) + "," + booleanToInt(player.isHasHWArtbookTwo()) + ","
-                            + booleanToInt(player.isHasEncyclopediaEorzea()) + "," + booleanToInt(player.isHasBeforeMeteor()) + ","
-                            + booleanToInt(player.isHasBeforeTheFall()) + "," + booleanToInt(player.isHasSoundtrack()) + ","
-                            + booleanToInt(player.isHasAttendedEternalBond()) + "," + booleanToInt(player.isHasCompletedHWSightseeing())
-                            + "," + booleanToInt(player.isHasCompleted2pt5()) + "," + booleanToInt(player.isHasFiftyComms()) + ","
-                            + booleanToInt(player.isHasMooglePlush()) + "," + booleanToInt(player.isHasTopazCarbunclePlush()) + ","
-                            + booleanToInt(player.isHasEmeraldCarbunclePlush()) + ",");
+            values.add(booleanToInt(player.isHasPreOrderArr()));
+            values.add(booleanToInt(player.isHasPreOrderHW()));
+            values.add(booleanToInt(player.isHasPreOrderSB()));
+            values.add(booleanToInt(player.isHasARRArtbook()));
+            values.add(booleanToInt(player.isHasHWArtbookOne()));
+            values.add(booleanToInt(player.isHasHWArtbookTwo()));
+            values.add(booleanToInt(player.isHasEncyclopediaEorzea()));
+            values.add(booleanToInt(player.isHasBeforeMeteor()));
+            values.add(booleanToInt(player.isHasBeforeTheFall()));
+            values.add(booleanToInt(player.isHasSoundtrack()));
+            values.add(booleanToInt(player.isHasAttendedEternalBond()));
+            values.add(booleanToInt(player.isHasCompletedHWSightseeing()));
+            values.add(booleanToInt(player.isHasCompleted2pt5()));
+            values.add(booleanToInt(player.isHasFiftyComms()));
+            values.add(booleanToInt(player.isHasMooglePlush()));
+            values.add(booleanToInt(player.isHasTopazCarbunclePlush()));
+            values.add(booleanToInt(player.isHasEmeraldCarbunclePlush()));
 
             sbFields.append("hildibrand, ps4collectors, dideternalbond, arrcollector, kobold, sahagin, amaljaa, "
                             + "sylph, moogle, vanuvanu, vath, hw_complete, hw_31_complete, hw_33_complete, sb_complete, legacy_player");
-            sbValues.append(booleanToInt(player.isHasCompletedHildibrand()) + "," + booleanToInt(player.isHasPS4Collectors()) + ","
-                            + booleanToInt(player.isHasEternalBond()) + "," + booleanToInt(player.isHasARRCollectors()) + ","
-                            + booleanToInt(player.isHasKobold()) + "," + booleanToInt(player.isHasSahagin()) + ","
-                            + booleanToInt(player.isHasAmaljaa()) + "," + booleanToInt(player.isHasSylph()) + ","
-                            + booleanToInt(player.isHasMoogle()) + "," + booleanToInt(player.isHasVanuVanu()) + ","
-                            + booleanToInt(player.isHasVath()) + "," + booleanToInt(player.isHasCompletedHW()) + ","
-                            + booleanToInt(player.isHasCompleted3pt1()) + "," + booleanToInt(player.isHasCompleted3pt3()) + ","
-                            + booleanToInt(player.isHasCompletedSB()) + "," + booleanToInt(player.isLegacyPlayer()));
+            values.add(booleanToInt(player.isHasCompletedHildibrand()));
+            values.add(booleanToInt(player.isHasPS4Collectors()));
+            values.add(booleanToInt(player.isHasEternalBond()));
+            values.add(booleanToInt(player.isHasARRCollectors()));
+            values.add(booleanToInt(player.isHasKobold()));
+            values.add(booleanToInt(player.isHasSahagin()));
+            values.add(booleanToInt(player.isHasAmaljaa()));
+            values.add(booleanToInt(player.isHasSylph()));
+            values.add(booleanToInt(player.isHasMoogle()));
+            values.add(booleanToInt(player.isHasVanuVanu()));
+            values.add(booleanToInt(player.isHasVath()));
+            values.add(booleanToInt(player.isHasCompletedHW()));
+            values.add(booleanToInt(player.isHasCompleted3pt1()));
+            values.add(booleanToInt(player.isHasCompleted3pt3()));
+            values.add(booleanToInt(player.isHasCompletedSB()));
+            values.add(booleanToInt(player.isLegacyPlayer()));
 
         }
 
         if(appConfig.isStoreMinions()) {
-            sbFields.append(",");
-            sbValues.append(",");
-            sbFields.append("minions");
-            sbValues.append("\"" + StringUtils.join(player.getMinions(), ",") + "\"");
+            sbFields.append(", minions");
+            values.add(StringUtils.join(player.getMinions(), ","));
         }
         if(appConfig.isStoreMounts()) {
-            sbFields.append(",");
-            sbValues.append(",");
-            sbFields.append("mounts");
-            sbValues.append("\"" + StringUtils.join(player.getMounts(), ",") + "\"");
+            sbFields.append(", mounts");
+            values.add(StringUtils.join(player.getMounts(), ","));
         }
 
         if(appConfig.isStoreActiveDate()) {
-            sbFields.append(",");
-            sbValues.append(",");
-            sbFields.append("date_active");
-            java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd");
-
-            String sqlDate = sdf.format(player.getDateImgLastModified());
-            sbValues.append("\"" + sqlDate + "\"");
+            sbFields.append(", date_active");
+            values.add(player.getDateImgLastModified());
         }
         if(appConfig.isStorePlayerActive()) {
-            sbFields.append(",");
-            sbValues.append(",");
-            sbFields.append("is_active");
-            sbValues.append(booleanToInt(player.isActive()));
+            sbFields.append(", is_active");
+            values.add(booleanToInt(player.isActive()));
         }
 
         sbFields.append(")");
-        sbValues.append(");");
 
-        String strSQL = sbFields.toString() + sbValues.toString();
+        String[] params = new String[values.size()];
+        Arrays.fill(params, "?");
 
-        jdbcTemplate.update(strSQL);
+        String strSQL = sbFields.toString() + " VALUES(" + String.join(",", params) + ");";
+
+        jdbcTemplate.update(strSQL, values.toArray());
 
         strOut = "Character " + player.getId() + " written to database successfully.";
         return strOut;
