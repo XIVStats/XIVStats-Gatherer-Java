@@ -37,7 +37,7 @@ try {
         step([$class: 'JUnitResultArchiver', testResults: 'target/*-reports/*.xml'])
       }
     }
-
+/*
     stage('SonarQube analysis') {
       // requires SonarQube Scanner 2.8+
       def scannerHome = tool 'SonarQube Scanner 2';
@@ -46,6 +46,7 @@ try {
         sh "${scannerHome}/bin/sonar-scanner"
       }
     }
+*/
 
   }
 } catch (caughtError) { //End of Try
