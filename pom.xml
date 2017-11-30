@@ -5,7 +5,7 @@
 
     <groupId>com.ffxivcensus.gatherer</groupId>
     <artifactId>XIVStats-Gatherer-Java</artifactId>
-    <version>v1.4.0</version>
+    <version>v2.0.0</version>
     <name>XIVStats Lodestone Gatherer</name>
     <url>https://github.com/xivstats</url>
 
