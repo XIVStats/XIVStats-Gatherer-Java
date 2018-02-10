@@ -487,3 +487,14 @@ databaseChangeLog:
       changes:
           - tagDatabase:
               tag: 1.4.0
+  - changeSet:
+      id: 4
+      author: matthewhillier
+      changes:
+          - addColumn:
+              tableName: tblplayers
+              columns:
+                - column:
+                    name: character_status
+                    type: varchar(10)
+              
