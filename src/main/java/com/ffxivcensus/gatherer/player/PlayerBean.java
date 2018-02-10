@@ -22,14 +22,15 @@ import com.ffxivcensus.gatherer.util.StringListConverter;
 @Entity
 @Table(name = "tblplayers")
 public class PlayerBean {
+    private static final String NOT_AVAILABLE = "N/A";
     @Id
     private int id;
-    private String realm;
-    private String name;
-    private String race;
-    private String gender;
-    private String grandCompany;
-    private String freeCompany;
+    private String realm = NOT_AVAILABLE;
+    private String name = NOT_AVAILABLE;
+    private String race = NOT_AVAILABLE;
+    private String gender = NOT_AVAILABLE;
+    private String grandCompany = NOT_AVAILABLE;
+    private String freeCompany = NOT_AVAILABLE;
     private int levelGladiator;
     private int levelPugilist;
     private int levelMarauder;

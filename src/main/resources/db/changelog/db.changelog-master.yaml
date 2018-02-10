@@ -497,4 +497,15 @@ databaseChangeLog:
                 - column:
                     name: character_status
                     type: varchar(10)
+  - changeSet:
+      id: 5
+      author: matthewhillier
+      changes:
+          - createIndex:
+              tableName: tblplayers
+              columns:
+                - column:
+                    name: character_status
+                    type: varchar(10)
+              indexName: idx_character_status
               
