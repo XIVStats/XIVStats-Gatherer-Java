@@ -130,21 +130,6 @@ public class ConfigurationBuilder {
                 configuration.setEndId(Integer.parseInt(cmd.getOptionValue("f")));
             }
 
-            // Store minions flag value
-            configuration.setStoreMinions(cmd.hasOption("P"));
-
-            // Store mounts flag value
-            configuration.setStoreMounts(cmd.hasOption("m"));
-
-            // Store progression
-            configuration.setStoreProgression(!cmd.hasOption("b"));
-
-            // Store whether player is active
-            configuration.setStorePlayerActive(!cmd.hasOption("a"));
-
-            // Store player active date
-            configuration.setStoreActiveDate(!cmd.hasOption("D"));
-
             // Database URL
             if(cmd.hasOption("d") && cmd.hasOption("U")) {
                 configuration.setDbUrl(cmd.getOptionValue("U"));

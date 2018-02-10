@@ -85,9 +85,6 @@ public class GathererControllerIT {
     public void testRunAdvancedOptions() throws Exception {
         config.setStartId(1557260);
         config.setEndId(1558260);
-        config.setStoreMinions(true);
-        config.setStoreMounts(true);
-        config.setStoreProgression(true);
 
         gathererController.run();
 
