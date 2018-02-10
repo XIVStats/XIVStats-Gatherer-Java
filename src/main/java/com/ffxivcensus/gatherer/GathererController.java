@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ffxivcensus.gatherer.config.ApplicationConfig;
+import com.ffxivcensus.gatherer.player.PlayerBeanRepository;
 import com.ffxivcensus.gatherer.player.PlayerBuilder;
 
 /**
@@ -26,6 +27,7 @@ public class GathererController {
     private static final Logger LOG = LoggerFactory.getLogger(GathererController.class);
     private ApplicationConfig appConfig;
     private final GathererFactory gathererFactory;
+    final PlayerBeanRepository playerRepository;
     /**
      * List of playable realms (used when splitting tables).
      */
@@ -43,9 +45,11 @@ public class GathererController {
      * 
      * @param config Configuration Bean
      */
-    public GathererController(@Autowired final ApplicationConfig config, @Autowired final GathererFactory gathererFactory) {
+    public GathererController(@Autowired final ApplicationConfig config, @Autowired final GathererFactory gathererFactory,
+                              @Autowired final PlayerBeanRepository playerRepository) {
         this.appConfig = config;
         this.gathererFactory = gathererFactory;
+        this.playerRepository = playerRepository;
     }
 
     /**
@@ -112,6 +116,10 @@ public class GathererController {
      * Method to gather data for characters in specified range.
      */
     private void gatherRange() {
+        // Firstly, clean the top-end of the database
+        LOG.debug("Cleaning top-end characters from the database");
+        playerRepository.trimDeleted(playerRepository.findLastNonDeleted());
+
         // Set next ID
         int nextID = appConfig.getStartId();
 
