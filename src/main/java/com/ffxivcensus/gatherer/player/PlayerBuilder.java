@@ -65,32 +65,32 @@ public class PlayerBuilder {
      * @param arrLevels integer array of classes in order displayed on lodestone.
      */
     public static void setLevels(final PlayerBean player, final int[] arrLevels) {
-        player.setLvlGladiator(arrLevels[0]);
-        player.setLvlMarauder(arrLevels[1]);
-        player.setLvlDarkKnight(arrLevels[2]);
-        player.setLvlPugilist(arrLevels[3]);
-        player.setLvlLancer(arrLevels[4]);
-        player.setLvlRogue(arrLevels[5]);
-        player.setLvlSamurai(arrLevels[6]);
-        player.setLvlConjurer(arrLevels[7]);
-        player.setLvlScholar(arrLevels[8]);
-        player.setLvlAstrologian(arrLevels[9]);
-        player.setLvlArcher(arrLevels[10]);
-        player.setLvlMachinist(arrLevels[11]);
-        player.setLvlThaumaturge(arrLevels[12]);
-        player.setLvlArcanist(arrLevels[13]);
-        player.setLvlRedMage(arrLevels[14]);
-        player.setLvlCarpenter(arrLevels[15]);
-        player.setLvlBlacksmith(arrLevels[16]);
-        player.setLvlArmorer(arrLevels[17]);
-        player.setLvlGoldsmith(arrLevels[18]);
-        player.setLvlLeatherworker(arrLevels[19]);
-        player.setLvlWeaver(arrLevels[20]);
-        player.setLvlAlchemist(arrLevels[21]);
-        player.setLvlCulinarian(arrLevels[22]);
-        player.setLvlMiner(arrLevels[23]);
-        player.setLvlBotanist(arrLevels[24]);
-        player.setLvlFisher(arrLevels[25]);
+        player.setLevelGladiator(arrLevels[0]);
+        player.setLevelMarauder(arrLevels[1]);
+        player.setLevelDarkKnight(arrLevels[2]);
+        player.setLevelPugilist(arrLevels[3]);
+        player.setLevelLancer(arrLevels[4]);
+        player.setLevelRogue(arrLevels[5]);
+        player.setLevelSamurai(arrLevels[6]);
+        player.setLevelConjurer(arrLevels[7]);
+        player.setLevelScholar(arrLevels[8]);
+        player.setLevelAstrologian(arrLevels[9]);
+        player.setLevelArcher(arrLevels[10]);
+        player.setLevelMachinist(arrLevels[11]);
+        player.setLevelThaumaturge(arrLevels[12]);
+        player.setLevelArcanist(arrLevels[13]);
+        player.setLevelRedMage(arrLevels[14]);
+        player.setLevelCarpenter(arrLevels[15]);
+        player.setLevelBlacksmith(arrLevels[16]);
+        player.setLevelArmorer(arrLevels[17]);
+        player.setLevelGoldsmith(arrLevels[18]);
+        player.setLevelLeatherworker(arrLevels[19]);
+        player.setLevelWeaver(arrLevels[20]);
+        player.setLevelAlchemist(arrLevels[21]);
+        player.setLevelCulinarian(arrLevels[22]);
+        player.setLevelMiner(arrLevels[23]);
+        player.setLevelBotanist(arrLevels[24]);
+        player.setLevelFisher(arrLevels[25]);
     }
 
     /**

@@ -65,41 +65,41 @@ public class PlayerBeanDAO {
         values.add(player.getFreeCompany());
 
         sbFields.append("level_gladiator, level_pugilist, level_marauder,level_lancer, level_archer, level_rogue,");
-        values.add(player.getLvlGladiator());
-        values.add(player.getLvlPugilist());
-        values.add(player.getLvlMarauder());
-        values.add(player.getLvlLancer());
-        values.add(player.getLvlArcher());
-        values.add(player.getLvlRogue());
+        values.add(player.getLevelGladiator());
+        values.add(player.getLevelPugilist());
+        values.add(player.getLevelMarauder());
+        values.add(player.getLevelLancer());
+        values.add(player.getLevelArcher());
+        values.add(player.getLevelRogue());
 
         sbFields.append("level_conjurer, level_thaumaturge, level_arcanist, level_astrologian, level_darkknight,"
                         + " level_machinist,");
-        values.add(player.getLvlConjurer());
-        values.add(player.getLvlThaumaturge());
-        values.add(player.getLvlArcanist());
-        values.add(player.getLvlAstrologian());
-        values.add(player.getLvlDarkKnight());
-        values.add(player.getLvlMachinist());
+        values.add(player.getLevelConjurer());
+        values.add(player.getLevelThaumaturge());
+        values.add(player.getLevelArcanist());
+        values.add(player.getLevelAstrologian());
+        values.add(player.getLevelDarkKnight());
+        values.add(player.getLevelMachinist());
 
         sbFields.append("level_scholar, level_redmage, level_samurai,");
-        values.add(player.getLvlScholar());
-        values.add(player.getLvlRedMage());
-        values.add(player.getLvlSamurai());
+        values.add(player.getLevelScholar());
+        values.add(player.getLevelRedMage());
+        values.add(player.getLevelSamurai());
 
         sbFields.append("level_carpenter, level_blacksmith, level_armorer, level_goldsmith, level_leatherworker, level_weaver, level_alchemist,");
-        values.add(player.getLvlCarpenter());
-        values.add(player.getLvlBlacksmith());
-        values.add(player.getLvlArmorer());
-        values.add(player.getLvlGoldsmith());
-        values.add(player.getLvlLeatherworker());
-        values.add(player.getLvlWeaver());
-        values.add(player.getLvlAlchemist());
+        values.add(player.getLevelCarpenter());
+        values.add(player.getLevelBlacksmith());
+        values.add(player.getLevelArmorer());
+        values.add(player.getLevelGoldsmith());
+        values.add(player.getLevelLeatherworker());
+        values.add(player.getLevelWeaver());
+        values.add(player.getLevelAlchemist());
 
         sbFields.append("level_culinarian, level_miner, level_botanist, level_fisher");
-        values.add(player.getLvlCulinarian());
-        values.add(player.getLvlMiner());
-        values.add(player.getLvlBotanist());
-        values.add(player.getLvlFisher());
+        values.add(player.getLevelCulinarian());
+        values.add(player.getLevelMiner());
+        values.add(player.getLevelArcanist());
+        values.add(player.getLevelFisher());
 
         if(appConfig.isStoreProgression()) {
             sbFields.append(", p30days, p60days, p90days, p180days, p270days, p360days, p450days, p630days, p960days,");

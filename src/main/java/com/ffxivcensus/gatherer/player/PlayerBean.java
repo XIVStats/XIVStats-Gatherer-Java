@@ -3,6 +3,13 @@ package com.ffxivcensus.gatherer.player;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
 /**
  * Object class to represent a Character/Player. This class specifies the attributes and behaviour of a player object.
  *
@@ -10,86 +17,135 @@ import java.util.List;
  * @since v1.0
  * @see PlayerBuilder
  */
+@Entity
+@Table(name="tblplayers")
 public class PlayerBean {
+    @Id
     private int id;
     private String realm;
-    private String playerName;
+    private String name;
     private String race;
     private String gender;
     private String grandCompany;
     private String freeCompany;
-    private int lvlGladiator;
-    private int lvlPugilist;
-    private int lvlMarauder;
-    private int lvlLancer;
-    private int lvlArcher;
-    private int lvlRogue;
-    private int lvlConjurer;
-    private int lvlThaumaturge;
-    private int lvlArcanist;
-    private int lvlDarkKnight;
-    private int lvlMachinist;
-    private int lvlAstrologian;
-    private int lvlScholar;
-    private int lvlRedMage;
-    private int lvlSamurai;
-    private int lvlCarpenter;
-    private int lvlBlacksmith;
-    private int lvlArmorer;
-    private int lvlGoldsmith;
-    private int lvlLeatherworker;
-    private int lvlWeaver;
-    private int lvlAlchemist;
-    private int lvlCulinarian;
-    private int lvlMiner;
-    private int lvlBotanist;
-    private int lvlFisher;
+    private int levelGladiator;
+    private int levelPugilist;
+    private int levelMarauder;
+    private int levelLancer;
+    private int levelArcher;
+    private int levelRogue;
+    private int levelConjurer;
+    private int levelThaumaturge;
+    private int levelArcanist;
+    private int levelDarkKnight;
+    private int levelMachinist;
+    private int levelAstrologian;
+    private int levelScholar;
+    private int levelRedMage;
+    private int levelSamurai;
+    private int levelCarpenter;
+    private int levelBlacksmith;
+    private int levelArmorer;
+    private int levelGoldsmith;
+    private int levelLeatherworker;
+    private int levelWeaver;
+    private int levelAlchemist;
+    private int levelCulinarian;
+    private int levelMiner;
+    private int levelBotanist;
+    private int levelFisher;
+    @Column(name = "p30days")
     private boolean has30DaysSub;
+    @Column(name = "p60days")
     private boolean has60DaysSub;
+    @Column(name = "p90days")
     private boolean has90DaysSub;
+    @Column(name = "p180days")
     private boolean has180DaysSub;
+    @Column(name = "p270days")
     private boolean has270DaysSub;
+    @Column(name = "p360days")
     private boolean has360DaysSub;
+    @Column(name = "p450days")
     private boolean has450DaysSub;
+    @Column(name = "p630days")
     private boolean has630DaysSub;
+    @Column(name = "p960days")
     private boolean has960DaysSub;
+    @Column(name = "prearr")
     private boolean hasPreOrderArr;
+    @Column(name = "prehw")
     private boolean hasPreOrderHW;
+    @Column(name = "presb")
     private boolean hasPreOrderSB;
+    @Column(name = "arrartbook")
     private boolean hasARRArtbook;
+    @Column(name = "hwartbookone")
     private boolean hasHWArtbookOne;
+    @Column(name = "hwartbooktwo")
     private boolean hasHWArtbookTwo;
+    @Column(name = "hasencyclopedia")
     private boolean hasEncyclopediaEorzea;
+    @Column(name = "beforemeteor")
     private boolean hasBeforeMeteor;
+    @Column(name = "beforethefall")
     private boolean hasBeforeTheFall;
+    @Column(name = "soundtrack")
     private boolean hasSoundtrack;
+    @Column(name = "saweternalbond")
     private boolean hasAttendedEternalBond;
+    @Column(name = "sightseeing")
     private boolean hasCompletedHWSightseeing;
     private boolean hasCompleted2pt5;
+    @Column(name = "comm50")
     private boolean hasFiftyComms;
+    @Column(name = "moogleplush")
     private boolean hasMooglePlush;
+    @Column(name = "topazcarbuncleplush")
     private boolean hasTopazCarbunclePlush;
+    @Column(name = "emeraldcarbuncleplush")
     private boolean hasEmeraldCarbunclePlush;
+    @Column(name = "hildibrand")
     private boolean hasCompletedHildibrand;
+    @Column(name = "ps4collectors")
     private boolean hasPS4Collectors;
+    @Column(name = "dideternalbond")
     private boolean hasEternalBond;
+    @Column(name = "arrcollector")
     private boolean hasARRCollectors;
+    @Column(name = "kobold")
     private boolean hasKobold;
+    @Column(name = "sahagin")
     private boolean hasSahagin;
+    @Column(name = "amaljaa")
     private boolean hasAmaljaa;
+    @Column(name = "sylph")
     private boolean hasSylph;
+    @Column(name = "moogle")
     private boolean hasMoogle;
+    @Column(name = "vanuvanu")
     private boolean hasVanuVanu;
+    @Column(name = "vath")
     private boolean hasVath;
+    @Column(name = "hw_complete")
     private boolean hasCompletedHW;
+    @Column(name = "sb_complete")
     private boolean hasCompletedSB;
+    @Column(name = "hw_31_complete")
     private boolean hasCompleted3pt1;
+    @Column(name = "hw_33_complete")
     private boolean hasCompleted3pt3;
+    @Column(name = "legacy_player")
     private boolean isLegacyPlayer;
+    @ElementCollection
     private List<String> minions;
+    @ElementCollection
     private List<String> mounts;
+    @Column(name = "date_active")
     private Date dateImgLastModified;
+    @Column(name = "is_active")
     private boolean isActive;
+    @Transient
     private CharacterStatus characterStatus = CharacterStatus.ACTIVE;
 
     public PlayerBean() {
@@ -112,11 +168,11 @@ public class PlayerBean {
     }
 
     public String getPlayerName() {
-        return playerName;
+        return name;
     }
 
     public void setPlayerName(final String playerName) {
-        this.playerName = playerName;
+        this.name = playerName;
     }
 
     public String getRace() {
@@ -151,212 +207,212 @@ public class PlayerBean {
         this.freeCompany = freeCompany;
     }
 
-    public int getLvlGladiator() {
-        return lvlGladiator;
+    public int getLevelGladiator() {
+        return levelGladiator;
     }
 
-    public void setLvlGladiator(final int lvlGladiator) {
-        this.lvlGladiator = lvlGladiator;
+    public void setLevelGladiator(final int lvlGladiator) {
+        this.levelGladiator = lvlGladiator;
     }
 
-    public int getLvlPugilist() {
-        return lvlPugilist;
+    public int getLevelPugilist() {
+        return levelPugilist;
     }
 
-    public void setLvlPugilist(final int lvlPugilist) {
-        this.lvlPugilist = lvlPugilist;
+    public void setLevelPugilist(final int lvlPugilist) {
+        this.levelPugilist = lvlPugilist;
     }
 
-    public int getLvlMarauder() {
-        return lvlMarauder;
+    public int getLevelMarauder() {
+        return levelMarauder;
     }
 
-    public void setLvlMarauder(final int lvlMarauder) {
-        this.lvlMarauder = lvlMarauder;
+    public void setLevelMarauder(final int lvlMarauder) {
+        this.levelMarauder = lvlMarauder;
     }
 
-    public int getLvlLancer() {
-        return lvlLancer;
+    public int getLevelLancer() {
+        return levelLancer;
     }
 
-    public void setLvlLancer(final int lvlLancer) {
-        this.lvlLancer = lvlLancer;
+    public void setLevelLancer(final int lvlLancer) {
+        this.levelLancer = lvlLancer;
     }
 
-    public int getLvlArcher() {
-        return lvlArcher;
+    public int getLevelArcher() {
+        return levelArcher;
     }
 
-    public void setLvlArcher(final int lvlArcher) {
-        this.lvlArcher = lvlArcher;
+    public void setLevelArcher(final int lvlArcher) {
+        this.levelArcher = lvlArcher;
     }
 
-    public int getLvlRogue() {
-        return lvlRogue;
+    public int getLevelRogue() {
+        return levelRogue;
     }
 
-    public void setLvlRogue(final int lvlRogue) {
-        this.lvlRogue = lvlRogue;
+    public void setLevelRogue(final int lvlRogue) {
+        this.levelRogue = lvlRogue;
     }
 
-    public int getLvlConjurer() {
-        return lvlConjurer;
+    public int getLevelConjurer() {
+        return levelConjurer;
     }
 
-    public void setLvlConjurer(final int lvlConjurer) {
-        this.lvlConjurer = lvlConjurer;
+    public void setLevelConjurer(final int lvlConjurer) {
+        this.levelConjurer = lvlConjurer;
     }
 
-    public int getLvlThaumaturge() {
-        return lvlThaumaturge;
+    public int getLevelThaumaturge() {
+        return levelThaumaturge;
     }
 
-    public void setLvlThaumaturge(final int lvlThaumaturge) {
-        this.lvlThaumaturge = lvlThaumaturge;
+    public void setLevelThaumaturge(final int lvlThaumaturge) {
+        this.levelThaumaturge = lvlThaumaturge;
     }
 
-    public int getLvlArcanist() {
-        return lvlArcanist;
+    public int getLevelArcanist() {
+        return levelArcanist;
     }
 
-    public void setLvlArcanist(final int lvlArcanist) {
-        this.lvlArcanist = lvlArcanist;
+    public void setLevelArcanist(final int lvlArcanist) {
+        this.levelArcanist = lvlArcanist;
     }
 
-    public int getLvlDarkKnight() {
-        return lvlDarkKnight;
+    public int getLevelDarkKnight() {
+        return levelDarkKnight;
     }
 
-    public void setLvlDarkKnight(final int lvlDarkKnight) {
-        this.lvlDarkKnight = lvlDarkKnight;
+    public void setLevelDarkKnight(final int lvlDarkKnight) {
+        this.levelDarkKnight = lvlDarkKnight;
     }
 
-    public int getLvlMachinist() {
-        return lvlMachinist;
+    public int getLevelMachinist() {
+        return levelMachinist;
     }
 
-    public void setLvlMachinist(final int lvlMachinist) {
-        this.lvlMachinist = lvlMachinist;
+    public void setLevelMachinist(final int lvlMachinist) {
+        this.levelMachinist = lvlMachinist;
     }
 
-    public int getLvlAstrologian() {
-        return lvlAstrologian;
+    public int getLevelAstrologian() {
+        return levelAstrologian;
     }
 
-    public void setLvlAstrologian(final int lvlAstrologian) {
-        this.lvlAstrologian = lvlAstrologian;
+    public void setLevelAstrologian(final int lvlAstrologian) {
+        this.levelAstrologian = lvlAstrologian;
     }
 
-    public int getLvlScholar() {
-        return lvlScholar;
+    public int getLevelScholar() {
+        return levelScholar;
     }
 
-    public void setLvlScholar(final int lvlScholar) {
-        this.lvlScholar = lvlScholar;
+    public void setLevelScholar(final int lvlScholar) {
+        this.levelScholar = lvlScholar;
     }
 
-    public int getLvlRedMage() {
-        return lvlRedMage;
+    public int getLevelRedMage() {
+        return levelRedMage;
     }
 
-    public void setLvlRedMage(final int lvlRedMage) {
-        this.lvlRedMage = lvlRedMage;
+    public void setLevelRedMage(final int lvlRedMage) {
+        this.levelRedMage = lvlRedMage;
     }
 
-    public int getLvlSamurai() {
-        return lvlSamurai;
+    public int getLevelSamurai() {
+        return levelSamurai;
     }
 
-    public void setLvlSamurai(final int lvlSamurai) {
-        this.lvlSamurai = lvlSamurai;
+    public void setLevelSamurai(final int lvlSamurai) {
+        this.levelSamurai = lvlSamurai;
     }
 
-    public int getLvlCarpenter() {
-        return lvlCarpenter;
+    public int getLevelCarpenter() {
+        return levelCarpenter;
     }
 
-    public void setLvlCarpenter(final int lvlCarpenter) {
-        this.lvlCarpenter = lvlCarpenter;
+    public void setLevelCarpenter(final int lvlCarpenter) {
+        this.levelCarpenter = lvlCarpenter;
     }
 
-    public int getLvlBlacksmith() {
-        return lvlBlacksmith;
+    public int getLevelBlacksmith() {
+        return levelBlacksmith;
     }
 
-    public void setLvlBlacksmith(final int lvlBlacksmith) {
-        this.lvlBlacksmith = lvlBlacksmith;
+    public void setLevelBlacksmith(final int lvlBlacksmith) {
+        this.levelBlacksmith = lvlBlacksmith;
     }
 
-    public int getLvlArmorer() {
-        return lvlArmorer;
+    public int getLevelArmorer() {
+        return levelArmorer;
     }
 
-    public void setLvlArmorer(final int lvlArmorer) {
-        this.lvlArmorer = lvlArmorer;
+    public void setLevelArmorer(final int lvlArmorer) {
+        this.levelArmorer = lvlArmorer;
     }
 
-    public int getLvlGoldsmith() {
-        return lvlGoldsmith;
+    public int getLevelGoldsmith() {
+        return levelGoldsmith;
     }
 
-    public void setLvlGoldsmith(final int lvlGoldsmith) {
-        this.lvlGoldsmith = lvlGoldsmith;
+    public void setLevelGoldsmith(final int lvlGoldsmith) {
+        this.levelGoldsmith = lvlGoldsmith;
     }
 
-    public int getLvlLeatherworker() {
-        return lvlLeatherworker;
+    public int getLevelLeatherworker() {
+        return levelLeatherworker;
     }
 
-    public void setLvlLeatherworker(final int lvlLeatherworker) {
-        this.lvlLeatherworker = lvlLeatherworker;
+    public void setLevelLeatherworker(final int lvlLeatherworker) {
+        this.levelLeatherworker = lvlLeatherworker;
     }
 
-    public int getLvlWeaver() {
-        return lvlWeaver;
+    public int getLevelWeaver() {
+        return levelWeaver;
     }
 
-    public void setLvlWeaver(final int lvlWeaver) {
-        this.lvlWeaver = lvlWeaver;
+    public void setLevelWeaver(final int lvlWeaver) {
+        this.levelWeaver = lvlWeaver;
     }
 
-    public int getLvlAlchemist() {
-        return lvlAlchemist;
+    public int getLevelAlchemist() {
+        return levelAlchemist;
     }
 
-    public void setLvlAlchemist(final int lvlAlchemist) {
-        this.lvlAlchemist = lvlAlchemist;
+    public void setLevelAlchemist(final int lvlAlchemist) {
+        this.levelAlchemist = lvlAlchemist;
     }
 
-    public int getLvlCulinarian() {
-        return lvlCulinarian;
+    public int getLevelCulinarian() {
+        return levelCulinarian;
     }
 
-    public void setLvlCulinarian(final int lvlCulinarian) {
-        this.lvlCulinarian = lvlCulinarian;
+    public void setLevelCulinarian(final int lvlCulinarian) {
+        this.levelCulinarian = lvlCulinarian;
     }
 
-    public int getLvlMiner() {
-        return lvlMiner;
+    public int getLevelMiner() {
+        return levelMiner;
     }
 
-    public void setLvlMiner(final int lvlMiner) {
-        this.lvlMiner = lvlMiner;
+    public void setLevelMiner(final int lvlMiner) {
+        this.levelMiner = lvlMiner;
     }
 
-    public int getLvlBotanist() {
-        return lvlBotanist;
+    public int getLevelBotanist() {
+        return levelBotanist;
     }
 
-    public void setLvlBotanist(final int lvlBotanist) {
-        this.lvlBotanist = lvlBotanist;
+    public void setLevelBotanist(final int lvlBotanist) {
+        this.levelBotanist = lvlBotanist;
     }
 
-    public int getLvlFisher() {
-        return lvlFisher;
+    public int getLevelFisher() {
+        return levelFisher;
     }
 
-    public void setLvlFisher(final int lvlFisher) {
-        this.lvlFisher = lvlFisher;
+    public void setLevelFisher(final int lvlFisher) {
+        this.levelFisher = lvlFisher;
     }
 
     public boolean isHas30DaysSub() {
@@ -727,11 +783,11 @@ public class PlayerBean {
         this.isActive = isActive;
     }
 
-	public CharacterStatus getCharacterStatus() {
-		return characterStatus;
-	}
+    public CharacterStatus getCharacterStatus() {
+        return characterStatus;
+    }
 
-	public void setCharacterStatus(final CharacterStatus characterStatus) {
-		this.characterStatus = characterStatus;
-	}
+    public void setCharacterStatus(final CharacterStatus characterStatus) {
+        this.characterStatus = characterStatus;
+    }
 }
