@@ -68,14 +68,9 @@ Follow these steps to setup XIVStats-Gatherer-Java:
 
   | Short option | Long option           | Argument type  | Description                                                          |
   |:------------:|:---------------------:|:--------------:|:--------------------------------------------------------------------:|
-  |-a            |--do-not-store-activity| none           | do not store boolean data indicating player activity in last 30 days |
-  |-b            |--do-not-store-progress| none           | do not store boolean data indicating player progress                 |
   |-d            | --database            | String         | database name                                                        |
-  |-D            | --do-not-store-date   | none           | do not store date of last player activity                            |
   |-f            | --finish              | integer        | the character id to conclude character run at (inclusive)            |
   |-h            | --help                | none           | display help message                                                 |
-  |-m            | --store-mounts        | none           | store mount data set for each player into the database               |
-  |-P            | --store-minions       | none           | store minion data set for each player into the database              |
   |-p            | --password            | String         | database user password                                               |
   |-s            | --start               | integer        | the character id to start from (inclusive)                           |
   |-t            | --threads             | integer        | number of gatherer thrads to running                                 |
@@ -94,7 +89,7 @@ There are 2 log files produced:
     - A simple per-character result log to enable tracking of progress
     - _Note: As characters are threaded, there is no guarantee the characters will be presented in this log in sequential order_
 
-Logs are currently overwritten with each run, so in the even you wish to save a log file, please re-name or copy the desired file for later review.
+Logs are currently overwritten with each run, so in the event you wish to save a log file, please re-name or copy the desired file for later review.
 
 ## Bugs and feature requests
 
@@ -192,21 +187,22 @@ The database table ```tblplayers``` has the following structure:
 |hw_31_complete        |bit      |Minion - Wind-up Haurchefant    |
 |hw_33_complete        |bit      |Minion - Wind-up Aymeric        |
 |legacy_player         |bit      |Mount - Legacy Chocobo          |
-|*mounts*              |*text*   |*N/A*                           |
-|*minions*             |*text*   |*N/A*                           |
+|mounts                |text     |N/A                             |
+|minions               |text     |N/A                             |
 |date_active           |date     |N/A                             |
 |is_active             |bit      |N/A                             |
-
-*Italicised fields are only completed jf specified with a command line flag.*
+|character_status      |varchar  |N/A                             |
 
 ## XIVStats-Gatherer-Ruby
-XIVStats-Gatherer-Java provides the same functionality as the original ruby-based  [XIVStats-Gatherer-Ruby](https://github.com/XIVStats/XIVStats-Gatherer-Ruby),
+XIVStats-Gatherer-Java begun by providing the same functionality as the original ruby-based  [XIVStats-Gatherer-Ruby](https://github.com/XIVStats/XIVStats-Gatherer-Ruby),
 but is written in Java to make use of Multi-threading capabilities that could
 not be harnessed in Ruby. This allows XIVStats-Gatherer-Java to perform large
 crawl operations in a much shorter period of time, utilizing only one application
 instance. XIVStats-Gatherer-Java also brings with it the benefit of being able
 to use a full SQL setup as opposed to a sqlite file, giving the advantage of
 being able to perform asynchronous database transactions.
+
+The Ruby implementation is now out-of-date and no-longer maintained.
 
 ## Creators
 **Peter Reid (Project Maintainer)**
@@ -218,5 +214,5 @@ being able to perform asynchronous database transactions.
 * [GitHub](https://github.com/pricetx)
 
 ## Copyright and license
-Code and documentation copyright 2015-2017 Jonathan Price & Peter Reid, Code
+Code and documentation copyright 2015-2018 Jonathan Price & Peter Reid, Code
 and documentation released under the [BSD 2-Clause "Simplified" License](https://github.com/XIVStats/XIVStats-Gatherer-Java/blob/master/LICENSE).
