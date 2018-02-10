@@ -32,7 +32,7 @@ public class PlayerBuilderIT {
         // NOTE: All of the following tests assume various pieces of information
         // Testing information that is very unlikely to change
         assertEquals(2356533, playerOne.getId());
-        assertEquals("Aelia Sokoto", playerOne.getPlayerName());
+        assertEquals("Nazreen Eby", playerOne.getPlayerName());
         assertEquals("Cerberus", playerOne.getRealm());
 
         // Following can only be assumed to be true based on info at time of test creation
