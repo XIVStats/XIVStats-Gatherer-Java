@@ -8,7 +8,6 @@ import com.ffxivcensus.gatherer.player.CharacterStatus;
 import com.ffxivcensus.gatherer.player.PlayerBean;
 import com.ffxivcensus.gatherer.player.PlayerBeanRepository;
 import com.ffxivcensus.gatherer.player.PlayerBuilder;
-import com.mysql.jdbc.exceptions.jdbc4.MySQLNonTransientConnectionException;
 
 /**
  * Gatherer worker class that implements Runnable class.
@@ -36,25 +35,15 @@ public class Gatherer implements Runnable {
     public void run() {
         try {
             LOG.debug("Starting evaluation of player ID: " + getPlayerId());
-            // Parse players and write them to DB
-            PlayerBean player = PlayerBuilder.getPlayer(getPlayerId(), 1);
-            // Currently ignore deleted characters (404)
-            if(!CharacterStatus.DELETED.equals(player.getCharacterStatus())) {
-                getPlayerRepository().save(player);
-            }
-            RESULT_LOG.info(getPlayerId() + " - " + player.getCharacterStatus().name());
-        } catch(MySQLNonTransientConnectionException failWriteEx) { // If record fails to write due to too many connections
-            LOG.trace("Error: Record write failure, reattempting write");
-            // Wait a second
-            try {
-                Thread.currentThread().wait(1);
-            } catch(InterruptedException e) {
-            }
-            // Then attempt to write again
-            try {
-                getPlayerRepository().save(PlayerBuilder.getPlayer(getPlayerId(), 1));
-            } catch(Exception e) {
-                LOG.error(e.getMessage(), e);
+
+            // Check whether we already know about this character
+            PlayerBean player = playerRepository.findOne(getPlayerId());
+            if(player == null || !CharacterStatus.DELETED.equals(player.getCharacterStatus())) {
+                // Only update characters that have not been deleted
+                player = getPlayerRepository().save(PlayerBuilder.getPlayer(getPlayerId(), 1));
+                RESULT_LOG.info(getPlayerId() + " - " + player.getCharacterStatus().name());
+            } else {
+                RESULT_LOG.info(getPlayerId() + " - SKIPPED as they have been previously marked as DELETED");
             }
         } catch(Exception e) {
             LOG.error(e.getMessage(), e);
