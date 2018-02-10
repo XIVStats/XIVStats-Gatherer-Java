@@ -4,11 +4,14 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+
+import com.ffxivcensus.gatherer.util.StringListConverter;
 
 /**
  * Object class to represent a Character/Player. This class specifies the attributes and behaviour of a player object.
@@ -18,7 +21,7 @@ import javax.persistence.Transient;
  * @see PlayerBuilder
  */
 @Entity
-@Table(name="tblplayers")
+@Table(name = "tblplayers")
 public class PlayerBean {
     @Id
     private int id;
@@ -37,11 +40,11 @@ public class PlayerBean {
     private int levelConjurer;
     private int levelThaumaturge;
     private int levelArcanist;
-    private int levelDarkKnight;
+    private int levelDarkknight;
     private int levelMachinist;
     private int levelAstrologian;
     private int levelScholar;
-    private int levelRedMage;
+    private int levelRedmage;
     private int levelSamurai;
     private int levelCarpenter;
     private int levelBlacksmith;
@@ -96,12 +99,13 @@ public class PlayerBean {
     private boolean hasAttendedEternalBond;
     @Column(name = "sightseeing")
     private boolean hasCompletedHWSightseeing;
+    @Column(name = "arr_25_complete")
     private boolean hasCompleted2pt5;
     @Column(name = "comm50")
     private boolean hasFiftyComms;
     @Column(name = "moogleplush")
     private boolean hasMooglePlush;
-    @Column(name = "topazcarbuncleplush")
+    @Column(name = "topazcarubuncleplush")
     private boolean hasTopazCarbunclePlush;
     @Column(name = "emeraldcarbuncleplush")
     private boolean hasEmeraldCarbunclePlush;
@@ -137,9 +141,11 @@ public class PlayerBean {
     private boolean hasCompleted3pt3;
     @Column(name = "legacy_player")
     private boolean isLegacyPlayer;
-    @ElementCollection
+    @Column(name = "minions")
+    @Convert(converter = StringListConverter.class)
     private List<String> minions;
-    @ElementCollection
+    @Column(name = "mounts")
+    @Convert(converter = StringListConverter.class)
     private List<String> mounts;
     @Column(name = "date_active")
     private Date dateImgLastModified;
@@ -279,12 +285,12 @@ public class PlayerBean {
         this.levelArcanist = lvlArcanist;
     }
 
-    public int getLevelDarkKnight() {
-        return levelDarkKnight;
+    public int getLevelDarkknight() {
+        return levelDarkknight;
     }
 
-    public void setLevelDarkKnight(final int lvlDarkKnight) {
-        this.levelDarkKnight = lvlDarkKnight;
+    public void setLevelDarkknight(final int lvlDarkknight) {
+        this.levelDarkknight = lvlDarkknight;
     }
 
     public int getLevelMachinist() {
@@ -311,12 +317,12 @@ public class PlayerBean {
         this.levelScholar = lvlScholar;
     }
 
-    public int getLevelRedMage() {
-        return levelRedMage;
+    public int getLevelRedmage() {
+        return levelRedmage;
     }
 
-    public void setLevelRedMage(final int lvlRedMage) {
-        this.levelRedMage = lvlRedMage;
+    public void setLevelRedmage(final int lvlRedmage) {
+        this.levelRedmage = lvlRedmage;
     }
 
     public int getLevelSamurai() {

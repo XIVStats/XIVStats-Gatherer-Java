@@ -67,7 +67,7 @@ public class PlayerBuilder {
     public static void setLevels(final PlayerBean player, final int[] arrLevels) {
         player.setLevelGladiator(arrLevels[0]);
         player.setLevelMarauder(arrLevels[1]);
-        player.setLevelDarkKnight(arrLevels[2]);
+        player.setLevelDarkknight(arrLevels[2]);
         player.setLevelPugilist(arrLevels[3]);
         player.setLevelLancer(arrLevels[4]);
         player.setLevelRogue(arrLevels[5]);
@@ -79,7 +79,7 @@ public class PlayerBuilder {
         player.setLevelMachinist(arrLevels[11]);
         player.setLevelThaumaturge(arrLevels[12]);
         player.setLevelArcanist(arrLevels[13]);
-        player.setLevelRedMage(arrLevels[14]);
+        player.setLevelRedmage(arrLevels[14]);
         player.setLevelCarpenter(arrLevels[15]);
         player.setLevelBlacksmith(arrLevels[16]);
         player.setLevelArmorer(arrLevels[17]);
