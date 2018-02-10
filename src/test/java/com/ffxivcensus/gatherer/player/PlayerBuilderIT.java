@@ -45,7 +45,7 @@ public class PlayerBuilderIT {
         // Tank
         assertTrue(playerOne.getLevelGladiator() >= 60);
         assertTrue(playerOne.getLevelMarauder() >= 60);
-        assertTrue(playerOne.getLevelDarkKnight() >= 60);
+        assertTrue(playerOne.getLevelDarkknight() >= 60);
 
         // Melee DPS
         assertTrue(playerOne.getLevelPugilist() >= 60);
@@ -60,7 +60,7 @@ public class PlayerBuilderIT {
         // Ranged Magical DPS
         assertTrue(playerOne.getLevelThaumaturge() >= 60);
         assertTrue(playerOne.getLevelArcanist() >= 60);
-        assertTrue(playerOne.getLevelRedMage() >= 70);
+        assertTrue(playerOne.getLevelRedmage() >= 70);
 
         // Healer
         assertTrue(playerOne.getLevelConjurer() >= 60);

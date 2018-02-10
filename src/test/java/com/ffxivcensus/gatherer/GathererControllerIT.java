@@ -1,11 +1,9 @@
 package com.ffxivcensus.gatherer;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.List;
-
 import javax.sql.DataSource;
 import javax.xml.parsers.ParserConfigurationException;
 
@@ -21,7 +19,7 @@ import org.xml.sax.SAXException;
 
 import com.ffxivcensus.gatherer.config.ApplicationConfig;
 import com.ffxivcensus.gatherer.config.ConfigurationBuilder;
-import com.ffxivcensus.gatherer.player.PlayerBeanDAO;
+import com.ffxivcensus.gatherer.player.PlayerBeanRepository;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
@@ -54,7 +52,7 @@ public class GathererControllerIT {
     @Autowired
     private GathererController gathererController;
     @Autowired
-    private PlayerBeanDAO dao;
+    private PlayerBeanRepository playerRepository;
 
     @BeforeClass
     public static void setUpClass() throws ParserConfigurationException, IOException, SAXException, SQLException, LiquibaseException {
@@ -102,20 +100,18 @@ public class GathererControllerIT {
 
         gathererController.run();
 
-        List<Integer> addedIDs = dao.getAdded(11886902, 11887010);
-
         // Test for IDs we know exist
-        assertTrue(addedIDs.contains(11886902));
-        assertTrue(addedIDs.contains(11886903));
-        assertTrue(addedIDs.contains(11886990));
-        assertTrue(addedIDs.contains(11887010));
+        assertNotNull(playerRepository.findOne(11886902));
+        assertNotNull(playerRepository.findOne(11886903));
+        assertNotNull(playerRepository.findOne(11886990));
+        assertNotNull(playerRepository.findOne(11887010));
 
         // Test that gatherer has not written records that don't exist
-        assertFalse(addedIDs.contains(11886909));
+        assertNull(playerRepository.findOne(11886909));
 
         // Test that gatherer has not 'overrun'
-        assertFalse(addedIDs.contains(11887011));
-        assertFalse(addedIDs.contains(11886901));
+        assertNull(playerRepository.findOne(11887011));
+        assertNull(playerRepository.findOne(11886901));
     }
 
     /**
@@ -142,19 +138,17 @@ public class GathererControllerIT {
 
         gathererController.run();
 
-        List<Integer> addedIDs = dao.getAdded(1557260, 1558260);
-
         // Test for IDs we know exist
-        assertTrue(addedIDs.contains(config.getStartId()));
-        assertTrue(addedIDs.contains(config.getEndId()));
-        assertTrue(addedIDs.contains(1557362));
-        assertTrue(addedIDs.contains(1557495));
+        assertNotNull(playerRepository.findOne(config.getStartId()));
+        assertNotNull(playerRepository.findOne(config.getEndId()));
+        assertNotNull(playerRepository.findOne(1557362));
+        assertNotNull(playerRepository.findOne(1557495));
 
         // Test that gatherer has not written records that don't exist
-        assertFalse(addedIDs.contains(1558259));
+        assertNull(playerRepository.findOne(1558259));
 
         // Test that gatherer has not 'overrun'
-        assertFalse(addedIDs.contains(config.getStartId() - 1));
-        assertFalse(addedIDs.contains(config.getEndId() + 1));
+        assertNull(playerRepository.findOne(config.getStartId() - 1));
+        assertNull(playerRepository.findOne(config.getEndId() + 1));
     }
 }
