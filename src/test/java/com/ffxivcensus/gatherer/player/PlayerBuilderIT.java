@@ -36,51 +36,51 @@ public class PlayerBuilderIT {
         assertEquals("Cerberus", playerOne.getRealm());
 
         // Following can only be assumed to be true based on info at time of test creation
-        assertEquals("Miqo'te", playerOne.getRace());
+        assertEquals("Au Ra", playerOne.getRace());
         assertEquals("female", playerOne.getGender());
         assertEquals("Maelstrom", playerOne.getGrandCompany());
         // assertEquals("End of Days", playerOne.getFreeCompany());
 
         // Test classes - levels based on those at time of test creation
         // Tank
-        assertTrue(playerOne.getLvlGladiator() >= 60);
-        assertTrue(playerOne.getLvlMarauder() >= 60);
-        assertTrue(playerOne.getLvlDarkKnight() >= 60);
+        assertTrue(playerOne.getLevelGladiator() >= 60);
+        assertTrue(playerOne.getLevelMarauder() >= 60);
+        assertTrue(playerOne.getLevelDarkKnight() >= 60);
 
         // Melee DPS
-        assertTrue(playerOne.getLvlPugilist() >= 60);
-        assertTrue(playerOne.getLvlLancer() >= 60);
-        assertTrue(playerOne.getLvlRogue() >= 56);
-        assertTrue(playerOne.getLvlSamurai() >= 70);
+        assertTrue(playerOne.getLevelPugilist() >= 60);
+        assertTrue(playerOne.getLevelLancer() >= 60);
+        assertTrue(playerOne.getLevelRogue() >= 56);
+        assertTrue(playerOne.getLevelSamurai() >= 70);
 
         // Ranged Physical DPS
-        assertTrue(playerOne.getLvlArcher() >= 52);
-        assertTrue(playerOne.getLvlMachinist() >= 60);
+        assertTrue(playerOne.getLevelArcher() >= 52);
+        assertTrue(playerOne.getLevelMachinist() >= 60);
 
         // Ranged Magical DPS
-        assertTrue(playerOne.getLvlThaumaturge() >= 60);
-        assertTrue(playerOne.getLvlArcanist() >= 60);
-        assertTrue(playerOne.getLvlRedMage() >= 70);
+        assertTrue(playerOne.getLevelThaumaturge() >= 60);
+        assertTrue(playerOne.getLevelArcanist() >= 60);
+        assertTrue(playerOne.getLevelRedMage() >= 70);
 
         // Healer
-        assertTrue(playerOne.getLvlConjurer() >= 60);
-        assertTrue(playerOne.getLvlScholar() >= 67);
-        assertTrue(playerOne.getLvlAstrologian() >= 60);
+        assertTrue(playerOne.getLevelConjurer() >= 60);
+        assertTrue(playerOne.getLevelScholar() >= 67);
+        assertTrue(playerOne.getLevelAstrologian() >= 60);
 
         // Disciples of the hand
-        assertTrue(playerOne.getLvlCarpenter() >= 53);
-        assertTrue(playerOne.getLvlBlacksmith() >= 53);
-        assertTrue(playerOne.getLvlArmorer() >= 58);
-        assertTrue(playerOne.getLvlGoldsmith() >= 58);
-        assertTrue(playerOne.getLvlLeatherworker() >= 53);
-        assertTrue(playerOne.getLvlWeaver() >= 56);
-        assertTrue(playerOne.getLvlAlchemist() >= 60);
-        assertTrue(playerOne.getLvlCulinarian() >= 55);
+        assertTrue(playerOne.getLevelCarpenter() >= 53);
+        assertTrue(playerOne.getLevelBlacksmith() >= 53);
+        assertTrue(playerOne.getLevelArmorer() >= 58);
+        assertTrue(playerOne.getLevelGoldsmith() >= 58);
+        assertTrue(playerOne.getLevelLeatherworker() >= 53);
+        assertTrue(playerOne.getLevelWeaver() >= 56);
+        assertTrue(playerOne.getLevelAlchemist() >= 60);
+        assertTrue(playerOne.getLevelCulinarian() >= 55);
 
         // Disciples of the land
-        assertTrue(playerOne.getLvlMiner() >= 60);
-        assertTrue(playerOne.getLvlBotanist() >= 60);
-        assertTrue(playerOne.getLvlFisher() >= 60);
+        assertTrue(playerOne.getLevelMiner() >= 60);
+        assertTrue(playerOne.getLevelBotanist() >= 60);
+        assertTrue(playerOne.getLevelFisher() >= 60);
 
         // Test boolean values
         // Subscription periods
@@ -180,7 +180,7 @@ public class PlayerBuilderIT {
         assertEquals("male", player.getGender());
 
         // Test that classes are polling correctly, arcanist level will be indicated on page by '-' should be 0 in player object.
-        assertEquals(player.getLvlArcanist(), 0);
+        assertEquals(player.getLevelArcanist(), 0);
 
         // Test fields that are true in other tests
         assertFalse(player.isHas30DaysSub());
