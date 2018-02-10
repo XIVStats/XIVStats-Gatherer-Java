@@ -20,16 +20,13 @@ public class ConfigurationBuilderTest {
                          "-f", "100",
                          "-t", "10",
                          "-d", "DatabaseName",
-                         "-U", "jdbc:mysql://test-server",
-                         "-bP"};
+                         "-U", "jdbc:mysql://test-server"};
 
         ApplicationConfig config = ConfigurationBuilder.createBuilder()
                                                        .loadCommandLineConfiguration(CLIConstants.setupOptions(), args)
                                                        .getConfiguration();
 
         // Test that options have set attributes correctly
-        assertFalse(config.isStoreProgression()); // b
-        assertTrue(config.isStoreMinions()); // P
         assertEquals(config.getStartId(), 0);
         assertEquals(config.getEndId(), 100);
         assertEquals(config.getThreadLimit(), 10);

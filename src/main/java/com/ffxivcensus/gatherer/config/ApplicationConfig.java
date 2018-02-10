@@ -73,26 +73,6 @@ public class ApplicationConfig {
      * The character ID to end the gatherer at.
      */
     private int endId = -1;
-    /**
-     * Boolean value indicating whether to store a comma delimited list of minions to database.
-     */
-    private boolean storeMinions;
-    /**
-     * Boolean value indicating whether to store a comma delimited list of mounts to database.
-     */
-    private boolean storeMounts;
-    /**
-     * Boolean value indicating whether to store bit fields indicating player achievements/progress.
-     */
-    private boolean storeProgression = true;
-    /**
-     * Whether to store player activity dates
-     */
-    private boolean storeActiveDate;
-    /**
-     * Whether to store player activity bit
-     */
-    private boolean storePlayerActive;
 
     /////////////////////////////////
     // Database Configuration Methods
@@ -168,45 +148,5 @@ public class ApplicationConfig {
 
     public void setEndId(int endId) {
         this.endId = endId;
-    }
-
-    public boolean isStoreMinions() {
-        return storeMinions;
-    }
-
-    public void setStoreMinions(boolean storeMinions) {
-        this.storeMinions = storeMinions;
-    }
-
-    public boolean isStoreMounts() {
-        return storeMounts;
-    }
-
-    public void setStoreMounts(boolean storeMounts) {
-        this.storeMounts = storeMounts;
-    }
-
-    public boolean isStoreProgression() {
-        return storeProgression;
-    }
-
-    public void setStoreProgression(boolean storeProgression) {
-        this.storeProgression = storeProgression;
-    }
-
-    public boolean isStoreActiveDate() {
-        return storeActiveDate;
-    }
-
-    public void setStoreActiveDate(boolean storeActiveDate) {
-        this.storeActiveDate = storeActiveDate;
-    }
-
-    public boolean isStorePlayerActive() {
-        return storePlayerActive;
-    }
-
-    public void setStorePlayerActive(boolean storePlayerActive) {
-        this.storePlayerActive = storePlayerActive;
     }
 }
