@@ -14,16 +14,17 @@ public interface PlayerBeanRepository extends CrudRepository<PlayerBean, Integer
 
     /**
      * Located the last non-deleted Character ID.
+     * 
      * @return
      */
     @Query(value = "SELECT MAX(id) FROM PlayerBean p WHERE characterStatus != 'DELETED'")
-    Integer findLastNonDeleted();
+    Integer findTopByIdByCharacterStatusNotDeleted();
+
     /**
      * Method to trim all deleted characters from the top-end of the database.
      * Used to ensure enable re-parsing of new characters where the gatherer overruns at the top-end of the ID numbers.
      */
     @Modifying
-    @Query(value = "DELETE FROM PlayerBean p WHERE id > ?1")
     @Transactional
-    void trimDeleted(final Integer lastKnownId);
+    void deleteByIdGreaterThan(final Integer lastKnownId);
 }
