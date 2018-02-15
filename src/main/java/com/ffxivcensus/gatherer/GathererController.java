@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ffxivcensus.gatherer.config.ApplicationConfig;
+import com.ffxivcensus.gatherer.player.CharacterStatus;
 import com.ffxivcensus.gatherer.player.PlayerBeanRepository;
 import com.ffxivcensus.gatherer.player.PlayerBuilder;
 
@@ -118,7 +119,7 @@ public class GathererController {
     private void gatherRange() {
         // Firstly, clean the top-end of the database
         LOG.debug("Cleaning top-end characters from the database");
-        playerRepository.trimDeleted(playerRepository.findLastNonDeleted());
+        playerRepository.deleteByIdGreaterThan(playerRepository.findTopByIdByCharacterStatusNotDeleted());
 
         // Set next ID
         int nextID = appConfig.getStartId();
