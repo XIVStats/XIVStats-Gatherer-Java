@@ -73,7 +73,8 @@ public class GathererControllerIT {
      */
     @Test(expected = Exception.class)
     public void testRunBasicInvalidParams() throws Exception {
-        config.setStartId(11887010);
+        config.setStartId(-1);
+        config.setEndId(-100);
 
         gathererController.run();
     }
