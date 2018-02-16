@@ -11,6 +11,12 @@ import org.springframework.transaction.annotation.Transactional;
  * @author matthew.hillier
  */
 public interface PlayerBeanRepository extends CrudRepository<PlayerBean, Integer> {
+    
+    /**
+     * Finds the top-most character by ID.
+     * @return Top-most {@link PlayerBean} object by ID.
+     */
+    PlayerBean findTopByOrderByIdDesc();
 
     /**
      * Located the last non-deleted Character ID.
