@@ -72,7 +72,7 @@ public class ApplicationConfig {
     /**
      * The character ID to end the gatherer at.
      */
-    private int endId = -1;
+    private int endId = Integer.MAX_VALUE;
 
     /////////////////////////////////
     // Database Configuration Methods
