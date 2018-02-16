@@ -2,6 +2,7 @@ package com.ffxivcensus.gatherer;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ffxivcensus.gatherer.config.ApplicationConfig;
-import com.ffxivcensus.gatherer.player.CharacterStatus;
 import com.ffxivcensus.gatherer.player.PlayerBeanRepository;
 import com.ffxivcensus.gatherer.player.PlayerBuilder;
 
@@ -25,6 +25,8 @@ import com.ffxivcensus.gatherer.player.PlayerBuilder;
 @Service
 public class GathererController {
 
+    /** Defines the maximum number of characters to gather in a single iteration. **/
+    private static final int GATHERING_ITERATON_MAX = 1000;
     private static final Logger LOG = LoggerFactory.getLogger(GathererController.class);
     private ApplicationConfig appConfig;
     private final GathererFactory gathererFactory;
@@ -76,7 +78,7 @@ public class GathererController {
                 } else { // Else pass values into poll method
                     LOG.info("Starting parse of range " + appConfig.getStartId() + " to " + appConfig.getEndId() + " using "
                              + appConfig.getThreadLimit() + " threads");
-                    gatherRange();
+                    gatherCharacters(appConfig.getStartId(), appConfig.getEndId());
                     // Get current time
                     long endTime = System.currentTimeMillis();
                     long seconds = (endTime - startTime) / 1000;
@@ -116,19 +118,32 @@ public class GathererController {
     /**
      * Method to gather data for characters in specified range.
      */
-    private void gatherRange() {
+    private void gatherCharacters(final int startId, final int finishId) {
         // Firstly, clean the top-end of the database
         LOG.debug("Cleaning top-end characters from the database");
         playerRepository.deleteByIdGreaterThan(playerRepository.findTopByIdByCharacterStatusNotDeleted());
 
-        // Set next ID
-        int nextID = appConfig.getStartId();
+        gatherCharacterRange(startId, finishId, 1);
+    }
 
+    /**
+     * Recursive method to gather characters between the given start and finish ID's, up to a maximum of {@value #GATHERING_ITERATON_MAX}
+     * (see {@link #GATHERING_ITERATON_MAX}) characters per iteration.
+     * 
+     * @param startId First ID to gather.
+     * @param finishId Final ID to gather.
+     * @param iteration Recursive iteration depth.
+     */
+    private void gatherCharacterRange(final int startId, final int finishId, final int iteration) {
         // Setup an executor service that respects the max thread limit
         ExecutorService executor = Executors.newFixedThreadPool(appConfig.getThreadLimit());
 
-        while(nextID <= appConfig.getEndId()) {
+        // Set next ID
+        int nextID = startId;
+
+        while(nextID <= finishId && nextID <= (startId + GATHERING_ITERATON_MAX)) {
             Gatherer worker = gathererFactory.createGatherer();
+            worker.setIteration(iteration);
             worker.setPlayerId(nextID);
             executor.execute(worker);
 
@@ -137,11 +152,17 @@ public class GathererController {
 
         executor.shutdown();
         while(!executor.isTerminated()) {
-            // Wait patiently for the executor to finish off everything submitted
-            if(Thread.interrupted()) {
+            try {
+                // Wait patiently for the executor to finish off everything submitted
+                executor.awaitTermination(30, TimeUnit.SECONDS);
+            } catch(InterruptedException ie) {
                 // Unless there's an interrupt, in which case shut down gracefully
                 executor.shutdownNow();
             }
+        }
+
+        if(nextID < finishId) {
+            gatherCharacterRange(nextID, finishId, iteration + 1);
         }
     }
 }
