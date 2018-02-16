@@ -70,7 +70,7 @@ public class ConfigurationBuilderTest {
     @Test(expected = MissingOptionException.class)
     public void testFailOnMissingMandatoryOption() throws Exception {
         // Test for a help dialog displayed upon failure
-        String[] args = {"-s 0"};
+        String[] args = {""};
 
         ConfigurationBuilder.createBuilder()
                             .loadCommandLineConfiguration(CLIConstants.setupOptions(), args)
