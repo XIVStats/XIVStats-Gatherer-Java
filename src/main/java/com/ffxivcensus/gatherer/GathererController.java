@@ -72,26 +72,23 @@ public class GathererController {
         }
 
         if(!isConfigured()) { // If not configured
-            throw new Exception("Program not (correctly) configured");
+            throw new Exception("Gathering ranges not (correctly) configured");
         } else { // Else configured correctly
             try {
-                if(appConfig.getStartId() > appConfig.getEndId()) {
-                    LOG.error("Error: The finish id argument needs to be greater than the start id argument");
-                } else { // Else pass values into poll method
-                    LOG.info("Starting parse of range " + appConfig.getStartId() + " to " + appConfig.getEndId() + " using "
-                             + appConfig.getThreadLimit() + " threads");
-                    gatherCharacters(appConfig.getStartId(), appConfig.getEndId());
-                    // Get current time
-                    long endTime = System.currentTimeMillis();
-                    long seconds = (endTime - startTime) / 1000;
-                    long minutes = seconds / 60;
-                    long hours = minutes / 60;
-                    long days = hours / 24;
-                    String time = days + " Days, " + hours % 24 + " hrs, " + minutes % 60 + " mins, " + seconds % 60 + " secs";
-                    LOG.info("Run completed, " + ((appConfig.getEndId() - appConfig.getStartId()) + 1)
-                             + " character IDs scanned in " + time + " (" + appConfig.getThreadLimit() + " threads)");
-
-                }
+                LOG.info("Starting parse of range " + appConfig.getStartId() + " to " + appConfig.getEndId() + " using "
+                         + appConfig.getThreadLimit() + " threads");
+                gatherCharacters(appConfig.getStartId(), appConfig.getEndId());
+                // Get current time
+                long endTime = System.currentTimeMillis();
+                long seconds = (endTime - startTime) / 1000;
+                long minutes = seconds / 60;
+                long hours = minutes / 60;
+                long days = hours / 24;
+                LOG.info("Run completed, gathered from Character #{} to Character #{} in {} Days, {} Hours, {} Minutes, {} Seconds (using {} threads)",
+                         appConfig.getStartId(),
+                         playerRepository.findTopByIdByCharacterStatusNotDeleted(),
+                         days, hours % 24, minutes % 60, seconds % 60,
+                         appConfig.getThreadLimit());
 
             } catch(Exception ex) {
                 throw new Exception(ex);
@@ -111,7 +108,11 @@ public class GathererController {
             configured = false;
         }
         if(appConfig.getEndId() < 0) {
-            LOG.error("End ID must be configured to a positive numerical value");
+            LOG.error("End ID must be configured to a positive numerical value, or left blank.");
+            configured = false;
+        }
+        if(appConfig.getStartId() > appConfig.getEndId()) {
+            LOG.error("Error: The finish id argument needs to be greater than the start id argument");
             configured = false;
         }
         return configured;
@@ -168,7 +169,7 @@ public class GathererController {
         Integer topValidId = playerRepository.findTopByIdByCharacterStatusNotDeleted();
 
         if(top != null && topValidId != null && top.getId() > topValidId.intValue() + GATHERING_VALID_GAP_MAX) {
-            LOG.info("FINISHING - No valid characters found for at least %d ID's after Character #%d", GATHERING_VALID_GAP_MAX, topValidId);
+            LOG.info("FINISHING - No valid characters found for at least {} ID's after Character #{}", GATHERING_VALID_GAP_MAX, topValidId);
             return;
         }
 
