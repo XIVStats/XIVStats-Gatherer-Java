@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ffxivcensus.gatherer.config.ApplicationConfig;
+import com.ffxivcensus.gatherer.player.PlayerBean;
 import com.ffxivcensus.gatherer.player.PlayerBeanRepository;
 import com.ffxivcensus.gatherer.player.PlayerBuilder;
 
@@ -24,7 +25,8 @@ import com.ffxivcensus.gatherer.player.PlayerBuilder;
  */
 @Service
 public class GathererController {
-
+    /** Defines the maximum number of ID's between the highest ID number and the last known good Character. **/
+    private static final int GATHERING_VALID_GAP_MAX = 200;
     /** Defines the maximum number of characters to gather in a single iteration. **/
     private static final int GATHERING_ITERATON_MAX = 1000;
     private static final Logger LOG = LoggerFactory.getLogger(GathererController.class);
@@ -141,7 +143,7 @@ public class GathererController {
         // Set next ID
         int nextID = startId;
 
-        while(nextID <= finishId && nextID <= (startId + GATHERING_ITERATON_MAX)) {
+        while(nextID <= finishId && nextID < (startId + GATHERING_ITERATON_MAX)) {
             Gatherer worker = gathererFactory.createGatherer();
             worker.setIteration(iteration);
             worker.setPlayerId(nextID);
@@ -159,6 +161,15 @@ public class GathererController {
                 // Unless there's an interrupt, in which case shut down gracefully
                 executor.shutdownNow();
             }
+        }
+
+        // Check whether we've ran-out of valid Characters
+        PlayerBean top = playerRepository.findTopByOrderByIdDesc();
+        Integer topValidId = playerRepository.findTopByIdByCharacterStatusNotDeleted();
+
+        if(top != null && topValidId != null && top.getId() > topValidId.intValue() + GATHERING_VALID_GAP_MAX) {
+            LOG.info("FINISHING - No valid characters found for at least %d ID's after Character #%d", GATHERING_VALID_GAP_MAX, topValidId);
+            return;
         }
 
         if(nextID < finishId) {
