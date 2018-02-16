@@ -62,7 +62,7 @@ Follow these steps to setup XIVStats-Gatherer-Java:
   8. Using a shell (or CMD on windows) run the following command (replace
     {words in brackets} with integer parameters):
   ```shell
-  java -jar XIVStats-Gatherer-Java.jar -s {lowest character id to fetch} -f {highest character id to fetch}
+  java -jar XIVStats-Gatherer-Java.jar -s {lowest character id to fetch}
   ```
   The application can be run with the following command line options/args:
 

@@ -15,6 +15,7 @@ import org.xml.sax.SAXException;
 
 import com.ffxivcensus.gatherer.config.ApplicationConfig;
 import com.ffxivcensus.gatherer.player.CharacterStatus;
+import com.ffxivcensus.gatherer.player.PlayerBean;
 import com.ffxivcensus.gatherer.player.PlayerBeanRepository;
 
 /**
@@ -72,7 +73,8 @@ public class GathererControllerIT {
      */
     @Test(expected = Exception.class)
     public void testRunBasicInvalidParams() throws Exception {
-        config.setStartId(11887010);
+        config.setStartId(-1);
+        config.setEndId(-100);
 
         gathererController.run();
     }
@@ -85,6 +87,7 @@ public class GathererControllerIT {
     public void testRunAdvancedOptions() throws Exception {
         config.setStartId(1557260);
         config.setEndId(1558260);
+        config.setThreadLimit(40);
 
         gathererController.run();
 
@@ -100,5 +103,21 @@ public class GathererControllerIT {
         // Test that gatherer has not 'overrun'
         assertNull(playerRepository.findOne(config.getStartId() - 1));
         assertNull(playerRepository.findOne(config.getEndId() + 1));
+    }
+
+    @Test
+    public void testRunBeyondValidCharacters() throws Exception {
+        config.setStartId(50000000);
+        config.setEndId(60000000);
+        config.setThreadLimit(32);
+
+        gathererController.run();
+        
+        // Test that character 50,000,000 was gathered, but didn't exist
+        PlayerBean expectedDeleted = playerRepository.findOne(50000000);
+        assertEquals(CharacterStatus.DELETED, expectedDeleted.getCharacterStatus());
+        
+        // Test that character 50,001,000 wasn't gathered (e.g. the gathering stopped)
+        assertNull(playerRepository.findOne(50001000));
     }
 }

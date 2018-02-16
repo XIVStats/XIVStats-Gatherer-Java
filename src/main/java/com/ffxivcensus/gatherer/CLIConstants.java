@@ -9,7 +9,7 @@ import org.apache.commons.cli.Options;
  * @author matthew.hillier
  */
 public class CLIConstants {
-    public static final String CLI_USAGE = "java -jar XIVStats-Gatherer-Java.jar [-i] -s startid -f finishid [-d database-name] [-u database-user] [-p database-user-password] [-U database-url] [-t threads]";
+    public static final String CLI_USAGE = "java -jar XIVStats-Gatherer-Java.jar [-i] -s startid [-f finishid] [-d database-name] [-u database-user] [-p database-user-password] [-U database-url] [-t threads]";
 
     /**
      * Establish the possible options (flags) to run the program with.
@@ -21,10 +21,10 @@ public class CLIConstants {
         Options options = new Options();
 
         // Add options
-        Option optStart = Option.builder("s").longOpt("start").argName("start-id").hasArg().numberOfArgs(1).required()
+        Option optStart = Option.builder("s").longOpt("start").argName("start-id").hasArg().numberOfArgs(1)
                                 .desc("the character id to start gatherer run from (inclusive)").required().build();
-        Option optFinish = Option.builder("f").longOpt("finish").argName("end-id").hasArg().numberOfArgs(1).required()
-                                 .desc("the character id to conclude gather run at (inclusive)").required().build();
+        Option optFinish = Option.builder("f").longOpt("finish").argName("end-id").hasArg().numberOfArgs(1)
+                                 .desc("the character id to conclude gather run at (inclusive)").build();
         Option optHelp = Option.builder("h").longOpt("help").desc("display this help message").build();
         Option optURL = Option.builder("U").longOpt("url").argName("database-server-url").hasArg().numberOfArgs(1)
                               .desc("the database url of the database server to connect to e.g. mysql://localhost:3306").build();
