@@ -25,6 +25,7 @@ public class Gatherer implements Runnable {
     private static final Logger LOG = LoggerFactory.getLogger(Gatherer.class);
     private static final Logger RESULT_LOG = LoggerFactory.getLogger(Gatherer.class.getName() + ".result");
 
+    private int iteration;
     private int playerId;
     private PlayerBeanRepository playerRepository;
 
@@ -33,6 +34,9 @@ public class Gatherer implements Runnable {
      */
     @Override
     public void run() {
+        final Thread currentThread = Thread.currentThread();
+        final String oldName = currentThread.getName();
+        currentThread.setName("#" + iteration + "-gatherer-" + playerId);
         try {
             LOG.debug("Starting evaluation of player ID: " + getPlayerId());
 
@@ -48,6 +52,8 @@ public class Gatherer implements Runnable {
         } catch(Exception e) {
             LOG.error(e.getMessage(), e);
             RESULT_LOG.debug(getPlayerId() + " - FAILED");
+        } finally {
+            currentThread.setName(oldName);
         }
     }
 
@@ -66,6 +72,14 @@ public class Gatherer implements Runnable {
     @Autowired
     public void setPlayerRepository(PlayerBeanRepository playerRepository) {
         this.playerRepository = playerRepository;
+    }
+
+    public int getIteration() {
+        return iteration;
+    }
+
+    public void setIteration(final int iteration) {
+        this.iteration = iteration;
     }
 
 }

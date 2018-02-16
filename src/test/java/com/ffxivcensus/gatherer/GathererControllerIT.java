@@ -85,6 +85,7 @@ public class GathererControllerIT {
     public void testRunAdvancedOptions() throws Exception {
         config.setStartId(1557260);
         config.setEndId(1558260);
+        config.setThreadLimit(40);
 
         gathererController.run();
 
