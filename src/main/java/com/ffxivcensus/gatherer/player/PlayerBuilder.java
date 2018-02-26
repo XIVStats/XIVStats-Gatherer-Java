@@ -20,7 +20,7 @@ import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.ffxivcensus.gatherer.Gatherer;
+import com.ffxivcensus.gatherer.GathererTask;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
@@ -31,7 +31,7 @@ import com.mashape.unirest.http.Unirest;
  * @author Peter Reid
  * @author Matthew Hillier
  * @since v1.0
- * @see Gatherer
+ * @see GathererTask
  */
 public class PlayerBuilder {
 

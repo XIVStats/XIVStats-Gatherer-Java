@@ -1,7 +1,9 @@
 package com.ffxivcensus.gatherer;
 
-import java.util.concurrent.ExecutorService;
+import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 import org.slf4j.Logger;
@@ -10,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ffxivcensus.gatherer.config.ApplicationConfig;
+import com.ffxivcensus.gatherer.player.CharacterStatus;
 import com.ffxivcensus.gatherer.player.PlayerBean;
 import com.ffxivcensus.gatherer.player.PlayerBeanRepository;
 import com.ffxivcensus.gatherer.player.PlayerBuilder;
@@ -21,18 +24,15 @@ import com.ffxivcensus.gatherer.player.PlayerBuilder;
  * @author Peter Reid
  * @since v1.0
  * @see PlayerBuilder
- * @see Gatherer
+ * @see GathererTask
  */
 @Service
 public class GathererController {
-    /** Defines the maximum number of ID's between the highest ID number and the last known good Character. **/
-    private static final int GATHERING_VALID_GAP_MAX = 200;
-    /** Defines the maximum number of characters to gather in a single iteration. **/
-    private static final int GATHERING_ITERATON_MAX = 1000;
     private static final Logger LOG = LoggerFactory.getLogger(GathererController.class);
     private ApplicationConfig appConfig;
-    private final GathererFactory gathererFactory;
-    final PlayerBeanRepository playerRepository;
+    private final TaskFactory gathererFactory;
+    private final GatheringStatus gatheringStatus;
+    private final PlayerBeanRepository playerRepository;
     /**
      * List of playable realms (used when splitting tables).
      */
@@ -50,10 +50,11 @@ public class GathererController {
      * 
      * @param config Configuration Bean
      */
-    public GathererController(@Autowired final ApplicationConfig config, @Autowired final GathererFactory gathererFactory,
-                              @Autowired final PlayerBeanRepository playerRepository) {
+    public GathererController(@Autowired final ApplicationConfig config, @Autowired final TaskFactory gathererFactory,
+                              @Autowired final PlayerBeanRepository playerRepository, @Autowired GatheringStatus gatheringStatus) {
         this.appConfig = config;
         this.gathererFactory = gathererFactory;
+        this.gatheringStatus = gatheringStatus;
         this.playerRepository = playerRepository;
     }
 
@@ -84,9 +85,12 @@ public class GathererController {
                 long minutes = seconds / 60;
                 long hours = minutes / 60;
                 long days = hours / 24;
+                PlayerBean highestGathered = playerRepository.findTopByOrderByIdDesc();
+                int finalId = appConfig.getEndId() == Integer.MAX_VALUE && highestGathered != null ? highestGathered.getId()
+                                                                                                   : appConfig.getEndId();
                 LOG.info("Run completed, gathered from Character #{} to Character #{} in {} Days, {} Hours, {} Minutes, {} Seconds (using {} threads)",
                          appConfig.getStartId(),
-                         playerRepository.findTopByIdByCharacterStatusNotDeleted(),
+                         finalId,
                          days, hours % 24, minutes % 60, seconds % 60,
                          appConfig.getThreadLimit());
 
@@ -124,57 +128,46 @@ public class GathererController {
     private void gatherCharacters(final int startId, final int finishId) {
         // Firstly, clean the top-end of the database
         LOG.debug("Cleaning top-end characters from the database");
-        Integer highestValid = playerRepository.findTopByIdByCharacterStatusNotDeleted();
+        PlayerBean highestValid = playerRepository.findTopByCharacterStatusNotOrderByIdDesc(CharacterStatus.DELETED);
         // Delete everything higher than last known good player
-        gatherCharacterRange(startId, finishId, 1);
-    }
+        playerRepository.deleteByIdGreaterThan(highestValid != null ? highestValid.getId() : 0);
 
-    /**
-     * Recursive method to gather characters between the given start and finish ID's, up to a maximum of {@value #GATHERING_ITERATON_MAX}
-     * (see {@link #GATHERING_ITERATON_MAX}) characters per iteration.
-     * 
-     * @param startId First ID to gather.
-     * @param finishId Final ID to gather.
-     * @param iteration Recursive iteration depth.
-     */
-    private void gatherCharacterRange(final int startId, final int finishId, final int iteration) {
-        // Setup an executor service that respects the max thread limit
-        ExecutorService executor = Executors.newFixedThreadPool(appConfig.getThreadLimit());
+        // Setup the gathering parameters
+        gatheringStatus.setStartId(startId);
+        gatheringStatus.setFinishId(finishId);
 
-        // Set next ID
-        int nextID = startId;
+        // Now setup the ExecutorServices
+        // gatheringExecutor runs only the gathering tasks
+        ThreadPoolExecutor gathererExecutor = new ThreadPoolExecutor(appConfig.getThreadLimit(),
+                                                                     appConfig.getThreadLimit(),
+                                                                     60,
+                                                                     TimeUnit.SECONDS,
+                                                                     new ArrayBlockingQueue<>(1000));
+        // managementExecutor runs all life-cycle management tasks
+        ScheduledExecutorService managementExecutor = Executors.newScheduledThreadPool(1);
+        // Executes the levemete task once every 10 seconds, starting immediately.
+        managementExecutor.scheduleAtFixedRate(new LevemeteTask(gathererExecutor,
+                                                                gathererFactory,
+                                                                gatheringStatus),
+                                               0,
+                                               5,
+                                               TimeUnit.SECONDS);
+        // Executes the limiter tasks once every 30 seconds, starting in 30 seconds time.
+        managementExecutor.scheduleAtFixedRate(new GatheringLimiterTask(gathererExecutor,
+                                                                        playerRepository),
+                                               30,
+                                               30,
+                                               TimeUnit.SECONDS);
 
-        while(nextID <= finishId && nextID < (startId + GATHERING_ITERATON_MAX)) {
-            Gatherer worker = gathererFactory.createGatherer();
-            worker.setIteration(iteration);
-            worker.setPlayerId(nextID);
-            executor.execute(worker);
-
-            nextID++;
-        }
-
-        executor.shutdown();
-        while(!executor.isTerminated()) {
+        // This is the main idle loop of the application and will continue until the gathering has finished.
+        while(!gathererExecutor.isTerminated()) {
             try {
-                // Wait patiently for the executor to finish off everything submitted
-                executor.awaitTermination(30, TimeUnit.SECONDS);
+                gathererExecutor.awaitTermination(5, TimeUnit.SECONDS);
             } catch(InterruptedException ie) {
-                // Unless there's an interrupt, in which case shut down gracefully
-                executor.shutdownNow();
+                gathererExecutor.shutdownNow();
             }
         }
 
-        // Check whether we've ran-out of valid Characters
-        PlayerBean top = playerRepository.findTopByOrderByIdDesc();
-        Integer topValidId = playerRepository.findTopByIdByCharacterStatusNotDeleted();
-
-        if(top != null && topValidId != null && top.getId() > topValidId.intValue() + GATHERING_VALID_GAP_MAX) {
-            LOG.info("FINISHING - No valid characters found for at least {} ID's after Character #{}", GATHERING_VALID_GAP_MAX, topValidId);
-            return;
-        }
-
-        if(nextID < finishId) {
-            gatherCharacterRange(nextID, finishId, iteration + 1);
-        }
+        managementExecutor.shutdownNow();
     }
 }

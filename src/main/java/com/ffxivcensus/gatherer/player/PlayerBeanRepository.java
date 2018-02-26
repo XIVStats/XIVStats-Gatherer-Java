@@ -11,20 +11,21 @@ import org.springframework.transaction.annotation.Transactional;
  * @author matthew.hillier
  */
 public interface PlayerBeanRepository extends CrudRepository<PlayerBean, Integer> {
-    
+
     /**
      * Finds the top-most character by ID.
+     * 
      * @return Top-most {@link PlayerBean} object by ID.
      */
     PlayerBean findTopByOrderByIdDesc();
 
     /**
-     * Located the last non-deleted Character ID.
+     * Finds the top-most character in the given Statuses
      * 
      * @return
      */
-    @Query(value = "SELECT MAX(id) FROM PlayerBean p WHERE characterStatus != 'DELETED'")
-    Integer findTopByIdByCharacterStatusNotDeleted();
+    //@Query(value = "SELECT p FROM PlayerBean p WHERE characterStatus != 'DELETED' ORDER BY id DESC")
+    PlayerBean findTopByCharacterStatusNotOrderByIdDesc(final CharacterStatus characterStatus);
 
     /**
      * Method to trim all deleted characters from the top-end of the database.

@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
  * @author matthew.hillier
  */
 @Service
-public class GathererFactory {
+public class TaskFactory {
 
     @Autowired
     private ApplicationContext context;
@@ -20,8 +20,8 @@ public class GathererFactory {
      * 
      * @return New Gatherer.
      */
-    public Gatherer createGatherer() {
-        return (Gatherer) context.getBean("gatherer");
+    public GathererTask createGatherer() {
+        return (GathererTask) context.getBean("gatherer");
     }
 
 }
