@@ -13,7 +13,8 @@ import org.xml.sax.SAXException;
 
 import com.ffxivcensus.gatherer.CLIConstants;
 import com.ffxivcensus.gatherer.Console;
-import com.ffxivcensus.gatherer.Gatherer;
+import com.ffxivcensus.gatherer.GathererTask;
+import com.ffxivcensus.gatherer.GatheringStatus;
 import com.ffxivcensus.gatherer.config.ApplicationConfig;
 import com.ffxivcensus.gatherer.config.ConfigurationBuilder;
 import com.zaxxer.hikari.HikariConfig;
@@ -32,8 +33,8 @@ public class SpringConfiguration {
 
     @Bean
     @Scope("prototype") // This is a prototype bean, as we want a new one every time
-    public Gatherer gatherer() {
-        return new Gatherer();
+    public GathererTask gatherer() {
+        return new GathererTask();
     }
 
     @Bean(destroyMethod = "close") // Should happen anyway, but worth calling out
@@ -52,5 +53,10 @@ public class SpringConfiguration {
         }
 
         return new HikariDataSource(hikariConfig);
+    }
+
+    @Bean
+    public GatheringStatus gatheringStatus() {
+        return new GatheringStatus();
     }
 }

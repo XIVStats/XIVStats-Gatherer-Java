@@ -20,10 +20,10 @@ import com.ffxivcensus.gatherer.player.PlayerBuilder;
  * @see GathererController
  * @see java.lang.Runnable
  */
-public class Gatherer implements Runnable {
+public class GathererTask implements Runnable {
 
-    private static final Logger LOG = LoggerFactory.getLogger(Gatherer.class);
-    private static final Logger RESULT_LOG = LoggerFactory.getLogger(Gatherer.class.getName() + ".result");
+    private static final Logger LOG = LoggerFactory.getLogger(GathererTask.class);
+    private static final Logger RESULT_LOG = LoggerFactory.getLogger(GathererTask.class.getName() + ".result");
 
     private int iteration;
     private int playerId;
@@ -34,9 +34,6 @@ public class Gatherer implements Runnable {
      */
     @Override
     public void run() {
-        final Thread currentThread = Thread.currentThread();
-        final String oldName = currentThread.getName();
-        currentThread.setName("#" + iteration + "-gatherer-" + playerId);
         try {
             LOG.debug("Starting evaluation of player ID: " + getPlayerId());
 
@@ -52,8 +49,6 @@ public class Gatherer implements Runnable {
         } catch(Exception e) {
             LOG.error(e.getMessage(), e);
             RESULT_LOG.debug(getPlayerId() + " - FAILED");
-        } finally {
-            currentThread.setName(oldName);
         }
     }
 

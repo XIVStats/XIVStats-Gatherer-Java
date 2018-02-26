@@ -23,7 +23,7 @@ import com.ffxivcensus.gatherer.player.PlayerBeanRepository;
  *
  * @author Peter Reid
  * @see com.ffxivcensus.gatherer.player.PlayerBuilder
- * @see com.ffxivcensus.gatherer.Gatherer
+ * @see com.ffxivcensus.gatherer.GathererTask
  * @see com.ffxivcensus.gatherer.GathererController
  * @see com.ffxivcensus.gatherer.player.PlayerBuilderIT
  * @since v1.0
