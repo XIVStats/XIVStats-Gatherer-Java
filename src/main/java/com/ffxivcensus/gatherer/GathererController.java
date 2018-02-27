@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.ffxivcensus.gatherer.config.ApplicationConfig;
 import com.ffxivcensus.gatherer.player.CharacterStatus;
+import com.ffxivcensus.gatherer.player.PlayerBean;
 import com.ffxivcensus.gatherer.player.PlayerBeanRepository;
 import com.ffxivcensus.gatherer.player.PlayerBuilder;
 
@@ -119,8 +120,9 @@ public class GathererController {
     private void gatherRange() {
         // Firstly, clean the top-end of the database
         LOG.debug("Cleaning top-end characters from the database");
-        playerRepository.deleteByIdGreaterThan(playerRepository.findTopByIdByCharacterStatusNotDeleted());
-
+        Integer highestValid = playerRepository.findTopByIdByCharacterStatusNotDeleted();
+        // Delete everything higher than last known good player
+        playerRepository.deleteByIdGreaterThan(highestValid != null ? highestValid.intValue() : 0);
         // Set next ID
         int nextID = appConfig.getStartId();
 
