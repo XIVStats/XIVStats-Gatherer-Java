@@ -32,13 +32,14 @@ Follow these steps to setup XIVStats-Gatherer-Java:
    or [PostgreSQL](https://wiki.postgresql.org/wiki/Detailed_installation_guides)
   server instance (if you have not already done so).
   2. Setup a database to store the program data in:
+  
     ```sql
-
     CREATE DATABASE dbplayers;
     ```
   3. Create a user for the program to use to connect to the database.
 
   **Replace {password} with your choice of password, take a note of this for later.**
+  
   ```sql
   GRANT ALL PRIVILEGES ON dbplayers.* TO `xivstats`@`localhost` IDENTIFIED BY '{password}';
   ```
