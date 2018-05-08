@@ -25,7 +25,6 @@ public class GathererTask implements Runnable {
     private static final Logger LOG = LoggerFactory.getLogger(GathererTask.class);
     private static final Logger RESULT_LOG = LoggerFactory.getLogger(GathererTask.class.getName() + ".result");
 
-    private int iteration;
     private int playerId;
     private PlayerBeanRepository playerRepository;
 
@@ -67,14 +66,6 @@ public class GathererTask implements Runnable {
     @Autowired
     public void setPlayerRepository(PlayerBeanRepository playerRepository) {
         this.playerRepository = playerRepository;
-    }
-
-    public int getIteration() {
-        return iteration;
-    }
-
-    public void setIteration(final int iteration) {
-        this.iteration = iteration;
     }
 
 }

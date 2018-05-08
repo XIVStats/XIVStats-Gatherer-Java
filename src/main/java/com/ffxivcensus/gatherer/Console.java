@@ -22,7 +22,7 @@ public class Console implements CommandLineRunner {
     private static final Logger LOG = LoggerFactory.getLogger(Console.class);
     // Hold the command-line arguments so that we can reference them in Spring
     public static String[] ARGS;
-    @Autowired
+    // Main Gathering Controller
     private GathererController controller;
 
     public static void main(final String[] args) {
@@ -46,6 +46,11 @@ public class Console implements CommandLineRunner {
         } catch(Exception e) {
             LOG.error(e.getMessage(), e);
         }
+    }
+    
+    @Autowired
+    public void setGathererController(final GathererController controller) {
+        this.controller = controller;
     }
 
 }
