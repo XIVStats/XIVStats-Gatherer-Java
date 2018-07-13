@@ -1,7 +1,5 @@
 package com.ffxivcensus.gatherer;
 
-import static org.junit.Assert.fail;
-
 import org.apache.commons.cli.ParseException;
 import org.junit.After;
 import org.junit.Before;

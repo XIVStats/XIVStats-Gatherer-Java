@@ -18,6 +18,7 @@ package com.ffxivcensus.gatherer.config;
  */
 public class ApplicationConfig {
 
+    public static final String DEFAULT_CONFIG_FILE = "config.xml";
     public static final String DEFAULT_DATABASE_HOST = "mysql://localhost:3306";
     public static final String DEFAULT_DATABASE_NAME = "dbplayers";
     public static final String DEFAULT_TABLE_NAME = "tblplayers";
@@ -59,7 +60,7 @@ public class ApplicationConfig {
     /**
      * User-defined limit for thread count.
      */
-    private int threadLimit;
+    private int threadLimit = MAX_THREADS;
 
     //////////////////////////
     // Gathering Configuration

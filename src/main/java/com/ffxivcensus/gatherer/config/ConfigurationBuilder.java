@@ -71,14 +71,27 @@ public class ConfigurationBuilder {
     /**
      * Load the application configuration from the config,xml file, assuming it can be found.
      *
+     * @param filePath Path to the configuration file.
      * @return New {@link ConfigurationBuilder} containing the updated Configuration bean and ready to be further configured.
      * @throws ParserConfigurationException Indicates a serious configuration error.
      * @throws IOException Indicates an error reading the file specified.
      * @throws SAXException Indicates an error parsing XML.
      */
     public ConfigurationBuilder loadXMLConfiguration() throws ParserConfigurationException, IOException, SAXException {
+        return loadXMLConfiguration(ApplicationConfig.DEFAULT_CONFIG_FILE);
+    }
+
+    /**
+     * Load the application configuration from the config,xml file, assuming it can be found.
+     *
+     * @return New {@link ConfigurationBuilder} containing the updated Configuration bean and ready to be further configured.
+     * @throws ParserConfigurationException Indicates a serious configuration error.
+     * @throws IOException Indicates an error reading the file specified.
+     * @throws SAXException Indicates an error parsing XML.
+     */
+    public ConfigurationBuilder loadXMLConfiguration(final String filePath) throws ParserConfigurationException, IOException, SAXException {
         // Set config file location
-        File xmlFile = new File("config.xml");
+        File xmlFile = new File(filePath);
 
         if(xmlFile.exists()) {
             // Initialize parsers

@@ -15,6 +15,25 @@ public class ConfigurationBuilderTest {
      * @throws Exception
      */
     @Test
+    public void testNoXML() throws Exception {
+
+        ApplicationConfig config = ConfigurationBuilder.createBuilder()
+                                                       .loadXMLConfiguration("noFileHere.xml")
+                                                       .getConfiguration();
+
+        // Test that options are set to the defaults
+        assertEquals(config.getStartId(), -1);
+        assertEquals(config.getEndId(), Integer.MAX_VALUE);
+        assertEquals(config.getThreadLimit(), ApplicationConfig.MAX_THREADS);
+        assertEquals(config.getDbUrl(), ApplicationConfig.DEFAULT_DATABASE_HOST);
+    }
+
+    /**
+     * Test configuration from the Command Line
+     *
+     * @throws Exception
+     */
+    @Test
     public void testValidCLIConfigPartial() throws Exception {
         String[] args = {"-is", "0",
                          "-f", "100",
