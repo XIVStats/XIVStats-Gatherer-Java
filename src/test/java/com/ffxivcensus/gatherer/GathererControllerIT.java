@@ -87,7 +87,7 @@ public class GathererControllerIT {
     public void testRunAdvancedOptions() throws Exception {
         config.setStartId(1557260);
         config.setEndId(1558260);
-        config.setThreadLimit(40);
+        config.setThreadLimit(100);
 
         gathererController.run();
 
@@ -112,12 +112,27 @@ public class GathererControllerIT {
         config.setThreadLimit(32);
 
         gathererController.run();
-        
+
         // Test that character 50,000,000 was gathered, but didn't exist
         PlayerBean expectedDeleted = playerRepository.findOne(50000000);
         assertEquals(CharacterStatus.DELETED, expectedDeleted.getCharacterStatus());
-        
+
         // Test that character 50,001,000 wasn't gathered (e.g. the gathering stopped)
         assertNull(playerRepository.findOne(50001000));
+    }
+
+    @Test
+    public void testRunInterrupted() throws Exception {
+        config.setStartId(90000000);
+        config.setEndId(100000000);
+        config.setThreadLimit(32);
+
+        // Set the interrupt flag on this thread to ensure the close-down signal is already inplace before gathering begins
+        Thread.currentThread().interrupt();
+        gathererController.run();
+
+        // Test that character 90,000,000 hasn't been gathered
+        PlayerBean expectedDeleted = playerRepository.findOne(90000000);
+        assertNull(expectedDeleted);
     }
 }
