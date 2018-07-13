@@ -16,6 +16,10 @@ import com.ffxivcensus.gatherer.player.CharacterStatus;
 import com.ffxivcensus.gatherer.player.PlayerBean;
 import com.ffxivcensus.gatherer.player.PlayerBeanRepository;
 import com.ffxivcensus.gatherer.player.PlayerBuilder;
+import com.ffxivcensus.gatherer.task.GathererTask;
+import com.ffxivcensus.gatherer.task.GatheringLimiterTask;
+import com.ffxivcensus.gatherer.task.LevemeteTask;
+import com.ffxivcensus.gatherer.task.TaskFactory;
 
 /**
  * GathererController class of character gathering program. This class makes calls to fetch records from the lodestone, and then
@@ -30,7 +34,7 @@ import com.ffxivcensus.gatherer.player.PlayerBuilder;
 public class GathererController {
     private static final Logger LOG = LoggerFactory.getLogger(GathererController.class);
     private ApplicationConfig appConfig;
-    private final TaskFactory gathererFactory;
+    private final TaskFactory taskFactory;
     private final GatheringStatus gatheringStatus;
     private final PlayerBeanRepository playerRepository;
     /**
@@ -50,10 +54,10 @@ public class GathererController {
      * 
      * @param config Configuration Bean
      */
-    public GathererController(@Autowired final ApplicationConfig config, @Autowired final TaskFactory gathererFactory,
+    public GathererController(@Autowired final ApplicationConfig config, @Autowired final TaskFactory taskFactory,
                               @Autowired final PlayerBeanRepository playerRepository, @Autowired GatheringStatus gatheringStatus) {
         this.appConfig = config;
-        this.gathererFactory = gathererFactory;
+        this.taskFactory = taskFactory;
         this.gatheringStatus = gatheringStatus;
         this.playerRepository = playerRepository;
     }
@@ -147,7 +151,7 @@ public class GathererController {
         ScheduledExecutorService managementExecutor = Executors.newScheduledThreadPool(1);
         // Executes the levemete task once every 10 seconds, starting immediately.
         managementExecutor.scheduleAtFixedRate(new LevemeteTask(gathererExecutor,
-                                                                gathererFactory,
+                                                                taskFactory,
                                                                 gatheringStatus),
                                                0,
                                                5,
