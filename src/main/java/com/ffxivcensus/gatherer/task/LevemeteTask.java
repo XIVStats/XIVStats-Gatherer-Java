@@ -1,10 +1,12 @@
-package com.ffxivcensus.gatherer;
+package com.ffxivcensus.gatherer.task;
 
 import java.util.concurrent.RejectedExecutionException;
 import java.util.concurrent.ThreadPoolExecutor;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.ffxivcensus.gatherer.GatheringStatus;
 
 /**
  * Runnable task managing the distribution and setup of {@see Gatherer} tasks into the {@see ExecutorService}.

@@ -1,4 +1,4 @@
-package com.ffxivcensus.gatherer;
+package com.ffxivcensus.gatherer.task;
 
 import java.util.concurrent.ThreadPoolExecutor;
 

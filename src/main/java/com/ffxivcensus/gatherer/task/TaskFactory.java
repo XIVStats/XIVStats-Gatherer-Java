@@ -1,4 +1,4 @@
-package com.ffxivcensus.gatherer;
+package com.ffxivcensus.gatherer.task;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;

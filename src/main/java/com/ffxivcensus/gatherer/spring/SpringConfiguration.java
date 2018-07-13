@@ -13,10 +13,10 @@ import org.xml.sax.SAXException;
 
 import com.ffxivcensus.gatherer.CLIConstants;
 import com.ffxivcensus.gatherer.Console;
-import com.ffxivcensus.gatherer.GathererTask;
 import com.ffxivcensus.gatherer.GatheringStatus;
 import com.ffxivcensus.gatherer.config.ApplicationConfig;
 import com.ffxivcensus.gatherer.config.ConfigurationBuilder;
+import com.ffxivcensus.gatherer.task.GathererTask;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
