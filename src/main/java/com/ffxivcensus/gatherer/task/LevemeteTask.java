@@ -56,6 +56,7 @@ public class LevemeteTask implements Runnable {
                 } catch(RejectedExecutionException ree) {
                     // -- catch RejectedExecution error and stop due to executor shutdown
                     LOG.info("LEVEMETE: STOPPING - Gatherer stopped accepting new jobs.");
+                    break;
                 }
             }
         }
