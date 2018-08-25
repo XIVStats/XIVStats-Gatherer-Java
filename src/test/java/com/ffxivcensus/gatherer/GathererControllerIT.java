@@ -128,19 +128,19 @@ public class GathererControllerIT {
      * 
      * @throws Exception
      */
-    @Ignore
+    /*@Ignore
     @Test
     public void testRunInterrupted() throws Exception {
         config.setStartId(90000000);
         config.setEndId(100000000);
         config.setThreadLimit(32);
 
-        // Set the interrupt flag on this thread to ensure the close-down signal is already inplace before gathering begins
+        // Set the interrupt flag on this thread to ensure the close-down signal is already in place before gathering begins
         Thread.currentThread().interrupt();
         gathererController.run();
 
         // Test that character 90,000,000 hasn't been gathered
         PlayerBean expectedDeleted = playerRepository.findOne(90000000);
         assertNull(expectedDeleted);
-    }
+    }*/
 }
