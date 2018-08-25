@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <jdbc>
+        <url>mysql://testbox:3306</url>
+        <database>ffxivcensus</database>
+        <username>uname</username>
+        <password>passwd</password>
+    </jdbc>
+    <execution>
+        <threads>32</threads>
+    </execution>
+</config>

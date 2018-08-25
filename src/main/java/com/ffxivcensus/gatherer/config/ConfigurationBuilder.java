@@ -78,7 +78,7 @@ public class ConfigurationBuilder {
      * @throws SAXException Indicates an error parsing XML.
      */
     public ConfigurationBuilder loadXMLConfiguration() throws ParserConfigurationException, IOException, SAXException {
-        return loadXMLConfiguration(ApplicationConfig.DEFAULT_CONFIG_FILE);
+        return loadXMLConfiguration(new File(ApplicationConfig.DEFAULT_CONFIG_FILE));
     }
 
     /**
@@ -89,11 +89,9 @@ public class ConfigurationBuilder {
      * @throws IOException Indicates an error reading the file specified.
      * @throws SAXException Indicates an error parsing XML.
      */
-    public ConfigurationBuilder loadXMLConfiguration(final String filePath) throws ParserConfigurationException, IOException, SAXException {
+    public ConfigurationBuilder loadXMLConfiguration(final File xmlFile) throws ParserConfigurationException, IOException, SAXException {
         // Set config file location
-        File xmlFile = new File(filePath);
-
-        if(xmlFile.exists()) {
+        if(xmlFile != null && xmlFile.exists()) {
             // Initialize parsers
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
@@ -134,9 +132,7 @@ public class ConfigurationBuilder {
             CommandLine cmd = parser.parse(options, args);
 
             // Start id flag
-            if(cmd.hasOption("s")) {
-                configuration.setStartId(Integer.parseInt(cmd.getOptionValue("s")));
-            }
+            configuration.setStartId(Integer.parseInt(cmd.getOptionValue("s")));
 
             // Finish id flag
             if(cmd.hasOption("f")) {
@@ -144,7 +140,7 @@ public class ConfigurationBuilder {
             }
 
             // Database URL
-            if(cmd.hasOption("d") && cmd.hasOption("U")) {
+            if(cmd.hasOption("U")) {
                 configuration.setDbUrl(cmd.getOptionValue("U"));
             }
             // Database Name
