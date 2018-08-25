@@ -16,7 +16,7 @@ import com.ffxivcensus.gatherer.player.PlayerBeanRepository;
  */
 public class GatheringLimiterTask implements Runnable {
 
-    private static Logger LOG = LoggerFactory.getLogger(GatheringLimiterTask.class);
+    private static final Logger LOG = LoggerFactory.getLogger(GatheringLimiterTask.class);
     /** Defines the maximum number of ID's between the highest ID number and the last known good Character. **/
     private static final int GATHERING_VALID_GAP_MAX = 200;
     private ThreadPoolExecutor gathererExecutor;
@@ -41,11 +41,9 @@ public class GatheringLimiterTask implements Runnable {
         int maxValidId = highestValid == null ? 0 : highestValid.getId();
 
         if(maxId > maxValidId + GATHERING_VALID_GAP_MAX) {
-            // if(highestGathered != null && highestValid != null && highestGathered.getId() > (highestValid.getId() +
-            // GATHERING_VALID_GAP_MAX)) {
             LOG.info("GATHERING CAPPING: FINISHING - No valid characters found for at least {} ID's after Character #{}",
                      GATHERING_VALID_GAP_MAX, maxValidId);
-            // Issue shutdownNow as this clears the execution queue of any unstarted tasks
+            // Issue shutdownNow as this clears the execution queue of any un-started tasks
             gathererExecutor.shutdownNow();
         }
     }
