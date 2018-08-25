@@ -180,7 +180,7 @@ public class PlayerBuilderIT {
         assertEquals("male", player.getGender());
 
         // Test that classes are polling correctly, arcanist level will be indicated on page by '-' should be 0 in player object.
-        assertEquals(player.getLevelArcanist(), 0);
+        assertEquals(0, player.getLevelArcanist());
 
         // Test fields that are true in other tests
         assertFalse(player.isHas30DaysSub());

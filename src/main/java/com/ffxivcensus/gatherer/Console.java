@@ -21,12 +21,12 @@ public class Console implements CommandLineRunner {
 
     private static final Logger LOG = LoggerFactory.getLogger(Console.class);
     // Hold the command-line arguments so that we can reference them in Spring
-    public static String[] ARGS;
+    private static String[] cliArgs;
     // Main Gathering Controller
     private GathererController controller;
 
     public static void main(final String[] args) {
-        ARGS = args;
+        cliArgs = args;
         SpringApplication.run(Console.class, args);
     }
 
@@ -47,10 +47,20 @@ public class Console implements CommandLineRunner {
             LOG.error(e.getMessage(), e);
         }
     }
-    
+
     @Autowired
     public void setGathererController(final GathererController controller) {
         this.controller = controller;
+    }
+
+    /**
+     * Returns the arguments passed in from the CLI.
+     * These are held in a static array so that they're available for Spring configurations to use later in the boot sequence.
+     * 
+     * @return Array of CLI arguments passed in at runtime.
+     */
+    public static String[] getARGS() {
+        return cliArgs;
     }
 
 }

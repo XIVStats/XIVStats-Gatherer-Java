@@ -12,6 +12,12 @@ public class CLIConstants {
     public static final String CLI_USAGE = "java -jar XIVStats-Gatherer-Java.jar [-i] -s startid [-f finishid] [-d database-name] [-u database-user] [-p database-user-password] [-U database-url] [-t threads]";
 
     /**
+     * Private constructor as this should never me initiated.
+     */
+    private CLIConstants() {
+    }
+
+    /**
      * Establish the possible options (flags) to run the program with.
      * 
      * @return the set of command line options.
