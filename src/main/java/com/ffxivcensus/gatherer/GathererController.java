@@ -6,6 +6,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.commons.cli.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,17 +38,6 @@ public class GathererController {
     private final TaskFactory taskFactory;
     private final GatheringStatus gatheringStatus;
     private final PlayerBeanRepository playerRepository;
-    /**
-     * List of playable realms (used when splitting tables).
-     */
-    public final static String[] REALMS = {"Adamantoise", "Aegis", "Alexander", "Anima", "Asura", "Atomos", "Bahamut", "Balmung",
-                                           "Behemoth", "Belias", "Brynhildr", "Cactuar", "Carbuncle", "Cerberus", "Chocobo", "Coeurl",
-                                           "Diabolos", "Durandal", "Excalibur", "Exodus", "Faerie", "Famfrit", "Fenrir", "Garuda",
-                                           "Gilgamesh", "Goblin", "Gungnir", "Hades", "Hyperion", "Ifrit", "Ixion", "Jenova", "Kujata",
-                                           "Lamia", "Leviathan", "Lich", "Louisoix", "Malboro", "Mandragora", "Masamune", "Mateus",
-                                           "Midgardsormr", "Moogle", "Odin", "Omega", "Pandaemonium", "Phoenix", "Ragnarok", "Ramuh",
-                                           "Ridill", "Sargatanas", "Shinryu", "Shiva", "Siren", "Tiamat", "Titan", "Tonberry", "Typhon",
-                                           "Ultima", "Ultros", "Unicorn", "Valefor", "Yojimbo", "Zalera", "Zeromus", "Zodiark"};
 
     /**
      * Constructs a new {@link GathererController} and configures with the provided {@link ApplicationConfig}.
@@ -64,10 +54,11 @@ public class GathererController {
 
     /**
      * Start the gatherer controller instance up.
+     * @throws ParseException 
      *
      * @throws Exception Exception thrown if system is incorrectly configured.
      */
-    public void run() throws Exception {
+    public void run() throws ParseException {
         // Store start time
         long startTime = System.currentTimeMillis();
 
@@ -77,30 +68,25 @@ public class GathererController {
         }
 
         if(!isConfigured()) { // If not configured
-            throw new Exception("Gathering ranges not (correctly) configured");
+            throw new ParseException("Gathering ranges not (correctly) configured");
         } else { // Else configured correctly
-            try {
-                LOG.info("Starting parse of range " + appConfig.getStartId() + " to " + appConfig.getEndId() + " using "
-                         + appConfig.getThreadLimit() + " threads");
-                gatherCharacters(appConfig.getStartId(), appConfig.getEndId());
-                // Get current time
-                long endTime = System.currentTimeMillis();
-                long seconds = (endTime - startTime) / 1000;
-                long minutes = seconds / 60;
-                long hours = minutes / 60;
-                long days = hours / 24;
-                PlayerBean highestGathered = playerRepository.findTopByOrderByIdDesc();
-                int finalId = appConfig.getEndId() == Integer.MAX_VALUE && highestGathered != null ? highestGathered.getId()
-                                                                                                   : appConfig.getEndId();
-                LOG.info("Run completed, gathered from Character #{} to Character #{} in {} Days, {} Hours, {} Minutes, {} Seconds (using {} threads)",
-                         appConfig.getStartId(),
-                         finalId,
-                         days, hours % 24, minutes % 60, seconds % 60,
-                         appConfig.getThreadLimit());
-
-            } catch(Exception ex) {
-                throw new Exception(ex);
-            }
+            LOG.info("Starting parse of range " + appConfig.getStartId() + " to " + appConfig.getEndId() + " using "
+                     + appConfig.getThreadLimit() + " threads");
+            gatherCharacters(appConfig.getStartId(), appConfig.getEndId());
+            // Get current time
+            long endTime = System.currentTimeMillis();
+            long seconds = (endTime - startTime) / 1000;
+            long minutes = seconds / 60;
+            long hours = minutes / 60;
+            long days = hours / 24;
+            PlayerBean highestGathered = playerRepository.findTopByOrderByIdDesc();
+            int finalId = appConfig.getEndId() == Integer.MAX_VALUE && highestGathered != null ? highestGathered.getId()
+                                                                                               : appConfig.getEndId();
+            LOG.info("Run completed, gathered from Character #{} to Character #{} in {} Days, {} Hours, {} Minutes, {} Seconds (using {} threads)",
+                     appConfig.getStartId(),
+                     finalId,
+                     days, hours % 24, minutes % 60, seconds % 60,
+                     appConfig.getThreadLimit());
         }
     }
 
@@ -169,6 +155,8 @@ public class GathererController {
                 gathererExecutor.awaitTermination(5, TimeUnit.SECONDS);
             } catch(InterruptedException ie) {
                 gathererExecutor.shutdownNow();
+                // Remember to re-propogate the interrupt now that we've handled our needs
+                Thread.currentThread().interrupt();
             }
         }
 

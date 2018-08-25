@@ -27,7 +27,7 @@ public class SpringConfiguration {
     public ApplicationConfig applicationConfig() throws ParserConfigurationException, IOException, SAXException, ParseException {
         return ConfigurationBuilder.createBuilder()
                                    .loadXMLConfiguration()
-                                   .loadCommandLineConfiguration(CLIConstants.setupOptions(), Console.ARGS)
+                                   .loadCommandLineConfiguration(CLIConstants.setupOptions(), Console.getARGS())
                                    .getConfiguration();
     }
 

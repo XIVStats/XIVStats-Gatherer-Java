@@ -1,5 +1,6 @@
 package com.ffxivcensus.gatherer.player;
 
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -35,13 +36,35 @@ import com.mashape.unirest.http.Unirest;
  */
 public class PlayerBuilder {
 
+    private static final String HEADER_LAST_MODIFIED = "Last-Modified";
+    private static final String ATTR_SRC = "src";
+    private static final String TAG_IMG = "img";
+    private static final String TAG_A = "a";
+    private static final String LAYOUT_CHARACTER_DETAIL_IMAGE = "character__detail__image";
+    private static final String LAYOUT_CHARACTER_MOUNTS = "character__mounts";
+    private static final String TAG_LI = "li";
+    private static final String LAYOUT_DATA_TOOLTIP = "data-tooltip";
+    private static final String TAG_DIV = "div";
+    private static final String LAYOUT_CHARACTER_MINION = "character__minion";
+    private static final String LAYOUT_CHARACTER_JOB_LEVEL = "character__job__level";
+    private static final String LAYOUT_CHARACTER_JOB = "character__job";
+    private static final String LAYOUT_CHARACTER_FREECOMPANY_NAME = "character__freecompany__name";
+    private static final String LAYOUT_CHARACTER_BLOCK_BOX = "character-block__box";
+    private static final String LAYOUT_FRAME_CHARA_WORLD = "frame__chara__world";
+    private static final String LAYOUT_CHARACTER_BLOCK_NAME = "character-block__name";
     private static final Logger LOG = LoggerFactory.getLogger(PlayerBuilder.class);
     /**
      * Number of days inactivity before character is considered inactive
      */
-    private final static int ACTIVITY_RANGE_DAYS = 30;
+    private static final int ACTIVITY_RANGE_DAYS = 30;
 
     private static final long ONE_DAY_IN_MILLIS = 86400000;
+
+    /**
+     * Private constructor to stop instances.
+     */
+    private PlayerBuilder() {
+    }
 
     /**
      * Set player class levels.
@@ -121,7 +144,7 @@ public class PlayerBuilder {
      * @return the player object matching the specified ID.
      * @throws Exception exception thrown if more class levels returned than anticipated.
      */
-    public static PlayerBean getPlayer(final int playerID, int attempt) throws Exception {
+    public static PlayerBean getPlayer(final int playerID, int attempt) throws IOException, InterruptedException {
         // Initialize player object to return
         PlayerBean player = new PlayerBean();
         player.setId(playerID);
@@ -205,11 +228,11 @@ public class PlayerBuilder {
                     player = PlayerBuilder.getPlayer(playerID, ++attempt);
                     break;
                 case HttpStatus.SC_NOT_FOUND:
-                    LOG.info("Character " + playerID + " does not exist. (404)");
+                    LOG.info("Character {} does not exist. (404)", playerID);
                     player.setCharacterStatus(CharacterStatus.DELETED);
                     break;
                 default:
-                    throw new Exception("Unexpected HTTP Status Code: " + httpe.getStatusCode(), httpe);
+                    throw new IOException("Unexpected HTTP Status Code: " + httpe.getStatusCode(), httpe);
             }
         }
         return player;
@@ -238,8 +261,7 @@ public class PlayerBuilder {
      */
     private static String getNameFromPage(final Document doc) {
         String[] parts = doc.title().split(Pattern.quote("|"));
-        String name = parts[0].trim();
-        return name;
+        return parts[0].trim();
     }
 
     /**
@@ -249,10 +271,8 @@ public class PlayerBuilder {
      * @return the realm of the character.
      */
     private static String getRealmFromPage(final Document doc) {
-        // Get elements in the player name area
-        String realmName = doc.getElementsByClass("frame__chara__world").get(0).text().replace("(", "").replace(")", "");
-        // Return the realm name (contained in span)
-        return realmName;
+        // Get elements in the player name area, and return the Realm name (contained in the span)
+        return doc.getElementsByClass(LAYOUT_FRAME_CHARA_WORLD).get(0).text().replace("(", "").replace(")", "");
     }
 
     /**
@@ -262,7 +282,7 @@ public class PlayerBuilder {
      * @return the race of the character.
      */
     private static String getRaceFromPage(final Document doc) {
-        return doc.getElementsByClass("character-block__name").get(0).textNodes().get(0).text().trim();
+        return doc.getElementsByClass(LAYOUT_CHARACTER_BLOCK_NAME).get(0).textNodes().get(0).text().trim();
     }
 
     /**
@@ -272,7 +292,7 @@ public class PlayerBuilder {
      * @return the gender of the character.
      */
     private static String getGenderFromPage(final Document doc) {
-        String[] parts = doc.getElementsByClass("character-block__name").get(0).text().split(Pattern.quote("/"));
+        String[] parts = doc.getElementsByClass(LAYOUT_CHARACTER_BLOCK_NAME).get(0).text().split(Pattern.quote("/"));
         String gender = parts[1].trim();
         if(gender.equals("♂")) {
             return "male";
@@ -292,14 +312,14 @@ public class PlayerBuilder {
     private static String getGrandCompanyFromPage(final Document doc) {
         String gc = null;
         // Get all elements with class chara_profile_box_info
-        Elements elements = doc.getElementsByClass("character-block__box");
+        Elements elements = doc.getElementsByClass(LAYOUT_CHARACTER_BLOCK_BOX);
         if(elements.size() == 5) {
-            gc = elements.get(3).getElementsByClass("character-block__name").get(0).text().split("/")[0].trim();
+            gc = elements.get(3).getElementsByClass(LAYOUT_CHARACTER_BLOCK_NAME).get(0).text().split("/")[0].trim();
         } else if(elements.size() == 4) {
-            if(elements.get(3).getElementsByClass("character__freecompany__name").size() > 0) { // If box is fc
+            if(!elements.get(3).getElementsByClass(LAYOUT_CHARACTER_FREECOMPANY_NAME).isEmpty()) { // If box is fc
                 gc = "none";
             } else {
-                gc = elements.get(3).getElementsByClass("character-block__name").get(0).text().split("/")[0].trim();
+                gc = elements.get(3).getElementsByClass(LAYOUT_CHARACTER_BLOCK_NAME).get(0).text().split("/")[0].trim();
             }
         } else {
             gc = "none";
@@ -317,15 +337,15 @@ public class PlayerBuilder {
     private static String getFreeCompanyFromPage(final Document doc) {
         String fc = null;
         // Get all elements with class chara_profile_box_info
-        Elements elements = doc.getElementsByClass("character-block__box");
+        Elements elements = doc.getElementsByClass(LAYOUT_CHARACTER_BLOCK_BOX);
 
         // Checks to see if optional FC has been added
         if(elements.size() == 5) {
-            fc = elements.get(4).getElementsByClass("character__freecompany__name").get(0).getElementsByTag("a").text();
+            fc = elements.get(4).getElementsByClass(LAYOUT_CHARACTER_FREECOMPANY_NAME).get(0).getElementsByTag(TAG_A).text();
         } else if(elements.size() == 4) { // If only 4 elements present
 
-            if(elements.get(3).getElementsByClass("character__freecompany__name").size() > 0) { // If box is fc
-                fc = elements.get(3).getElementsByClass("character__freecompany__name").get(0).getElementsByTag("a").text();
+            if(!elements.get(3).getElementsByClass(LAYOUT_CHARACTER_FREECOMPANY_NAME).isEmpty()) { // If box is fc
+                fc = elements.get(3).getElementsByClass(LAYOUT_CHARACTER_FREECOMPANY_NAME).get(0).getElementsByTag(TAG_A).text();
             } else { // Else must not be gc
                 fc = "none";
             }
@@ -342,13 +362,13 @@ public class PlayerBuilder {
      * @return the set of levels of the player in the order displayed on the lodestone.
      * @throws Exception Exception thrown if more classes found than anticipated.
      */
-    private static int[] getLevelsFromPage(final Document doc) throws Exception {
+    private static int[] getLevelsFromPage(final Document doc) {
         // Initialize array list in which to store levels (in order displayed on lodestone)
         List<Integer> levels = new ArrayList<>();
-        Elements discipleBoxes = doc.getElementsByClass("character__job");
+        Elements discipleBoxes = doc.getElementsByClass(LAYOUT_CHARACTER_JOB);
 
         for(int i = 0; i < discipleBoxes.size(); i++) {
-            Elements levelBoxes = discipleBoxes.get(i).getElementsByClass("character__job__level");
+            Elements levelBoxes = discipleBoxes.get(i).getElementsByClass(LAYOUT_CHARACTER_JOB_LEVEL);
             for(Element levelBox : levelBoxes) {
                 String strLvl = levelBox.text();
                 if(strLvl.equals("-")) {
@@ -369,8 +389,8 @@ public class PlayerBuilder {
         // Check if levels array is larger than this system is programmed for
         // As of 4.0, this is now 26 - SCH and SMN are 2 jobs, + SAM & RDM
         if(arrLevels.length > 26) {
-            throw new Exception("Error: More class levels found (" + arrLevels.length
-                                + ") than anticipated (26). The class definitions need to be updated.");
+            throw new IllegalArgumentException("Error: More class levels found (" + arrLevels.length
+                                               + ") than anticipated (26). The class definitions need to be updated.");
         }
 
         return arrLevels;
@@ -387,12 +407,12 @@ public class PlayerBuilder {
         // Initialize array in which to store minions
         List<String> minions = new ArrayList<>();
         // Get minion box element
-        Elements minionBoxes = doc.getElementsByClass("character__minion");
-        if(minionBoxes.size() > 0) {
+        Elements minionBoxes = doc.getElementsByClass(LAYOUT_CHARACTER_MINION);
+        if(!minionBoxes.isEmpty()) {
             // Get minions
-            Elements minionSet = minionBoxes.get(0).getElementsByTag("li");
+            Elements minionSet = minionBoxes.get(0).getElementsByTag(TAG_LI);
             for(int index = 0; index < minionSet.size(); index++) { // For each minion link store into array
-                minions.add(minionSet.get(index).getElementsByTag("div").attr("data-tooltip"));
+                minions.add(minionSet.get(index).getElementsByTag(TAG_DIV).attr(LAYOUT_DATA_TOOLTIP));
             }
         }
         return minions;
@@ -410,12 +430,12 @@ public class PlayerBuilder {
         List<String> mounts = new ArrayList<>();
 
         // Get minion box element
-        Elements minionBoxes = doc.getElementsByClass("character__mounts");
+        Elements minionBoxes = doc.getElementsByClass(LAYOUT_CHARACTER_MOUNTS);
         // Get mounts
-        if(minionBoxes.size() > 0) {
-            Elements mountSet = minionBoxes.get(0).getElementsByTag("li");
+        if(!minionBoxes.isEmpty()) {
+            Elements mountSet = minionBoxes.get(0).getElementsByTag(TAG_LI);
             for(int index = 0; index < mountSet.size(); index++) { // For each mount link store into array
-                mounts.add(mountSet.get(index).getElementsByTag("div").attr("data-tooltip"));
+                mounts.add(mountSet.get(index).getElementsByTag(TAG_DIV).attr(LAYOUT_DATA_TOOLTIP));
             }
         }
         return mounts;
@@ -427,17 +447,18 @@ public class PlayerBuilder {
      * @param doc the lodestone profile page to parse
      * @return the date on which the full body image was last modified.
      */
-    private static Date getDateLastUpdatedFromPage(final Document doc, final int id) throws Exception {
-        Date dateLastModified = new Date();
+    private static Date getDateLastUpdatedFromPage(final Document doc, final int id) {
+        Date dateLastModified;
         // Get character image URL.
-        String imgUrl = doc.getElementsByClass("character__detail__image").get(0).getElementsByTag("a").get(0).getElementsByTag("img")
-                           .get(0).attr("src");
+        String imgUrl = doc.getElementsByClass(LAYOUT_CHARACTER_DETAIL_IMAGE).get(0).getElementsByTag(TAG_A).get(0)
+                           .getElementsByTag(TAG_IMG)
+                           .get(0).attr(ATTR_SRC);
         String strLastModifiedDate = "";
 
         try {
             HttpResponse<JsonNode> jsonResponse = Unirest.head(imgUrl).asJson();
 
-            strLastModifiedDate = jsonResponse.getHeaders().get("Last-Modified").toString();
+            strLastModifiedDate = jsonResponse.getHeaders().get(HEADER_LAST_MODIFIED).toString();
         } catch(Exception e) {
             LOG.warn("Setting last-active date to ARR launch date due to an an error loading character " + id
                      + "'s profile image: " + e.getMessage());
@@ -451,7 +472,8 @@ public class PlayerBuilder {
         try {
             dateLastModified = dateFormat.parse(strLastModifiedDate);
         } catch(ParseException e) {
-            throw new Exception("Could not correctly parse date 'Last-Modified' header from full body image for character id" + id);
+            throw new IllegalArgumentException("Could not correctly parse date 'Last-Modified' header from full body image for character id"
+                                               + id);
         }
         return dateLastModified;
     }
