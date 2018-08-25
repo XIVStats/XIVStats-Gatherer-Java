@@ -2,6 +2,8 @@ package com.ffxivcensus.gatherer.config;
 
 import static org.junit.Assert.*;
 
+import java.io.File;
+
 import org.apache.commons.cli.MissingOptionException;
 import org.junit.Test;
 
@@ -18,14 +20,68 @@ public class ConfigurationBuilderTest {
     public void testNoXML() throws Exception {
 
         ApplicationConfig config = ConfigurationBuilder.createBuilder()
-                                                       .loadXMLConfiguration("noFileHere.xml")
+                                                       .loadXMLConfiguration(new File("noFileHere.xml"))
                                                        .getConfiguration();
 
         // Test that options are set to the defaults
-        assertEquals(config.getStartId(), -1);
-        assertEquals(config.getEndId(), Integer.MAX_VALUE);
-        assertEquals(config.getThreadLimit(), ApplicationConfig.MAX_THREADS);
-        assertEquals(config.getDbUrl(), ApplicationConfig.DEFAULT_DATABASE_HOST);
+        assertEquals(-1, config.getStartId());
+        assertEquals(Integer.MAX_VALUE, config.getEndId());
+        assertEquals(ApplicationConfig.MAX_THREADS, config.getThreadLimit());
+        assertEquals(ApplicationConfig.DEFAULT_DATABASE_HOST, config.getDbUrl());
+    }
+
+    /**
+     * Test configuration from the Command Line
+     *
+     * @throws Exception
+     */
+    @Test
+    public void testXmlBasic() throws Exception {
+        ApplicationConfig config = ConfigurationBuilder.createBuilder()
+                                                       .loadXMLConfiguration(new File(this.getClass().getResource("/config/test_config.xml").toURI()))
+                                                       .getConfiguration();
+
+        // Test that options are set to the defaults
+        assertEquals(-1, config.getStartId());
+        assertEquals(Integer.MAX_VALUE, config.getEndId());
+        assertEquals("mysql://testbox:3306", config.getDbUrl());
+        assertEquals(32, config.getThreadLimit());
+    }
+
+    /**
+     * Test configuration from the Command Line
+     *
+     * @throws Exception
+     */
+    @Test
+    public void testValidCLIConfigNull() throws Exception {
+        String[] args = null;
+
+        ApplicationConfig config = ConfigurationBuilder.createBuilder()
+                                                       .loadCommandLineConfiguration(CLIConstants.setupOptions(), args)
+                                                       .getConfiguration();
+
+        // Test that options have set attributes correctly
+        assertEquals(-1, config.getStartId());
+        assertEquals(Integer.MAX_VALUE, config.getEndId());
+    }
+
+    /**
+     * Test configuration from the Command Line
+     *
+     * @throws Exception
+     */
+    @Test
+    public void testValidCLIConfigMinimal() throws Exception {
+        String[] args = {"-s", "0"};
+
+        ApplicationConfig config = ConfigurationBuilder.createBuilder()
+                                                       .loadCommandLineConfiguration(CLIConstants.setupOptions(), args)
+                                                       .getConfiguration();
+
+        // Test that options have set attributes correctly
+        assertEquals(0, config.getStartId());
+        assertEquals(Integer.MAX_VALUE, config.getEndId());
     }
 
     /**
@@ -46,9 +102,9 @@ public class ConfigurationBuilderTest {
                                                        .getConfiguration();
 
         // Test that options have set attributes correctly
-        assertEquals(config.getStartId(), 0);
-        assertEquals(config.getEndId(), 100);
-        assertEquals(config.getThreadLimit(), 10);
+        assertEquals(0, config.getStartId());
+        assertEquals(100, config.getEndId());
+        assertEquals(10, config.getThreadLimit());
     }
 
     /**
