@@ -35,20 +35,20 @@ public class GathererTask implements Runnable {
     @Override
     public void run() {
         try {
-            LOG.debug("Starting evaluation of player ID: " + getPlayerId());
+            LOG.debug("Starting evaluation of player ID: {}", getPlayerId());
 
             // Check whether we already know about this character
             PlayerBean player = playerRepository.findOne(getPlayerId());
             if(player == null || !CharacterStatus.DELETED.equals(player.getCharacterStatus())) {
                 // Only update characters that have not been deleted
                 player = getPlayerRepository().save(PlayerBuilder.getPlayer(getPlayerId(), 1));
-                RESULT_LOG.info(getPlayerId() + " - " + player.getCharacterStatus().name());
+                RESULT_LOG.info("{} - {}", getPlayerId(), player.getCharacterStatus());
             } else {
-                RESULT_LOG.info(getPlayerId() + " - SKIPPED as they have been previously marked as DELETED");
+                RESULT_LOG.info("{} - SKIPPED as they have been previously marked as DELETED", getPlayerId());
             }
         } catch(Exception e) {
             LOG.error(e.getMessage(), e);
-            RESULT_LOG.debug(getPlayerId() + " - FAILED");
+            RESULT_LOG.debug("{} - FAILED", getPlayerId());
         }
     }
 
