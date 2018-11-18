@@ -68,7 +68,7 @@ public class PlayerBuilder {
 
     /**
      * Set player class levels.
-     * As of 4.0, this is now parsed in the order:
+     * As of 4.5, this is now parsed in the order:
      * - Gladiator
      * - Marauder
      * - Dark Knight
@@ -84,6 +84,7 @@ public class PlayerBuilder {
      * - Black Mage
      * - Summoner
      * - Red Mage
+     * - Blue Mage
      *
      * @param arrLevels integer array of classes in order displayed on lodestone.
      */
@@ -103,17 +104,18 @@ public class PlayerBuilder {
         player.setLevelThaumaturge(arrLevels[12]);
         player.setLevelArcanist(arrLevels[13]);
         player.setLevelRedmage(arrLevels[14]);
-        player.setLevelCarpenter(arrLevels[15]);
-        player.setLevelBlacksmith(arrLevels[16]);
-        player.setLevelArmorer(arrLevels[17]);
-        player.setLevelGoldsmith(arrLevels[18]);
-        player.setLevelLeatherworker(arrLevels[19]);
-        player.setLevelWeaver(arrLevels[20]);
-        player.setLevelAlchemist(arrLevels[21]);
-        player.setLevelCulinarian(arrLevels[22]);
-        player.setLevelMiner(arrLevels[23]);
-        player.setLevelBotanist(arrLevels[24]);
-        player.setLevelFisher(arrLevels[25]);
+        player.setLevelBluemage(arrLevels[15]);
+        player.setLevelCarpenter(arrLevels[16]);
+        player.setLevelBlacksmith(arrLevels[17]);
+        player.setLevelArmorer(arrLevels[18]);
+        player.setLevelGoldsmith(arrLevels[19]);
+        player.setLevelLeatherworker(arrLevels[20]);
+        player.setLevelWeaver(arrLevels[21]);
+        player.setLevelAlchemist(arrLevels[22]);
+        player.setLevelCulinarian(arrLevels[23]);
+        player.setLevelMiner(arrLevels[24]);
+        player.setLevelBotanist(arrLevels[25]);
+        player.setLevelFisher(arrLevels[26]);
     }
 
     /**

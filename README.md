@@ -137,6 +137,7 @@ The database table ```tblplayers``` has the following structure:
 |level_scholar         |int      |N/A                             |
 |level_redmage         |int      |N/A                             |
 |level_samurai         |int      |N/A                             |
+|level_bluemage         |int      |N/A                             |
 |level_carpenter       |int      |N/A                             |
 |level_blacksmith      |int      |N/A                             |
 |level_armorer         |int      |N/A                             |

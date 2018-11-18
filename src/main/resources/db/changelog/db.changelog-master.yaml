@@ -137,6 +137,12 @@ databaseChangeLog:
                   constraints:
                     nullable: false
               - column:
+                  name: level_bluemage
+                  type: int(3)
+                  defaultValueNumeric: 0
+                  constraints:
+                    nullable: false
+              - column:
                   name: level_samurai
                   type: int(3)
                   defaultValueNumeric: 0
