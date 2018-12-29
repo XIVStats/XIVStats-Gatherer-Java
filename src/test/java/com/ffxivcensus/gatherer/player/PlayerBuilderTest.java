@@ -142,6 +142,48 @@ public class PlayerBuilderTest {
         assertFalse(player.getMounts().contains("Cavalry Drake"));
         // Test for data from very end
         assertTrue(player.getMounts().contains("Midgardsormr"));
+        
+        assertEquals("d6ac244ec4b", player.getGearSet().getMainHand().getItemId());
+        assertEquals("Shishio", player.getGearSet().getMainHand().getName());
+        
+        assertEquals("e69d895bf22", player.getGearSet().getHead().getItemId());
+        assertEquals("Omicron Eye Mask of Casting", player.getGearSet().getHead().getName());
+        
+        assertEquals("c08d2308f4f", player.getGearSet().getBody().getItemId());
+        assertEquals("Ryumyaku Dogi of Casting", player.getGearSet().getBody().getName());
+        
+        assertEquals("778143b799f", player.getGearSet().getHands().getItemId());
+        assertEquals("Omicron Gloves of Casting", player.getGearSet().getHands().getName());
+        
+        assertEquals("d3bc9b865af", player.getGearSet().getBelt().getItemId());
+        assertEquals("Omicron Tassets of Casting", player.getGearSet().getBelt().getName());
+        
+        assertEquals("cf8a646b343", player.getGearSet().getLegs().getItemId());
+        assertEquals("Ryumyaku Tsutsu-hakama of Casting", player.getGearSet().getLegs().getName());
+        
+        assertEquals("cb14f0710a4", player.getGearSet().getFeet().getItemId());
+        assertEquals("Omicron Shoes of Casting", player.getGearSet().getFeet().getName());
+        
+        assertNull(player.getGearSet().getOffHand());
+        
+        assertEquals("abd545a23d1", player.getGearSet().getEars().getItemId());
+        assertEquals("Ryumyaku Earring of Casting", player.getGearSet().getEars().getName());
+        
+        assertEquals("dcb212121fd", player.getGearSet().getKneck().getItemId());
+        assertEquals("Ryumyaku Necklace of Casting", player.getGearSet().getKneck().getName());
+        
+        assertEquals("7d2522888dd", player.getGearSet().getWrists().getItemId());
+        assertEquals("Ryumyaku Bracelet of Casting", player.getGearSet().getWrists().getName());
+        
+        assertEquals("574487820f7", player.getGearSet().getLeftHand().getItemId());
+        assertEquals("Ryumyaku Ring of Casting", player.getGearSet().getLeftHand().getName());
+        
+        assertEquals("2ac77b2c541", player.getGearSet().getRightHand().getItemId());
+        assertEquals("Augmented Silvergrace Ring of Casting", player.getGearSet().getRightHand().getName());
+        
+        assertEquals("c7202f71bec", player.getGearSet().getJobCrystal().getItemId());
+        assertEquals("Soul of the Red Mage", player.getGearSet().getJobCrystal().getName());
+        
     }
 
     @Test

@@ -5,6 +5,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -167,6 +168,7 @@ public class PlayerBuilder {
             
             Document classJobDoc = pageLoader.getClassJobPage(playerID);
             setLevels(player, getLevelsFromPage(classJobDoc));
+            player.setGearSet(getGearSet(doc));
 
             // Mounts from the relevant sub-section
             Document mountDoc = pageLoader.getMountPage(playerID);
@@ -485,6 +487,52 @@ public class PlayerBuilder {
                                                + id);
         }
         return dateLastModified;
+    }
+
+    private GearSet getGearSet(final Document doc) {
+        GearSet gearSet = new GearSet();
+        
+        Element characterView = doc.getElementsByClass("character__view").get(0);
+        
+        gearSet.setMainHand(getGearItem(characterView, 0));
+        
+        gearSet.setHead(getGearItem(characterView, 2));
+        gearSet.setBody(getGearItem(characterView, 3));
+        gearSet.setHands(getGearItem(characterView, 4));
+        gearSet.setBelt(getGearItem(characterView, 5));
+        gearSet.setLegs(getGearItem(characterView, 6));
+        gearSet.setFeet(getGearItem(characterView, 7));
+        
+        gearSet.setOffHand(getGearItem(characterView, 1));
+        gearSet.setEars(getGearItem(characterView, 8));
+        gearSet.setKneck(getGearItem(characterView, 9));
+        gearSet.setWrists(getGearItem(characterView, 10));
+        gearSet.setLeftHand(getGearItem(characterView, 11));
+        gearSet.setRightHand(getGearItem(characterView, 12));
+        gearSet.setJobCrystal(getGearItem(characterView, 13));
+
+        return gearSet;
+    }
+    
+    private GearItem getGearItem(final Element characterView, final int itemPosition) {
+        Element detail = characterView.getElementsByClass("icon-c--" + itemPosition).get(0);
+        Elements toolTips = detail.getElementsByClass("db-tooltip");
+        
+        if(toolTips != null && !toolTips.isEmpty()) {
+            Element toolTip = toolTips.get(0);
+            GearItem item = new GearItem();
+
+            // Get Database ID
+            String[] dbUrl = toolTip.getElementsByClass("db-tooltip__bt_item_detail").get(0).getElementsByTag("a").get(0).attr("href").split("/"); 
+            item.setItemId(dbUrl[5]);
+            
+            // Get Item Name
+            item.setName(toolTip.getElementsByClass("db-tooltip__item__name").get(0).text());
+            
+            return item;
+        }
+        
+        return null;
     }
 
     /**

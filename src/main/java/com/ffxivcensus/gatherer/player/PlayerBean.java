@@ -32,6 +32,7 @@ public class PlayerBean {
     private String gender = NOT_AVAILABLE;
     private String grandCompany = NOT_AVAILABLE;
     private String freeCompany = NOT_AVAILABLE;
+    private GearSet gearSet = new GearSet();
     private int levelGladiator;
     private int levelPugilist;
     private int levelMarauder;
@@ -862,5 +863,19 @@ public class PlayerBean {
 
     public void setCharacterStatus(final CharacterStatus characterStatus) {
         this.characterStatus = characterStatus;
+    }
+
+    /**
+     * @return the gearSet
+     */
+    public GearSet getGearSet() {
+        return gearSet;
+    }
+
+    /**
+     * @param gearSet the gearSet to set
+     */
+    public void setGearSet(GearSet gearSet) {
+        this.gearSet = gearSet;
     }
 }
