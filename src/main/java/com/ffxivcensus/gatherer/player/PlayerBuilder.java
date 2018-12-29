@@ -8,19 +8,18 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Random;
-import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
 
-import org.apache.http.HttpStatus;
-import org.jsoup.HttpStatusException;
-import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 
+import com.ffxivcensus.gatherer.lodestone.CharacterDeletedException;
+import com.ffxivcensus.gatherer.lodestone.LodestonePageLoader;
+import com.ffxivcensus.gatherer.lodestone.ProductionLodestonePageLoader;
 import com.ffxivcensus.gatherer.task.GathererTask;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
@@ -34,6 +33,7 @@ import com.mashape.unirest.http.Unirest;
  * @since v1.0
  * @see GathererTask
  */
+@Service
 public class PlayerBuilder {
 
     private static final String HEADER_LAST_MODIFIED = "Last-Modified";
@@ -60,11 +60,7 @@ public class PlayerBuilder {
 
     private static final long ONE_DAY_IN_MILLIS = 86400000;
 
-    /**
-     * Private constructor to stop instances.
-     */
-    private PlayerBuilder() {
-    }
+    private LodestonePageLoader pageLoader = new ProductionLodestonePageLoader();
 
     /**
      * Set player class levels.
@@ -87,7 +83,7 @@ public class PlayerBuilder {
      *
      * @param arrLevels integer array of classes in order displayed on lodestone.
      */
-    public static void setLevels(final PlayerBean player, final int[] arrLevels) {
+    public void setLevels(final PlayerBean player, final int[] arrLevels) {
         player.setLevelGladiator(arrLevels[0]);
         player.setLevelMarauder(arrLevels[1]);
         player.setLevelDarkknight(arrLevels[2]);
@@ -122,7 +118,7 @@ public class PlayerBuilder {
      * @param mountName the name of the mount to check for.
      * @return whether the player has the specified mount.
      */
-    public static boolean doesPlayerHaveMount(final PlayerBean player, final String mountName) {
+    public boolean doesPlayerHaveMount(final PlayerBean player, final String mountName) {
         return player.getMounts().contains(mountName);
     }
 
@@ -132,7 +128,7 @@ public class PlayerBuilder {
      * @param minionName the name of the minion to check for
      * @return whether the player has the specified minion.
      */
-    public static boolean doesPlayerHaveMinion(final PlayerBean player, final String minionName) {
+    public boolean doesPlayerHaveMinion(final PlayerBean player, final String minionName) {
         return player.getMinions().contains(minionName);
     }
 
@@ -144,19 +140,14 @@ public class PlayerBuilder {
      * @return the player object matching the specified ID.
      * @throws Exception exception thrown if more class levels returned than anticipated.
      */
-    public static PlayerBean getPlayer(final int playerID, int attempt) throws IOException, InterruptedException {
+    public PlayerBean getPlayer(final int playerID) throws IOException, InterruptedException {
         // Initialize player object to return
         PlayerBean player = new PlayerBean();
         player.setId(playerID);
         // Declare HTML document
-        Document doc;
-
-        // URL to connect to
-        String url = "http://eu.finalfantasyxiv.com/lodestone/character/" + playerID + "/";
-
         try {
-            // Fetch the specified URL
-            doc = Jsoup.connect(url).timeout(5000).get();
+            Document doc = pageLoader.getCharacterPage(playerID);
+
             player.setPlayerName(getNameFromPage(doc));
             player.setRealm(getRealmFromPage(doc));
             player.setRace(getRaceFromPage(doc));
@@ -214,26 +205,8 @@ public class PlayerBuilder {
             player.setLegacyPlayer(doesPlayerHaveMount(player, "Legacy Chocobo"));
             player.setActive(isPlayerActiveInDateRange(player));
             player.setCharacterStatus(player.isActive() ? CharacterStatus.ACTIVE : CharacterStatus.INACTIVE);
-        } catch(HttpStatusException httpe) {
-            switch (httpe.getStatusCode()) {
-                case 429:
-                    // Generate random number 1->20*attempt no and sleep for it
-                    Random rand = new Random();
-                    int max = attempt * 20;
-                    int min = (attempt - 1) + 1;
-                    int randomNum = rand.nextInt(max - min + 1) + min;
-                    LOG.trace("Experiencing rate limiting (HTTP 429) while fetching id " + playerID + " (attempt " + attempt
-                              + "), waiting " + randomNum + "ms then retrying...");
-                    TimeUnit.MILLISECONDS.sleep(randomNum);
-                    player = PlayerBuilder.getPlayer(playerID, ++attempt);
-                    break;
-                case HttpStatus.SC_NOT_FOUND:
-                    LOG.info("Character {} does not exist. (404)", playerID);
-                    player.setCharacterStatus(CharacterStatus.DELETED);
-                    break;
-                default:
-                    throw new IOException("Unexpected HTTP Status Code: " + httpe.getStatusCode(), httpe);
-            }
+        } catch(CharacterDeletedException cde) {
+            player.setCharacterStatus(CharacterStatus.DELETED);
         }
         return player;
     }
@@ -243,7 +216,7 @@ public class PlayerBuilder {
      *
      * @return whether player has been active inside the activity window
      */
-    private static boolean isPlayerActiveInDateRange(final PlayerBean player) {
+    private boolean isPlayerActiveInDateRange(final PlayerBean player) {
 
         Calendar date = Calendar.getInstance();
         long t = date.getTimeInMillis();
@@ -259,7 +232,7 @@ public class PlayerBuilder {
      * @param doc the lodestone profile page.
      * @return the name of the character.
      */
-    private static String getNameFromPage(final Document doc) {
+    private String getNameFromPage(final Document doc) {
         String[] parts = doc.title().split(Pattern.quote("|"));
         return parts[0].trim();
     }
@@ -270,7 +243,7 @@ public class PlayerBuilder {
      * @param doc the lodestone profile page.
      * @return the realm of the character.
      */
-    private static String getRealmFromPage(final Document doc) {
+    private String getRealmFromPage(final Document doc) {
         // Get elements in the player name area, and return the Realm name (contained in the span)
         return doc.getElementsByClass(LAYOUT_FRAME_CHARA_WORLD).get(0).text().replace("(", "").replace(")", "");
     }
@@ -281,7 +254,7 @@ public class PlayerBuilder {
      * @param doc the lodestone profile page.
      * @return the race of the character.
      */
-    private static String getRaceFromPage(final Document doc) {
+    private String getRaceFromPage(final Document doc) {
         return doc.getElementsByClass(LAYOUT_CHARACTER_BLOCK_NAME).get(0).textNodes().get(0).text().trim();
     }
 
@@ -291,7 +264,7 @@ public class PlayerBuilder {
      * @param doc the lodestone profile page.
      * @return the gender of the character.
      */
-    private static String getGenderFromPage(final Document doc) {
+    private String getGenderFromPage(final Document doc) {
         String[] parts = doc.getElementsByClass(LAYOUT_CHARACTER_BLOCK_NAME).get(0).text().split(Pattern.quote("/"));
         String gender = parts[1].trim();
         if(gender.equals("♂")) {
@@ -309,7 +282,7 @@ public class PlayerBuilder {
      * @param doc the lodestone profile page.
      * @return the grand company of the character.
      */
-    private static String getGrandCompanyFromPage(final Document doc) {
+    private String getGrandCompanyFromPage(final Document doc) {
         String gc = null;
         // Get all elements with class chara_profile_box_info
         Elements elements = doc.getElementsByClass(LAYOUT_CHARACTER_BLOCK_BOX);
@@ -334,7 +307,7 @@ public class PlayerBuilder {
      * @param doc the lodestone profile page.
      * @return the free company of the character.
      */
-    private static String getFreeCompanyFromPage(final Document doc) {
+    private String getFreeCompanyFromPage(final Document doc) {
         String fc = null;
         // Get all elements with class chara_profile_box_info
         Elements elements = doc.getElementsByClass(LAYOUT_CHARACTER_BLOCK_BOX);
@@ -362,7 +335,7 @@ public class PlayerBuilder {
      * @return the set of levels of the player in the order displayed on the lodestone.
      * @throws Exception Exception thrown if more classes found than anticipated.
      */
-    private static int[] getLevelsFromPage(final Document doc) {
+    private int[] getLevelsFromPage(final Document doc) {
         // Initialize array list in which to store levels (in order displayed on lodestone)
         List<Integer> levels = new ArrayList<>();
         Elements discipleBoxes = doc.getElementsByClass(LAYOUT_CHARACTER_JOB);
@@ -402,7 +375,7 @@ public class PlayerBuilder {
      * @param doc the lodestone profile page to parse.
      * @return the set of strings representing the player's minions.
      */
-    private static List<String> getMinionsFromPage(final Document doc) {
+    private List<String> getMinionsFromPage(final Document doc) {
 
         // Initialize array in which to store minions
         List<String> minions = new ArrayList<>();
@@ -424,7 +397,7 @@ public class PlayerBuilder {
      * @param doc the lodestone profile page to parse.
      * @return the set of strings representing the player's mounts.
      */
-    private static List<String> getMountsFromPage(final Document doc) {
+    private List<String> getMountsFromPage(final Document doc) {
 
         // Initialize array in which to store minions
         List<String> mounts = new ArrayList<>();
@@ -447,7 +420,7 @@ public class PlayerBuilder {
      * @param doc the lodestone profile page to parse
      * @return the date on which the full body image was last modified.
      */
-    private static Date getDateLastUpdatedFromPage(final Document doc, final int id) {
+    private Date getDateLastUpdatedFromPage(final Document doc, final int id) {
         Date dateLastModified;
         // Get character image URL.
         String imgUrl = doc.getElementsByClass(LAYOUT_CHARACTER_DETAIL_IMAGE).get(0).getElementsByTag(TAG_A).get(0)
@@ -476,5 +449,15 @@ public class PlayerBuilder {
                                                + id);
         }
         return dateLastModified;
+    }
+
+    /**
+     * Sets a Loadestone Page Loader to use.
+     * By default, the PlayerBuilder will be initiatsed with a {@link ProductionLodestonePageLoader}.
+     * 
+     * @param pageLoader the pageLoader to set
+     */
+    public void setPageLoader(final LodestonePageLoader pageLoader) {
+        this.pageLoader = pageLoader;
     }
 }

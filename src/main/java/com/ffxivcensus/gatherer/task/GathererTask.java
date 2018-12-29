@@ -27,6 +27,7 @@ public class GathererTask implements Runnable {
     private static final Logger RESULT_LOG = LoggerFactory.getLogger(GathererTask.class.getName() + ".result");
 
     private int playerId;
+    private PlayerBuilder playerBuilder;
     private PlayerBeanRepository playerRepository;
 
     /**
@@ -41,7 +42,8 @@ public class GathererTask implements Runnable {
             PlayerBean player = playerRepository.findOne(getPlayerId());
             if(player == null || !CharacterStatus.DELETED.equals(player.getCharacterStatus())) {
                 // Only update characters that have not been deleted
-                player = getPlayerRepository().save(PlayerBuilder.getPlayer(getPlayerId(), 1));
+                player = playerBuilder.getPlayer(getPlayerId());
+                getPlayerRepository().save(player);
                 RESULT_LOG.info("{} - {}", getPlayerId(), player.getCharacterStatus());
             } else {
                 RESULT_LOG.info("{} - SKIPPED as they have been previously marked as DELETED", getPlayerId());
@@ -62,6 +64,11 @@ public class GathererTask implements Runnable {
 
     public PlayerBeanRepository getPlayerRepository() {
         return playerRepository;
+    }
+
+    @Autowired
+    public void setPlayerBuilder(PlayerBuilder playerBuilder) {
+        this.playerBuilder = playerBuilder;
     }
 
     @Autowired

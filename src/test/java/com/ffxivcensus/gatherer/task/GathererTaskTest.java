@@ -16,6 +16,7 @@ import org.mockito.MockitoAnnotations;
 import com.ffxivcensus.gatherer.player.CharacterStatus;
 import com.ffxivcensus.gatherer.player.PlayerBean;
 import com.ffxivcensus.gatherer.player.PlayerBeanRepository;
+import com.ffxivcensus.gatherer.player.PlayerBuilder;
 
 public class GathererTaskTest {
     
@@ -28,6 +29,7 @@ public class GathererTaskTest {
         MockitoAnnotations.initMocks(this);
         instance = new GathererTask();
         instance.setPlayerRepository(mockRepo);
+        instance.setPlayerBuilder(new PlayerBuilder());
     }
     
     @After
