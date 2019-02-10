@@ -46,6 +46,7 @@ public class PlayerBean {
     private int levelScholar;
     private int levelRedmage;
     private int levelSamurai;
+    private int levelBluemage;
     private int levelCarpenter;
     private int levelBlacksmith;
     private int levelArmorer;
@@ -331,6 +332,20 @@ public class PlayerBean {
 
     public void setLevelSamurai(final int lvlSamurai) {
         this.levelSamurai = lvlSamurai;
+    }
+
+    /**
+     * @return the levelBluemage
+     */
+    public int getLevelBluemage() {
+        return levelBluemage;
+    }
+
+    /**
+     * @param levelBluemage the levelBluemage to set
+     */
+    public void setLevelBluemage(int levelBluemage) {
+        this.levelBluemage = levelBluemage;
     }
 
     public int getLevelCarpenter() {
