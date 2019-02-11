@@ -1,7 +1,6 @@
 # XIV Stats Gatherer (Java) #
 
-[![Build Status](https://mygitlab.org:4043/buildStatus/icon?job=XIVStats/XIVStats-Gatherer-Java)](https://mygitlab.org:4043/job/XIVStats/job/XIVStats-Gatherer-Java/)
-[![Tests Status](https://img.shields.io/jenkins/t/https/mygitlab.org:4043/XIVStats-Gatherer-Java-Tests.svg)](https://mygitlab.org:4043/job/XIVStats/job/XIVStats-Gatherer-Java-Tests/lastBuild/testReport/)
+[![Build Status](https://ci.reidweb.com/job/XIVStats/job/XIVStats-Gatherer-Java/job/master/badge/icon)](https://mygitlab.org:4043/job/XIVStats/job/XIVStats-Gatherer-Java/job/master/)
 [![codecov.io](https://codecov.io/github/XIVStats/XIVStats-Gatherer-Java/coverage.svg?branch=master)](https://codecov.io/github/XIVStats/XIVStats-Gatherer-Java?branch=master)
 
 XIVStats Gatherer Java is a multi threaded Java program with the purpose of
@@ -33,13 +32,15 @@ Follow these steps to setup XIVStats-Gatherer-Java:
    or [PostgreSQL](https://wiki.postgresql.org/wiki/Detailed_installation_guides)
   server instance (if you have not already done so).
   2. Setup a database to store the program data in:
-    ```sql
-
+  
+  ```sql
     CREATE DATABASE dbplayers;
-    ```
+  ```
+  
   3. Create a user for the program to use to connect to the database.
 
   **Replace {password} with your choice of password, take a note of this for later.**
+  
   ```sql
   GRANT ALL PRIVILEGES ON dbplayers.* TO `xivstats`@`localhost` IDENTIFIED BY '{password}';
   ```
@@ -63,32 +64,34 @@ Follow these steps to setup XIVStats-Gatherer-Java:
   8. Using a shell (or CMD on windows) run the following command (replace
     {words in brackets} with integer parameters):
   ```shell
-  java -jar XIVStats-Gatherer-Java.jar -s {lowest character id to fetch} -f {highest character id to fetch}
+  java -jar XIVStats-Gatherer-Java.jar -s {lowest character id to fetch}
   ```
   The application can be run with the following command line options/args:
 
-  | Short option | Long option           | Argument type  | Description                                               |
-  |:------------:|:---------------------:|:--------------:|:---------------------------------------------------------:|
-  |-b            |--do-not-store-progress| none           | do not store boolean data indicating player progress      |
-  |-d            | --database            | String         | database name                                             |
-  |-f            | --finish              | integer        | the character id to conclude character run at (inclusive) |
-  |-F            | --print-failures      | none           |  print records that don't exist                           |
-  |-h            | --help                | none           | display help message                                      |
-  |-m            | --store-mounts        | none           | store mount data set for each player into the database    |
-  |-P            | --store-minions       | none           | store minion data set for each player into the database   |
-  |-p            | --password            | String         | database user password                                    |
-  |-q            | --quiet               | none           | run program in quiet mode - no console output             |
-  |-s            | --start               | integer        | the character id to start from (inclusive)                |
-  |-S            | --split-table         | none           | split table into several small tables                     |
-  |-t            | --threads             | integer        | number of gatherer thrads to running                      |
-  |-T            | --table               | String         | the table to write records to                             |
-  |-u            | --user                | String         | database user                                             |
-  |-U            | --url                 | String         | the database URL of the database server to connect to     |
-  |-v            | --verbose             | none           | run program in verbose mode - full console output         |
-  |-x            | --suffix              | String         | suffix to append to all tables generated                  |
-
+  | Short option | Long option           | Argument type  | Description                                                          |
+  |:------------:|:---------------------:|:--------------:|:--------------------------------------------------------------------:|
+  |-d            | --database            | String         | database name                                                        |
+  |-f            | --finish              | integer        | the character id to conclude character run at (inclusive)            |
+  |-h            | --help                | none           | display help message                                                 |
+  |-p            | --password            | String         | database user password                                               |
+  |-s            | --start               | integer        | the character id to start from (inclusive)                           |
+  |-t            | --threads             | integer        | number of gatherer thrads to running                                 |
+  |-u            | --user                | String         | database user                                                        |
+  |-U            | --url                 | String         | the database URL of the database server to connect to                |
+  
 
   Note: On Linux/Unix it is advised to run the program in Tmux/Screen or similar.
+  
+## Logging
+Running the JAR will generate 2 log files, in a ```/.ffxivcensus/``` folder in the user's home directory.
+There are 2 log files produced:
+- ```gatherer.log```
+    - A record of all debug logging generated during the gathering run
+- ```progress.log```
+    - A simple per-character result log to enable tracking of progress
+    - _Note: As characters are threaded, there is no guarantee the characters will be presented in this log in sequential order_
+
+Logs are currently overwritten with each run, so in the event you wish to save a log file, please re-name or copy the desired file for later review.
 
 ## Bugs and feature requests
 
@@ -131,6 +134,9 @@ The database table ```tblplayers``` has the following structure:
 |level_darkknight      |int      |N/A                             |
 |level_machinist       |int      |N/A                             |
 |level_astrologian     |int      |N/A                             |
+|level_scholar         |int      |N/A                             |
+|level_redmage         |int      |N/A                             |
+|level_samurai         |int      |N/A                             |
 |level_carpenter       |int      |N/A                             |
 |level_blacksmith      |int      |N/A                             |
 |level_armorer         |int      |N/A                             |
@@ -153,7 +159,11 @@ The database table ```tblplayers``` has the following structure:
 |p960days              |bit      |Minion - Wind-up Firion         |
 |prearr                |bit      |Minion - Cait Sith Doll         |
 |prehw                 |bit      |Minion - Chocobo Chick Courier  |
-|artbook               |bit      |Minion - Model Enterprise       |
+|presb                 |bit      |Minion - Wind-up Red Mage       |
+|arrartbook            |bit      |Minion - Model Enterprise       |
+|hwartbookone          |bit      |Minion - Wind-Up Relm           |
+|hwartbooktw           |bit      |Minion - Wind-Up Hraesvelgr     |
+|hasencyclopedia       |bit      |Minion - Namingway              |
 |beforemeteor          |bit      |Minion - Wind-up Dalamud        |
 |beforethefall         |bit      |Minion - Set Of Primogs         |
 |soundtrack            |bit      |Minion - Wind-up Bahamut        |
@@ -162,6 +172,8 @@ The database table ```tblplayers``` has the following structure:
 |arr_25_complete       |bit      |Minion - Midgardsormr           |
 |comm50                |bit      |Minion - Princely Hatchling     |
 |moogleplush           |bit      |Minion - Wind-up Delivery Moogle|
+|topazcarubuncleplush  |bit      |Minion - Heliodor Carbuncle     |
+|emeraldcarbuncleplush |bit      |Minion - Peridot Carbuncle      |
 |hildibrand            |bit      |Minion - Wind-up Gentleman      |
 |ps4collectors         |bit      |Minion - Wind-up Moogle         |
 |dideternalbond        |bit      |Mount - Ceremony Chocobo        |
@@ -170,23 +182,29 @@ The database table ```tblplayers``` has the following structure:
 |sahagin               |bit      |Mount - Cavalry Elbst           |
 |amaljaa               |bit      |Mount - Cavalry Drake           |
 |sylph                 |bit      |Mount - Laurel Goobbue          |
+|moogle                |bit      |Mount - Cloud Mallow            |
+|vanuvanu              |bit      |Mount - Sanuwa                  |
+|vath                  |bit      |Mount - Kongamato               |
 |hw_complete           |bit      |Mount - Midgardsormr            |
 |hw_31_complete        |bit      |Minion - Wind-up Haurchefant    |
 |hw_33_complete        |bit      |Minion - Wind-up Aymeric        |
 |legacy_player         |bit      |Mount - Legacy Chocobo          |
-|*mounts*              |*text*   |*N/A*                           |
-|*minions*             |*text*   |*N/A*                           |
-
-*Italicised fields are only completed jf specified with a command line flag.*
+|mounts                |text     |N/A                             |
+|minions               |text     |N/A                             |
+|date_active           |date     |N/A                             |
+|is_active             |bit      |N/A                             |
+|character_status      |varchar  |N/A                             |
 
 ## XIVStats-Gatherer-Ruby
-XIVStats-Gatherer-Java provides the same functionality as the original ruby-based  [XIVStats-Gatherer-Ruby](https://github.com/XIVStats/XIVStats-Gatherer-Ruby),
+XIVStats-Gatherer-Java begun by providing the same functionality as the original ruby-based  [XIVStats-Gatherer-Ruby](https://github.com/XIVStats/XIVStats-Gatherer-Ruby),
 but is written in Java to make use of Multi-threading capabilities that could
 not be harnessed in Ruby. This allows XIVStats-Gatherer-Java to perform large
 crawl operations in a much shorter period of time, utilizing only one application
 instance. XIVStats-Gatherer-Java also brings with it the benefit of being able
 to use a full SQL setup as opposed to a sqlite file, giving the advantage of
 being able to perform asynchronous database transactions.
+
+The Ruby implementation is now out-of-date and no-longer maintained.
 
 ## Creators
 **Peter Reid (Project Maintainer)**
@@ -198,5 +216,5 @@ being able to perform asynchronous database transactions.
 * [GitHub](https://github.com/pricetx)
 
 ## Copyright and license
-Code and documentation copyright 2015-2016 Jonathan Price & Peter Reid, Code
+Code and documentation copyright 2015-2018 Jonathan Price & Peter Reid, Code
 and documentation released under the [BSD 2-Clause "Simplified" License](https://github.com/XIVStats/XIVStats-Gatherer-Java/blob/master/LICENSE).
