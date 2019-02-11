@@ -63,7 +63,7 @@ public class GatheringLimiterTaskTest {
     @Test
     public void testContinueAtMarginCondition() {
         PlayerBean topId = new PlayerBean();
-        topId.setId(300);
+        topId.setId(5100);
         PlayerBean topValid = new PlayerBean();
         topValid.setId(100);
         
@@ -78,7 +78,7 @@ public class GatheringLimiterTaskTest {
     @Test
     public void testStopCondition() {
         PlayerBean topId = new PlayerBean();
-        topId.setId(301);
+        topId.setId(5101);
         PlayerBean topValid = new PlayerBean();
         topValid.setId(100);
         
