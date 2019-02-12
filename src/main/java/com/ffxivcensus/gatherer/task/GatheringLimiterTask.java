@@ -18,7 +18,8 @@ public class GatheringLimiterTask implements Runnable {
 
     private static final Logger LOG = LoggerFactory.getLogger(GatheringLimiterTask.class);
     /** Defines the maximum number of ID's between the highest ID number and the last known good Character. **/
-    private static final int GATHERING_VALID_GAP_MAX = 50000;
+    private static final int GATHERING_VALID_GAP_MAX = 5000;
+
     private ThreadPoolExecutor gathererExecutor;
     private PlayerBeanRepository characterRepository;
 
