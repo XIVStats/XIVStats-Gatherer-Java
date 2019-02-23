@@ -39,47 +39,48 @@ public class PlayerBuilderTest {
 
         // Test classes - levels based on those at time of test creation
         // Tank
-        assertTrue(player.getLevelGladiator() == 0);
-        assertTrue(player.getLevelMarauder() == 0);
-        assertTrue(player.getLevelDarkknight() == 70);
+        assertEquals(0, player.getLevelGladiator());
+        assertEquals(0, player.getLevelMarauder());
+        assertEquals(70, player.getLevelDarkknight());
 
         // Melee DPS
-        assertTrue(player.getLevelPugilist() == 70);
-        assertTrue(player.getLevelLancer() == 22);
-        assertTrue(player.getLevelRogue() == 50);
-        assertTrue(player.getLevelSamurai() == 65);
+        assertEquals(70, player.getLevelPugilist());
+        assertEquals(29, player.getLevelLancer());
+        assertEquals(51, player.getLevelRogue());
+        assertEquals(67, player.getLevelSamurai());
 
         // Ranged Physical DPS
-        assertTrue(player.getLevelArcher() == 70);
-        assertTrue(player.getLevelMachinist() == 70);
+        assertEquals(70, player.getLevelArcher());
+        assertEquals(70, player.getLevelMachinist());
 
         // Ranged Magical DPS
-        assertTrue(player.getLevelThaumaturge() == 70);
-        assertTrue(player.getLevelArcanist() == 70);
-        assertTrue(player.getLevelRedmage() == 70);
+        assertEquals(70, player.getLevelThaumaturge());
+        assertEquals(70, player.getLevelArcanist());
+        assertEquals(70, player.getLevelRedmage());
+        assertEquals(50, player.getLevelBluemage());
 
         // Healer
-        assertTrue(player.getLevelConjurer() == 70);
-        assertTrue(player.getLevelScholar() == 70);
-        assertTrue(player.getLevelAstrologian() == 70);
+        assertEquals(70, player.getLevelConjurer());
+        assertEquals(70, player.getLevelScholar());
+        assertEquals(70, player.getLevelAstrologian());
 
         // Disciples of the hand
-        assertTrue(player.getLevelCarpenter() == 27);
-        assertTrue(player.getLevelBlacksmith() == 13);
-        assertTrue(player.getLevelArmorer() == 17);
-        assertTrue(player.getLevelGoldsmith() == 21);
-        assertTrue(player.getLevelLeatherworker() == 0);
-        assertTrue(player.getLevelWeaver() == 0);
-        assertTrue(player.getLevelAlchemist() == 0);
-        assertTrue(player.getLevelCulinarian() == 32);
+        assertEquals(27, player.getLevelCarpenter());
+        assertEquals(13, player.getLevelBlacksmith());
+        assertEquals(17, player.getLevelArmorer());
+        assertEquals(21, player.getLevelGoldsmith());
+        assertEquals(0, player.getLevelLeatherworker());
+        assertEquals(0, player.getLevelWeaver());
+        assertEquals(0, player.getLevelAlchemist());
+        assertEquals(33, player.getLevelCulinarian());
 
         // Disciples of the land
-        assertTrue(player.getLevelMiner() == 0);
-        assertTrue(player.getLevelBotanist() == 46);
-        assertTrue(player.getLevelFisher() == 70);
+        assertEquals(0, player.getLevelMiner());
+        assertEquals(50, player.getLevelBotanist());
+        assertEquals(70, player.getLevelFisher());
         
         // The Forbidden Land, Eureka
-        assertTrue(player.getLevelEureka() == 51);
+        assertEquals(51, player.getLevelEureka());
 
         // Test boolean values
         // Subscription periods
@@ -161,63 +162,67 @@ public class PlayerBuilderTest {
 
         // Test classes - levels based on those at time of test creation
         // Tank
-        assertTrue(player.getLevelGladiator() == 0);
-        assertTrue(player.getLevelMarauder() == 8);
-        assertTrue(player.getLevelDarkknight() == 0);
+        assertEquals(0, player.getLevelGladiator());
+        assertEquals(15, player.getLevelMarauder());
+        assertEquals(0, player.getLevelDarkknight());
 
         // Melee DPS
-        assertTrue(player.getLevelPugilist() == 0);
-        assertTrue(player.getLevelLancer() == 0);
-        assertTrue(player.getLevelRogue() == 0);
-        assertTrue(player.getLevelSamurai() == 0);
+        assertEquals(0, player.getLevelPugilist());
+        assertEquals(0, player.getLevelLancer());
+        assertEquals(0, player.getLevelRogue());
+        assertEquals(0, player.getLevelSamurai());
 
         // Ranged Physical DPS
-        assertTrue(player.getLevelArcher() == 0);
-        assertTrue(player.getLevelMachinist() == 0);
+        assertEquals(0, player.getLevelArcher());
+        assertEquals(0, player.getLevelMachinist());
 
         // Ranged Magical DPS
-        assertTrue(player.getLevelThaumaturge() == 0);
-        assertTrue(player.getLevelArcanist() == 0);
-        assertTrue(player.getLevelRedmage() == 0);
+        assertEquals(0, player.getLevelThaumaturge());
+        assertEquals(0, player.getLevelArcanist());
+        assertEquals(0, player.getLevelRedmage());
+        assertEquals(0, player.getLevelBluemage());
 
         // Healer
-        assertTrue(player.getLevelConjurer() == 0);
-        assertTrue(player.getLevelScholar() == 0);
-        assertTrue(player.getLevelAstrologian() == 0);
+        assertEquals(0, player.getLevelConjurer());
+        assertEquals(0, player.getLevelScholar());
+        assertEquals(0, player.getLevelAstrologian());
 
         // Disciples of the hand
-        assertTrue(player.getLevelCarpenter() == 0);
-        assertTrue(player.getLevelBlacksmith() == 0);
-        assertTrue(player.getLevelArmorer() == 0);
-        assertTrue(player.getLevelGoldsmith() == 0);
-        assertTrue(player.getLevelLeatherworker() == 0);
-        assertTrue(player.getLevelWeaver() == 0);
-        assertTrue(player.getLevelAlchemist() == 0);
-        assertTrue(player.getLevelCulinarian() == 0);
+        assertEquals(0, player.getLevelCarpenter());
+        assertEquals(0, player.getLevelBlacksmith());
+        assertEquals(0, player.getLevelArmorer());
+        assertEquals(0, player.getLevelGoldsmith());
+        assertEquals(0, player.getLevelLeatherworker());
+        assertEquals(0, player.getLevelWeaver());
+        assertEquals(0, player.getLevelAlchemist());
+        assertEquals(0, player.getLevelCulinarian());
 
         // Disciples of the land
-        assertTrue(player.getLevelMiner() == 0);
-        assertTrue(player.getLevelBotanist() == 0);
-        assertTrue(player.getLevelFisher() == 0);
+        assertEquals(0, player.getLevelMiner());
+        assertEquals(0, player.getLevelBotanist());
+        assertEquals(0, player.getLevelFisher());
+        
+        // The Forbidden Land, Eureka
+        assertEquals(0, player.getLevelEureka());
 
         // Test boolean values
         // Subscription periods
-        assertFalse(player.isHas30DaysSub());
-        assertFalse(player.isHas60DaysSub());
-        assertFalse(player.isHas90DaysSub());
-        assertFalse(player.isHas180DaysSub());
-        assertFalse(player.isHas270DaysSub());
-        assertFalse(player.isHas360DaysSub());
-        assertFalse(player.isHas450DaysSub());
+        assertTrue(player.isHas30DaysSub());
+        assertTrue(player.isHas60DaysSub());
+        assertTrue(player.isHas90DaysSub());
+        assertTrue(player.isHas180DaysSub());
+        assertTrue(player.isHas270DaysSub());
+        assertTrue(player.isHas360DaysSub());
+        assertTrue(player.isHas450DaysSub());
         assertTrue(player.isHas630DaysSub());
         assertTrue(player.isHas960DaysSub());
 
         // Collectibles
-        assertFalse(player.isHasPreOrderArr());
+        assertTrue(player.isHasPreOrderArr());
         assertTrue(player.isHasPreOrderHW());
         assertTrue(player.isHasPreOrderSB());
         assertTrue(player.isHasPS4Collectors());
-        assertFalse(player.isHasARRCollectors());
+        assertTrue(player.isHasARRCollectors());
         // Assuming the below don't change
         assertFalse(player.isHasARRArtbook());
         assertFalse(player.isHasBeforeMeteor());

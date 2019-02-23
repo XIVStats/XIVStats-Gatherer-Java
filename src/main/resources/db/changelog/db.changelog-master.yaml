@@ -522,3 +522,17 @@ databaseChangeLog:
                     constraints:
                       nullable: false
                     afterColumn: level_samurai
+  - changeSet:
+      id: 7
+      author: matthewhillier
+      changes:
+          - addColumn:
+              tableName: tblplayers
+              columns:
+                - column:
+                    name: level_eureka
+                    type: int(3)
+                    defaultValueNumeric: 0
+                    constraints:
+                      nullable: false
+                    afterColumn: level_fisher
