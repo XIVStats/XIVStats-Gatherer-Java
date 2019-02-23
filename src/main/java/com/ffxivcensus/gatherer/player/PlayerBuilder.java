@@ -47,7 +47,6 @@ public class PlayerBuilder {
     private static final String TAG_DIV = "div";
     private static final String LAYOUT_CHARACTER_MINION = "character__minion";
     private static final String LAYOUT_CHARACTER_JOB_LEVEL = "character__job__level";
-    private static final String LAYOUT_CHARACTER_JOB = "character__job";
     private static final String LAYOUT_CHARACTER_FREECOMPANY_NAME = "character__freecompany__name";
     private static final String LAYOUT_CHARACTER_BLOCK_BOX = "character-block__box";
     private static final String LAYOUT_FRAME_CHARA_WORLD = "frame__chara__world";
@@ -111,6 +110,10 @@ public class PlayerBuilder {
         player.setLevelMiner(arrLevels[24]);
         player.setLevelBotanist(arrLevels[25]);
         player.setLevelFisher(arrLevels[26]);
+        // Elemental Level is an optional component at the end of the section, so may not exist
+        if(arrLevels.length > 27) {
+            player.setLevelEureka(arrLevels[27]);
+        }
     }
 
     /**
@@ -339,17 +342,14 @@ public class PlayerBuilder {
     private int[] getLevelsFromPage(final Document doc) {
         // Initialize array list in which to store levels (in order displayed on lodestone)
         List<Integer> levels = new ArrayList<>();
-        Elements discipleBoxes = doc.getElementsByClass(LAYOUT_CHARACTER_JOB);
 
-        for(int i = 0; i < discipleBoxes.size(); i++) {
-            Elements levelBoxes = discipleBoxes.get(i).getElementsByClass(LAYOUT_CHARACTER_JOB_LEVEL);
-            for(Element levelBox : levelBoxes) {
-                String strLvl = levelBox.text();
-                if(strLvl.equals("-")) {
-                    levels.add(0);
-                } else {
-                    levels.add(Integer.parseInt(strLvl));
-                }
+        Element classJobTab = doc.getElementsByClass("character__content").get(2);
+        for(Element jobLevel : classJobTab.getElementsByClass(LAYOUT_CHARACTER_JOB_LEVEL)) {
+            String strLvl = jobLevel.text();
+            if(strLvl.equals("-")) {
+                levels.add(0);
+            } else {
+                levels.add(Integer.parseInt(strLvl));
             }
         }
 
@@ -361,10 +361,10 @@ public class PlayerBuilder {
         }
 
         // Check if levels array is larger than this system is programmed for
-        // As of 4.5, this is now 27 - SCH and SMN are 2 jobs, + SAM, RDM & BLU
-        if(arrLevels.length > 27) {
+        // As of 4.5, this is now 28 - SCH and SMN are 2 jobs, + SAM, RDM, BLU & Eureka
+        if(arrLevels.length > 28) {
             throw new IllegalArgumentException("Error: More class levels found (" + arrLevels.length
-                                               + ") than anticipated (26). The class definitions need to be updated.");
+                                               + ") than anticipated (28). The class definitions need to be updated.");
         }
 
         return arrLevels;

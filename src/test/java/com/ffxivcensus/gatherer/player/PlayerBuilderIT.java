@@ -90,6 +90,9 @@ public class PlayerBuilderIT {
         assertTrue(playerOne.getLevelMiner() >= 60);
         assertTrue(playerOne.getLevelBotanist() >= 60);
         assertTrue(playerOne.getLevelFisher() >= 60);
+        
+        // The Forbidden Land, Eureka
+        assertTrue(playerOne.getLevelEureka() == 0);
 
         // Test boolean values
         // Subscription periods
@@ -269,6 +272,13 @@ public class PlayerBuilderIT {
         assertTrue(player.isHasSoundtrack());
         assertTrue(player.isHasCompletedHWSightseeing());
         assertTrue(player.isHasMooglePlush());
+    }
+    
+    @Test
+    public void testGetPlayerWithEureka() throws Exception {
+        PlayerBean player = instance.getPlayer(2256025);
+        
+        assertTrue(player.getLevelEureka() > 50);
     }
 
     /**

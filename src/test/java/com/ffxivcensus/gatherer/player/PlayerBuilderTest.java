@@ -77,6 +77,9 @@ public class PlayerBuilderTest {
         assertTrue(player.getLevelMiner() == 0);
         assertTrue(player.getLevelBotanist() == 46);
         assertTrue(player.getLevelFisher() == 70);
+        
+        // The Forbidden Land, Eureka
+        assertTrue(player.getLevelEureka() == 51);
 
         // Test boolean values
         // Subscription periods
