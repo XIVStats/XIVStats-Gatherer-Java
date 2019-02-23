@@ -5,6 +5,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.ffxivcensus.gatherer.config.ApplicationConfig;
 import com.ffxivcensus.gatherer.player.CharacterStatus;
 import com.ffxivcensus.gatherer.player.PlayerBean;
 import com.ffxivcensus.gatherer.player.PlayerBeanRepository;
@@ -17,13 +18,13 @@ import com.ffxivcensus.gatherer.player.PlayerBeanRepository;
 public class GatheringLimiterTask implements Runnable {
 
     private static final Logger LOG = LoggerFactory.getLogger(GatheringLimiterTask.class);
-    /** Defines the maximum number of ID's between the highest ID number and the last known good Character. **/
-    private static final int GATHERING_VALID_GAP_MAX = 50000;
 
     private ThreadPoolExecutor gathererExecutor;
     private PlayerBeanRepository characterRepository;
+    private ApplicationConfig config;
 
-    public GatheringLimiterTask(final ThreadPoolExecutor gathererExecutor, final PlayerBeanRepository playerBeanRepository) {
+    public GatheringLimiterTask(ApplicationConfig config, final ThreadPoolExecutor gathererExecutor, final PlayerBeanRepository playerBeanRepository) {
+        this.config = config;
         this.gathererExecutor = gathererExecutor;
         this.characterRepository = playerBeanRepository;
     }
@@ -41,9 +42,9 @@ public class GatheringLimiterTask implements Runnable {
         int maxId = highestGathered == null ? Integer.MAX_VALUE : highestGathered.getId();
         int maxValidId = highestValid == null ? 0 : highestValid.getId();
 
-        if(maxId > maxValidId + GATHERING_VALID_GAP_MAX) {
+        if(maxId > config.getAutoStopLowerLimitId() && maxId > maxValidId + config.getAutoStopGap()) {
             LOG.info("GATHERING CAPPING: FINISHING - No valid characters found for at least {} ID's after Character #{}",
-                     GATHERING_VALID_GAP_MAX, maxValidId);
+                     config.getAutoStopGap(), maxValidId);
             // Issue shutdownNow as this clears the execution queue of any un-started tasks
             gathererExecutor.shutdownNow();
         }

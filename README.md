@@ -72,6 +72,8 @@ Follow these steps to setup XIVStats-Gatherer-Java:
   |:------------:|:---------------------:|:--------------:|:--------------------------------------------------------------------:|
   |-d            | --database            | String         | database name                                                        |
   |-f            | --finish              | integer        | the character id to conclude character run at (inclusive)            |
+  |-a			 | --autostopfrom        | integer        | the lowest character id to allow auto-stop to happen                 |
+  |-g			 | --autostopgap         | integer        | the number of continuous invalid characters to trigger auto-stopping |
   |-h            | --help                | none           | display help message                                                 |
   |-p            | --password            | String         | database user password                                               |
   |-s            | --start               | integer        | the character id to start from (inclusive)                           |

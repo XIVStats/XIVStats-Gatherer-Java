@@ -75,6 +75,16 @@ public class ApplicationConfig {
      */
     private int endId = Integer.MAX_VALUE;
 
+    /**
+     * The lowest character ID to allow auto-stopping to begin at.
+     */
+    private int autoStopLowerLimitId = 0;
+
+    /**
+     * The largest continuous character gap to trigger auto-stopping.
+     */
+    private int autoStopGap = 50000;
+
     /////////////////////////////////
     // Database Configuration Methods
     /////////////////////////////////
@@ -149,5 +159,21 @@ public class ApplicationConfig {
 
     public void setEndId(int endId) {
         this.endId = endId;
+    }
+
+    public int getAutoStopLowerLimitId() {
+        return autoStopLowerLimitId;
+    }
+
+    public void setAutoStopLowerLimitId(int autoStopLowerLimitId) {
+        this.autoStopLowerLimitId = autoStopLowerLimitId;
+    }
+
+    public int getAutoStopGap() {
+        return autoStopGap;
+    }
+
+    public void setAutoStopGap(int autoStopGap) {
+        this.autoStopGap = autoStopGap;
     }
 }

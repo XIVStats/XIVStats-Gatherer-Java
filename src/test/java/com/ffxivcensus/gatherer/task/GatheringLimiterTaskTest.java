@@ -12,6 +12,8 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+
+import com.ffxivcensus.gatherer.config.ApplicationConfig;
 import com.ffxivcensus.gatherer.player.CharacterStatus;
 import com.ffxivcensus.gatherer.player.PlayerBean;
 import com.ffxivcensus.gatherer.player.PlayerBeanRepository;
@@ -22,12 +24,14 @@ public class GatheringLimiterTaskTest {
     private ThreadPoolExecutor mockExecutor;
     @Mock
     private PlayerBeanRepository mockRepository;
+    private ApplicationConfig config;
     private GatheringLimiterTask instance;
 
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        instance = new GatheringLimiterTask(mockExecutor, mockRepository);
+        config = new ApplicationConfig();
+        instance = new GatheringLimiterTask(config, mockExecutor, mockRepository);
     }
     
     @After
