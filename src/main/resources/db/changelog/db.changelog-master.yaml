@@ -508,4 +508,17 @@ databaseChangeLog:
                     name: character_status
                     type: varchar(10)
               indexName: idx_character_status
-              
+  - changeSet:
+      id: 6
+      author: matthewhillier
+      changes:
+          - addColumn:
+              tableName: tblplayers
+              columns:
+                - column:
+                    name: level_bluemage
+                    type: int(3)
+                    defaultValueNumeric: 0
+                    constraints:
+                      nullable: false
+                    afterColumn: level_samurai

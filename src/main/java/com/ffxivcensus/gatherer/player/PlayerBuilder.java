@@ -99,17 +99,18 @@ public class PlayerBuilder {
         player.setLevelThaumaturge(arrLevels[12]);
         player.setLevelArcanist(arrLevels[13]);
         player.setLevelRedmage(arrLevels[14]);
-        player.setLevelCarpenter(arrLevels[15]);
-        player.setLevelBlacksmith(arrLevels[16]);
-        player.setLevelArmorer(arrLevels[17]);
-        player.setLevelGoldsmith(arrLevels[18]);
-        player.setLevelLeatherworker(arrLevels[19]);
-        player.setLevelWeaver(arrLevels[20]);
-        player.setLevelAlchemist(arrLevels[21]);
-        player.setLevelCulinarian(arrLevels[22]);
-        player.setLevelMiner(arrLevels[23]);
-        player.setLevelBotanist(arrLevels[24]);
-        player.setLevelFisher(arrLevels[25]);
+        player.setLevelBluemage(arrLevels[15]);
+        player.setLevelCarpenter(arrLevels[16]);
+        player.setLevelBlacksmith(arrLevels[17]);
+        player.setLevelArmorer(arrLevels[18]);
+        player.setLevelGoldsmith(arrLevels[19]);
+        player.setLevelLeatherworker(arrLevels[20]);
+        player.setLevelWeaver(arrLevels[21]);
+        player.setLevelAlchemist(arrLevels[22]);
+        player.setLevelCulinarian(arrLevels[23]);
+        player.setLevelMiner(arrLevels[24]);
+        player.setLevelBotanist(arrLevels[25]);
+        player.setLevelFisher(arrLevels[26]);
     }
 
     /**
@@ -360,8 +361,8 @@ public class PlayerBuilder {
         }
 
         // Check if levels array is larger than this system is programmed for
-        // As of 4.0, this is now 26 - SCH and SMN are 2 jobs, + SAM & RDM
-        if(arrLevels.length > 26) {
+        // As of 4.5, this is now 27 - SCH and SMN are 2 jobs, + SAM, RDM & BLU
+        if(arrLevels.length > 27) {
             throw new IllegalArgumentException("Error: More class levels found (" + arrLevels.length
                                                + ") than anticipated (26). The class definitions need to be updated.");
         }
