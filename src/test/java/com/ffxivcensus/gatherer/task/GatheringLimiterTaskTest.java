@@ -80,6 +80,23 @@ public class GatheringLimiterTaskTest {
     }
     
     @Test
+    public void testContinueWithUnbreachedAutostopLimit() {
+        PlayerBean topId = new PlayerBean();
+        topId.setId(60000);
+        PlayerBean topValid = new PlayerBean();
+        topValid.setId(100);
+        
+        config.setAutoStopLowerLimitId(61000);
+        
+        when(mockRepository.findTopByOrderByIdDesc()).thenReturn(topId);
+        when(mockRepository.findTopByCharacterStatusNotOrderByIdDesc(Mockito.any(CharacterStatus.class))).thenReturn(topValid);
+        
+        instance.run();
+        
+        verify(mockExecutor, never()).shutdownNow();
+    }
+    
+    @Test
     public void testStopCondition() {
         PlayerBean topId = new PlayerBean();
         topId.setId(50101);

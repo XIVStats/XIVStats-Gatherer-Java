@@ -28,6 +28,7 @@ public class ConfigurationBuilderTest {
         assertEquals(Integer.MAX_VALUE, config.getEndId());
         assertEquals(ApplicationConfig.MAX_THREADS, config.getThreadLimit());
         assertEquals(ApplicationConfig.DEFAULT_DATABASE_HOST, config.getDbUrl());
+        assertEquals(ApplicationConfig.DEFAULT_AUTOSTOP_GAP, config.getAutoStopGap());
     }
 
     /**
@@ -46,6 +47,7 @@ public class ConfigurationBuilderTest {
         assertEquals(Integer.MAX_VALUE, config.getEndId());
         assertEquals("mysql://testbox:3306", config.getDbUrl());
         assertEquals(32, config.getThreadLimit());
+        assertEquals(10000000, config.getAutoStopLowerLimitId());
     }
 
     /**
@@ -93,6 +95,7 @@ public class ConfigurationBuilderTest {
     public void testValidCLIConfigPartial() throws Exception {
         String[] args = {"-is", "0",
                          "-f", "100",
+                         "-g", "56",
                          "-t", "10",
                          "-d", "DatabaseName",
                          "-U", "jdbc:mysql://test-server"};
@@ -105,6 +108,7 @@ public class ConfigurationBuilderTest {
         assertEquals(0, config.getStartId());
         assertEquals(100, config.getEndId());
         assertEquals(10, config.getThreadLimit());
+        assertEquals(56, config.getAutoStopGap());
     }
 
     /**
@@ -127,7 +131,9 @@ public class ConfigurationBuilderTest {
                          "-d", "DatabaseName",
                          "-U", "jdbc:mysql://test-server",
                          "-u", "user",
-                         "-p", "password"};
+                         "-p", "password",
+                         "-a", "56000",
+                         "-g", "150"};
 
         ApplicationConfig config = ConfigurationBuilder.createBuilder()
                                                        .loadCommandLineConfiguration(CLIConstants.setupOptions(), args)
@@ -140,6 +146,8 @@ public class ConfigurationBuilderTest {
         assertEquals("jdbc:mysql://test-server", config.getDbUrl());
         assertEquals("user", config.getDbUser());
         assertEquals("password", config.getDbPassword());
+        assertEquals(56000, config.getAutoStopLowerLimitId());
+        assertEquals(150, config.getAutoStopGap());
     }
 
     @Test(expected = MissingOptionException.class)

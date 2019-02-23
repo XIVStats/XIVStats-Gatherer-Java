@@ -150,7 +150,7 @@ public class ConfigurationBuilder {
             
             // Autostop Character Gap Count
             if(cmd.hasOption("g")) {
-                configuration.setAutoStopLowerLimitId(Integer.parseInt(cmd.getOptionValue("g")));
+                configuration.setAutoStopGap(Integer.parseInt(cmd.getOptionValue("g")));
             }
 
             // Database URL

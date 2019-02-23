@@ -8,5 +8,6 @@
     </jdbc>
     <execution>
         <threads>32</threads>
+        <autoStopLowerLimit>10000000</autoStopLowerLimit>
     </execution>
 </config>
