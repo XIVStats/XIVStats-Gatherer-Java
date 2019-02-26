@@ -20,6 +20,7 @@ to produce a web page displaying statistics for the data gathered.
 * [Documentation](#documentation)
 * [Contributing](#contributing)
 * [Database](#database)
+* [Performance Statistics](#performance-statistics)
 * [XIVStats-Gatherer-Ruby](#xivstats-gatherer-ruby)
 * [Creators](#creators)
 * [Copyright and license](#copyright-and-license)
