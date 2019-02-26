@@ -58,6 +58,7 @@ public class PlayerBean {
     private int levelMiner;
     private int levelBotanist;
     private int levelFisher;
+    private int levelEureka;
     @Column(name = "p30days")
     private boolean has30DaysSub;
     @Column(name = "p60days")
@@ -434,6 +435,14 @@ public class PlayerBean {
 
     public void setLevelFisher(final int lvlFisher) {
         this.levelFisher = lvlFisher;
+    }
+
+    public int getLevelEureka() {
+        return levelEureka;
+    }
+
+    public void setLevelEureka(int levelEureka) {
+        this.levelEureka = levelEureka;
     }
 
     public boolean isHas30DaysSub() {
