@@ -197,6 +197,23 @@ The database table ```tblplayers``` has the following structure:
 |is_active             |bit      |N/A                             |
 |character_status      |varchar  |N/A                             |
 
+## Performance Statistics
+This section provides some insight into the performance of the application when performing censuses for [ffxivcensus.com](ffxivcensus.com)
+
+How many IDs are there?
+- As of February 2019, the highest ID is between 24 and 25 million. However, almost 10 million character IDs have been deleted.
+
+How long does a complete census take?
+- A complete census currently takes around 14 days
+
+What hardware is the live census using?
+- The live census is running on a CentOS 7 VM with 2 CPU cores from an i5-750, 2GB of RAM and a 100mbit network connection.
+
+What is the CPU, memory and network usage like?
+- The census uses 30-60% of the two CPU cores
+- The census will happily run with a 1GB heap size allocated
+- Network usage is fairly minimal, with about 4mbit download and 300kbit upload with 64 threads configured
+
 ## XIVStats-Gatherer-Ruby
 XIVStats-Gatherer-Java begun by providing the same functionality as the original ruby-based  [XIVStats-Gatherer-Ruby](https://github.com/XIVStats/XIVStats-Gatherer-Ruby),
 but is written in Java to make use of Multi-threading capabilities that could
