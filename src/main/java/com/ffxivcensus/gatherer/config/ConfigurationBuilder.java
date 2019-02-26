@@ -111,6 +111,10 @@ public class ConfigurationBuilder {
             NodeList nodesExecConf = doc.getElementsByTagName("execution");
             Element elementExecConf = (Element) nodesExecConf.item(0);
             configuration.setThreadLimit(Integer.parseInt(elementExecConf.getElementsByTagName("threads").item(0).getTextContent()));
+            if(elementExecConf.getElementsByTagName("autoStopLowerLimit").getLength() > 0) {
+                configuration.setAutoStopLowerLimitId(Integer.parseInt(elementExecConf.getElementsByTagName("autoStopLowerLimit").item(0)
+                                                                                      .getTextContent()));
+            }
         } else {
             LOG.error("Configuration: No config.xml file found. Failing over to defaults.");
         }
@@ -137,6 +141,16 @@ public class ConfigurationBuilder {
             // Finish id flag
             if(cmd.hasOption("f")) {
                 configuration.setEndId(Integer.parseInt(cmd.getOptionValue("f")));
+            }
+            
+            // Autostop Lower Id
+            if(cmd.hasOption("a")) {
+                configuration.setAutoStopLowerLimitId(Integer.parseInt(cmd.getOptionValue("a")));
+            }
+            
+            // Autostop Character Gap Count
+            if(cmd.hasOption("g")) {
+                configuration.setAutoStopGap(Integer.parseInt(cmd.getOptionValue("g")));
             }
 
             // Database URL

@@ -12,6 +12,8 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+
+import com.ffxivcensus.gatherer.config.ApplicationConfig;
 import com.ffxivcensus.gatherer.player.CharacterStatus;
 import com.ffxivcensus.gatherer.player.PlayerBean;
 import com.ffxivcensus.gatherer.player.PlayerBeanRepository;
@@ -22,12 +24,14 @@ public class GatheringLimiterTaskTest {
     private ThreadPoolExecutor mockExecutor;
     @Mock
     private PlayerBeanRepository mockRepository;
+    private ApplicationConfig config;
     private GatheringLimiterTask instance;
 
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        instance = new GatheringLimiterTask(mockExecutor, mockRepository);
+        config = new ApplicationConfig();
+        instance = new GatheringLimiterTask(config, mockExecutor, mockRepository);
     }
     
     @After
@@ -66,6 +70,23 @@ public class GatheringLimiterTaskTest {
         topId.setId(50100);
         PlayerBean topValid = new PlayerBean();
         topValid.setId(100);
+        
+        when(mockRepository.findTopByOrderByIdDesc()).thenReturn(topId);
+        when(mockRepository.findTopByCharacterStatusNotOrderByIdDesc(Mockito.any(CharacterStatus.class))).thenReturn(topValid);
+        
+        instance.run();
+        
+        verify(mockExecutor, never()).shutdownNow();
+    }
+    
+    @Test
+    public void testContinueWithUnbreachedAutostopLimit() {
+        PlayerBean topId = new PlayerBean();
+        topId.setId(60000);
+        PlayerBean topValid = new PlayerBean();
+        topValid.setId(100);
+        
+        config.setAutoStopLowerLimitId(61000);
         
         when(mockRepository.findTopByOrderByIdDesc()).thenReturn(topId);
         when(mockRepository.findTopByCharacterStatusNotOrderByIdDesc(Mockito.any(CharacterStatus.class))).thenReturn(topValid);

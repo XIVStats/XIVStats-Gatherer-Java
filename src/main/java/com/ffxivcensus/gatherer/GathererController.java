@@ -54,8 +54,8 @@ public class GathererController {
 
     /**
      * Start the gatherer controller instance up.
-     * @throws ParseException 
-     *
+     * 
+     * @throws ParseException
      * @throws Exception Exception thrown if system is incorrectly configured.
      */
     public void run() throws ParseException {
@@ -143,7 +143,8 @@ public class GathererController {
                                                5,
                                                TimeUnit.SECONDS);
         // Executes the limiter tasks once every 30 seconds, starting in 30 seconds time.
-        managementExecutor.scheduleAtFixedRate(new GatheringLimiterTask(gathererExecutor,
+        managementExecutor.scheduleAtFixedRate(new GatheringLimiterTask(appConfig,
+                                                                        gathererExecutor,
                                                                         playerRepository),
                                                30,
                                                30,

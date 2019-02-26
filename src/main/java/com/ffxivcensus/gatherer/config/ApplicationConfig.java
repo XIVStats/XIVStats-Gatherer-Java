@@ -22,6 +22,7 @@ public class ApplicationConfig {
     public static final String DEFAULT_DATABASE_HOST = "mysql://localhost:3306";
     public static final String DEFAULT_DATABASE_NAME = "dbplayers";
     public static final String DEFAULT_TABLE_NAME = "tblplayers";
+    public static final int DEFAULT_AUTOSTOP_GAP = 50000;
 
     /**
      * Safety limit for thread count - user cannot exceed this limit.
@@ -74,6 +75,16 @@ public class ApplicationConfig {
      * The character ID to end the gatherer at.
      */
     private int endId = Integer.MAX_VALUE;
+
+    /**
+     * The lowest character ID to allow auto-stopping to begin at.
+     */
+    private int autoStopLowerLimitId = 0;
+
+    /**
+     * The largest continuous character gap to trigger auto-stopping.
+     */
+    private int autoStopGap = DEFAULT_AUTOSTOP_GAP;
 
     /////////////////////////////////
     // Database Configuration Methods
@@ -149,5 +160,21 @@ public class ApplicationConfig {
 
     public void setEndId(int endId) {
         this.endId = endId;
+    }
+
+    public int getAutoStopLowerLimitId() {
+        return autoStopLowerLimitId;
+    }
+
+    public void setAutoStopLowerLimitId(int autoStopLowerLimitId) {
+        this.autoStopLowerLimitId = autoStopLowerLimitId;
+    }
+
+    public int getAutoStopGap() {
+        return autoStopGap;
+    }
+
+    public void setAutoStopGap(int autoStopGap) {
+        this.autoStopGap = autoStopGap;
     }
 }
