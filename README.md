@@ -20,7 +20,6 @@ to produce a web page displaying statistics for the data gathered.
 * [Documentation](#documentation)
 * [Contributing](#contributing)
 * [Database](#database)
-* [Performance Statistics](#performance-statistics)
 * [XIVStats-Gatherer-Ruby](#xivstats-gatherer-ruby)
 * [Creators](#creators)
 * [Copyright and license](#copyright-and-license)
@@ -73,8 +72,6 @@ Follow these steps to setup XIVStats-Gatherer-Java:
   |:------------:|:---------------------:|:--------------:|:--------------------------------------------------------------------:|
   |-d            | --database            | String         | database name                                                        |
   |-f            | --finish              | integer        | the character id to conclude character run at (inclusive)            |
-  |-a			 | --autostopfrom        | integer        | the lowest character id to allow auto-stop to happen                 |
-  |-g			 | --autostopgap         | integer        | the number of continuous invalid characters to trigger auto-stopping |
   |-h            | --help                | none           | display help message                                                 |
   |-p            | --password            | String         | database user password                                               |
   |-s            | --start               | integer        | the character id to start from (inclusive)                           |
@@ -140,6 +137,7 @@ The database table ```tblplayers``` has the following structure:
 |level_scholar         |int      |N/A                             |
 |level_redmage         |int      |N/A                             |
 |level_samurai         |int      |N/A                             |
+|level_bluemage        |int      |N/A                             |
 |level_carpenter       |int      |N/A                             |
 |level_blacksmith      |int      |N/A                             |
 |level_armorer         |int      |N/A                             |
@@ -163,6 +161,7 @@ The database table ```tblplayers``` has the following structure:
 |prearr                |bit      |Minion - Cait Sith Doll         |
 |prehw                 |bit      |Minion - Chocobo Chick Courier  |
 |presb                 |bit      |Minion - Wind-up Red Mage       |
+|preshb                |bit      |Minion - Baby Gremlin           |
 |arrartbook            |bit      |Minion - Model Enterprise       |
 |hwartbookone          |bit      |Minion - Wind-Up Relm           |
 |hwartbooktw           |bit      |Minion - Wind-Up Hraesvelgr     |
@@ -197,23 +196,6 @@ The database table ```tblplayers``` has the following structure:
 |date_active           |date     |N/A                             |
 |is_active             |bit      |N/A                             |
 |character_status      |varchar  |N/A                             |
-
-## Performance Statistics
-This section provides some insight into the performance of the application when performing censuses for [ffxivcensus.com](ffxivcensus.com)
-
-How many IDs are there?
-- As of February 2019, the highest ID is between 24 and 25 million. However, almost 10 million character IDs have been deleted.
-
-How long does a complete census take?
-- A complete census currently takes around 14 days
-
-What hardware is the live census using?
-- The live census is running on a CentOS 7 VM with 2 CPU cores from an i5-750, 2GB of RAM and a 100mbit network connection.
-
-What is the CPU, memory and network usage like?
-- The census uses 30-60% of the two CPU cores
-- The census will happily run with a 1GB heap size allocated
-- Network usage is fairly minimal, with about 4mbit download and 300kbit upload with 64 threads configured
 
 ## XIVStats-Gatherer-Ruby
 XIVStats-Gatherer-Java begun by providing the same functionality as the original ruby-based  [XIVStats-Gatherer-Ruby](https://github.com/XIVStats/XIVStats-Gatherer-Ruby),

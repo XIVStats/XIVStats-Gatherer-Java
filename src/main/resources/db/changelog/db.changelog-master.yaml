@@ -137,6 +137,12 @@ databaseChangeLog:
                   constraints:
                     nullable: false
               - column:
+                  name: level_bluemage
+                  type: int(3)
+                  defaultValueNumeric: 0
+                  constraints:
+                    nullable: false
+              - column:
                   name: level_samurai
                   type: int(3)
                   defaultValueNumeric: 0
@@ -276,6 +282,12 @@ databaseChangeLog:
                     nullable: false
               - column:
                   name: presb
+                  type: bit(1)
+                  defaultValueNumeric: 0
+                  constraints:
+                    nullable: false
+              - column:
+                  name: preshb
                   type: bit(1)
                   defaultValueNumeric: 0
                   constraints:
@@ -508,31 +520,4 @@ databaseChangeLog:
                     name: character_status
                     type: varchar(10)
               indexName: idx_character_status
-  - changeSet:
-      id: 6
-      author: matthewhillier
-      changes:
-          - addColumn:
-              tableName: tblplayers
-              columns:
-                - column:
-                    name: level_bluemage
-                    type: int(3)
-                    defaultValueNumeric: 0
-                    constraints:
-                      nullable: false
-                    afterColumn: level_samurai
-  - changeSet:
-      id: 7
-      author: matthewhillier
-      changes:
-          - addColumn:
-              tableName: tblplayers
-              columns:
-                - column:
-                    name: level_eureka
-                    type: int(3)
-                    defaultValueNumeric: 0
-                    constraints:
-                      nullable: false
-                    afterColumn: level_fisher
+              

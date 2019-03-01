@@ -58,7 +58,6 @@ public class PlayerBean {
     private int levelMiner;
     private int levelBotanist;
     private int levelFisher;
-    private int levelEureka;
     @Column(name = "p30days")
     private boolean has30DaysSub;
     @Column(name = "p60days")
@@ -83,6 +82,8 @@ public class PlayerBean {
     private boolean hasPreOrderHW;
     @Column(name = "presb")
     private boolean hasPreOrderSB;
+    @Column(name = "preshb")
+    private boolean hasPreOrderShB;
     @Column(name = "arrartbook")
     private boolean hasARRArtbook;
     @Column(name = "hwartbookone")
@@ -335,18 +336,12 @@ public class PlayerBean {
         this.levelSamurai = lvlSamurai;
     }
 
-    /**
-     * @return the levelBluemage
-     */
     public int getLevelBluemage() {
         return levelBluemage;
     }
 
-    /**
-     * @param levelBluemage the levelBluemage to set
-     */
-    public void setLevelBluemage(int levelBluemage) {
-        this.levelBluemage = levelBluemage;
+    public void setLevelBluemage(final int lvlBluemage) {
+        this.levelBluemage = lvlBluemage;
     }
 
     public int getLevelCarpenter() {
@@ -435,14 +430,6 @@ public class PlayerBean {
 
     public void setLevelFisher(final int lvlFisher) {
         this.levelFisher = lvlFisher;
-    }
-
-    public int getLevelEureka() {
-        return levelEureka;
-    }
-
-    public void setLevelEureka(int levelEureka) {
-        this.levelEureka = levelEureka;
     }
 
     public boolean isHas30DaysSub() {
@@ -539,6 +526,14 @@ public class PlayerBean {
 
     public void setHasPreOrderSB(final boolean hasPreOrderSB) {
         this.hasPreOrderSB = hasPreOrderSB;
+    }
+
+    public boolean isHasPreOrderShB() {
+        return hasPreOrderShB;
+    }
+
+    public void setHasPreOrderShB(final boolean hasPreOrderShB) {
+        this.hasPreOrderShB = hasPreOrderShB;
     }
 
     public boolean isHasARRArtbook() {
