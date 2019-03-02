@@ -83,6 +83,8 @@ public class PlayerBean {
     private boolean hasPreOrderHW;
     @Column(name = "presb")
     private boolean hasPreOrderSB;
+    @Column(name = "preshb")
+    private boolean hasPreOrderShB;
     @Column(name = "arrartbook")
     private boolean hasARRArtbook;
     @Column(name = "hwartbookone")
@@ -540,6 +542,13 @@ public class PlayerBean {
     public void setHasPreOrderSB(final boolean hasPreOrderSB) {
         this.hasPreOrderSB = hasPreOrderSB;
     }
+    public boolean isHasPreOrderShB() {
+        return hasPreOrderShB;
+    }
+
+    public void setHasPreOrderShB(final boolean hasPreOrderShB) {
+        this.hasPreOrderShB = hasPreOrderShB;
+    }    
 
     public boolean isHasARRArtbook() {
         return hasARRArtbook;

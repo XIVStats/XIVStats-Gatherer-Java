@@ -281,6 +281,12 @@ databaseChangeLog:
                   constraints:
                     nullable: false
               - column:
+                  name: preshb
+                  type: bit(1)
+                  defaultValueNumeric: 0
+                  constraints:
+                    nullable: false
+              - column:
                   name: arrartbook
                   type: bit(1)
                   defaultValueNumeric: 0
@@ -536,3 +542,17 @@ databaseChangeLog:
                     constraints:
                       nullable: false
                     afterColumn: level_fisher
+  - changeSet:
+      id: 8
+      author: fahy
+      changes:
+          - addColumn:
+              tableName: tblplayers
+              columns:
+                - column:
+                    name: preshb
+                    type: bit(1)
+                    defaultValueNumeric: 0
+                    constraints:
+                      nullable: false
+                    afterColumn: presb
