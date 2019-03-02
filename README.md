@@ -140,6 +140,7 @@ The database table ```tblplayers``` has the following structure:
 |level_scholar         |int      |N/A                             |
 |level_redmage         |int      |N/A                             |
 |level_samurai         |int      |N/A                             |
+|level_bluemage        |int      |N/A                             |
 |level_carpenter       |int      |N/A                             |
 |level_blacksmith      |int      |N/A                             |
 |level_armorer         |int      |N/A                             |
@@ -163,6 +164,7 @@ The database table ```tblplayers``` has the following structure:
 |prearr                |bit      |Minion - Cait Sith Doll         |
 |prehw                 |bit      |Minion - Chocobo Chick Courier  |
 |presb                 |bit      |Minion - Wind-up Red Mage       |
+|preshb                |bit      |Minion - Baby Gremlin           |
 |arrartbook            |bit      |Minion - Model Enterprise       |
 |hwartbookone          |bit      |Minion - Wind-Up Relm           |
 |hwartbooktw           |bit      |Minion - Wind-Up Hraesvelgr     |

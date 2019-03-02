@@ -174,6 +174,7 @@ public class PlayerBuilder {
             player.setHasPreOrderArr(doesPlayerHaveMinion(player, "Cait Sith Doll"));
             player.setHasPreOrderHW(doesPlayerHaveMinion(player, "Chocobo Chick Courier"));
             player.setHasPreOrderSB(doesPlayerHaveMinion(player, "Wind-up Red Mage"));
+            player.setHasPreOrderShB(doesPlayerHaveMinion(player, "Baby Gremlin"));
             player.setHasARRArtbook(doesPlayerHaveMinion(player, "Model Enterprise"));
             player.setHasHWArtbookOne(doesPlayerHaveMinion(player, "Wind-Up Relm"));
             player.setHasHWArtbookTwo(doesPlayerHaveMinion(player, "Wind-Up Hraesvelgr"));
