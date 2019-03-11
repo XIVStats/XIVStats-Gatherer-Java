@@ -305,6 +305,12 @@ databaseChangeLog:
                   constraints:
                     nullable: false
               - column:
+                  name: sbartbook
+                  type: bit(1)
+                  defaultValueNumeric: 0
+                  constraints:
+                    nullable: false
+              - column:
                   name: hasencyclopedia
                   type: bit(1)
                   defaultValueNumeric: 0
@@ -556,3 +562,19 @@ databaseChangeLog:
                     constraints:
                       nullable: false
                     afterColumn: presb
+  - changeSet:
+      id: 9
+      author: fahy
+      changes:
+          - addColumn:
+              tableName: tblplayers
+              columns:
+                - column:
+                    name: sbartbook
+                    type: bit(1)
+                    defaultValueNumeric: 0
+                    constraints:
+                      nullable: false
+                    afterColumn: hwartbooktwo
+
+                    
