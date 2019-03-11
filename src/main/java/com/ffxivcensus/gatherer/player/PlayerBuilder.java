@@ -178,6 +178,7 @@ public class PlayerBuilder {
             player.setHasARRArtbook(doesPlayerHaveMinion(player, "Model Enterprise"));
             player.setHasHWArtbookOne(doesPlayerHaveMinion(player, "Wind-Up Relm"));
             player.setHasHWArtbookTwo(doesPlayerHaveMinion(player, "Wind-Up Hraesvelgr"));
+            player.setHasSBArtbook(doesPlayerHaveMinion(player, "Dress-up Tataru"));
             player.setHasEncyclopediaEorzea(doesPlayerHaveMinion(player, "Namingway"));
             player.setHasBeforeMeteor(doesPlayerHaveMinion(player, "Wind-up Dalamud"));
             player.setHasBeforeTheFall(doesPlayerHaveMinion(player, "Set Of Primogs"));
