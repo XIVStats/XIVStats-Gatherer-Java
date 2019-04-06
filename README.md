@@ -166,7 +166,8 @@ The database table ```tblplayers``` has the following structure:
 |presb                 |bit      |Minion - Wind-up Red Mage       |
 |preshb                |bit      |Minion - Baby Gremlin           |
 |arrartbook            |bit      |Minion - Model Enterprise       |
-|sbartbook             |bit      |Minion - Dress-up Tataru       |
+|sbartbook             |bit      |Minion - Wind-up Yotsuyu        |
+|sbartbooktwo          |bit      |Minion - Dress-up Tataru        |
 |hwartbookone          |bit      |Minion - Wind-Up Relm           |
 |hwartbooktw           |bit      |Minion - Wind-Up Hraesvelgr     |
 |hasencyclopedia       |bit      |Minion - Namingway              |
