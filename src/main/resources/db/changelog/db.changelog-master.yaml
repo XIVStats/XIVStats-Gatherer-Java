@@ -281,12 +281,6 @@ databaseChangeLog:
                   constraints:
                     nullable: false
               - column:
-                  name: preshb
-                  type: bit(1)
-                  defaultValueNumeric: 0
-                  constraints:
-                    nullable: false
-              - column:
                   name: arrartbook
                   type: bit(1)
                   defaultValueNumeric: 0
@@ -300,12 +294,6 @@ databaseChangeLog:
                     nullable: false
               - column:
                   name: hwartbooktwo
-                  type: bit(1)
-                  defaultValueNumeric: 0
-                  constraints:
-                    nullable: false
-              - column:
-                  name: sbartbook
                   type: bit(1)
                   defaultValueNumeric: 0
                   constraints:
@@ -576,5 +564,20 @@ databaseChangeLog:
                     constraints:
                       nullable: false
                     afterColumn: hwartbooktwo
+  - changeSet:
+      id: 10
+      author: matthewhillier
+      changes:
+          - addColumn:
+              tableName: tblplayers
+              columns:
+                - column:
+                    name: sbartbooktwo
+                    type: bit(1)
+                    defaultValueNumeric: 0
+                    constraints:
+                      nullable: false
+                    afterColumn: sbartbook
+                    
 
                     

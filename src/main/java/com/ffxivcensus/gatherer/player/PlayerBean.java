@@ -87,12 +87,14 @@ public class PlayerBean {
     private boolean hasPreOrderShB;
     @Column(name = "arrartbook")
     private boolean hasARRArtbook;
-    @Column(name = "sbartbook")
-    private boolean hasSBArtbook;
     @Column(name = "hwartbookone")
     private boolean hasHWArtbookOne;
     @Column(name = "hwartbooktwo")
     private boolean hasHWArtbookTwo;
+    @Column(name = "sbartbook")
+    private boolean hasSBArtbook;
+    @Column(name = "sbartbooktwo")
+    private boolean hasSBArtbookTwo;
     @Column(name = "hasencyclopedia")
     private boolean hasEncyclopediaEorzea;
     @Column(name = "beforemeteor")
@@ -544,13 +546,14 @@ public class PlayerBean {
     public void setHasPreOrderSB(final boolean hasPreOrderSB) {
         this.hasPreOrderSB = hasPreOrderSB;
     }
+
     public boolean isHasPreOrderShB() {
         return hasPreOrderShB;
     }
 
     public void setHasPreOrderShB(final boolean hasPreOrderShB) {
         this.hasPreOrderShB = hasPreOrderShB;
-    }    
+    }
 
     public boolean isHasARRArtbook() {
         return hasARRArtbook;
@@ -575,13 +578,22 @@ public class PlayerBean {
     public void setHasHWArtbookTwo(final boolean hasHWArtbookTwo) {
         this.hasHWArtbookTwo = hasHWArtbookTwo;
     }
+
     public boolean isHasSBArtbook() {
         return hasSBArtbook;
     }
 
     public void setHasSBArtbook(final boolean hasSBArtbook) {
         this.hasSBArtbook = hasSBArtbook;
-    }    
+    }
+
+    public boolean isHasSBArtbookTwo() {
+        return hasSBArtbookTwo;
+    }
+
+    public void setHasSBArtbookTwo(boolean hasSBArtBookTwo) {
+        this.hasSBArtbookTwo = hasSBArtBookTwo;
+    }
 
     public boolean isHasEncyclopediaEorzea() {
         return hasEncyclopediaEorzea;
