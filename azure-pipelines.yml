@@ -29,7 +29,7 @@ steps:
 
 - task: PublishBuildArtifacts@1
   inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)/XIVStats-Gatherer-Java.zip'
+    PathtoPublish: '$(Build.SourcesDirectory)/XIVStats-Gatherer-Java.zip'
     ArtifactName: 'artifacts'
 
 - script: |
