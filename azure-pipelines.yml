@@ -21,6 +21,18 @@ steps:
     goals: 'package'
 
 - script: |
+    mkdir - p target/release
+    cp target/*.jar target/release/XIVStats-Gatherer-Java.jar
+    cp config_example.xml target/release
+    zip -r XIVStats-Gatherer-Java.zip target/release/
+  displayName: zip
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)/XIVStats-Gatherer-Java.zip'
+    ArtifactName: 'artifacts'
+
+- script: |
     cp config_example.xml config.xml
     sed -i -e "s/mysql:\/\/localhost:3306/$(hostUri)/" -e "s/value/$(password)/" -e "s/xivstats/$(username)/" -e "s/dbplayers/$(database)/" config.xml
   displayName: 'Prepare for test'
