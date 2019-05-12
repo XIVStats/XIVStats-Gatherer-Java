@@ -1,0 +1,38 @@
+  # Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+
+pool:
+  vmImage: 'ubuntu-16.04'
+
+steps:
+- task: Maven@3
+  displayName: 'Build'
+  inputs:
+    mavenPomFile: 'pom.xml'
+    mavenOptions: '-Xmx3072m'
+    javaHomeOption: 'JDKVersion'
+    jdkVersionOption: '1.8'
+    jdkArchitectureOption: 'x64'
+    publishJUnitResults: false
+    testResultsFiles: '**/TEST-*.xml'
+    goals: 'package'
+
+- script: |
+    cp config_example.xml config.xml
+    sed -i -e "s/mysql:\/\/localhost:3306/$(hostUri)/" -e "s/value/$(password)/" -e "s/xivstats/$(username)/" -e "s/dbplayers/$(database)/" config.xml
+  displayName: 'Prepare for test'
+
+- task: Maven@3
+  displayName: 'Test'
+  inputs:
+    mavenPomFile: 'pom.xml'
+    mavenOptions: '-Xmx3072m'
+    javaHomeOption: 'JDKVersion'
+    jdkVersionOption: '1.8'
+    jdkArchitectureOption: 'x64'
+    publishJUnitResults: true
+    testResultsFiles: '**/TEST-*.xml'
+    goals: 'verify'

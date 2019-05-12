@@ -4,7 +4,7 @@
         <url>mysql://localhost:3306</url>
         <database>dbplayers</database>
         <username>xivstats</username>
-        <password>password</password>
+        <password>value</password>
     </jdbc>
     <execution>
         <threads>32</threads>
