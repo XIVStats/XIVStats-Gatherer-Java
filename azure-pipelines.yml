@@ -34,7 +34,7 @@ steps:
 
 - script: |
     cp config_example.xml config.xml
-    sed -i -e "s/mysql:\/\/localhost:3306/$(hostUri)/" -e "s/value/$(password)/" -e "s/xivstats/$(username)/" -e "s/dbplayers/$(database)/" config.xml
+    sed -i -e "s/mysql:\/\/localhost:3306/$(hostUri)/" -e "s/value/$(password)/" -e "s/xivstats/$(username)/" -e "s/dbplayers/$(database)/" -e "s/32/$(threads)/" config.xml
   displayName: 'Prepare for test'
 
 - task: Maven@3
