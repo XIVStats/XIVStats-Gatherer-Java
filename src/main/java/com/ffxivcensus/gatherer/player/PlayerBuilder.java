@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.regex.Pattern;
 
+import org.apache.commons.lang.StringUtils;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -252,7 +253,12 @@ public class PlayerBuilder {
      */
     private String getRealmFromPage(final Document doc) {
         // Get elements in the player name area, and return the Realm name (contained in the span)
-        return doc.getElementsByClass(LAYOUT_FRAME_CHARA_WORLD).get(0).text().replace("(", "").replace(")", "");
+        String realmAndDatacenter = doc.getElementsByClass(LAYOUT_FRAME_CHARA_WORLD).get(0).text();
+        String realm = null;
+        if(!StringUtils.isEmpty(realmAndDatacenter)) {
+            realm = realmAndDatacenter.substring(0, realmAndDatacenter.indexOf("(") - 1);
+        }
+        return realm;
     }
 
     /**

@@ -92,7 +92,7 @@ public class PlayerBuilderIT {
         assertTrue(playerOne.getLevelFisher() >= 60);
         
         // The Forbidden Land, Eureka
-        assertTrue(playerOne.getLevelEureka() == 0);
+        assertTrue(playerOne.getLevelEureka() == 20);
 
         // Test boolean values
         // Subscription periods
