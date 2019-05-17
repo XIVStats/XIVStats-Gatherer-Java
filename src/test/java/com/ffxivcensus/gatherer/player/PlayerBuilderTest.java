@@ -45,9 +45,9 @@ public class PlayerBuilderTest {
 
         // Melee DPS
         assertEquals(70, player.getLevelPugilist());
-        assertEquals(29, player.getLevelLancer());
-        assertEquals(51, player.getLevelRogue());
-        assertEquals(67, player.getLevelSamurai());
+        assertEquals(37, player.getLevelLancer());
+        assertEquals(54, player.getLevelRogue());
+        assertEquals(70, player.getLevelSamurai());
 
         // Ranged Physical DPS
         assertEquals(70, player.getLevelArcher());
@@ -80,7 +80,7 @@ public class PlayerBuilderTest {
         assertEquals(70, player.getLevelFisher());
         
         // The Forbidden Land, Eureka
-        assertEquals(51, player.getLevelEureka());
+        assertEquals(60, player.getLevelEureka());
 
         // Test boolean values
         // Subscription periods
@@ -157,13 +157,13 @@ public class PlayerBuilderTest {
         // Following can only be assumed to be true based on info at time of test creation
         assertEquals("Miqo'te", player.getRace());
         assertEquals("male", player.getGender());
-        assertEquals("none", player.getGrandCompany());
+        assertEquals("Maelstrom", player.getGrandCompany());
         // assertEquals("End of Days", playerOne.getFreeCompany());
 
         // Test classes - levels based on those at time of test creation
         // Tank
         assertEquals(0, player.getLevelGladiator());
-        assertEquals(15, player.getLevelMarauder());
+        assertEquals(28, player.getLevelMarauder());
         assertEquals(0, player.getLevelDarkknight());
 
         // Melee DPS
@@ -258,7 +258,7 @@ public class PlayerBuilderTest {
 
         // Test mounts string
         // Test for data from (near) start
-        assertFalse(player.getMounts().contains("Company Chocobo"));
+        assertTrue(player.getMounts().contains("Company Chocobo"));
         // Test for data from middle
         assertFalse(player.getMounts().contains("Cavalry Drake"));
         // Test for data from very end
