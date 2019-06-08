@@ -64,7 +64,7 @@ public class PlayerBuilder {
 
     /**
      * Set player class levels.
-     * As of 4.0, this is now parsed in the order:
+     * As of 4.5, this is now parsed in the order:
      * - Gladiator
      * - Marauder
      * - Dark Knight
@@ -80,6 +80,7 @@ public class PlayerBuilder {
      * - Black Mage
      * - Summoner
      * - Red Mage
+     * - Blue Mage
      *
      * @param arrLevels integer array of classes in order displayed on lodestone.
      */
@@ -100,6 +101,9 @@ public class PlayerBuilder {
         player.setLevelArcanist(arrLevels[13]);
         player.setLevelRedmage(arrLevels[14]);
         player.setLevelBluemage(arrLevels[15]);
+        // TODO: Update for 5.0 job changes on the lodestone
+        //player.setLevelGunbreaker(arrLevels[gnb]);
+        //player.setLevelDancer(arrLevels[dnc]);
         player.setLevelCarpenter(arrLevels[16]);
         player.setLevelBlacksmith(arrLevels[17]);
         player.setLevelArmorer(arrLevels[18]);

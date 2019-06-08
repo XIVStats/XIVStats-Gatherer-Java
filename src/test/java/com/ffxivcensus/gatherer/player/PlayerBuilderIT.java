@@ -54,6 +54,7 @@ public class PlayerBuilderIT {
         assertTrue(playerOne.getLevelGladiator() >= 60);
         assertTrue(playerOne.getLevelMarauder() >= 60);
         assertTrue(playerOne.getLevelDarkknight() >= 60);
+        assertTrue(playerOne.getLevelGunbreaker() >= 0);
 
         // Melee DPS
         assertTrue(playerOne.getLevelPugilist() >= 60);
@@ -64,6 +65,7 @@ public class PlayerBuilderIT {
         // Ranged Physical DPS
         assertTrue(playerOne.getLevelArcher() >= 52);
         assertTrue(playerOne.getLevelMachinist() >= 60);
+        assertTrue(playerOne.getLevelDancer() >= 0);
 
         // Ranged Magical DPS
         assertTrue(playerOne.getLevelThaumaturge() >= 60);
@@ -92,7 +94,7 @@ public class PlayerBuilderIT {
         assertTrue(playerOne.getLevelFisher() >= 60);
         
         // The Forbidden Land, Eureka
-        assertTrue(playerOne.getLevelEureka() == 20);
+        assertTrue(playerOne.getLevelEureka() == 60);
 
         // Test boolean values
         // Subscription periods

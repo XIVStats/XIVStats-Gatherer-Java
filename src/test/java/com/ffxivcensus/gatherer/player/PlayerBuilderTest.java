@@ -42,6 +42,7 @@ public class PlayerBuilderTest {
         assertEquals(0, player.getLevelGladiator());
         assertEquals(0, player.getLevelMarauder());
         assertEquals(70, player.getLevelDarkknight());
+        assertEquals(0, player.getLevelGunbreaker());
 
         // Melee DPS
         assertEquals(70, player.getLevelPugilist());
@@ -52,6 +53,7 @@ public class PlayerBuilderTest {
         // Ranged Physical DPS
         assertEquals(70, player.getLevelArcher());
         assertEquals(70, player.getLevelMachinist());
+        assertEquals(0, player.getLevelDancer());
 
         // Ranged Magical DPS
         assertEquals(70, player.getLevelThaumaturge());
@@ -165,6 +167,7 @@ public class PlayerBuilderTest {
         assertEquals(0, player.getLevelGladiator());
         assertEquals(28, player.getLevelMarauder());
         assertEquals(0, player.getLevelDarkknight());
+        assertEquals(0, player.getLevelGunbreaker());
 
         // Melee DPS
         assertEquals(0, player.getLevelPugilist());
@@ -175,6 +178,7 @@ public class PlayerBuilderTest {
         // Ranged Physical DPS
         assertEquals(0, player.getLevelArcher());
         assertEquals(0, player.getLevelMachinist());
+        assertEquals(0, player.getLevelDancer());
 
         // Ranged Magical DPS
         assertEquals(0, player.getLevelThaumaturge());
