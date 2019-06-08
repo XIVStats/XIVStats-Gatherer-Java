@@ -578,6 +578,27 @@ databaseChangeLog:
                     constraints:
                       nullable: false
                     afterColumn: sbartbook
+  - changeSet:
+      id: 11
+      author: matthewhillier
+      changes:
+          - addColumn:
+              tableName: tblplayers
+              columns:
+                - column:
+                    name: level_gunbreaker
+                    type: int(3)
+                    defaultValueNumeric: 0
+                    constraints:
+                      nullable: false
+                    afterColumn: level_bluemage
+                - column:
+                    name: level_dancer
+                    type: int(3)
+                    defaultValueNumeric: 0
+                    constraints:
+                      nullable: false
+                    afterColumn: level_gunbreaker
                     
 
                     
