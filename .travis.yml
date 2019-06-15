@@ -1,8 +1,14 @@
 language: java
 jdk:
-  - oraclejdk8
+  - openjdk8
 
 jobs:
   include:
     - stage: Build
-      script: mvn clean install -DskipTests validate compile package jar:jar javadoc:javadoc
+      script: mvn clean install -DskipTests validate compile package jar:jar
+    - stage: Create distributable
+      script: |
+        mkdir - p target/release
+        cp target/*.jar target/release/XIVStats-Gatherer-Java.jar
+        cp config_example.xml target/release
+        zip -r XIVStats-Gatherer-Java.zip target/release/
