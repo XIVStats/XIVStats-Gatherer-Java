@@ -3,4 +3,4 @@ language: java
 jobs:
   include:
     - stage: Build
-      script: mvn clean install -DskipTests validate compile package jar:jar javadoc:javadoc
+      script: mvn clean install -DskipTests validate compile package jar:jar
