@@ -88,6 +88,8 @@ public class PlayerBuilder {
         player.setLevelGladiator(arrLevels[0]);
         player.setLevelMarauder(arrLevels[1]);
         player.setLevelDarkknight(arrLevels[2]);
+        // TODO: Update for 5.0 job changes on the lodestone
+        //player.setLevelGunbreaker(arrLevels[gnb]);
         player.setLevelPugilist(arrLevels[3]);
         player.setLevelLancer(arrLevels[4]);
         player.setLevelRogue(arrLevels[5]);
@@ -97,13 +99,11 @@ public class PlayerBuilder {
         player.setLevelAstrologian(arrLevels[9]);
         player.setLevelArcher(arrLevels[10]);
         player.setLevelMachinist(arrLevels[11]);
+        //player.setLevelDancer(arrLevels[dnc]);
         player.setLevelThaumaturge(arrLevels[12]);
         player.setLevelArcanist(arrLevels[13]);
         player.setLevelRedmage(arrLevels[14]);
         player.setLevelBluemage(arrLevels[15]);
-        // TODO: Update for 5.0 job changes on the lodestone
-        //player.setLevelGunbreaker(arrLevels[gnb]);
-        //player.setLevelDancer(arrLevels[dnc]);
         player.setLevelCarpenter(arrLevels[16]);
         player.setLevelBlacksmith(arrLevels[17]);
         player.setLevelArmorer(arrLevels[18]);
