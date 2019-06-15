@@ -3,15 +3,15 @@ jdk:
 - openjdk8
 jobs:
   include:
-  - stage: Build
-    script: mvn clean install -DskipTests validate compile package jar:jar
-  - stage: Create distributable
+#  - stage: Build
+#    script: |-
+#      mvn clean install -DskipTests validate compile package jar:jar
+#      mkdir - p target/release
+#      cp target/*.jar target/release/XIVStats-Gatherer-Java.jar
+#      cp config_example.xml target/release
+#      zip -r XIVStats-Gatherer-Java.zip target/release/
+  - stage: Test
     script: |-
-      mkdir - p target/release
-      cp target/*.jar target/release/XIVStats-Gatherer-Java.jar
-      cp config_example.xml target/release
-      zip -r XIVStats-Gatherer-Java.zip target/release/
-  - stage: Prepare for testing
-    script: |-
-      cp config_example.xml config.xml
-      sed -i -e "s/mysql:\/\/localhost:3306/$hostUri/" -e "s/value/$password/" -e "s/xivstats/$username/" -e "s/dbplayers/$database/" -e "s/32/$threads/" config.xml
+      echo $database
+#      cp config_example.xml config.xml
+#      sed -i -e "s/mysql:\/\/localhost:3306/$hostUri/" -e "s/value/$password/" -e "s/xivstats/$username/" -e "s/dbplayers/$database/" -e "s/32/$threads/" config.xml
