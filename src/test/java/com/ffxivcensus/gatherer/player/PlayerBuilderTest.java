@@ -47,7 +47,7 @@ public class PlayerBuilderTest {
         // Melee DPS
         assertEquals(70, player.getLevelPugilist());
         assertEquals(37, player.getLevelLancer());
-        assertEquals(54, player.getLevelRogue());
+        assertEquals(55, player.getLevelRogue());
         assertEquals(70, player.getLevelSamurai());
 
         // Ranged Physical DPS
@@ -73,7 +73,7 @@ public class PlayerBuilderTest {
         assertEquals(21, player.getLevelGoldsmith());
         assertEquals(0, player.getLevelLeatherworker());
         assertEquals(0, player.getLevelWeaver());
-        assertEquals(0, player.getLevelAlchemist());
+        assertEquals(21, player.getLevelAlchemist());
         assertEquals(33, player.getLevelCulinarian());
 
         // Disciples of the land

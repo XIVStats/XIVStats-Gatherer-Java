@@ -88,36 +88,35 @@ public class PlayerBuilder {
         player.setLevelGladiator(arrLevels[0]);
         player.setLevelMarauder(arrLevels[1]);
         player.setLevelDarkknight(arrLevels[2]);
-        // TODO: Update for 5.0 job changes on the lodestone
-        //player.setLevelGunbreaker(arrLevels[gnb]);
-        player.setLevelPugilist(arrLevels[3]);
-        player.setLevelLancer(arrLevels[4]);
-        player.setLevelRogue(arrLevels[5]);
-        player.setLevelSamurai(arrLevels[6]);
-        player.setLevelConjurer(arrLevels[7]);
-        player.setLevelScholar(arrLevels[8]);
-        player.setLevelAstrologian(arrLevels[9]);
-        player.setLevelArcher(arrLevels[10]);
-        player.setLevelMachinist(arrLevels[11]);
-        //player.setLevelDancer(arrLevels[dnc]);
-        player.setLevelThaumaturge(arrLevels[12]);
-        player.setLevelArcanist(arrLevels[13]);
-        player.setLevelRedmage(arrLevels[14]);
-        player.setLevelBluemage(arrLevels[15]);
-        player.setLevelCarpenter(arrLevels[16]);
-        player.setLevelBlacksmith(arrLevels[17]);
-        player.setLevelArmorer(arrLevels[18]);
-        player.setLevelGoldsmith(arrLevels[19]);
-        player.setLevelLeatherworker(arrLevels[20]);
-        player.setLevelWeaver(arrLevels[21]);
-        player.setLevelAlchemist(arrLevels[22]);
-        player.setLevelCulinarian(arrLevels[23]);
-        player.setLevelMiner(arrLevels[24]);
-        player.setLevelBotanist(arrLevels[25]);
-        player.setLevelFisher(arrLevels[26]);
+        player.setLevelGunbreaker(arrLevels[3]);
+        player.setLevelPugilist(arrLevels[4]);
+        player.setLevelLancer(arrLevels[5]);
+        player.setLevelRogue(arrLevels[6]);
+        player.setLevelSamurai(arrLevels[7]);
+        player.setLevelConjurer(arrLevels[8]);
+        player.setLevelScholar(arrLevels[9]);
+        player.setLevelAstrologian(arrLevels[10]);
+        player.setLevelArcher(arrLevels[11]);
+        player.setLevelMachinist(arrLevels[12]);
+        player.setLevelDancer(arrLevels[13]);
+        player.setLevelThaumaturge(arrLevels[14]);
+        player.setLevelArcanist(arrLevels[15]);
+        player.setLevelRedmage(arrLevels[16]);
+        player.setLevelBluemage(arrLevels[17]);
+        player.setLevelCarpenter(arrLevels[18]);
+        player.setLevelBlacksmith(arrLevels[19]);
+        player.setLevelArmorer(arrLevels[20]);
+        player.setLevelGoldsmith(arrLevels[21]);
+        player.setLevelLeatherworker(arrLevels[22]);
+        player.setLevelWeaver(arrLevels[23]);
+        player.setLevelAlchemist(arrLevels[24]);
+        player.setLevelCulinarian(arrLevels[25]);
+        player.setLevelMiner(arrLevels[26]);
+        player.setLevelBotanist(arrLevels[27]);
+        player.setLevelFisher(arrLevels[28]);
         // Elemental Level is an optional component at the end of the section, so may not exist
-        if(arrLevels.length > 27) {
-            player.setLevelEureka(arrLevels[27]);
+        if(arrLevels.length > 29) {
+            player.setLevelEureka(arrLevels[29]);
         }
     }
 
@@ -374,10 +373,10 @@ public class PlayerBuilder {
         }
 
         // Check if levels array is larger than this system is programmed for
-        // As of 4.5, this is now 28 - SCH and SMN are 2 jobs, + SAM, RDM, BLU & Eureka
-        if(arrLevels.length > 28) {
+        // As of 5.0, this is now 30 - SCH and SMN are 2 jobs, + SAM, RDM, BLU, GNB, DNC & Eureka
+        if(arrLevels.length > 30) {
             throw new IllegalArgumentException("Error: More class levels found (" + arrLevels.length
-                                               + ") than anticipated (28). The class definitions need to be updated.");
+                                               + ") than anticipated (30). The class definitions need to be updated.");
         }
 
         return arrLevels;
