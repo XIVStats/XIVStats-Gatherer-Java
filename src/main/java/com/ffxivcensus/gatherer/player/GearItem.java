@@ -18,33 +18,31 @@ public class GearItem {
     private String itemId;
     /** Gear Item's Name (English). */
     private String name;
+    /** Gear Item's Category (English). */
+    private String category;
 
-    /**
-     * @return the itemId
-     */
     public String getItemId() {
         return itemId;
     }
 
-    /**
-     * @param itemId the itemId to set
-     */
     public void setItemId(String itemId) {
         this.itemId = itemId;
     }
 
-    /**
-     * @return the name
-     */
     public String getName() {
         return name;
     }
 
-    /**
-     * @param name the name to set
-     */
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 
 }

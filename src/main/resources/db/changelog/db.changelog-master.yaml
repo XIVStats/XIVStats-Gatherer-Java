@@ -730,3 +730,15 @@ databaseChangeLog:
               nullable: true
               foreignKeyName: fk_gear_job_crystal
               references: gear_items(item_id)
+- changeSet:
+    id: 14
+    author: matthewhillier
+    changes:
+    - addColumn:
+        tableName: gear_items
+        columns:
+        - column:
+            name: category
+            type: text
+            constraints:
+              nullable: true

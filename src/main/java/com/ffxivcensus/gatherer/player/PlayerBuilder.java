@@ -541,8 +541,9 @@ public class PlayerBuilder {
                 item = new GearItem();
                 item.setItemId(dbUrl[5]);
 
-                // Get Item Name
+                // Get Item Details
                 item.setName(toolTip.getElementsByClass("db-tooltip__item__name").get(0).text());
+                item.setCategory(toolTip.getElementsByClass("db-tooltip__item__category").get(0).text());
 
                 gearItemRepository.save(item);
             }
