@@ -42,7 +42,7 @@ public class GathererTask implements Runnable {
             PlayerBean player = playerRepository.findOne(getPlayerId());
             if(player == null || !CharacterStatus.DELETED.equals(player.getCharacterStatus())) {
                 // Only update characters that have not been deleted
-                player = playerBuilder.getPlayer(getPlayerId());
+                player = playerBuilder.getPlayer(getPlayerId(), player);
                 getPlayerRepository().save(player);
                 RESULT_LOG.info("{} - {}", getPlayerId(), player.getCharacterStatus());
             } else {

@@ -1,734 +1,732 @@
 databaseChangeLog:
-  - changeSet:
-      id: 1
-      author: matthewhillier
-      preConditions:
-        - onFail: MARK_RAN
-        - tableExists:
-            tableName: tblplayers
-      changes:
-        - dropTable:
-            tableName: tblplayers
-  - changeSet:
-      id: 2
-      author: matthewhillier
-      changes:
-        - createTable:
-            tableName: tblplayers
-            columns:
-              - column:
-                  name: id
-                  type: int
-                  constraints:
-                    primaryKey: true
-                    nullable: false
-              - column:
-                  name: name
-                  type: varchar(255)
-                  constraints:
-                    nullable: false
-              - column:
-                  name: realm
-                  type: varchar(255)
-                  constraints:
-                    nullable: false
-              - column:
-                  name: race
-                  type: varchar(255)
-                  constraints:
-                    nullable: false
-              - column:
-                  name: gender
-                  type: varchar(255)
-                  constraints:
-                    nullable: false
-              - column:
-                  name: grand_company
-                  type: varchar(255)
-                  constraints:
-                    nullable: true
-              - column:
-                  name: free_company
-                  type: varchar(255)
-                  constraints:
-                    nullable: true
-              - column:
-                  name: level_gladiator
-                  type: int(3)
-                  defaultValueNumeric: 0
-                  constraints:
-                    nullable: false
-              - column:
-                  name: level_pugilist
-                  type: int(3)
-                  defaultValueNumeric: 0
-                  constraints:
-                    nullable: false
-              - column:
-                  name: level_marauder
-                  type: int(3)
-                  defaultValueNumeric: 0
-                  constraints:
-                    nullable: false
-              - column:
-                  name: level_lancer
-                  type: int(3)
-                  defaultValueNumeric: 0
-                  constraints:
-                    nullable: false
-              - column:
-                  name: level_archer
-                  type: int(3)
-                  defaultValueNumeric: 0
-                  constraints:
-                    nullable: false
-              - column:
-                  name: level_rogue
-                  type: int(3)
-                  defaultValueNumeric: 0
-                  constraints:
-                    nullable: false
-              - column:
-                  name: level_conjurer
-                  type: int(3)
-                  defaultValueNumeric: 0
-                  constraints:
-                    nullable: false
-              - column:
-                  name: level_thaumaturge
-                  type: int(3)
-                  defaultValueNumeric: 0
-                  constraints:
-                    nullable: false
-              - column:
-                  name: level_arcanist
-                  type: int(3)
-                  defaultValueNumeric: 0
-                  constraints:
-                    nullable: false
-              - column:
-                  name: level_darkknight
-                  type: int(3)
-                  defaultValueNumeric: 0
-                  constraints:
-                    nullable: false
-              - column:
-                  name: level_machinist
-                  type: int(3)
-                  defaultValueNumeric: 0
-                  constraints:
-                    nullable: false
-              - column:
-                  name: level_astrologian
-                  type: int(3)
-                  defaultValueNumeric: 0
-                  constraints:
-                    nullable: false
-              - column:
-                  name: level_scholar
-                  type: int(3)
-                  defaultValueNumeric: 0
-                  constraints:
-                    nullable: false
-              - column:
-                  name: level_redmage
-                  type: int(3)
-                  defaultValueNumeric: 0
-                  constraints:
-                    nullable: false
-              - column:
-                  name: level_samurai
-                  type: int(3)
-                  defaultValueNumeric: 0
-                  constraints:
-                    nullable: false
-              - column:
-                  name: level_carpenter
-                  type: int(3)
-                  defaultValueNumeric: 0
-                  constraints:
-                    nullable: false
-              - column:
-                  name: level_blacksmith
-                  type: int(3)
-                  defaultValueNumeric: 0
-                  constraints:
-                    nullable: false
-              - column:
-                  name: level_armorer
-                  type: int(3)
-                  defaultValueNumeric: 0
-                  constraints:
-                    nullable: false
-              - column:
-                  name: level_goldsmith
-                  type: int(3)
-                  defaultValueNumeric: 0
-                  constraints:
-                    nullable: false
-              - column:
-                  name: level_leatherworker
-                  type: int(3)
-                  defaultValueNumeric: 0
-                  constraints:
-                    nullable: false
-              - column:
-                  name: level_weaver
-                  type: int(3)
-                  defaultValueNumeric: 0
-                  constraints:
-                    nullable: false
-              - column:
-                  name: level_alchemist
-                  type: int(3)
-                  defaultValueNumeric: 0
-                  constraints:
-                    nullable: false
-              - column:
-                  name: level_culinarian
-                  type: int(3)
-                  defaultValueNumeric: 0
-                  constraints:
-                    nullable: false
-              - column:
-                  name: level_miner
-                  type: int(3)
-                  defaultValueNumeric: 0
-                  constraints:
-                    nullable: false
-              - column:
-                  name: level_botanist
-                  type: int(3)
-                  defaultValueNumeric: 0
-                  constraints:
-                    nullable: false
-              - column:
-                  name: level_fisher
-                  type: int(3)
-                  defaultValueNumeric: 0
-                  constraints:
-                    nullable: false
-              - column:
-                  name: p30days
-                  type: bit(1)
-                  defaultValueNumeric: 0
-                  constraints:
-                    nullable: false
-              - column:
-                  name: p60days
-                  type: bit(1)
-                  defaultValueNumeric: 0
-                  constraints:
-                    nullable: false
-              - column:
-                  name: p90days
-                  type: bit(1)
-                  defaultValueNumeric: 0
-                  constraints:
-                    nullable: false
-              - column:
-                  name: p180days
-                  type: bit(1)
-                  defaultValueNumeric: 0
-                  constraints:
-                    nullable: false
-              - column:
-                  name: p270days
-                  type: bit(1)
-                  defaultValueNumeric: 0
-                  constraints:
-                    nullable: false
-              - column:
-                  name: p360days
-                  type: bit(1)
-                  defaultValueNumeric: 0
-                  constraints:
-                    nullable: false
-              - column:
-                  name: p450days
-                  type: bit(1)
-                  defaultValueNumeric: 0
-                  constraints:
-                    nullable: false
-              - column:
-                  name: p630days
-                  type: bit(1)
-                  defaultValueNumeric: 0
-                  constraints:
-                    nullable: false
-              - column:
-                  name: p960days
-                  type: bit(1)
-                  defaultValueNumeric: 0
-                  constraints:
-                    nullable: false
-              - column:
-                  name: prearr
-                  type: bit(1)
-                  defaultValueNumeric: 0
-                  constraints:
-                    nullable: false
-              - column:
-                  name: prehw
-                  type: bit(1)
-                  defaultValueNumeric: 0
-                  constraints:
-                    nullable: false
-              - column:
-                  name: presb
-                  type: bit(1)
-                  defaultValueNumeric: 0
-                  constraints:
-                    nullable: false
-              - column:
-                  name: arrartbook
-                  type: bit(1)
-                  defaultValueNumeric: 0
-                  constraints:
-                    nullable: false
-              - column:
-                  name: hwartbookone
-                  type: bit(1)
-                  defaultValueNumeric: 0
-                  constraints:
-                    nullable: false
-              - column:
-                  name: hwartbooktwo
-                  type: bit(1)
-                  defaultValueNumeric: 0
-                  constraints:
-                    nullable: false
-              - column:
-                  name: hasencyclopedia
-                  type: bit(1)
-                  defaultValueNumeric: 0
-                  constraints:
-                    nullable: false
-              - column:
-                  name: beforemeteor
-                  type: bit(1)
-                  defaultValueNumeric: 0
-                  constraints:
-                    nullable: false
-              - column:
-                  name: beforethefall
-                  type: bit(1)
-                  defaultValueNumeric: 0
-                  constraints:
-                    nullable: false
-              - column:
-                  name: ps4collectors
-                  type: bit(1)
-                  defaultValueNumeric: 0
-                  constraints:
-                    nullable: false
-              - column:
-                  name: soundtrack
-                  type: bit(1)
-                  defaultValueNumeric: 0
-                  constraints:
-                    nullable: false
-              - column:
-                  name: saweternalbond
-                  type: bit(1)
-                  defaultValueNumeric: 0
-                  constraints:
-                    nullable: false
-              - column:
-                  name: sightseeing
-                  type: bit(1)
-                  defaultValueNumeric: 0
-                  constraints:
-                    nullable: false
-              - column:
-                  name: comm50
-                  type: bit(1)
-                  defaultValueNumeric: 0
-                  constraints:
-                    nullable: false
-              - column:
-                  name: moogleplush
-                  type: bit(1)
-                  defaultValueNumeric: 0
-                  constraints:
-                    nullable: false
-              - column:
-                  name: topazcarubuncleplush
-                  type: bit(1)
-                  defaultValueNumeric: 0
-                  constraints:
-                    nullable: false
-              - column:
-                  name: emeraldcarbuncleplush
-                  type: bit(1)
-                  defaultValueNumeric: 0
-                  constraints:
-                    nullable: false
-              - column:
-                  name: hildibrand
-                  type: bit(1)
-                  defaultValueNumeric: 0
-                  constraints:
-                    nullable: false
-              - column:
-                  name: dideternalbond
-                  type: bit(1)
-                  defaultValueNumeric: 0
-                  constraints:
-                    nullable: false
-              - column:
-                  name: arrcollector
-                  type: bit(1)
-                  defaultValueNumeric: 0
-                  constraints:
-                    nullable: false
-              - column:
-                  name: kobold
-                  type: bit(1)
-                  defaultValueNumeric: 0
-                  constraints:
-                    nullable: false
-              - column:
-                  name: sahagin
-                  type: bit(1)
-                  defaultValueNumeric: 0
-                  constraints:
-                    nullable: false
-              - column:
-                  name: amaljaa
-                  type: bit(1)
-                  defaultValueNumeric: 0
-                  constraints:
-                    nullable: false
-              - column:
-                  name: sylph
-                  type: bit(1)
-                  defaultValueNumeric: 0
-                  constraints:
-                    nullable: false
-              - column:
-                  name: moogle
-                  type: bit(1)
-                  defaultValueNumeric: 0
-                  constraints:
-                    nullable: false
-              - column:
-                  name: vanuvanu
-                  type: bit(1)
-                  defaultValueNumeric: 0
-                  constraints:
-                    nullable: false
-              - column:
-                  name: vath
-                  type: bit(1)
-                  defaultValueNumeric: 0
-                  constraints:
-                    nullable: false
-              - column:
-                  name: arr_25_complete
-                  type: bit(1)
-                  defaultValueNumeric: 0
-                  constraints:
-                    nullable: false
-              - column:
-                  name: hw_complete
-                  type: bit(1)
-                  defaultValueNumeric: 0
-                  constraints:
-                    nullable: false
-              - column:
-                  name: hw_31_complete
-                  type: bit(1)
-                  defaultValueNumeric: 0
-                  constraints:
-                    nullable: false
-              - column:
-                  name: hw_33_complete
-                  type: bit(1)
-                  defaultValueNumeric: 0
-                  constraints:
-                    nullable: false
-              - column:
-                  name: sb_complete
-                  type: bit(1)
-                  defaultValueNumeric: 0
-                  constraints:
-                    nullable: false
-              - column:
-                  name: legacy_player
-                  type: bit(1)
-                  defaultValueNumeric: 0
-                  constraints:
-                    nullable: false
-              - column:
-                  name: mounts
-                  type: text
-                  constraints:
-                    nullable: true
-              - column:
-                  name: minions
-                  type: text
-                  constraints:
-                    nullable: true
-              - column:
-                  name: date_active
-                  type: date
-                  constraints:
-                    nullable: true
-              - column:
-                  name: is_active
-                  type: bit(1)
-                  defaultValueNumeric: 0
-                  constraints:
-                    nullable: false
-  - changeSet:
-      id: 3
-      author: matthewhillier
-      changes:
-          - tagDatabase:
-              tag: 1.4.0
-  - changeSet:
-      id: 4
-      author: matthewhillier
-      changes:
-          - addColumn:
-              tableName: tblplayers
-              columns:
-                - column:
-                    name: character_status
-                    type: varchar(10)
-  - changeSet:
-      id: 5
-      author: matthewhillier
-      changes:
-          - createIndex:
-              tableName: tblplayers
-              columns:
-                - column:
-                    name: character_status
-                    type: varchar(10)
-              indexName: idx_character_status
-  - changeSet:
-      id: 6
-      author: matthewhillier
-      changes:
-          - addColumn:
-              tableName: tblplayers
-              columns:
-                - column:
-                    name: level_bluemage
-                    type: int(3)
-                    defaultValueNumeric: 0
-                    constraints:
-                      nullable: false
-                    afterColumn: level_samurai
-  - changeSet:
-      id: 7
-      author: matthewhillier
-      changes:
-          - addColumn:
-              tableName: tblplayers
-              columns:
-                - column:
-                    name: level_eureka
-                    type: int(3)
-                    defaultValueNumeric: 0
-                    constraints:
-                      nullable: false
-                    afterColumn: level_fisher
-  - changeSet:
-      id: 8
-      author: fahy
-      changes:
-          - addColumn:
-              tableName: tblplayers
-              columns:
-                - column:
-                    name: preshb
-                    type: bit(1)
-                    defaultValueNumeric: 0
-                    constraints:
-                      nullable: false
-                    afterColumn: presb
-  - changeSet:
-      id: 9
-      author: fahy
-      changes:
-          - addColumn:
-              tableName: tblplayers
-              columns:
-                - column:
-                    name: sbartbook
-                    type: bit(1)
-                    defaultValueNumeric: 0
-                    constraints:
-                      nullable: false
-                    afterColumn: hwartbooktwo
-  - changeSet:
-      id: 10
-      author: matthewhillier
-      changes:
-          - addColumn:
-              tableName: tblplayers
-              columns:
-                - column:
-                    name: sbartbooktwo
-                    type: bit(1)
-                    defaultValueNumeric: 0
-                    constraints:
-                      nullable: false
-                    afterColumn: sbartbook
-  - changeSet:
-      id: 11
-      author: matthewhillier
-      changes:
-          - addColumn:
-              tableName: tblplayers
-              columns:
-                - column:
-                    name: level_gunbreaker
-                    type: int(3)
-                    defaultValueNumeric: 0
-                    constraints:
-                      nullable: false
-                    afterColumn: level_bluemage
-                - column:
-                    name: level_dancer
-                    type: int(3)
-                    defaultValueNumeric: 0
-                    constraints:
-                      nullable: false
-                    afterColumn: level_gunbreaker
-                    
-  - changeSet:
-      id: 12
-      author: matthewhillier
-      changes:
-          - createTable:
-              tableName: gear_items
-              columns:
-                - column:
-                    name: item_id
-                    type: varchar(12)
-                    constraints:
-                      nullable: false
-                      primaryKey: true
-                - column:
-                    name: name
-                    type: text
-                    constraints:
-                      nullable: true
-                    
-  - changeSet:
-      id: 13
-      author: matthewhillier
-      changes:
-          - createTable:
-              tableName: character_gear_sets
-              columns:
-                - column:
-                    name: character_id
-                    type: int
-                    constraints:
-                      primaryKey: true
-                      nullable: false
-                      foreignKeyName: fk_character
-                      references: tblplayers(id)
-                - column:
-                    name: main_hand
-                    type: varchar(12)
-                    constraints:
-                      nullable: true
-                      foreignKeyName: fk_gear_main_hand
-                      references: gear_items(item_id)
-                - column:
-                    name: head
-                    type: varchar(12)
-                    constraints:
-                      nullable: true
-                      foreignKeyName: fk_gear_head
-                      references: gear_items(item_id)
-                - column:
-                    name: body
-                    type: varchar(12)
-                    constraints:
-                      nullable: true
-                      foreignKeyName: fk_gear_body
-                      references: gear_items(item_id)
-                - column:
-                    name: hands
-                    type: varchar(12)
-                    constraints:
-                      nullable: true
-                      foreignKeyName: fk_gear_hands
-                      references: gear_items(item_id)
-                - column:
-                    name: belt
-                    type: varchar(12)
-                    constraints:
-                      nullable: true
-                      foreignKeyName: fk_gear_belt
-                      references: gear_items(item_id)
-                - column:
-                    name: legs
-                    type: varchar(12)
-                    constraints:
-                      nullable: true
-                      foreignKeyName: fk_gear_legs
-                      references: gear_items(item_id)
-                - column:
-                    name: feet
-                    type: varchar(12)
-                    constraints:
-                      nullable: true
-                      foreignKeyName: fk_gear_feet
-                      references: gear_items(item_id)
-                - column:
-                    name: off_hand
-                    type: varchar(12)
-                    constraints:
-                      nullable: true
-                      foreignKeyName: fk_gear_off_hand
-                      references: gear_items(item_id)
-                - column:
-                    name: ears
-                    type: varchar(12)
-                    constraints:
-                      nullable: true
-                      foreignKeyName: fk_gear_ears
-                      references: gear_items(item_id)
-                - column:
-                    name: neck
-                    type: varchar(12)
-                    constraints:
-                      nullable: true
-                      foreignKeyName: fk_gear_neck
-                      references: gear_items(item_id)
-                - column:
-                    name: wrists
-                    type: varchar(12)
-                    constraints:
-                      nullable: true
-                      foreignKeyName: fk_gear_wrists
-                      references: gear_items(item_id)
-                - column:
-                    name: left_hand
-                    type: varchar(12)
-                    constraints:
-                      nullable: true
-                      foreignKeyName: fk_gear_left_hand
-                      references: gear_items(item_id)
-                - column:
-                    name: right_hand
-                    type: varchar(12)
-                    constraints:
-                      nullable: true
-                      foreignKeyName: fk_gear_right_hand
-                      references: gear_items(item_id)
-                - column:
-                    name: job_crystal
-                    type: varchar(12)
-                    constraints:
-                      nullable: true
-                      foreignKeyName: fk_gear_job_crystal
-                      references: gear_items(item_id)
+- changeSet:
+    id: 1
+    author: matthewhillier
+    preConditions:
+    - onFail: MARK_RAN
+    - tableExists:
+        tableName: tblplayers
+    changes:
+    - dropTable:
+        tableName: tblplayers
+- changeSet:
+    id: 2
+    author: matthewhillier
+    changes:
+    - createTable:
+        tableName: tblplayers
+        columns:
+        - column:
+            name: id
+            type: int
+            constraints:
+              primaryKey: true
+              nullable: false
+        - column:
+            name: name
+            type: varchar(255)
+            constraints:
+              nullable: false
+        - column:
+            name: realm
+            type: varchar(255)
+            constraints:
+              nullable: false
+        - column:
+            name: race
+            type: varchar(255)
+            constraints:
+              nullable: false
+        - column:
+            name: gender
+            type: varchar(255)
+            constraints:
+              nullable: false
+        - column:
+            name: grand_company
+            type: varchar(255)
+            constraints:
+              nullable: true
+        - column:
+            name: free_company
+            type: varchar(255)
+            constraints:
+              nullable: true
+        - column:
+            name: level_gladiator
+            type: int(3)
+            defaultValueNumeric: 0
+            constraints:
+              nullable: false
+        - column:
+            name: level_pugilist
+            type: int(3)
+            defaultValueNumeric: 0
+            constraints:
+              nullable: false
+        - column:
+            name: level_marauder
+            type: int(3)
+            defaultValueNumeric: 0
+            constraints:
+              nullable: false
+        - column:
+            name: level_lancer
+            type: int(3)
+            defaultValueNumeric: 0
+            constraints:
+              nullable: false
+        - column:
+            name: level_archer
+            type: int(3)
+            defaultValueNumeric: 0
+            constraints:
+              nullable: false
+        - column:
+            name: level_rogue
+            type: int(3)
+            defaultValueNumeric: 0
+            constraints:
+              nullable: false
+        - column:
+            name: level_conjurer
+            type: int(3)
+            defaultValueNumeric: 0
+            constraints:
+              nullable: false
+        - column:
+            name: level_thaumaturge
+            type: int(3)
+            defaultValueNumeric: 0
+            constraints:
+              nullable: false
+        - column:
+            name: level_arcanist
+            type: int(3)
+            defaultValueNumeric: 0
+            constraints:
+              nullable: false
+        - column:
+            name: level_darkknight
+            type: int(3)
+            defaultValueNumeric: 0
+            constraints:
+              nullable: false
+        - column:
+            name: level_machinist
+            type: int(3)
+            defaultValueNumeric: 0
+            constraints:
+              nullable: false
+        - column:
+            name: level_astrologian
+            type: int(3)
+            defaultValueNumeric: 0
+            constraints:
+              nullable: false
+        - column:
+            name: level_scholar
+            type: int(3)
+            defaultValueNumeric: 0
+            constraints:
+              nullable: false
+        - column:
+            name: level_redmage
+            type: int(3)
+            defaultValueNumeric: 0
+            constraints:
+              nullable: false
+        - column:
+            name: level_samurai
+            type: int(3)
+            defaultValueNumeric: 0
+            constraints:
+              nullable: false
+        - column:
+            name: level_carpenter
+            type: int(3)
+            defaultValueNumeric: 0
+            constraints:
+              nullable: false
+        - column:
+            name: level_blacksmith
+            type: int(3)
+            defaultValueNumeric: 0
+            constraints:
+              nullable: false
+        - column:
+            name: level_armorer
+            type: int(3)
+            defaultValueNumeric: 0
+            constraints:
+              nullable: false
+        - column:
+            name: level_goldsmith
+            type: int(3)
+            defaultValueNumeric: 0
+            constraints:
+              nullable: false
+        - column:
+            name: level_leatherworker
+            type: int(3)
+            defaultValueNumeric: 0
+            constraints:
+              nullable: false
+        - column:
+            name: level_weaver
+            type: int(3)
+            defaultValueNumeric: 0
+            constraints:
+              nullable: false
+        - column:
+            name: level_alchemist
+            type: int(3)
+            defaultValueNumeric: 0
+            constraints:
+              nullable: false
+        - column:
+            name: level_culinarian
+            type: int(3)
+            defaultValueNumeric: 0
+            constraints:
+              nullable: false
+        - column:
+            name: level_miner
+            type: int(3)
+            defaultValueNumeric: 0
+            constraints:
+              nullable: false
+        - column:
+            name: level_botanist
+            type: int(3)
+            defaultValueNumeric: 0
+            constraints:
+              nullable: false
+        - column:
+            name: level_fisher
+            type: int(3)
+            defaultValueNumeric: 0
+            constraints:
+              nullable: false
+        - column:
+            name: p30days
+            type: bit(1)
+            defaultValueNumeric: 0
+            constraints:
+              nullable: false
+        - column:
+            name: p60days
+            type: bit(1)
+            defaultValueNumeric: 0
+            constraints:
+              nullable: false
+        - column:
+            name: p90days
+            type: bit(1)
+            defaultValueNumeric: 0
+            constraints:
+              nullable: false
+        - column:
+            name: p180days
+            type: bit(1)
+            defaultValueNumeric: 0
+            constraints:
+              nullable: false
+        - column:
+            name: p270days
+            type: bit(1)
+            defaultValueNumeric: 0
+            constraints:
+              nullable: false
+        - column:
+            name: p360days
+            type: bit(1)
+            defaultValueNumeric: 0
+            constraints:
+              nullable: false
+        - column:
+            name: p450days
+            type: bit(1)
+            defaultValueNumeric: 0
+            constraints:
+              nullable: false
+        - column:
+            name: p630days
+            type: bit(1)
+            defaultValueNumeric: 0
+            constraints:
+              nullable: false
+        - column:
+            name: p960days
+            type: bit(1)
+            defaultValueNumeric: 0
+            constraints:
+              nullable: false
+        - column:
+            name: prearr
+            type: bit(1)
+            defaultValueNumeric: 0
+            constraints:
+              nullable: false
+        - column:
+            name: prehw
+            type: bit(1)
+            defaultValueNumeric: 0
+            constraints:
+              nullable: false
+        - column:
+            name: presb
+            type: bit(1)
+            defaultValueNumeric: 0
+            constraints:
+              nullable: false
+        - column:
+            name: arrartbook
+            type: bit(1)
+            defaultValueNumeric: 0
+            constraints:
+              nullable: false
+        - column:
+            name: hwartbookone
+            type: bit(1)
+            defaultValueNumeric: 0
+            constraints:
+              nullable: false
+        - column:
+            name: hwartbooktwo
+            type: bit(1)
+            defaultValueNumeric: 0
+            constraints:
+              nullable: false
+        - column:
+            name: hasencyclopedia
+            type: bit(1)
+            defaultValueNumeric: 0
+            constraints:
+              nullable: false
+        - column:
+            name: beforemeteor
+            type: bit(1)
+            defaultValueNumeric: 0
+            constraints:
+              nullable: false
+        - column:
+            name: beforethefall
+            type: bit(1)
+            defaultValueNumeric: 0
+            constraints:
+              nullable: false
+        - column:
+            name: ps4collectors
+            type: bit(1)
+            defaultValueNumeric: 0
+            constraints:
+              nullable: false
+        - column:
+            name: soundtrack
+            type: bit(1)
+            defaultValueNumeric: 0
+            constraints:
+              nullable: false
+        - column:
+            name: saweternalbond
+            type: bit(1)
+            defaultValueNumeric: 0
+            constraints:
+              nullable: false
+        - column:
+            name: sightseeing
+            type: bit(1)
+            defaultValueNumeric: 0
+            constraints:
+              nullable: false
+        - column:
+            name: comm50
+            type: bit(1)
+            defaultValueNumeric: 0
+            constraints:
+              nullable: false
+        - column:
+            name: moogleplush
+            type: bit(1)
+            defaultValueNumeric: 0
+            constraints:
+              nullable: false
+        - column:
+            name: topazcarubuncleplush
+            type: bit(1)
+            defaultValueNumeric: 0
+            constraints:
+              nullable: false
+        - column:
+            name: emeraldcarbuncleplush
+            type: bit(1)
+            defaultValueNumeric: 0
+            constraints:
+              nullable: false
+        - column:
+            name: hildibrand
+            type: bit(1)
+            defaultValueNumeric: 0
+            constraints:
+              nullable: false
+        - column:
+            name: dideternalbond
+            type: bit(1)
+            defaultValueNumeric: 0
+            constraints:
+              nullable: false
+        - column:
+            name: arrcollector
+            type: bit(1)
+            defaultValueNumeric: 0
+            constraints:
+              nullable: false
+        - column:
+            name: kobold
+            type: bit(1)
+            defaultValueNumeric: 0
+            constraints:
+              nullable: false
+        - column:
+            name: sahagin
+            type: bit(1)
+            defaultValueNumeric: 0
+            constraints:
+              nullable: false
+        - column:
+            name: amaljaa
+            type: bit(1)
+            defaultValueNumeric: 0
+            constraints:
+              nullable: false
+        - column:
+            name: sylph
+            type: bit(1)
+            defaultValueNumeric: 0
+            constraints:
+              nullable: false
+        - column:
+            name: moogle
+            type: bit(1)
+            defaultValueNumeric: 0
+            constraints:
+              nullable: false
+        - column:
+            name: vanuvanu
+            type: bit(1)
+            defaultValueNumeric: 0
+            constraints:
+              nullable: false
+        - column:
+            name: vath
+            type: bit(1)
+            defaultValueNumeric: 0
+            constraints:
+              nullable: false
+        - column:
+            name: arr_25_complete
+            type: bit(1)
+            defaultValueNumeric: 0
+            constraints:
+              nullable: false
+        - column:
+            name: hw_complete
+            type: bit(1)
+            defaultValueNumeric: 0
+            constraints:
+              nullable: false
+        - column:
+            name: hw_31_complete
+            type: bit(1)
+            defaultValueNumeric: 0
+            constraints:
+              nullable: false
+        - column:
+            name: hw_33_complete
+            type: bit(1)
+            defaultValueNumeric: 0
+            constraints:
+              nullable: false
+        - column:
+            name: sb_complete
+            type: bit(1)
+            defaultValueNumeric: 0
+            constraints:
+              nullable: false
+        - column:
+            name: legacy_player
+            type: bit(1)
+            defaultValueNumeric: 0
+            constraints:
+              nullable: false
+        - column:
+            name: mounts
+            type: text
+            constraints:
+              nullable: true
+        - column:
+            name: minions
+            type: text
+            constraints:
+              nullable: true
+        - column:
+            name: date_active
+            type: date
+            constraints:
+              nullable: true
+        - column:
+            name: is_active
+            type: bit(1)
+            defaultValueNumeric: 0
+            constraints:
+              nullable: false
+- changeSet:
+    id: 3
+    author: matthewhillier
+    changes:
+    - tagDatabase:
+        tag: 1.4.0
+- changeSet:
+    id: 4
+    author: matthewhillier
+    changes:
+    - addColumn:
+        tableName: tblplayers
+        columns:
+        - column:
+            name: character_status
+            type: varchar(10)
+- changeSet:
+    id: 5
+    author: matthewhillier
+    changes:
+    - createIndex:
+        tableName: tblplayers
+        columns:
+        - column:
+            name: character_status
+            type: varchar(10)
+        indexName: idx_character_status
+- changeSet:
+    id: 6
+    author: matthewhillier
+    changes:
+    - addColumn:
+        tableName: tblplayers
+        columns:
+        - column:
+            name: level_bluemage
+            type: int(3)
+            defaultValueNumeric: 0
+            constraints:
+              nullable: false
+            afterColumn: level_samurai
+- changeSet:
+    id: 7
+    author: matthewhillier
+    changes:
+    - addColumn:
+        tableName: tblplayers
+        columns:
+        - column:
+            name: level_eureka
+            type: int(3)
+            defaultValueNumeric: 0
+            constraints:
+              nullable: false
+            afterColumn: level_fisher
+- changeSet:
+    id: 8
+    author: fahy
+    changes:
+    - addColumn:
+        tableName: tblplayers
+        columns:
+        - column:
+            name: preshb
+            type: bit(1)
+            defaultValueNumeric: 0
+            constraints:
+              nullable: false
+            afterColumn: presb
+- changeSet:
+    id: 9
+    author: fahy
+    changes:
+    - addColumn:
+        tableName: tblplayers
+        columns:
+        - column:
+            name: sbartbook
+            type: bit(1)
+            defaultValueNumeric: 0
+            constraints:
+              nullable: false
+            afterColumn: hwartbooktwo
+- changeSet:
+    id: 10
+    author: matthewhillier
+    changes:
+    - addColumn:
+        tableName: tblplayers
+        columns:
+        - column:
+            name: sbartbooktwo
+            type: bit(1)
+            defaultValueNumeric: 0
+            constraints:
+              nullable: false
+            afterColumn: sbartbook
+- changeSet:
+    id: 11
+    author: matthewhillier
+    changes:
+    - addColumn:
+        tableName: tblplayers
+        columns:
+        - column:
+            name: level_gunbreaker
+            type: int(3)
+            defaultValueNumeric: 0
+            constraints:
+              nullable: false
+            afterColumn: level_bluemage
+        - column:
+            name: level_dancer
+            type: int(3)
+            defaultValueNumeric: 0
+            constraints:
+              nullable: false
+            afterColumn: level_gunbreaker
+- changeSet:
+    id: 12
+    author: matthewhillier
+    changes:
+    - createTable:
+        tableName: gear_items
+        columns:
+        - column:
+            name: item_id
+            type: varchar(12)
+            constraints:
+              nullable: false
+              primaryKey: true
+        - column:
+            name: name
+            type: text
+            constraints:
+              nullable: true
+- changeSet:
+    id: 13
+    author: matthewhillier
+    changes:
+    - createTable:
+        tableName: character_gear_sets
+        columns:
+        - column:
+            name: player_id
+            type: int
+            constraints:
+              primaryKey: true
+              nullable: false
+              foreignKeyName: fk_character
+              references: tblplayers(id)
+        - column:
+            name: main_hand
+            type: varchar(12)
+            constraints:
+              nullable: true
+              foreignKeyName: fk_gear_main_hand
+              references: gear_items(item_id)
+        - column:
+            name: head
+            type: varchar(12)
+            constraints:
+              nullable: true
+              foreignKeyName: fk_gear_head
+              references: gear_items(item_id)
+        - column:
+            name: body
+            type: varchar(12)
+            constraints:
+              nullable: true
+              foreignKeyName: fk_gear_body
+              references: gear_items(item_id)
+        - column:
+            name: hands
+            type: varchar(12)
+            constraints:
+              nullable: true
+              foreignKeyName: fk_gear_hands
+              references: gear_items(item_id)
+        - column:
+            name: belt
+            type: varchar(12)
+            constraints:
+              nullable: true
+              foreignKeyName: fk_gear_belt
+              references: gear_items(item_id)
+        - column:
+            name: legs
+            type: varchar(12)
+            constraints:
+              nullable: true
+              foreignKeyName: fk_gear_legs
+              references: gear_items(item_id)
+        - column:
+            name: feet
+            type: varchar(12)
+            constraints:
+              nullable: true
+              foreignKeyName: fk_gear_feet
+              references: gear_items(item_id)
+        - column:
+            name: off_hand
+            type: varchar(12)
+            constraints:
+              nullable: true
+              foreignKeyName: fk_gear_off_hand
+              references: gear_items(item_id)
+        - column:
+            name: ears
+            type: varchar(12)
+            constraints:
+              nullable: true
+              foreignKeyName: fk_gear_ears
+              references: gear_items(item_id)
+        - column:
+            name: neck
+            type: varchar(12)
+            constraints:
+              nullable: true
+              foreignKeyName: fk_gear_neck
+              references: gear_items(item_id)
+        - column:
+            name: wrists
+            type: varchar(12)
+            constraints:
+              nullable: true
+              foreignKeyName: fk_gear_wrists
+              references: gear_items(item_id)
+        - column:
+            name: left_hand
+            type: varchar(12)
+            constraints:
+              nullable: true
+              foreignKeyName: fk_gear_left_hand
+              references: gear_items(item_id)
+        - column:
+            name: right_hand
+            type: varchar(12)
+            constraints:
+              nullable: true
+              foreignKeyName: fk_gear_right_hand
+              references: gear_items(item_id)
+        - column:
+            name: job_crystal
+            type: varchar(12)
+            constraints:
+              nullable: true
+              foreignKeyName: fk_gear_job_crystal
+              references: gear_items(item_id)

@@ -15,16 +15,19 @@ import org.mockito.MockitoAnnotations;
 
 import com.ffxivcensus.gatherer.edb.EorzeaDatabaseCache;
 import com.ffxivcensus.gatherer.player.CharacterStatus;
+import com.ffxivcensus.gatherer.player.GearItemRepository;
 import com.ffxivcensus.gatherer.player.PlayerBean;
 import com.ffxivcensus.gatherer.player.PlayerBeanRepository;
 import com.ffxivcensus.gatherer.player.PlayerBuilder;
 
 public class GathererTaskTest {
-    
+
     @Mock
     private PlayerBeanRepository mockRepo;
+    @Mock
+    private GearItemRepository gearRepo;
     private GathererTask instance;
-    
+
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
@@ -32,23 +35,24 @@ public class GathererTaskTest {
         instance.setPlayerRepository(mockRepo);
         PlayerBuilder builder = new PlayerBuilder();
         builder.setEorzeaDatabaseCache(new EorzeaDatabaseCache());
+        builder.setGearItemRepository(gearRepo);
         instance.setPlayerBuilder(builder);
     }
-    
+
     @After
     public void tearDown() {
         instance = null;
     }
-    
+
     @Test
     public void runWithSuccess() {
         when(mockRepo.findOne(Mockito.anyInt())).thenReturn(null);
-        
+
         ArgumentCaptor<PlayerBean> argument = ArgumentCaptor.forClass(PlayerBean.class);
-        
+
         instance.setPlayerId(2256025);
         instance.run();
-        
+
         verify(mockRepo).save(argument.capture());
         assertEquals(2256025, argument.getValue().getId());
         assertEquals(CharacterStatus.ACTIVE, argument.getValue().getCharacterStatus());

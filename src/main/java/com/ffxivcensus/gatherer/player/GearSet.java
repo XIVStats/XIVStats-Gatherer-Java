@@ -1,7 +1,10 @@
 package com.ffxivcensus.gatherer.player;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
@@ -14,34 +17,78 @@ import javax.persistence.Table;
 public class GearSet {
 
     @Id
-    private int characterId;
+    private int playerId;
+    @OneToOne(mappedBy = "gearSet")
+    private PlayerBean player;
+    @OneToOne(cascade = {CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE}, optional = true)
+    @JoinColumn(name = "main_hand")
     private GearItem mainHand;
+    @OneToOne(cascade = {CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE}, optional = true)
+    @JoinColumn(name = "head")
     private GearItem head;
+    @OneToOne(cascade = {CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE}, optional = true)
+    @JoinColumn(name = "body")
     private GearItem body;
+    @OneToOne(cascade = {CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE}, optional = true)
+    @JoinColumn(name = "hands")
     private GearItem hands;
+    @OneToOne(cascade = {CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE}, optional = true)
+    @JoinColumn(name = "belt")
     private GearItem belt;
+    @OneToOne(cascade = {CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE}, optional = true)
+    @JoinColumn(name = "legs")
     private GearItem legs;
+    @OneToOne(cascade = {CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE}, optional = true)
+    @JoinColumn(name = "feet")
     private GearItem feet;
+    @OneToOne(cascade = {CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE}, optional = true)
+    @JoinColumn(name = "off_hand")
     private GearItem offHand;
+    @OneToOne(cascade = {CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE}, optional = true)
+    @JoinColumn(name = "ears")
     private GearItem ears;
-    private GearItem kneck;
+    @OneToOne(cascade = {CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE}, optional = true)
+    @JoinColumn(name = "neck")
+    private GearItem neck;
+    @OneToOne(cascade = {CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE}, optional = true)
+    @JoinColumn(name = "wrists")
     private GearItem wrists;
+    @OneToOne(cascade = {CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE}, optional = true)
+    @JoinColumn(name = "left_hand")
     private GearItem leftHand;
+    @OneToOne(cascade = {CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE}, optional = true)
+    @JoinColumn(name = "right_hand")
     private GearItem rightHand;
+    @OneToOne(cascade = {CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE}, optional = true)
+    @JoinColumn(name = "job_crystal")
     private GearItem jobCrystal;
 
     /**
      * @return the characterId
      */
-    public int getCharacterId() {
-        return characterId;
+    public int getPlayerId() {
+        return playerId;
     }
 
     /**
      * @param characterId the characterId to set
      */
-    public void setCharacterId(int characterId) {
-        this.characterId = characterId;
+    public void setPlayerId(int playerId) {
+        this.playerId = playerId;
+    }
+
+    /**
+     * @return the player
+     */
+    public PlayerBean getPlayer() {
+        return player;
+    }
+
+    /**
+     * @param player the player to set
+     */
+    public void setPlayer(PlayerBean player) {
+        this.player = player;
     }
 
     /**
@@ -171,17 +218,17 @@ public class GearSet {
     }
 
     /**
-     * @return the kneck
+     * @return the neck
      */
-    public GearItem getKneck() {
-        return kneck;
+    public GearItem getNeck() {
+        return neck;
     }
 
     /**
-     * @param kneck the kneck to set
+     * @param kneck the neck to set
      */
-    public void setKneck(GearItem kneck) {
-        this.kneck = kneck;
+    public void setNeck(GearItem neck) {
+        this.neck = neck;
     }
 
     /**

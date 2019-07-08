@@ -10,6 +10,8 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 import com.ffxivcensus.gatherer.edb.EorzeaDatabaseCache;
 import com.ffxivcensus.gatherer.player.PlayerBean;
@@ -27,6 +29,8 @@ public class PlayerBuilderIT {
     private PlayerBuilder instance;
     // Slightly hacky, but mimicking the Spring singleton instance in order to save on performance
     private static EorzeaDatabaseCache edbCache;
+    @Mock
+    private GearItemRepository gearItemRepository;
 
     @BeforeClass
     public static void beforeClass() {
@@ -35,8 +39,10 @@ public class PlayerBuilderIT {
 
     @Before
     public void setUp() {
+        MockitoAnnotations.initMocks(this);
         instance = new PlayerBuilder();
         instance.setEorzeaDatabaseCache(edbCache);
+        instance.setGearItemRepository(gearItemRepository);
     }
 
     @After
@@ -57,7 +63,7 @@ public class PlayerBuilderIT {
     @Test
     public void testGetPlayer() throws Exception {
         // Fetch object to test against (Aelia Sokoto, Cerberus)
-        PlayerBean playerOne = instance.getPlayer(2356533);
+        PlayerBean playerOne = instance.getPlayer(2356533, null);
 
         // NOTE: All of the following tests assume various pieces of information
         // Testing information that is very unlikely to change
@@ -114,7 +120,7 @@ public class PlayerBuilderIT {
         assertTrue(playerOne.getLevelMiner() >= 60);
         assertTrue(playerOne.getLevelBotanist() >= 60);
         assertTrue(playerOne.getLevelFisher() >= 60);
-        
+
         // The Forbidden Land, Eureka
         assertTrue(playerOne.getLevelEureka() >= 48);
 
@@ -189,7 +195,7 @@ public class PlayerBuilderIT {
      */
     @Test
     public void testGetVeteranPlayer() throws Exception {
-        PlayerBean player = instance.getPlayer(501646);
+        PlayerBean player = instance.getPlayer(501646, null);
 
         // Player has 960 days sub, make sure recorded correctly
         assertTrue(player.isHas960DaysSub());
@@ -206,7 +212,7 @@ public class PlayerBuilderIT {
      */
     @Test
     public void testUnplayedPlayer() throws Exception {
-        PlayerBean player = instance.getPlayer(1557282);
+        PlayerBean player = instance.getPlayer(13002142, null);
 
         // Test grand company
         assertEquals("none", player.getGrandCompany());
@@ -259,7 +265,7 @@ public class PlayerBuilderIT {
      */
     @Test
     public void testGetPlayerNoGCHasFC() throws Exception {
-        PlayerBean player = instance.getPlayer(1);
+        PlayerBean player = instance.getPlayer(1, null);
 
         // Verify that grand company is "None"
         assertEquals("none", player.getGrandCompany());
@@ -273,7 +279,7 @@ public class PlayerBuilderIT {
      */
     @Test
     public void testGetPlayerNoFCHasGC() throws Exception {
-        PlayerBean player = instance.getPlayer(11886920);
+        PlayerBean player = instance.getPlayer(11886920, null);
 
         // Test that GC is maelstrom
         assertEquals("Maelstrom", player.getGrandCompany());
@@ -288,7 +294,7 @@ public class PlayerBuilderIT {
      */
     @Test
     public void testGetPlayerWithAllCollectibles() throws Exception {
-        PlayerBean player = instance.getPlayer(71);
+        PlayerBean player = instance.getPlayer(71, null);
 
         assertTrue(player.isHasARRArtbook());
         assertTrue(player.isHasBeforeMeteor());
@@ -297,11 +303,11 @@ public class PlayerBuilderIT {
         assertTrue(player.isHasCompletedHWSightseeing());
         assertTrue(player.isHasMooglePlush());
     }
-    
+
     @Test
     public void testGetPlayerWithEureka() throws Exception {
-        PlayerBean player = instance.getPlayer(2256025);
-        
+        PlayerBean player = instance.getPlayer(2256025, null);
+
         assertTrue(player.getLevelEureka() > 50);
     }
 
@@ -312,7 +318,7 @@ public class PlayerBuilderIT {
     public void testGetPlayerInvalid() {
         try {
             // Try to get a character that doesn't exist
-            PlayerBean player = instance.getPlayer(2356539);
+            PlayerBean player = instance.getPlayer(2356539, null);
             assertEquals("Character should be marked as DELETED", CharacterStatus.DELETED, player.getCharacterStatus());
         } catch(Exception e) {
 

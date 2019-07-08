@@ -69,6 +69,25 @@ public class GathererControllerIT {
     }
 
     /**
+     * Test gathering run of range from 11886902 to 11887010
+     *
+     * @throws IOException
+     * @throws SAXException
+     * @throws ParserConfigurationException
+     */
+    @Test
+    public void testRun1558258() throws Exception {
+        config.setStartId(1558258);
+        config.setEndId(1558258);
+        config.setThreadLimit(40);
+
+        gathererController.run();
+
+        // Test for IDs we know exist
+        assertNotNull(playerRepository.findOne(1558258));
+    }
+
+    /**
      * Run the program with invalid parameters.
      */
     @Test(expected = Exception.class)
@@ -127,19 +146,19 @@ public class GathererControllerIT {
      * 
      * @throws Exception
      */
-    /*@Ignore
-    @Test
-    public void testRunInterrupted() throws Exception {
-        config.setStartId(90000000);
-        config.setEndId(100000000);
-        config.setThreadLimit(32);
-
-        // Set the interrupt flag on this thread to ensure the close-down signal is already in place before gathering begins
-        Thread.currentThread().interrupt();
-        gathererController.run();
-
-        // Test that character 90,000,000 hasn't been gathered
-        PlayerBean expectedDeleted = playerRepository.findOne(90000000);
-        assertNull(expectedDeleted);
-    }*/
+    /*
+     * @Ignore
+     * @Test
+     * public void testRunInterrupted() throws Exception {
+     * config.setStartId(90000000);
+     * config.setEndId(100000000);
+     * config.setThreadLimit(32);
+     * // Set the interrupt flag on this thread to ensure the close-down signal is already in place before gathering begins
+     * Thread.currentThread().interrupt();
+     * gathererController.run();
+     * // Test that character 90,000,000 hasn't been gathered
+     * PlayerBean expectedDeleted = playerRepository.findOne(90000000);
+     * assertNull(expectedDeleted);
+     * }
+     */
 }

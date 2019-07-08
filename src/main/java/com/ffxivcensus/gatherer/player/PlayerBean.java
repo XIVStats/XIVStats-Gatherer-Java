@@ -4,13 +4,15 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Convert;
-import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import com.ffxivcensus.gatherer.util.StringListConverter;
 
@@ -33,7 +35,9 @@ public class PlayerBean {
     private String gender = NOT_AVAILABLE;
     private String grandCompany = NOT_AVAILABLE;
     private String freeCompany = NOT_AVAILABLE;
-    private GearSet gearSet = new GearSet();
+    @OneToOne(cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn(name = "id", referencedColumnName = "playerId")
+    private GearSet gearSet;
     private int levelGladiator;
     private int levelPugilist;
     private int levelMarauder;

@@ -4,6 +4,8 @@ import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 import com.ffxivcensus.gatherer.edb.EorzeaDatabaseCache;
 import com.ffxivcensus.gatherer.lodestone.TestDataLodestonePageLoader;
@@ -12,18 +14,22 @@ public class PlayerBuilderTest {
 
     private PlayerBuilder instance;
     private static EorzeaDatabaseCache EDB_CACHE = new EorzeaDatabaseCache();
+    @Mock
+    private GearItemRepository gearItemRepository;
 
     @Before
     public void setUp() {
+        MockitoAnnotations.initMocks(this);
         instance = new PlayerBuilder();
         // TODO: Figure out a mock of this
         instance.setEorzeaDatabaseCache(EDB_CACHE);
+        instance.setGearItemRepository(gearItemRepository);
     }
 
     @Test
     public void testLoadFrom2256025() throws Exception {
         instance.setPageLoader(new TestDataLodestonePageLoader());
-        PlayerBean player = instance.getPlayer(2256025);
+        PlayerBean player = instance.getPlayer(2256025, null);
 
         // NOTE: All of the following tests assume various pieces of information
         // Testing information that is very unlikely to change
@@ -142,54 +148,54 @@ public class PlayerBuilderTest {
         assertFalse(player.getMounts().contains("Cavalry Drake"));
         // Test for data from very end
         assertTrue(player.getMounts().contains("Midgardsormr"));
-        
+
         assertEquals("550368b1982", player.getGearSet().getMainHand().getItemId());
         assertEquals("Augmented Scaevan Magitek Codex", player.getGearSet().getMainHand().getName());
-        
+
         assertEquals("985384846a3", player.getGearSet().getHead().getItemId());
         assertEquals("Augmented Scaevan Mask of Healing", player.getGearSet().getHead().getName());
-        
+
         assertEquals("95aad27d167", player.getGearSet().getBody().getItemId());
         assertEquals("Augmented Scaevan Coat of Healing", player.getGearSet().getBody().getName());
-        
+
         assertEquals("5a66a295b31", player.getGearSet().getHands().getItemId());
         assertEquals("Augmented Scaevan Gloves of Healing", player.getGearSet().getHands().getName());
-        
+
         assertEquals("aa52c71cf03", player.getGearSet().getBelt().getItemId());
         assertEquals("Augmented Scaevan Tassets of Healing", player.getGearSet().getBelt().getName());
-        
+
         assertEquals("f567a14e946", player.getGearSet().getLegs().getItemId());
         assertEquals("Augmented Scaevan Trousers of Healing", player.getGearSet().getLegs().getName());
-        
+
         assertEquals("7ef876f9b9f", player.getGearSet().getFeet().getItemId());
         assertEquals("Augmented Scaevan Shoes of Healing", player.getGearSet().getFeet().getName());
-        
+
         assertNull(player.getGearSet().getOffHand());
-        
+
         assertEquals("e4a564c39da", player.getGearSet().getEars().getItemId());
         assertEquals("Augmented Scaevan Ear Cuff of Healing", player.getGearSet().getEars().getName());
-        
-        assertEquals("724ca4caf77", player.getGearSet().getKneck().getItemId());
-        assertEquals("Augmented Scaevan Choker of Healing", player.getGearSet().getKneck().getName());
-        
+
+        assertEquals("724ca4caf77", player.getGearSet().getNeck().getItemId());
+        assertEquals("Augmented Scaevan Choker of Healing", player.getGearSet().getNeck().getName());
+
         assertEquals("80935bab5fa", player.getGearSet().getWrists().getItemId());
         assertEquals("Augmented Scaevan Bracelet of Healing", player.getGearSet().getWrists().getName());
-        
+
         assertEquals("59d188f2713", player.getGearSet().getLeftHand().getItemId());
         assertEquals("Scaevan Ring of Healing", player.getGearSet().getLeftHand().getName());
-        
+
         assertEquals("826cc331045", player.getGearSet().getRightHand().getItemId());
         assertEquals("Augmented Scaevan Ring of Healing", player.getGearSet().getRightHand().getName());
-        
+
         assertEquals("eb511e3871f", player.getGearSet().getJobCrystal().getItemId());
         assertEquals("Soul of the Scholar", player.getGearSet().getJobCrystal().getName());
-        
+
     }
 
     @Test
     public void testLoadFrom22763008() throws Exception {
         instance.setPageLoader(new TestDataLodestonePageLoader());
-        PlayerBean player = instance.getPlayer(22763008);
+        PlayerBean player = instance.getPlayer(22763008, null);
 
         // NOTE: All of the following tests assume various pieces of information
         // Testing information that is very unlikely to change
