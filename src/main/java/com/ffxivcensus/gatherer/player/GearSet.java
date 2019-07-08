@@ -1,7 +1,20 @@
 package com.ffxivcensus.gatherer.player;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+/**
+ * A Gear Set assigned to the player at the time of parsing.
+ * 
+ * @author matthew.hillier
+ */
+@Entity
+@Table(name = "character_gear_sets")
 public class GearSet {
 
+    @Id
+    private int characterId;
     private GearItem mainHand;
     private GearItem head;
     private GearItem body;
@@ -16,6 +29,20 @@ public class GearSet {
     private GearItem leftHand;
     private GearItem rightHand;
     private GearItem jobCrystal;
+
+    /**
+     * @return the characterId
+     */
+    public int getCharacterId() {
+        return characterId;
+    }
+
+    /**
+     * @param characterId the characterId to set
+     */
+    public void setCharacterId(int characterId) {
+        this.characterId = characterId;
+    }
 
     /**
      * @return the mainHand

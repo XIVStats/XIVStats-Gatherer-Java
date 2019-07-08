@@ -143,46 +143,46 @@ public class PlayerBuilderTest {
         // Test for data from very end
         assertTrue(player.getMounts().contains("Midgardsormr"));
         
-        assertEquals("d6ac244ec4b", player.getGearSet().getMainHand().getItemId());
-        assertEquals("Shishio", player.getGearSet().getMainHand().getName());
+        assertEquals("550368b1982", player.getGearSet().getMainHand().getItemId());
+        assertEquals("Augmented Scaevan Magitek Codex", player.getGearSet().getMainHand().getName());
         
-        assertEquals("e69d895bf22", player.getGearSet().getHead().getItemId());
-        assertEquals("Omicron Eye Mask of Casting", player.getGearSet().getHead().getName());
+        assertEquals("985384846a3", player.getGearSet().getHead().getItemId());
+        assertEquals("Augmented Scaevan Mask of Healing", player.getGearSet().getHead().getName());
         
-        assertEquals("c08d2308f4f", player.getGearSet().getBody().getItemId());
-        assertEquals("Ryumyaku Dogi of Casting", player.getGearSet().getBody().getName());
+        assertEquals("95aad27d167", player.getGearSet().getBody().getItemId());
+        assertEquals("Augmented Scaevan Coat of Healing", player.getGearSet().getBody().getName());
         
-        assertEquals("778143b799f", player.getGearSet().getHands().getItemId());
-        assertEquals("Omicron Gloves of Casting", player.getGearSet().getHands().getName());
+        assertEquals("5a66a295b31", player.getGearSet().getHands().getItemId());
+        assertEquals("Augmented Scaevan Gloves of Healing", player.getGearSet().getHands().getName());
         
-        assertEquals("d3bc9b865af", player.getGearSet().getBelt().getItemId());
-        assertEquals("Omicron Tassets of Casting", player.getGearSet().getBelt().getName());
+        assertEquals("aa52c71cf03", player.getGearSet().getBelt().getItemId());
+        assertEquals("Augmented Scaevan Tassets of Healing", player.getGearSet().getBelt().getName());
         
-        assertEquals("cf8a646b343", player.getGearSet().getLegs().getItemId());
-        assertEquals("Ryumyaku Tsutsu-hakama of Casting", player.getGearSet().getLegs().getName());
+        assertEquals("f567a14e946", player.getGearSet().getLegs().getItemId());
+        assertEquals("Augmented Scaevan Trousers of Healing", player.getGearSet().getLegs().getName());
         
-        assertEquals("cb14f0710a4", player.getGearSet().getFeet().getItemId());
-        assertEquals("Omicron Shoes of Casting", player.getGearSet().getFeet().getName());
+        assertEquals("7ef876f9b9f", player.getGearSet().getFeet().getItemId());
+        assertEquals("Augmented Scaevan Shoes of Healing", player.getGearSet().getFeet().getName());
         
         assertNull(player.getGearSet().getOffHand());
         
-        assertEquals("abd545a23d1", player.getGearSet().getEars().getItemId());
-        assertEquals("Ryumyaku Earring of Casting", player.getGearSet().getEars().getName());
+        assertEquals("e4a564c39da", player.getGearSet().getEars().getItemId());
+        assertEquals("Augmented Scaevan Ear Cuff of Healing", player.getGearSet().getEars().getName());
         
-        assertEquals("dcb212121fd", player.getGearSet().getKneck().getItemId());
-        assertEquals("Ryumyaku Necklace of Casting", player.getGearSet().getKneck().getName());
+        assertEquals("724ca4caf77", player.getGearSet().getKneck().getItemId());
+        assertEquals("Augmented Scaevan Choker of Healing", player.getGearSet().getKneck().getName());
         
-        assertEquals("7d2522888dd", player.getGearSet().getWrists().getItemId());
-        assertEquals("Ryumyaku Bracelet of Casting", player.getGearSet().getWrists().getName());
+        assertEquals("80935bab5fa", player.getGearSet().getWrists().getItemId());
+        assertEquals("Augmented Scaevan Bracelet of Healing", player.getGearSet().getWrists().getName());
         
-        assertEquals("574487820f7", player.getGearSet().getLeftHand().getItemId());
-        assertEquals("Ryumyaku Ring of Casting", player.getGearSet().getLeftHand().getName());
+        assertEquals("59d188f2713", player.getGearSet().getLeftHand().getItemId());
+        assertEquals("Scaevan Ring of Healing", player.getGearSet().getLeftHand().getName());
         
-        assertEquals("2ac77b2c541", player.getGearSet().getRightHand().getItemId());
-        assertEquals("Augmented Silvergrace Ring of Casting", player.getGearSet().getRightHand().getName());
+        assertEquals("826cc331045", player.getGearSet().getRightHand().getItemId());
+        assertEquals("Augmented Scaevan Ring of Healing", player.getGearSet().getRightHand().getName());
         
-        assertEquals("c7202f71bec", player.getGearSet().getJobCrystal().getItemId());
-        assertEquals("Soul of the Red Mage", player.getGearSet().getJobCrystal().getName());
+        assertEquals("eb511e3871f", player.getGearSet().getJobCrystal().getItemId());
+        assertEquals("Soul of the Scholar", player.getGearSet().getJobCrystal().getName());
         
     }
 

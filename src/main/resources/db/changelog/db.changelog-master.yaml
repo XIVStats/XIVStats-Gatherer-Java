@@ -600,5 +600,135 @@ databaseChangeLog:
                       nullable: false
                     afterColumn: level_gunbreaker
                     
-
+  - changeSet:
+      id: 12
+      author: matthewhillier
+      changes:
+          - createTable:
+              tableName: gear_items
+              columns:
+                - column:
+                    name: item_id
+                    type: varchar(12)
+                    constraints:
+                      nullable: false
+                      primaryKey: true
+                - column:
+                    name: name
+                    type: text
+                    constraints:
+                      nullable: true
                     
+  - changeSet:
+      id: 13
+      author: matthewhillier
+      changes:
+          - createTable:
+              tableName: character_gear_sets
+              columns:
+                - column:
+                    name: character_id
+                    type: int
+                    constraints:
+                      primaryKey: true
+                      nullable: false
+                      foreignKeyName: fk_character
+                      references: tblplayers(id)
+                - column:
+                    name: main_hand
+                    type: varchar(12)
+                    constraints:
+                      nullable: true
+                      foreignKeyName: fk_gear_main_hand
+                      references: gear_items(item_id)
+                - column:
+                    name: head
+                    type: varchar(12)
+                    constraints:
+                      nullable: true
+                      foreignKeyName: fk_gear_head
+                      references: gear_items(item_id)
+                - column:
+                    name: body
+                    type: varchar(12)
+                    constraints:
+                      nullable: true
+                      foreignKeyName: fk_gear_body
+                      references: gear_items(item_id)
+                - column:
+                    name: hands
+                    type: varchar(12)
+                    constraints:
+                      nullable: true
+                      foreignKeyName: fk_gear_hands
+                      references: gear_items(item_id)
+                - column:
+                    name: belt
+                    type: varchar(12)
+                    constraints:
+                      nullable: true
+                      foreignKeyName: fk_gear_belt
+                      references: gear_items(item_id)
+                - column:
+                    name: legs
+                    type: varchar(12)
+                    constraints:
+                      nullable: true
+                      foreignKeyName: fk_gear_legs
+                      references: gear_items(item_id)
+                - column:
+                    name: feet
+                    type: varchar(12)
+                    constraints:
+                      nullable: true
+                      foreignKeyName: fk_gear_feet
+                      references: gear_items(item_id)
+                - column:
+                    name: off_hand
+                    type: varchar(12)
+                    constraints:
+                      nullable: true
+                      foreignKeyName: fk_gear_off_hand
+                      references: gear_items(item_id)
+                - column:
+                    name: ears
+                    type: varchar(12)
+                    constraints:
+                      nullable: true
+                      foreignKeyName: fk_gear_ears
+                      references: gear_items(item_id)
+                - column:
+                    name: neck
+                    type: varchar(12)
+                    constraints:
+                      nullable: true
+                      foreignKeyName: fk_gear_neck
+                      references: gear_items(item_id)
+                - column:
+                    name: wrists
+                    type: varchar(12)
+                    constraints:
+                      nullable: true
+                      foreignKeyName: fk_gear_wrists
+                      references: gear_items(item_id)
+                - column:
+                    name: left_hand
+                    type: varchar(12)
+                    constraints:
+                      nullable: true
+                      foreignKeyName: fk_gear_left_hand
+                      references: gear_items(item_id)
+                - column:
+                    name: right_hand
+                    type: varchar(12)
+                    constraints:
+                      nullable: true
+                      foreignKeyName: fk_gear_right_hand
+                      references: gear_items(item_id)
+                - column:
+                    name: job_crystal
+                    type: varchar(12)
+                    constraints:
+                      nullable: true
+                      foreignKeyName: fk_gear_job_crystal
+                      references: gear_items(item_id)
