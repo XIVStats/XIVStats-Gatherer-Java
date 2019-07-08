@@ -1,5 +1,6 @@
 package com.ffxivcensus.gatherer.player;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -16,6 +17,9 @@ public class GearItem {
     /** Gear Item's Lodestone Database ID. */
     @Id
     private String itemId;
+    /** Gear Item's iLevel. */
+    @Column(name = "ilevel")
+    private int iLevel;
     /** Gear Item's Name (English). */
     private String name;
     /** Gear Item's Category (English). */
@@ -27,6 +31,14 @@ public class GearItem {
 
     public void setItemId(String itemId) {
         this.itemId = itemId;
+    }
+
+    public int getiLevel() {
+        return iLevel;
+    }
+
+    public void setiLevel(int iLevel) {
+        this.iLevel = iLevel;
     }
 
     public String getName() {

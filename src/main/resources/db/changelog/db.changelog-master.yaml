@@ -742,3 +742,16 @@ databaseChangeLog:
             type: text
             constraints:
               nullable: true
+- changeSet:
+    id: 15
+    author: matthewhillier
+    changes:
+    - addColumn:
+        tableName: gear_items
+        columns:
+        - column:
+            name: ilevel
+            type: int(4)
+            defaultValueNumeric: 0
+            constraints:
+              nullable: false

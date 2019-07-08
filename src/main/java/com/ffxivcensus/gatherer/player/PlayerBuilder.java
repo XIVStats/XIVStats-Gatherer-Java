@@ -540,13 +540,14 @@ public class PlayerBuilder {
             if(item == null) {
                 item = new GearItem();
                 item.setItemId(dbUrl[5]);
-
-                // Get Item Details
-                item.setName(toolTip.getElementsByClass("db-tooltip__item__name").get(0).text());
-                item.setCategory(toolTip.getElementsByClass("db-tooltip__item__category").get(0).text());
-
-                gearItemRepository.save(item);
             }
+
+            // Get Item Details
+            item.setName(toolTip.getElementsByClass("db-tooltip__item__name").get(0).text());
+            item.setCategory(toolTip.getElementsByClass("db-tooltip__item__category").get(0).text());
+            item.setiLevel(Integer.parseInt(toolTip.getElementsByClass("db-tooltip__item__level").get(0).text().split(" ")[2]));
+
+            gearItemRepository.save(item);
 
             return item;
         }

@@ -152,6 +152,7 @@ public class PlayerBuilderTest {
         assertEquals("550368b1982", player.getGearSet().getMainHand().getItemId());
         assertEquals("Augmented Scaevan Magitek Codex", player.getGearSet().getMainHand().getName());
         assertEquals("Scholar's Arm", player.getGearSet().getMainHand().getCategory());
+        assertEquals(400, player.getGearSet().getMainHand().getiLevel());
 
         assertEquals("985384846a3", player.getGearSet().getHead().getItemId());
         assertEquals("Augmented Scaevan Mask of Healing", player.getGearSet().getHead().getName());
