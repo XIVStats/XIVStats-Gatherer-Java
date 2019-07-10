@@ -170,6 +170,7 @@ public class PlayerBean {
     private boolean isActive;
     @Enumerated(EnumType.STRING)
     private CharacterStatus characterStatus = CharacterStatus.ACTIVE;
+    private Date lastChecked;
 
     public PlayerBean() {
     }
@@ -870,17 +871,19 @@ public class PlayerBean {
         this.characterStatus = characterStatus;
     }
 
-    /**
-     * @return the gearSet
-     */
     public GearSet getGearSet() {
         return gearSet;
     }
 
-    /**
-     * @param gearSet the gearSet to set
-     */
     public void setGearSet(GearSet gearSet) {
         this.gearSet = gearSet;
+    }
+
+    public Date getLastChecked() {
+        return lastChecked;
+    }
+
+    public void setLastChecked(Date lastChecked) {
+        this.lastChecked = lastChecked;
     }
 }

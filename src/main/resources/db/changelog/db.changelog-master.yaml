@@ -755,3 +755,15 @@ databaseChangeLog:
             defaultValueNumeric: 0
             constraints:
               nullable: false
+- changeSet:
+    id: 16
+    author: matthewhillier
+    changes:
+    - addColumn:
+        tableName: tblplayers
+        columns:
+        - column:
+            name: last_checked
+            type: date
+            constraints:
+              nullable: true
