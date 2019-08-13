@@ -42,7 +42,7 @@ public class PlayerBuilderTest {
         assertEquals(0, player.getLevelGladiator());
         assertEquals(0, player.getLevelMarauder());
         assertEquals(70, player.getLevelDarkknight());
-        assertEquals(0, player.getLevelGunbreaker());
+        assertEquals(74, player.getLevelGunbreaker());
 
         // Melee DPS
         assertEquals(70, player.getLevelPugilist());
@@ -51,19 +51,19 @@ public class PlayerBuilderTest {
         assertEquals(70, player.getLevelSamurai());
 
         // Ranged Physical DPS
-        assertEquals(70, player.getLevelArcher());
-        assertEquals(70, player.getLevelMachinist());
-        assertEquals(0, player.getLevelDancer());
+        assertEquals(80, player.getLevelArcher());
+        assertEquals(80, player.getLevelMachinist());
+        assertEquals(60, player.getLevelDancer());
 
         // Ranged Magical DPS
         assertEquals(70, player.getLevelThaumaturge());
-        assertEquals(70, player.getLevelArcanist());
+        assertEquals(80, player.getLevelArcanist());
         assertEquals(70, player.getLevelRedmage());
         assertEquals(50, player.getLevelBluemage());
 
         // Healer
         assertEquals(70, player.getLevelConjurer());
-        assertEquals(70, player.getLevelScholar());
+        assertEquals(80, player.getLevelScholar());
         assertEquals(70, player.getLevelAstrologian());
 
         // Disciples of the hand
@@ -79,7 +79,7 @@ public class PlayerBuilderTest {
         // Disciples of the land
         assertEquals(0, player.getLevelMiner());
         assertEquals(50, player.getLevelBotanist());
-        assertEquals(70, player.getLevelFisher());
+        assertEquals(78, player.getLevelFisher());
         
         // The Forbidden Land, Eureka
         assertEquals(60, player.getLevelEureka());
