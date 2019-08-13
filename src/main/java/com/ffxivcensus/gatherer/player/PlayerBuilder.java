@@ -164,8 +164,16 @@ public class PlayerBuilder {
             player.setFreeCompany(getFreeCompanyFromPage(doc));
             player.setDateImgLastModified(getDateLastUpdatedFromPage(doc, playerID));
             setLevels(player, getLevelsFromPage(doc));
-            player.setMounts(getMountsFromPage(doc));
-            player.setMinions(getMinionsFromPage(doc));
+            
+            // Mounts from the relevant sub-section
+            Document mountDoc = pageLoader.getMountPage(playerID);
+            player.setMounts(getMountsFromPage(mountDoc));
+            
+            // Minions from the relevant sub-section
+            Document minionDoc = pageLoader.getMinionPage(playerID);
+            player.setMinions(getMinionsFromPage(minionDoc));
+            
+            // Info based on the result of grabbing Mounts & Minions
             player.setHas30DaysSub(doesPlayerHaveMinion(player, "Wind-up Cursor"));
             player.setHas60DaysSub(doesPlayerHaveMinion(player, "Black Chocobo Chick"));
             player.setHas90DaysSub(doesPlayerHaveMinion(player, "Beady Eye"));
@@ -214,6 +222,8 @@ public class PlayerBuilder {
             player.setHasCompletedSB(doesPlayerHaveMinion(player, "Ivon Coeurlfist Doll") || doesPlayerHaveMinion(player, "Dress-up Yugiri")
                                      || doesPlayerHaveMinion(player, "Wind-up Exdeath"));
             player.setLegacyPlayer(doesPlayerHaveMount(player, "Legacy Chocobo"));
+            
+            // Finalise character info
             player.setActive(isPlayerActiveInDateRange(player));
             player.setCharacterStatus(player.isActive() ? CharacterStatus.ACTIVE : CharacterStatus.INACTIVE);
         } catch(CharacterDeletedException cde) {
@@ -420,8 +430,8 @@ public class PlayerBuilder {
         // Get mounts
         if(!minionBoxes.isEmpty()) {
             Elements mountSet = minionBoxes.get(0).getElementsByTag(TAG_LI);
-            for(int index = 0; index < mountSet.size(); index++) { // For each mount link store into array
-                mounts.add(mountSet.get(index).getElementsByTag(TAG_DIV).attr(LAYOUT_DATA_TOOLTIP));
+            for(Element mount : mountSet) {
+                mounts.add(mount.getElementsByClass("mount__header__label").get(0).html());
             }
         }
         return mounts;
