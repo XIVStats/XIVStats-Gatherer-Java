@@ -164,15 +164,15 @@ public class PlayerBuilder {
             player.setFreeCompany(getFreeCompanyFromPage(doc));
             player.setDateImgLastModified(getDateLastUpdatedFromPage(doc, playerID));
             setLevels(player, getLevelsFromPage(doc));
-            
+
             // Mounts from the relevant sub-section
             Document mountDoc = pageLoader.getMountPage(playerID);
             player.setMounts(getMountsFromPage(mountDoc));
-            
+
             // Minions from the relevant sub-section
             Document minionDoc = pageLoader.getMinionPage(playerID);
             player.setMinions(getMinionsFromPage(minionDoc));
-            
+
             // Info based on the result of grabbing Mounts & Minions
             player.setHas30DaysSub(doesPlayerHaveMinion(player, "Wind-up Cursor"));
             player.setHas60DaysSub(doesPlayerHaveMinion(player, "Black Chocobo Chick"));
@@ -222,7 +222,7 @@ public class PlayerBuilder {
             player.setHasCompletedSB(doesPlayerHaveMinion(player, "Ivon Coeurlfist Doll") || doesPlayerHaveMinion(player, "Dress-up Yugiri")
                                      || doesPlayerHaveMinion(player, "Wind-up Exdeath"));
             player.setLegacyPlayer(doesPlayerHaveMount(player, "Legacy Chocobo"));
-            
+
             // Finalise character info
             player.setActive(isPlayerActiveInDateRange(player));
             player.setCharacterStatus(player.isActive() ? CharacterStatus.ACTIVE : CharacterStatus.INACTIVE);
@@ -404,11 +404,14 @@ public class PlayerBuilder {
         List<String> minions = new ArrayList<>();
         // Get minion box element
         Elements minionBoxes = doc.getElementsByClass(LAYOUT_CHARACTER_MINION);
+        // Get mounts
         if(!minionBoxes.isEmpty()) {
-            // Get minions
             Elements minionSet = minionBoxes.get(0).getElementsByTag(TAG_LI);
-            for(int index = 0; index < minionSet.size(); index++) { // For each minion link store into array
-                minions.add(minionSet.get(index).getElementsByTag(TAG_DIV).attr(LAYOUT_DATA_TOOLTIP));
+            for(Element minion : minionSet) {
+                Elements mountLabels = minion.getElementsByClass("minion__header__label");
+                if(!mountLabels.isEmpty()) {
+                    minions.add(mountLabels.get(0).html());
+                }
             }
         }
         return minions;
@@ -426,12 +429,15 @@ public class PlayerBuilder {
         List<String> mounts = new ArrayList<>();
 
         // Get minion box element
-        Elements minionBoxes = doc.getElementsByClass(LAYOUT_CHARACTER_MOUNTS);
+        Elements mountBoxes = doc.getElementsByClass(LAYOUT_CHARACTER_MOUNTS);
         // Get mounts
-        if(!minionBoxes.isEmpty()) {
-            Elements mountSet = minionBoxes.get(0).getElementsByTag(TAG_LI);
+        if(!mountBoxes.isEmpty()) {
+            Elements mountSet = mountBoxes.get(0).getElementsByTag(TAG_LI);
             for(Element mount : mountSet) {
-                mounts.add(mount.getElementsByClass("mount__header__label").get(0).html());
+                Elements mountLabels = mount.getElementsByClass("mount__header__label");
+                if(!mountLabels.isEmpty()) {
+                    mounts.add(mountLabels.get(0).html());
+                }
             }
         }
         return mounts;
