@@ -16,6 +16,7 @@ import com.ffxivcensus.gatherer.Console;
 import com.ffxivcensus.gatherer.GatheringStatus;
 import com.ffxivcensus.gatherer.config.ApplicationConfig;
 import com.ffxivcensus.gatherer.config.ConfigurationBuilder;
+import com.ffxivcensus.gatherer.edb.EorzeaDatabaseCache;
 import com.ffxivcensus.gatherer.task.GathererTask;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
@@ -35,6 +36,11 @@ public class SpringConfiguration {
     @Scope("prototype") // This is a prototype bean, as we want a new one every time
     public GathererTask gatherer() {
         return new GathererTask();
+    }
+
+    @Bean
+    public EorzeaDatabaseCache eorzeaDatabaseCache() {
+        return new EorzeaDatabaseCache();
     }
 
     @Bean(destroyMethod = "close") // Should happen anyway, but worth calling out

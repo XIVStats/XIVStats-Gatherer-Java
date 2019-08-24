@@ -21,5 +21,34 @@ public interface LodestonePageLoader {
      * @throws CharacterDeletedException
      */
     Document getCharacterPage(final int characterId) throws IOException, InterruptedException, CharacterDeletedException;
+    
+    /**
+     * Fetches a Characters Minions page, where available.
+     * @param characterId
+     * @return
+     * @throws IOException
+     * @throws InterruptedException
+     * @throws CharacterDeletedException
+     */
+    Document getMinionPage(final int characterId) throws IOException, InterruptedException, CharacterDeletedException;
+    
+    /**
+     * Fetches a Characters Mounts page, where available.
+     * @param characterId
+     * @return
+     * @throws IOException
+     * @throws InterruptedException
+     * @throws CharacterDeletedException
+     */
+    Document getMountPage(final int characterId) throws IOException, InterruptedException, CharacterDeletedException;
+    
+    /**
+     * Fetches a tooltop page from a 'data-tooltip_href' reference 
+     * @param href Value from the data-tooltip_href value
+     * @return
+     * @throws IOException
+     * @throws InterruptedException
+     */
+    Document getTooltipPage(final String href) throws IOException, InterruptedException;
 
 }

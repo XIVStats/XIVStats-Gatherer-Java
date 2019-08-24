@@ -16,8 +16,10 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ffxivcensus.gatherer.edb.EorzeaDatabaseCache;
 import com.ffxivcensus.gatherer.lodestone.CharacterDeletedException;
 import com.ffxivcensus.gatherer.lodestone.LodestonePageLoader;
 import com.ffxivcensus.gatherer.lodestone.ProductionLodestonePageLoader;
@@ -44,8 +46,6 @@ public class PlayerBuilder {
     private static final String LAYOUT_CHARACTER_DETAIL_IMAGE = "character__detail__image";
     private static final String LAYOUT_CHARACTER_MOUNTS = "character__mounts";
     private static final String TAG_LI = "li";
-    private static final String LAYOUT_DATA_TOOLTIP = "data-tooltip";
-    private static final String TAG_DIV = "div";
     private static final String LAYOUT_CHARACTER_MINION = "character__minion";
     private static final String LAYOUT_CHARACTER_JOB_LEVEL = "character__job__level";
     private static final String LAYOUT_CHARACTER_FREECOMPANY_NAME = "character__freecompany__name";
@@ -61,6 +61,7 @@ public class PlayerBuilder {
     private static final long ONE_DAY_IN_MILLIS = 86400000;
 
     private LodestonePageLoader pageLoader = new ProductionLodestonePageLoader();
+    private EorzeaDatabaseCache edbCache;
 
     /**
      * Set player class levels.
@@ -164,8 +165,16 @@ public class PlayerBuilder {
             player.setFreeCompany(getFreeCompanyFromPage(doc));
             player.setDateImgLastModified(getDateLastUpdatedFromPage(doc, playerID));
             setLevels(player, getLevelsFromPage(doc));
-            player.setMounts(getMountsFromPage(doc));
-            player.setMinions(getMinionsFromPage(doc));
+
+            // Mounts from the relevant sub-section
+            Document mountDoc = pageLoader.getMountPage(playerID);
+            player.setMounts(getMountsFromPage(mountDoc));
+
+            // Minions from the relevant sub-section
+            Document minionDoc = pageLoader.getMinionPage(playerID);
+            player.setMinions(getMinionsFromPage(minionDoc));
+
+            // Info based on the result of grabbing Mounts & Minions
             player.setHas30DaysSub(doesPlayerHaveMinion(player, "Wind-up Cursor"));
             player.setHas60DaysSub(doesPlayerHaveMinion(player, "Black Chocobo Chick"));
             player.setHas90DaysSub(doesPlayerHaveMinion(player, "Beady Eye"));
@@ -214,6 +223,8 @@ public class PlayerBuilder {
             player.setHasCompletedSB(doesPlayerHaveMinion(player, "Ivon Coeurlfist Doll") || doesPlayerHaveMinion(player, "Dress-up Yugiri")
                                      || doesPlayerHaveMinion(player, "Wind-up Exdeath"));
             player.setLegacyPlayer(doesPlayerHaveMount(player, "Legacy Chocobo"));
+
+            // Finalise character info
             player.setActive(isPlayerActiveInDateRange(player));
             player.setCharacterStatus(player.isActive() ? CharacterStatus.ACTIVE : CharacterStatus.INACTIVE);
         } catch(CharacterDeletedException cde) {
@@ -387,18 +398,23 @@ public class PlayerBuilder {
      *
      * @param doc the lodestone profile page to parse.
      * @return the set of strings representing the player's minions.
+     * @throws InterruptedException 
+     * @throws IOException 
      */
-    private List<String> getMinionsFromPage(final Document doc) {
+    private List<String> getMinionsFromPage(final Document doc) throws IOException, InterruptedException {
 
         // Initialize array in which to store minions
         List<String> minions = new ArrayList<>();
         // Get minion box element
         Elements minionBoxes = doc.getElementsByClass(LAYOUT_CHARACTER_MINION);
+        // Get mounts
         if(!minionBoxes.isEmpty()) {
-            // Get minions
             Elements minionSet = minionBoxes.get(0).getElementsByTag(TAG_LI);
-            for(int index = 0; index < minionSet.size(); index++) { // For each minion link store into array
-                minions.add(minionSet.get(index).getElementsByTag(TAG_DIV).attr(LAYOUT_DATA_TOOLTIP));
+            for(Element minion : minionSet) {
+                String minionName = edbCache.getMinionNameFromTooltip(minion.attr("data-tooltip_href"));
+                if(minionName != null) {
+                    minions.add(minionName);
+                }
             }
         }
         return minions;
@@ -409,19 +425,24 @@ public class PlayerBuilder {
      *
      * @param doc the lodestone profile page to parse.
      * @return the set of strings representing the player's mounts.
+     * @throws InterruptedException
+     * @throws IOException
      */
-    private List<String> getMountsFromPage(final Document doc) {
+    private List<String> getMountsFromPage(final Document doc) throws IOException, InterruptedException {
 
         // Initialize array in which to store minions
         List<String> mounts = new ArrayList<>();
 
         // Get minion box element
-        Elements minionBoxes = doc.getElementsByClass(LAYOUT_CHARACTER_MOUNTS);
+        Elements mountBoxes = doc.getElementsByClass(LAYOUT_CHARACTER_MOUNTS);
         // Get mounts
-        if(!minionBoxes.isEmpty()) {
-            Elements mountSet = minionBoxes.get(0).getElementsByTag(TAG_LI);
-            for(int index = 0; index < mountSet.size(); index++) { // For each mount link store into array
-                mounts.add(mountSet.get(index).getElementsByTag(TAG_DIV).attr(LAYOUT_DATA_TOOLTIP));
+        if(!mountBoxes.isEmpty()) {
+            Elements mountSet = mountBoxes.get(0).getElementsByTag(TAG_LI);
+            for(Element mount : mountSet) {
+                String mountName = edbCache.getMountNameFromTooltip(mount.attr("data-tooltip_href"));
+                if(mountName != null) {
+                    mounts.add(mountName);
+                }
             }
         }
         return mounts;
@@ -472,5 +493,15 @@ public class PlayerBuilder {
      */
     public void setPageLoader(final LodestonePageLoader pageLoader) {
         this.pageLoader = pageLoader;
+    }
+
+    /**
+     * Sets an instance of the EorzeaDatabaseCache used for read-through caching of lookups from Eorzea Database on the Lodestone.
+     * 
+     * @param edbCache
+     */
+    @Autowired
+    public void setEorzeaDatabaseCache(final EorzeaDatabaseCache edbCache) {
+        this.edbCache = edbCache;
     }
 }

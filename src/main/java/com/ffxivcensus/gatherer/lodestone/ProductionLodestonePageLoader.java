@@ -20,12 +20,17 @@ public class ProductionLodestonePageLoader implements LodestonePageLoader {
 
     /** Logger */
     private static final Logger LOG = LoggerFactory.getLogger(ProductionLodestonePageLoader.class);
+    /** URL fragment for Minions. */
+    private static final String SECTION_MINIONS = "minion";
+    /** URL fragment for Mounts. */
+    private static final String SECTION_MOUNTS = "mount";
 
+    private String baseDomain = "http://eu.finalfantasyxiv.com";
     /**
      * Base URL used to fetch character data for.
      * Default to {@value}}
      */
-    private String baseUrl = "http://eu.finalfantasyxiv.com/lodestone/character/%d/";
+    private String baseUrl = baseDomain + "/lodestone/character/%d/";
 
     /**
      * Fetches the given Character {@link Document} from the Lodestone.
@@ -38,11 +43,46 @@ public class ProductionLodestonePageLoader implements LodestonePageLoader {
      */
     @Override
     public Document getCharacterPage(final int characterId) throws IOException, InterruptedException, CharacterDeletedException {
-        int attempt = 1;
+        return getPage(baseUrl, characterId, 1);
+    }
+
+    @Override
+    public Document getMinionPage(int characterId) throws IOException, InterruptedException, CharacterDeletedException {
+        return getPage(baseUrl + SECTION_MINIONS, characterId, 1);
+    }
+
+    @Override
+    public Document getMountPage(int characterId) throws IOException, InterruptedException, CharacterDeletedException {
+        return getPage(baseUrl + SECTION_MOUNTS, characterId, 1);
+    }
+
+    @Override
+    public Document getTooltipPage(String href) throws IOException, InterruptedException {
+        Document doc;
+        try {
+            doc = Jsoup.connect(baseDomain + href).timeout(5000).get();
+        } catch(HttpStatusException httpe) {
+            switch (httpe.getStatusCode()) {
+                case 429:
+                    // Generate random number 1->20*attempt no and sleep for it
+                    Random rand = new Random();
+                    int randomNum = rand.nextInt(5);
+                    LOG.trace("Experiencing rate limiting (HTTP 429) while fetching tooltip, waiting " + randomNum + "ms then retrying...");
+                    TimeUnit.MILLISECONDS.sleep(randomNum);
+                    doc = getTooltipPage(href);
+                    break;
+                default:
+                    throw new IOException("Unexpected HTTP Status Code: " + httpe.getStatusCode(), httpe);
+            }
+        }
+        return doc;
+    }
+
+    private Document getPage(final String pageUrl, final int characterId, final int attempt) throws IOException, InterruptedException,
+                                                                                             CharacterDeletedException {
         Document doc;
 
-        // URL to connect to
-        String url = String.format(baseUrl, characterId);
+        String url = String.format(pageUrl, characterId);
 
         try {
             doc = Jsoup.connect(url).timeout(5000).get();
@@ -57,7 +97,7 @@ public class ProductionLodestonePageLoader implements LodestonePageLoader {
                     LOG.trace("Experiencing rate limiting (HTTP 429) while fetching id " + characterId + " (attempt " + attempt
                               + "), waiting " + randomNum + "ms then retrying...");
                     TimeUnit.MILLISECONDS.sleep(randomNum);
-                    doc = getCharacterPage(characterId);
+                    doc = getPage(url, characterId, attempt);
                     break;
                 case HttpStatus.SC_NOT_FOUND:
                     LOG.info("Character {} does not exist. (404)", characterId);

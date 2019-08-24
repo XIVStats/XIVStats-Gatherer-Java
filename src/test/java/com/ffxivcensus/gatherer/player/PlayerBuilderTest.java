@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.ffxivcensus.gatherer.edb.EorzeaDatabaseCache;
 import com.ffxivcensus.gatherer.lodestone.TestDataLodestonePageLoader;
 
 public class PlayerBuilderTest {
@@ -14,10 +15,8 @@ public class PlayerBuilderTest {
     @Before
     public void setUp() {
         instance = new PlayerBuilder();
-    }
-
-    public void tearDown() {
-        instance = null;
+        // TODO: Figure out a mock of this
+        instance.setEorzeaDatabaseCache(new EorzeaDatabaseCache());
     }
 
     @Test
@@ -42,7 +41,7 @@ public class PlayerBuilderTest {
         assertEquals(0, player.getLevelGladiator());
         assertEquals(0, player.getLevelMarauder());
         assertEquals(70, player.getLevelDarkknight());
-        assertEquals(0, player.getLevelGunbreaker());
+        assertEquals(74, player.getLevelGunbreaker());
 
         // Melee DPS
         assertEquals(70, player.getLevelPugilist());
@@ -51,19 +50,19 @@ public class PlayerBuilderTest {
         assertEquals(70, player.getLevelSamurai());
 
         // Ranged Physical DPS
-        assertEquals(70, player.getLevelArcher());
-        assertEquals(70, player.getLevelMachinist());
-        assertEquals(0, player.getLevelDancer());
+        assertEquals(80, player.getLevelArcher());
+        assertEquals(80, player.getLevelMachinist());
+        assertEquals(60, player.getLevelDancer());
 
         // Ranged Magical DPS
         assertEquals(70, player.getLevelThaumaturge());
-        assertEquals(70, player.getLevelArcanist());
+        assertEquals(80, player.getLevelArcanist());
         assertEquals(70, player.getLevelRedmage());
         assertEquals(50, player.getLevelBluemage());
 
         // Healer
         assertEquals(70, player.getLevelConjurer());
-        assertEquals(70, player.getLevelScholar());
+        assertEquals(80, player.getLevelScholar());
         assertEquals(70, player.getLevelAstrologian());
 
         // Disciples of the hand
@@ -79,8 +78,8 @@ public class PlayerBuilderTest {
         // Disciples of the land
         assertEquals(0, player.getLevelMiner());
         assertEquals(50, player.getLevelBotanist());
-        assertEquals(70, player.getLevelFisher());
-        
+        assertEquals(78, player.getLevelFisher());
+
         // The Forbidden Land, Eureka
         assertEquals(60, player.getLevelEureka());
 
@@ -149,7 +148,6 @@ public class PlayerBuilderTest {
         instance.setPageLoader(new TestDataLodestonePageLoader());
         PlayerBean player = instance.getPlayer(22763008);
 
-
         // NOTE: All of the following tests assume various pieces of information
         // Testing information that is very unlikely to change
         assertEquals(22763008, player.getId());
@@ -205,7 +203,7 @@ public class PlayerBuilderTest {
         assertEquals(0, player.getLevelMiner());
         assertEquals(0, player.getLevelBotanist());
         assertEquals(0, player.getLevelFisher());
-        
+
         // The Forbidden Land, Eureka
         assertEquals(0, player.getLevelEureka());
 
