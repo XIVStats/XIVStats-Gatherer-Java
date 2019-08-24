@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.ffxivcensus.gatherer.edb.EorzeaDatabaseCache;
 import com.ffxivcensus.gatherer.lodestone.TestDataLodestonePageLoader;
 
 public class PlayerBuilderTest {
@@ -14,10 +15,8 @@ public class PlayerBuilderTest {
     @Before
     public void setUp() {
         instance = new PlayerBuilder();
-    }
-
-    public void tearDown() {
-        instance = null;
+        // TODO: Figure out a mock of this
+        instance.setEorzeaDatabaseCache(new EorzeaDatabaseCache());
     }
 
     @Test
@@ -80,7 +79,7 @@ public class PlayerBuilderTest {
         assertEquals(0, player.getLevelMiner());
         assertEquals(50, player.getLevelBotanist());
         assertEquals(78, player.getLevelFisher());
-        
+
         // The Forbidden Land, Eureka
         assertEquals(60, player.getLevelEureka());
 
@@ -149,7 +148,6 @@ public class PlayerBuilderTest {
         instance.setPageLoader(new TestDataLodestonePageLoader());
         PlayerBean player = instance.getPlayer(22763008);
 
-
         // NOTE: All of the following tests assume various pieces of information
         // Testing information that is very unlikely to change
         assertEquals(22763008, player.getId());
@@ -205,7 +203,7 @@ public class PlayerBuilderTest {
         assertEquals(0, player.getLevelMiner());
         assertEquals(0, player.getLevelBotanist());
         assertEquals(0, player.getLevelFisher());
-        
+
         // The Forbidden Land, Eureka
         assertEquals(0, player.getLevelEureka());
 

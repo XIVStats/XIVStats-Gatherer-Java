@@ -13,6 +13,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
+import com.ffxivcensus.gatherer.edb.EorzeaDatabaseCache;
 import com.ffxivcensus.gatherer.player.CharacterStatus;
 import com.ffxivcensus.gatherer.player.PlayerBean;
 import com.ffxivcensus.gatherer.player.PlayerBeanRepository;
@@ -29,7 +30,9 @@ public class GathererTaskTest {
         MockitoAnnotations.initMocks(this);
         instance = new GathererTask();
         instance.setPlayerRepository(mockRepo);
-        instance.setPlayerBuilder(new PlayerBuilder());
+        PlayerBuilder builder = new PlayerBuilder();
+        builder.setEorzeaDatabaseCache(new EorzeaDatabaseCache());
+        instance.setPlayerBuilder(builder);
     }
     
     @After

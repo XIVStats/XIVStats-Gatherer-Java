@@ -1,5 +1,6 @@
 package com.ffxivcensus.gatherer.player;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -153,10 +154,10 @@ public class PlayerBean {
     private boolean isLegacyPlayer;
     @Column(name = "minions")
     @Convert(converter = StringListConverter.class)
-    private List<String> minions;
+    private List<String> minions = new ArrayList<>();
     @Column(name = "mounts")
     @Convert(converter = StringListConverter.class)
-    private List<String> mounts;
+    private List<String> mounts = new ArrayList<>();
     @Column(name = "date_active")
     private Date dateImgLastModified;
     @Column(name = "is_active")

@@ -5,7 +5,10 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import java.util.Date;
 
+import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.ffxivcensus.gatherer.edb.EorzeaDatabaseCache;
@@ -22,11 +25,28 @@ import com.ffxivcensus.gatherer.player.PlayerBuilder;
 public class PlayerBuilderIT {
 
     private PlayerBuilder instance;
+    // Slightly hacky, but mimicking the Spring singleton instance in order to save on performance
+    private static EorzeaDatabaseCache edbCache;
+
+    @BeforeClass
+    public static void beforeClass() {
+        edbCache = new EorzeaDatabaseCache();
+    }
 
     @Before
     public void setUp() {
         instance = new PlayerBuilder();
-        instance.setEorzeaDatabaseCache(new EorzeaDatabaseCache());
+        instance.setEorzeaDatabaseCache(edbCache);
+    }
+
+    @After
+    public void tearDown() {
+        instance = null;
+    }
+
+    @AfterClass
+    public static void afterClass() {
+        edbCache = null;
     }
 
     /**
