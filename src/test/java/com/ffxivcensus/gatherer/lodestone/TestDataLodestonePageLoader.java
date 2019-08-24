@@ -55,4 +55,10 @@ public class TestDataLodestonePageLoader implements LodestonePageLoader {
         return doc;
     }
 
+    @Override
+    public Document getTooltipPage(String href) throws IOException, InterruptedException {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
 }
