@@ -41,5 +41,14 @@ public interface LodestonePageLoader {
      * @throws CharacterDeletedException
      */
     Document getMountPage(final int characterId) throws IOException, InterruptedException, CharacterDeletedException;
+    
+    /**
+     * Fetches a tooltop page from a 'data-tooltip_href' reference 
+     * @param href Value from the data-tooltip_href value
+     * @return
+     * @throws IOException
+     * @throws InterruptedException
+     */
+    Document getTooltipPage(final String href) throws IOException, InterruptedException;
 
 }

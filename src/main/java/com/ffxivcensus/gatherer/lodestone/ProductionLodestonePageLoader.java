@@ -55,7 +55,30 @@ public class ProductionLodestonePageLoader implements LodestonePageLoader {
         return getPage(baseUrl + SECTION_MOUNTS, characterId, 1);
     }
 
-    private Document getPage(final String pageUrl, final int characterId, final int attempt) throws IOException, InterruptedException, CharacterDeletedException {
+    @Override
+    public Document getTooltipPage(String href) throws IOException, InterruptedException {
+        Document doc;
+        try {
+            doc = Jsoup.connect(href).timeout(5000).get();
+        } catch(HttpStatusException httpe) {
+            switch (httpe.getStatusCode()) {
+                case 429:
+                    // Generate random number 1->20*attempt no and sleep for it
+                    Random rand = new Random();
+                    int randomNum = rand.nextInt(5);
+                    LOG.trace("Experiencing rate limiting (HTTP 429) while fetching tooltip, waiting " + randomNum + "ms then retrying...");
+                    TimeUnit.MILLISECONDS.sleep(randomNum);
+                    doc = getTooltipPage(href);
+                    break;
+                default:
+                    throw new IOException("Unexpected HTTP Status Code: " + httpe.getStatusCode(), httpe);
+            }
+        }
+        return doc;
+    }
+
+    private Document getPage(final String pageUrl, final int characterId, final int attempt) throws IOException, InterruptedException,
+                                                                                             CharacterDeletedException {
         Document doc;
 
         String url = String.format(pageUrl, characterId);
