@@ -8,6 +8,7 @@ import java.util.Date;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.ffxivcensus.gatherer.edb.EorzeaDatabaseCache;
 import com.ffxivcensus.gatherer.player.PlayerBean;
 import com.ffxivcensus.gatherer.player.PlayerBuilder;
 
@@ -25,6 +26,7 @@ public class PlayerBuilderIT {
     @Before
     public void setUp() {
         instance = new PlayerBuilder();
+        instance.setEorzeaDatabaseCache(new EorzeaDatabaseCache());
     }
 
     /**

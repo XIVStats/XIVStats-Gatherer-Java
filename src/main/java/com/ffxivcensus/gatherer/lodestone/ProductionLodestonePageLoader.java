@@ -25,11 +25,12 @@ public class ProductionLodestonePageLoader implements LodestonePageLoader {
     /** URL fragment for Mounts. */
     private static final String SECTION_MOUNTS = "mount";
 
+    private String baseDomain = "http://eu.finalfantasyxiv.com";
     /**
      * Base URL used to fetch character data for.
      * Default to {@value}}
      */
-    private String baseUrl = "http://eu.finalfantasyxiv.com/lodestone/character/%d/";
+    private String baseUrl = baseDomain + "/lodestone/character/%d/";
 
     /**
      * Fetches the given Character {@link Document} from the Lodestone.
@@ -59,7 +60,7 @@ public class ProductionLodestonePageLoader implements LodestonePageLoader {
     public Document getTooltipPage(String href) throws IOException, InterruptedException {
         Document doc;
         try {
-            doc = Jsoup.connect(href).timeout(5000).get();
+            doc = Jsoup.connect(baseDomain + href).timeout(5000).get();
         } catch(HttpStatusException httpe) {
             switch (httpe.getStatusCode()) {
                 case 429:
