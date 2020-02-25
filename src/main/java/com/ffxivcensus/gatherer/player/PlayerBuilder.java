@@ -164,7 +164,9 @@ public class PlayerBuilder {
             player.setGrandCompany(getGrandCompanyFromPage(doc));
             player.setFreeCompany(getFreeCompanyFromPage(doc));
             player.setDateImgLastModified(getDateLastUpdatedFromPage(doc, playerID));
-            setLevels(player, getLevelsFromPage(doc));
+            
+            Document classJobDoc = pageLoader.getClassJobPage(playerID);
+            setLevels(player, getLevelsFromPage(classJobDoc));
 
             // Mounts from the relevant sub-section
             Document mountDoc = pageLoader.getMountPage(playerID);
@@ -366,7 +368,7 @@ public class PlayerBuilder {
         // Initialize array list in which to store levels (in order displayed on lodestone)
         List<Integer> levels = new ArrayList<>();
 
-        Element classJobTab = doc.getElementsByClass("character__content").get(2);
+        Element classJobTab = doc.getElementsByClass("character__content").get(0);
         for(Element jobLevel : classJobTab.getElementsByClass(LAYOUT_CHARACTER_JOB_LEVEL)) {
             String strLvl = jobLevel.text();
             if(strLvl.equals("-")) {

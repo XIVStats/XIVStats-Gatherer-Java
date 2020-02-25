@@ -20,6 +20,8 @@ public class ProductionLodestonePageLoader implements LodestonePageLoader {
 
     /** Logger */
     private static final Logger LOG = LoggerFactory.getLogger(ProductionLodestonePageLoader.class);
+    /** URL fragment for Classes & Jobs */
+    private static final String SECTION_CLASS_JOB = "class_job";
     /** URL fragment for Minions. */
     private static final String SECTION_MINIONS = "minion";
     /** URL fragment for Mounts. */
@@ -46,6 +48,11 @@ public class ProductionLodestonePageLoader implements LodestonePageLoader {
         return getPage(baseUrl, characterId, 1);
     }
 
+    @Override
+    public Document getClassJobPage(int characterId) throws IOException, InterruptedException, CharacterDeletedException {
+        return getPage(baseUrl + SECTION_CLASS_JOB, characterId, 1);
+    }
+    
     @Override
     public Document getMinionPage(int characterId) throws IOException, InterruptedException, CharacterDeletedException {
         return getPage(baseUrl + SECTION_MINIONS, characterId, 1);

@@ -11,12 +11,13 @@ import com.ffxivcensus.gatherer.lodestone.TestDataLodestonePageLoader;
 public class PlayerBuilderTest {
 
     private PlayerBuilder instance;
+    private static EorzeaDatabaseCache EDB_CACHE = new EorzeaDatabaseCache();
 
     @Before
     public void setUp() {
         instance = new PlayerBuilder();
         // TODO: Figure out a mock of this
-        instance.setEorzeaDatabaseCache(new EorzeaDatabaseCache());
+        instance.setEorzeaDatabaseCache(EDB_CACHE);
     }
 
     @Test
@@ -40,45 +41,45 @@ public class PlayerBuilderTest {
         // Tank
         assertEquals(0, player.getLevelGladiator());
         assertEquals(0, player.getLevelMarauder());
-        assertEquals(70, player.getLevelDarkknight());
-        assertEquals(74, player.getLevelGunbreaker());
+        assertEquals(80, player.getLevelDarkknight());
+        assertEquals(80, player.getLevelGunbreaker());
 
         // Melee DPS
-        assertEquals(70, player.getLevelPugilist());
-        assertEquals(37, player.getLevelLancer());
+        assertEquals(80, player.getLevelPugilist());
+        assertEquals(50, player.getLevelLancer());
         assertEquals(55, player.getLevelRogue());
         assertEquals(70, player.getLevelSamurai());
 
         // Ranged Physical DPS
         assertEquals(80, player.getLevelArcher());
         assertEquals(80, player.getLevelMachinist());
-        assertEquals(60, player.getLevelDancer());
+        assertEquals(80, player.getLevelDancer());
 
         // Ranged Magical DPS
         assertEquals(70, player.getLevelThaumaturge());
         assertEquals(80, player.getLevelArcanist());
-        assertEquals(70, player.getLevelRedmage());
-        assertEquals(50, player.getLevelBluemage());
+        assertEquals(73, player.getLevelRedmage());
+        assertEquals(60, player.getLevelBluemage());
 
         // Healer
-        assertEquals(70, player.getLevelConjurer());
+        assertEquals(80, player.getLevelConjurer());
         assertEquals(80, player.getLevelScholar());
-        assertEquals(70, player.getLevelAstrologian());
+        assertEquals(80, player.getLevelAstrologian());
 
         // Disciples of the hand
-        assertEquals(27, player.getLevelCarpenter());
-        assertEquals(13, player.getLevelBlacksmith());
-        assertEquals(17, player.getLevelArmorer());
+        assertEquals(69, player.getLevelCarpenter());
+        assertEquals(28, player.getLevelBlacksmith());
+        assertEquals(25, player.getLevelArmorer());
         assertEquals(21, player.getLevelGoldsmith());
         assertEquals(0, player.getLevelLeatherworker());
         assertEquals(0, player.getLevelWeaver());
-        assertEquals(21, player.getLevelAlchemist());
-        assertEquals(33, player.getLevelCulinarian());
+        assertEquals(80, player.getLevelAlchemist());
+        assertEquals(70, player.getLevelCulinarian());
 
         // Disciples of the land
         assertEquals(0, player.getLevelMiner());
-        assertEquals(50, player.getLevelBotanist());
-        assertEquals(78, player.getLevelFisher());
+        assertEquals(58, player.getLevelBotanist());
+        assertEquals(80, player.getLevelFisher());
 
         // The Forbidden Land, Eureka
         assertEquals(60, player.getLevelEureka());
@@ -163,7 +164,7 @@ public class PlayerBuilderTest {
         // Test classes - levels based on those at time of test creation
         // Tank
         assertEquals(0, player.getLevelGladiator());
-        assertEquals(28, player.getLevelMarauder());
+        assertEquals(33, player.getLevelMarauder());
         assertEquals(0, player.getLevelDarkknight());
         assertEquals(0, player.getLevelGunbreaker());
 

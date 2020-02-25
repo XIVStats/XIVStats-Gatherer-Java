@@ -23,6 +23,16 @@ public interface LodestonePageLoader {
     Document getCharacterPage(final int characterId) throws IOException, InterruptedException, CharacterDeletedException;
     
     /**
+     * Fetches a Character's Class & Job info, where available.
+     * @param characterId
+     * @return
+     * @throws IOException
+     * @throws InterruptedException
+     * @throws CharacterDeletedException
+     */
+    Document getClassJobPage(final int characterId) throws IOException, InterruptedException, CharacterDeletedException;
+    
+    /**
      * Fetches a Characters Minions page, where available.
      * @param characterId
      * @return
