@@ -93,7 +93,7 @@ public class PlayerBuilderIT {
         assertTrue(playerOne.getLevelThaumaturge() >= 60);
         assertTrue(playerOne.getLevelArcanist() >= 60);
         assertTrue(playerOne.getLevelRedmage() >= 70);
-        assertTrue(playerOne.getLevelBluemage() <= 50);
+        assertTrue(playerOne.getLevelBluemage() <= 60);
 
         // Healer
         assertTrue(playerOne.getLevelConjurer() >= 60);
@@ -199,14 +199,14 @@ public class PlayerBuilderIT {
     }
 
     /**
-     * Perform a test of the getPlayer method using character #13002145 (Mi Clay, Yojimbo) to test data
+     * Perform a test of the getPlayer method using character #13002145 (Momo Haru, Fenrir) to test data
      * that could not be tested with other tests.
      *
      * @throws Exception Exception exception thrown when reading non-existant character.
      */
     @Test
     public void testUnplayedPlayer() throws Exception {
-        PlayerBean player = instance.getPlayer(13002142);
+        PlayerBean player = instance.getPlayer(1557282);
 
         // Test grand company
         assertEquals("none", player.getGrandCompany());
@@ -215,8 +215,8 @@ public class PlayerBuilderIT {
         // Test gender
         assertEquals("male", player.getGender());
 
-        // Test that classes are polling correctly, arcanist level will be indicated on page by '-' should be 0 in player object.
-        assertEquals(0, player.getLevelArcanist());
+        // Test that classes are polling correctly, pugilist level will be indicated on page by '-' should be 0 in player object.
+        assertEquals(0, player.getLevelPugilist());
 
         // Test fields that are true in other tests
         assertFalse(player.isHas30DaysSub());
@@ -249,7 +249,7 @@ public class PlayerBuilderIT {
 
         // Test get minions method
         assertTrue(player.getMinions().size() == 0);
-        assertTrue(player.getMounts().size() == 0);
+        assertTrue(player.getMounts().size() <= 1);
     }
 
     /**
