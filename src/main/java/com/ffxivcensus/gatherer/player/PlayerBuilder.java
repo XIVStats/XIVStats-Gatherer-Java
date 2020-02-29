@@ -172,7 +172,7 @@ public class PlayerBuilder {
             
             Document classJobDoc = pageLoader.getClassJobPage(playerID);
             setLevels(player, getLevelsFromPage(classJobDoc));
-            player.setGearSet(getGearSet(doc));
+            player.setGearSet(getGearSet(player, doc));
 
             // Mounts from the relevant sub-section
             Document mountDoc = pageLoader.getMountPage(playerID);

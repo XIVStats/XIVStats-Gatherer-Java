@@ -149,45 +149,45 @@ public class PlayerBuilderTest {
         // Test for data from very end
         assertTrue(player.getMounts().contains("Midgardsormr"));
 
-        assertEquals("550368b1982", player.getGearSet().getMainHand().getItemId());
-        assertEquals("Augmented Scaevan Magitek Codex", player.getGearSet().getMainHand().getName());
+        assertEquals("08372e63df2", player.getGearSet().getMainHand().getItemId());
+        assertEquals("Augmented Deepshadow Codex", player.getGearSet().getMainHand().getName());
         assertEquals("Scholar's Arm", player.getGearSet().getMainHand().getCategory());
-        assertEquals(400, player.getGearSet().getMainHand().getiLevel());
+        assertEquals(470, player.getGearSet().getMainHand().getiLevel());
 
-        assertEquals("985384846a3", player.getGearSet().getHead().getItemId());
-        assertEquals("Augmented Scaevan Mask of Healing", player.getGearSet().getHead().getName());
+        assertEquals("4a2ae61210d", player.getGearSet().getHead().getItemId());
+        assertEquals("Augmented Deepshadow Hood of Healing", player.getGearSet().getHead().getName());
 
-        assertEquals("95aad27d167", player.getGearSet().getBody().getItemId());
-        assertEquals("Augmented Scaevan Coat of Healing", player.getGearSet().getBody().getName());
+        assertEquals("e7276bb2a56", player.getGearSet().getBody().getItemId());
+        assertEquals("Augmented Deepshadow Scale Mail of Healing", player.getGearSet().getBody().getName());
 
-        assertEquals("5a66a295b31", player.getGearSet().getHands().getItemId());
-        assertEquals("Augmented Scaevan Gloves of Healing", player.getGearSet().getHands().getName());
+        assertEquals("3804a54f06b", player.getGearSet().getHands().getItemId());
+        assertEquals("Augmented Deepshadow Armguards of Healing", player.getGearSet().getHands().getName());
 
-        assertEquals("aa52c71cf03", player.getGearSet().getBelt().getItemId());
-        assertEquals("Augmented Scaevan Tassets of Healing", player.getGearSet().getBelt().getName());
+        assertEquals("e60f7637206", player.getGearSet().getBelt().getItemId());
+        assertEquals("Augmented Deepshadow Tassets of Healing", player.getGearSet().getBelt().getName());
 
-        assertEquals("f567a14e946", player.getGearSet().getLegs().getItemId());
-        assertEquals("Augmented Scaevan Trousers of Healing", player.getGearSet().getLegs().getName());
+        assertEquals("9922348a266", player.getGearSet().getLegs().getItemId());
+        assertEquals("Augmented Deepshadow Breeches of Healing", player.getGearSet().getLegs().getName());
 
-        assertEquals("7ef876f9b9f", player.getGearSet().getFeet().getItemId());
-        assertEquals("Augmented Scaevan Shoes of Healing", player.getGearSet().getFeet().getName());
+        assertEquals("c4985948ea9", player.getGearSet().getFeet().getItemId());
+        assertEquals("Augmented Deepshadow Greaves of Healing", player.getGearSet().getFeet().getName());
 
         assertNull(player.getGearSet().getOffHand());
 
-        assertEquals("e4a564c39da", player.getGearSet().getEars().getItemId());
-        assertEquals("Augmented Scaevan Ear Cuff of Healing", player.getGearSet().getEars().getName());
+        assertEquals("6433817eadd", player.getGearSet().getEars().getItemId());
+        assertEquals("Augmented Deepshadow Earring of Healing", player.getGearSet().getEars().getName());
 
-        assertEquals("724ca4caf77", player.getGearSet().getNeck().getItemId());
-        assertEquals("Augmented Scaevan Choker of Healing", player.getGearSet().getNeck().getName());
+        assertEquals("f6ff748e3da", player.getGearSet().getNeck().getItemId());
+        assertEquals("Augmented Deepshadow Necklace of Healing", player.getGearSet().getNeck().getName());
 
-        assertEquals("80935bab5fa", player.getGearSet().getWrists().getItemId());
-        assertEquals("Augmented Scaevan Bracelet of Healing", player.getGearSet().getWrists().getName());
+        assertEquals("3f76ec4df01", player.getGearSet().getWrists().getItemId());
+        assertEquals("Augmented Deepshadow Bracelet of Healing", player.getGearSet().getWrists().getName());
 
-        assertEquals("59d188f2713", player.getGearSet().getLeftHand().getItemId());
-        assertEquals("Scaevan Ring of Healing", player.getGearSet().getLeftHand().getName());
+        assertEquals("f90266bb91f", player.getGearSet().getLeftHand().getItemId());
+        assertEquals("Edencall Ring of Healing", player.getGearSet().getLeftHand().getName());
 
-        assertEquals("826cc331045", player.getGearSet().getRightHand().getItemId());
-        assertEquals("Augmented Scaevan Ring of Healing", player.getGearSet().getRightHand().getName());
+        assertEquals("22c8c0bb824", player.getGearSet().getRightHand().getItemId());
+        assertEquals("Augmented Deepshadow Ring of Healing", player.getGearSet().getRightHand().getName());
 
         assertEquals("eb511e3871f", player.getGearSet().getJobCrystal().getItemId());
         assertEquals("Soul of the Scholar", player.getGearSet().getJobCrystal().getName());

@@ -212,7 +212,7 @@ public class PlayerBuilderIT {
      */
     @Test
     public void testUnplayedPlayer() throws Exception {
-        PlayerBean player = instance.getPlayer(13002142, null);
+        PlayerBean player = instance.getPlayer(1557282, null);
 
         // Test grand company
         assertEquals("none", player.getGrandCompany());
