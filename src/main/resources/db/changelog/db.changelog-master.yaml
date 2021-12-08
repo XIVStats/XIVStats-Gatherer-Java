@@ -620,3 +620,17 @@ databaseChangeLog:
                     constraints:
                       nullable: false
                     afterColumn: level_reaper
+  - changeSet:
+      id: 13
+      author: matthewhillier
+      changes:
+          - addColumn:
+              tableName: tblplayers
+              columns:
+                - column:
+                    name: level_bozja
+                    type: int(3)
+                    defaultValueNumeric: 0
+                    constraints:
+                      nullable: false
+                    afterColumn: level_fisher

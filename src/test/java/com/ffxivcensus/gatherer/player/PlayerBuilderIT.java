@@ -73,50 +73,55 @@ public class PlayerBuilderIT {
 
         // Test classes - levels based on those at time of test creation
         // Tank
-        assertTrue(playerOne.getLevelGladiator() >= 60);
-        assertTrue(playerOne.getLevelMarauder() >= 60);
-        assertTrue(playerOne.getLevelDarkknight() >= 60);
-        assertTrue(playerOne.getLevelGunbreaker() >= 0);
+        assertTrue(playerOne.getLevelGladiator() >= 80);
+        assertTrue(playerOne.getLevelMarauder() >= 80);
+        assertTrue(playerOne.getLevelDarkknight() >= 80);
+        assertTrue(playerOne.getLevelGunbreaker() >= 80);
 
         // Melee DPS
-        assertTrue(playerOne.getLevelPugilist() >= 60);
-        assertTrue(playerOne.getLevelLancer() >= 60);
-        assertTrue(playerOne.getLevelRogue() >= 56);
-        assertTrue(playerOne.getLevelSamurai() >= 70);
+        assertTrue(playerOne.getLevelPugilist() >= 80);
+        assertTrue(playerOne.getLevelLancer() >= 80);
+        assertTrue(playerOne.getLevelRogue() >= 80);
+        assertTrue(playerOne.getLevelSamurai() >= 80);
+        assertTrue(playerOne.getLevelReaper() == 0);
 
         // Ranged Physical DPS
-        assertTrue(playerOne.getLevelArcher() >= 52);
-        assertTrue(playerOne.getLevelMachinist() >= 60);
-        assertTrue(playerOne.getLevelDancer() >= 0);
+        assertTrue(playerOne.getLevelArcher() >= 80);
+        assertTrue(playerOne.getLevelMachinist() >= 80);
+        assertTrue(playerOne.getLevelDancer() >= 80);
 
         // Ranged Magical DPS
-        assertTrue(playerOne.getLevelThaumaturge() >= 60);
-        assertTrue(playerOne.getLevelArcanist() >= 60);
-        assertTrue(playerOne.getLevelRedmage() >= 70);
-        assertTrue(playerOne.getLevelBluemage() <= 60);
+        assertTrue(playerOne.getLevelThaumaturge() >= 80);
+        assertTrue(playerOne.getLevelArcanist() >= 80);
+        assertTrue(playerOne.getLevelRedmage() >= 80);
+        assertTrue(playerOne.getLevelBluemage() <= 70);
 
         // Healer
-        assertTrue(playerOne.getLevelConjurer() >= 60);
-        assertTrue(playerOne.getLevelScholar() >= 67);
-        assertTrue(playerOne.getLevelAstrologian() >= 60);
+        assertTrue(playerOne.getLevelConjurer() >= 90);
+        assertTrue(playerOne.getLevelScholar() >= 80);
+        assertTrue(playerOne.getLevelAstrologian() >= 81);
+        assertTrue(playerOne.getLevelSage() == 0);
 
         // Disciples of the hand
-        assertTrue(playerOne.getLevelCarpenter() >= 53);
-        assertTrue(playerOne.getLevelBlacksmith() >= 53);
-        assertTrue(playerOne.getLevelArmorer() >= 58);
-        assertTrue(playerOne.getLevelGoldsmith() >= 58);
-        assertTrue(playerOne.getLevelLeatherworker() >= 53);
-        assertTrue(playerOne.getLevelWeaver() >= 56);
-        assertTrue(playerOne.getLevelAlchemist() >= 60);
-        assertTrue(playerOne.getLevelCulinarian() >= 55);
+        assertTrue(playerOne.getLevelCarpenter() >= 80);
+        assertTrue(playerOne.getLevelBlacksmith() >= 80);
+        assertTrue(playerOne.getLevelArmorer() >= 80);
+        assertTrue(playerOne.getLevelGoldsmith() >= 80);
+        assertTrue(playerOne.getLevelLeatherworker() >= 80);
+        assertTrue(playerOne.getLevelWeaver() >= 80);
+        assertTrue(playerOne.getLevelAlchemist() >= 80);
+        assertTrue(playerOne.getLevelCulinarian() >= 80);
 
         // Disciples of the land
-        assertTrue(playerOne.getLevelMiner() >= 60);
-        assertTrue(playerOne.getLevelBotanist() >= 60);
-        assertTrue(playerOne.getLevelFisher() >= 60);
+        assertTrue(playerOne.getLevelMiner() >= 80);
+        assertTrue(playerOne.getLevelBotanist() >= 80);
+        assertTrue(playerOne.getLevelFisher() >= 80);
+        
+        // Bozjan Southern Front
+        assertTrue(playerOne.getLevelBozja() >= 13);
         
         // The Forbidden Land, Eureka
-        assertTrue(playerOne.getLevelEureka() >= 48);
+        assertTrue(playerOne.getLevelEureka() >= 60);
 
         // Test boolean values
         // Subscription periods

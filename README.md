@@ -141,6 +141,10 @@ The database table ```tblplayers``` has the following structure:
 |level_redmage         |int      |N/A                             |
 |level_samurai         |int      |N/A                             |
 |level_bluemage        |int      |N/A                             |
+|level_gunbreaker      |int      |N/A                             |
+|level_dancer          |int      |N/A                             |
+|level_reaper          |int      |N/A                             |
+|level_sage            |int      |N/A                             |
 |level_carpenter       |int      |N/A                             |
 |level_blacksmith      |int      |N/A                             |
 |level_armorer         |int      |N/A                             |
@@ -152,6 +156,8 @@ The database table ```tblplayers``` has the following structure:
 |level_miner           |int      |N/A                             |
 |level_botanist        |int      |N/A                             |
 |level_fisher          |int      |N/A                             |
+|level_bozja           |int      |N/A                             |
+|level_eureka          |int      |N/A                             |
 |p30days               |bit      |Minion - Wind-up Cursor         |
 |p60days               |bit      |Minion - Black Chocobo Chick    |
 |p90days               |bit      |Minion - Beady Eye              |

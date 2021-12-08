@@ -39,16 +39,17 @@ public class PlayerBuilderTest {
 
         // Test classes - levels based on those at time of test creation
         // Tank
-        assertEquals(0, player.getLevelGladiator());
-        assertEquals(0, player.getLevelMarauder());
+        assertEquals(80, player.getLevelGladiator());
+        assertEquals(32, player.getLevelMarauder());
         assertEquals(80, player.getLevelDarkknight());
-        assertEquals(80, player.getLevelGunbreaker());
+        assertEquals(82, player.getLevelGunbreaker());
 
         // Melee DPS
         assertEquals(80, player.getLevelPugilist());
-        assertEquals(50, player.getLevelLancer());
-        assertEquals(55, player.getLevelRogue());
-        assertEquals(70, player.getLevelSamurai());
+        assertEquals(80, player.getLevelLancer());
+        assertEquals(80, player.getLevelRogue());
+        assertEquals(80, player.getLevelSamurai());
+        assertEquals(71, player.getLevelReaper());
 
         // Ranged Physical DPS
         assertEquals(80, player.getLevelArcher());
@@ -56,30 +57,34 @@ public class PlayerBuilderTest {
         assertEquals(80, player.getLevelDancer());
 
         // Ranged Magical DPS
-        assertEquals(70, player.getLevelThaumaturge());
-        assertEquals(80, player.getLevelArcanist());
-        assertEquals(73, player.getLevelRedmage());
-        assertEquals(60, player.getLevelBluemage());
+        assertEquals(80, player.getLevelThaumaturge());
+        assertEquals(86, player.getLevelArcanist());
+        assertEquals(80, player.getLevelRedmage());
+        assertEquals(70, player.getLevelBluemage());
 
         // Healer
         assertEquals(80, player.getLevelConjurer());
-        assertEquals(80, player.getLevelScholar());
+        assertEquals(86, player.getLevelScholar());
         assertEquals(80, player.getLevelAstrologian());
+        assertEquals(74, player.getLevelSage());
 
         // Disciples of the hand
-        assertEquals(69, player.getLevelCarpenter());
-        assertEquals(28, player.getLevelBlacksmith());
+        assertEquals(80, player.getLevelCarpenter());
+        assertEquals(34, player.getLevelBlacksmith());
         assertEquals(25, player.getLevelArmorer());
-        assertEquals(21, player.getLevelGoldsmith());
+        assertEquals(26, player.getLevelGoldsmith());
         assertEquals(0, player.getLevelLeatherworker());
         assertEquals(0, player.getLevelWeaver());
         assertEquals(80, player.getLevelAlchemist());
-        assertEquals(70, player.getLevelCulinarian());
+        assertEquals(80, player.getLevelCulinarian());
 
         // Disciples of the land
-        assertEquals(0, player.getLevelMiner());
-        assertEquals(58, player.getLevelBotanist());
-        assertEquals(80, player.getLevelFisher());
+        assertEquals(25, player.getLevelMiner());
+        assertEquals(80, player.getLevelBotanist());
+        assertEquals(87, player.getLevelFisher());
+        
+        // Bozjan Southern Front
+        assertEquals(25, player.getLevelBozja());
 
         // The Forbidden Land, Eureka
         assertEquals(60, player.getLevelEureka());
@@ -119,7 +124,7 @@ public class PlayerBuilderTest {
         assertFalse(player.isHasKobold());
         assertFalse(player.isHasSahagin());
         assertFalse(player.isHasAmaljaa());
-        assertFalse(player.isHasSylph());
+        assertTrue(player.isHasSylph());
         assertTrue(player.isHasCompletedHW());
         // Currently no way to definitively tell player has completed the SB Main Scenario
         // Currently assumes minion drop from Kugane, Temple of the Fist or Delta V4
@@ -164,7 +169,7 @@ public class PlayerBuilderTest {
         // Test classes - levels based on those at time of test creation
         // Tank
         assertEquals(0, player.getLevelGladiator());
-        assertEquals(33, player.getLevelMarauder());
+        assertEquals(52, player.getLevelMarauder());
         assertEquals(0, player.getLevelDarkknight());
         assertEquals(0, player.getLevelGunbreaker());
 
@@ -181,13 +186,13 @@ public class PlayerBuilderTest {
 
         // Ranged Magical DPS
         assertEquals(0, player.getLevelThaumaturge());
-        assertEquals(0, player.getLevelArcanist());
+        assertEquals(34, player.getLevelArcanist());
         assertEquals(0, player.getLevelRedmage());
-        assertEquals(0, player.getLevelBluemage());
+        assertEquals(22, player.getLevelBluemage());
 
         // Healer
         assertEquals(0, player.getLevelConjurer());
-        assertEquals(0, player.getLevelScholar());
+        assertEquals(34, player.getLevelScholar());
         assertEquals(0, player.getLevelAstrologian());
 
         // Disciples of the hand
