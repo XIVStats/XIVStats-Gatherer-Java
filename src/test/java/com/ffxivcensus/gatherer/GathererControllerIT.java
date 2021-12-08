@@ -107,14 +107,14 @@ public class GathererControllerIT {
 
     @Test
     public void testRunBeyondValidCharacters() throws Exception {
-        config.setStartId(50000000);
-        config.setEndId(60000000);
+        config.setStartId(150000000);
+        config.setEndId(160000000);
         config.setThreadLimit(32);
 
         gathererController.run();
 
         // Test that character 50,000,000 was gathered, but didn't exist
-        PlayerBean expectedDeleted = playerRepository.findOne(50000000);
+        PlayerBean expectedDeleted = playerRepository.findOne(150000000);
         assertEquals(CharacterStatus.DELETED, expectedDeleted.getCharacterStatus());
 
         // Test that character 50,001,000 wasn't gathered (e.g. the gathering stopped)

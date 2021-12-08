@@ -50,6 +50,8 @@ public class PlayerBean {
     private int levelBluemage;
     private int levelGunbreaker;
     private int levelDancer;
+    private int levelReaper;
+    private int levelSage;
     private int levelCarpenter;
     private int levelBlacksmith;
     private int levelArmorer;
@@ -61,6 +63,7 @@ public class PlayerBean {
     private int levelMiner;
     private int levelBotanist;
     private int levelFisher;
+    private int levelBozja;
     private int levelEureka;
     @Column(name = "p30days")
     private boolean has30DaysSub;
@@ -368,6 +371,22 @@ public class PlayerBean {
         this.levelDancer = levelDancer;
     }
 
+    public int getLevelReaper() {
+        return levelReaper;
+    }
+
+    public void setLevelReaper(int levelReaper) {
+        this.levelReaper = levelReaper;
+    }
+
+    public int getLevelSage() {
+        return levelSage;
+    }
+
+    public void setLevelSage(int levelSage) {
+        this.levelSage = levelSage;
+    }
+
     public int getLevelCarpenter() {
         return levelCarpenter;
     }
@@ -454,6 +473,14 @@ public class PlayerBean {
 
     public void setLevelFisher(final int lvlFisher) {
         this.levelFisher = lvlFisher;
+    }
+
+    public int getLevelBozja() {
+        return levelBozja;
+    }
+
+    public void setLevelBozja(int levelBozja) {
+        this.levelBozja = levelBozja;
     }
 
     public int getLevelEureka() {

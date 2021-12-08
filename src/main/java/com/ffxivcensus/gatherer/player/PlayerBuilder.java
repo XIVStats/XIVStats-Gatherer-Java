@@ -65,59 +65,87 @@ public class PlayerBuilder {
 
     /**
      * Set player class levels.
-     * As of 4.5, this is now parsed in the order:
+     * As of 6.0, this is now parsed in the order:
      * - Gladiator
      * - Marauder
      * - Dark Knight
+     * - Gunbreaker
+     * - White Mage
+     * - Scholar
+     * - Astrologian
+     * - Sage
      * - Monk
      * - Dragoon
      * - Ninja
      * - Samurai
-     * - White Mage
-     * - Scholar
-     * - Astrologian
+     * - Reaper
      * - Bard
      * - Machinist
+     * - Dancer
      * - Black Mage
      * - Summoner
      * - Red Mage
      * - Blue Mage
+     * - Carpenter
+     * - Blacksmith
+     * - Armorer
+     * - Goldsmith
+     * - Leatherworker
+     * - Weaver
+     * - Alchemist
+     * - Culinarian
+     * - Miner
+     * - Botanist
+     * - Fisher
      *
      * @param arrLevels integer array of classes in order displayed on lodestone.
      */
     public void setLevels(final PlayerBean player, final int[] arrLevels) {
+        // Row 1, Col 1
         player.setLevelGladiator(arrLevels[0]);
         player.setLevelMarauder(arrLevels[1]);
         player.setLevelDarkknight(arrLevels[2]);
         player.setLevelGunbreaker(arrLevels[3]);
-        player.setLevelPugilist(arrLevels[4]);
-        player.setLevelLancer(arrLevels[5]);
-        player.setLevelRogue(arrLevels[6]);
-        player.setLevelSamurai(arrLevels[7]);
-        player.setLevelConjurer(arrLevels[8]);
-        player.setLevelScholar(arrLevels[9]);
-        player.setLevelAstrologian(arrLevels[10]);
-        player.setLevelArcher(arrLevels[11]);
-        player.setLevelMachinist(arrLevels[12]);
-        player.setLevelDancer(arrLevels[13]);
-        player.setLevelThaumaturge(arrLevels[14]);
-        player.setLevelArcanist(arrLevels[15]);
-        player.setLevelRedmage(arrLevels[16]);
-        player.setLevelBluemage(arrLevels[17]);
-        player.setLevelCarpenter(arrLevels[18]);
-        player.setLevelBlacksmith(arrLevels[19]);
-        player.setLevelArmorer(arrLevels[20]);
-        player.setLevelGoldsmith(arrLevels[21]);
-        player.setLevelLeatherworker(arrLevels[22]);
-        player.setLevelWeaver(arrLevels[23]);
-        player.setLevelAlchemist(arrLevels[24]);
-        player.setLevelCulinarian(arrLevels[25]);
-        player.setLevelMiner(arrLevels[26]);
-        player.setLevelBotanist(arrLevels[27]);
-        player.setLevelFisher(arrLevels[28]);
+        // Row 1, Col 2
+        player.setLevelConjurer(arrLevels[4]);
+        player.setLevelScholar(arrLevels[5]);
+        player.setLevelAstrologian(arrLevels[6]);
+        player.setLevelSage(arrLevels[7]);
+        // Row 2, Col 1
+        player.setLevelPugilist(arrLevels[8]);
+        player.setLevelLancer(arrLevels[9]);
+        player.setLevelRogue(arrLevels[10]);
+        player.setLevelSamurai(arrLevels[11]);
+        player.setLevelReaper(arrLevels[12]);
+        // Row 2, Col 2
+        player.setLevelArcher(arrLevels[13]);
+        player.setLevelMachinist(arrLevels[14]);
+        player.setLevelDancer(arrLevels[15]);
+        player.setLevelThaumaturge(arrLevels[16]);
+        player.setLevelArcanist(arrLevels[17]);
+        player.setLevelRedmage(arrLevels[18]);
+        player.setLevelBluemage(arrLevels[19]);
+        // Row 3, Col 1
+        player.setLevelCarpenter(arrLevels[20]);
+        player.setLevelBlacksmith(arrLevels[21]);
+        player.setLevelArmorer(arrLevels[22]);
+        player.setLevelGoldsmith(arrLevels[23]);
+        player.setLevelLeatherworker(arrLevels[24]);
+        player.setLevelWeaver(arrLevels[25]);
+        player.setLevelAlchemist(arrLevels[26]);
+        player.setLevelCulinarian(arrLevels[27]);
+        // Row 3, Col 2
+        player.setLevelMiner(arrLevels[28]);
+        player.setLevelBotanist(arrLevels[29]);
+        player.setLevelFisher(arrLevels[30]);
+        // TODO: Figure out a better way to parse Resistance & Elemental levels. As they're optional, segments we cannot rely on their exact position in the array
+        // Resistance Rank is an optional component at the end of the section, so may not exist
+        if(arrLevels.length > 32) {
+            player.setLevelBozja(arrLevels[31]);
+        }
         // Elemental Level is an optional component at the end of the section, so may not exist
-        if(arrLevels.length > 29) {
-            player.setLevelEureka(arrLevels[29]);
+        if(arrLevels.length > 32) {
+            player.setLevelEureka(arrLevels[32]);
         }
     }
 
@@ -386,8 +414,8 @@ public class PlayerBuilder {
         }
 
         // Check if levels array is larger than this system is programmed for
-        // As of 5.0, this is now 30 - SCH and SMN are 2 jobs, + SAM, RDM, BLU, GNB, DNC & Eureka
-        if(arrLevels.length > 30) {
+        // As of 6.0, this is now 32 - SCH and SMN are 2 jobs, + SAM, RDM, BLU, GNB, DNC, RPR, SGE, Bozja & Eureka
+        if(arrLevels.length > 33) {
             throw new IllegalArgumentException("Error: More class levels found (" + arrLevels.length
                                                + ") than anticipated (30). The class definitions need to be updated.");
         }
