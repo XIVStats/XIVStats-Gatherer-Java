@@ -599,6 +599,24 @@ databaseChangeLog:
                     constraints:
                       nullable: false
                     afterColumn: level_gunbreaker
-                    
-
-                    
+  - changeSet:
+      id: 12
+      author: matthewhillier
+      changes:
+          - addColumn:
+              tableName: tblplayers
+              columns:
+                - column:
+                    name: level_reaper
+                    type: int(3)
+                    defaultValueNumeric: 0
+                    constraints:
+                      nullable: false
+                    afterColumn: level_dancer
+                - column:
+                    name: level_sage
+                    type: int(3)
+                    defaultValueNumeric: 0
+                    constraints:
+                      nullable: false
+                    afterColumn: level_reaper
