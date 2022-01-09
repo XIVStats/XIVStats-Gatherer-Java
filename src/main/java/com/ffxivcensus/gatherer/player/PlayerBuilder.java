@@ -1,15 +1,13 @@
 package com.ffxivcensus.gatherer.player;
 
-import java.io.IOException;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.regex.Pattern;
-
+import com.ffxivcensus.gatherer.edb.EorzeaDatabaseCache;
+import com.ffxivcensus.gatherer.lodestone.FetchYieldedPageNotFoundException;
+import com.ffxivcensus.gatherer.lodestone.LodestonePageLoader;
+import com.ffxivcensus.gatherer.lodestone.ProductionLodestonePageLoader;
+import com.ffxivcensus.gatherer.task.GathererTask;
+import com.mashape.unirest.http.HttpResponse;
+import com.mashape.unirest.http.JsonNode;
+import com.mashape.unirest.http.Unirest;
 import org.apache.commons.lang.StringUtils;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -19,14 +17,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ffxivcensus.gatherer.edb.EorzeaDatabaseCache;
-import com.ffxivcensus.gatherer.lodestone.CharacterDeletedException;
-import com.ffxivcensus.gatherer.lodestone.LodestonePageLoader;
-import com.ffxivcensus.gatherer.lodestone.ProductionLodestonePageLoader;
-import com.ffxivcensus.gatherer.task.GathererTask;
-import com.mashape.unirest.http.HttpResponse;
-import com.mashape.unirest.http.JsonNode;
-import com.mashape.unirest.http.Unirest;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.regex.Pattern;
 
 /**
  * Builder class for creating PlayerBean objects from the Lodestone.
@@ -192,17 +191,25 @@ public class PlayerBuilder {
             player.setGrandCompany(getGrandCompanyFromPage(doc));
             player.setFreeCompany(getFreeCompanyFromPage(doc));
             player.setDateImgLastModified(getDateLastUpdatedFromPage(doc, playerID));
-            
+
             Document classJobDoc = pageLoader.getClassJobPage(playerID);
             setLevels(player, getLevelsFromPage(classJobDoc));
 
             // Mounts from the relevant sub-section
-            Document mountDoc = pageLoader.getMountPage(playerID);
-            player.setMounts(getMountsFromPage(mountDoc));
+			try {
+				Document mountDoc = pageLoader.getMountPage(playerID);
+				player.setMounts(getMountsFromPage(mountDoc));
+			} catch (FetchYieldedPageNotFoundException e) {
+				player.setMounts(new ArrayList<>());
+			}
 
             // Minions from the relevant sub-section
-            Document minionDoc = pageLoader.getMinionPage(playerID);
-            player.setMinions(getMinionsFromPage(minionDoc));
+			try {
+				Document minionDoc = pageLoader.getMinionPage(playerID);
+				player.setMinions(getMinionsFromPage(minionDoc));
+			} catch (FetchYieldedPageNotFoundException e) {
+				player.setMinions(new ArrayList<>());
+			}
 
             // Info based on the result of grabbing Mounts & Minions
             player.setHas30DaysSub(doesPlayerHaveMinion(player, "Wind-up Cursor"));
@@ -257,7 +264,7 @@ public class PlayerBuilder {
             // Finalise character info
             player.setActive(isPlayerActiveInDateRange(player));
             player.setCharacterStatus(player.isActive() ? CharacterStatus.ACTIVE : CharacterStatus.INACTIVE);
-        } catch(CharacterDeletedException cde) {
+        } catch(FetchYieldedPageNotFoundException plfe) {
             player.setCharacterStatus(CharacterStatus.DELETED);
         }
         return player;
@@ -428,8 +435,8 @@ public class PlayerBuilder {
      *
      * @param doc the lodestone profile page to parse.
      * @return the set of strings representing the player's minions.
-     * @throws InterruptedException 
-     * @throws IOException 
+     * @throws InterruptedException
+     * @throws IOException
      */
     private List<String> getMinionsFromPage(final Document doc) throws IOException, InterruptedException {
 
@@ -518,7 +525,7 @@ public class PlayerBuilder {
     /**
      * Sets a Loadestone Page Loader to use.
      * By default, the PlayerBuilder will be initiatsed with a {@link ProductionLodestonePageLoader}.
-     * 
+     *
      * @param pageLoader the pageLoader to set
      */
     public void setPageLoader(final LodestonePageLoader pageLoader) {
@@ -527,7 +534,7 @@ public class PlayerBuilder {
 
     /**
      * Sets an instance of the EorzeaDatabaseCache used for read-through caching of lookups from Eorzea Database on the Lodestone.
-     * 
+     *
      * @param edbCache
      */
     @Autowired

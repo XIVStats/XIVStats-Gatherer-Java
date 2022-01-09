@@ -1,14 +1,15 @@
 package com.ffxivcensus.gatherer.lodestone;
 
-import java.io.File;
-import java.io.IOException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+
+import java.io.File;
+import java.io.IOException;
 
 public class TestDataLodestonePageLoader implements LodestonePageLoader {
 
     @Override
-    public Document getCharacterPage(int characterId) throws IOException, InterruptedException, CharacterDeletedException {
+    public Document getCharacterPage(int characterId) throws IOException, InterruptedException, FetchYieldedPageNotFoundException {
         Document doc;
         try {
             doc = Jsoup.parse(
@@ -22,9 +23,9 @@ public class TestDataLodestonePageLoader implements LodestonePageLoader {
         }
         return doc;
     }
-    
+
     @Override
-    public Document getClassJobPage(int characterId) throws IOException, InterruptedException, CharacterDeletedException {
+    public Document getClassJobPage(int characterId) throws IOException, InterruptedException, FetchYieldedPageNotFoundException {
         Document doc;
         try {
             doc = Jsoup.parse(
@@ -40,7 +41,7 @@ public class TestDataLodestonePageLoader implements LodestonePageLoader {
     }
 
     @Override
-    public Document getMinionPage(int characterId) throws IOException, InterruptedException, CharacterDeletedException {
+    public Document getMinionPage(int characterId) throws IOException, InterruptedException, FetchYieldedPageNotFoundException {
         Document doc;
         try {
             doc = Jsoup.parse(
@@ -56,7 +57,7 @@ public class TestDataLodestonePageLoader implements LodestonePageLoader {
     }
 
     @Override
-    public Document getMountPage(int characterId) throws IOException, InterruptedException, CharacterDeletedException {
+    public Document getMountPage(int characterId) throws IOException, InterruptedException, FetchYieldedPageNotFoundException {
         Document doc;
         try {
             doc = Jsoup.parse(
