@@ -1,19 +1,11 @@
 package com.ffxivcensus.gatherer.player;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import com.ffxivcensus.gatherer.edb.EorzeaDatabaseCache;
+import org.junit.*;
+
 import java.util.Date;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-
-import com.ffxivcensus.gatherer.edb.EorzeaDatabaseCache;
-import com.ffxivcensus.gatherer.player.PlayerBean;
-import com.ffxivcensus.gatherer.player.PlayerBuilder;
+import static org.junit.Assert.*;
 
 /**
  * JUnit test class to test the methods of the Player class.
@@ -116,10 +108,10 @@ public class PlayerBuilderIT {
         assertTrue(playerOne.getLevelMiner() >= 80);
         assertTrue(playerOne.getLevelBotanist() >= 80);
         assertTrue(playerOne.getLevelFisher() >= 80);
-        
+
         // Bozjan Southern Front
         assertTrue(playerOne.getLevelBozja() >= 13);
-        
+
         // The Forbidden Land, Eureka
         assertTrue(playerOne.getLevelEureka() >= 60);
 
@@ -302,11 +294,11 @@ public class PlayerBuilderIT {
         assertTrue(player.isHasCompletedHWSightseeing());
         assertTrue(player.isHasMooglePlush());
     }
-    
+
     @Test
     public void testGetPlayerWithEureka() throws Exception {
         PlayerBean player = instance.getPlayer(2256025);
-        
+
         assertTrue(player.getLevelEureka() > 50);
     }
 
@@ -323,5 +315,37 @@ public class PlayerBuilderIT {
 
         }
     }
+
+	/**
+	 * Perform a test of the getPlayer method, using character #33000008, which has no minions or mounts
+	 */
+	@Test
+	public void testGetPlayerWithNoMinionsNoMounts() {
+		try {
+			// Try to get a character that doesn't exist
+			PlayerBean player = instance.getPlayer(33000008);
+			assertNotEquals("Character should NOT be marked as DELETED", CharacterStatus.DELETED, player.getCharacterStatus());
+			assertEquals("Character should have mount array of length 0", 0, player.getMounts().size());
+			assertEquals("Character should have minion array of length 0", 0, player.getMinions().size());
+		} catch(Exception e) {
+
+		}
+	}
+
+	/**
+	 * Perform a test of the getPlayer method, using character #33000046, which has minions but has no mounts
+	 */
+	@Test
+	public void testGetPlayerWithMinionsButNoMounts() {
+		try {
+			// Try to get a character that doesn't exist
+			PlayerBean player = instance.getPlayer(33000046);
+			assertNotEquals("Character should NOT be marked as deleted", CharacterStatus.DELETED, player.getCharacterStatus());
+			assertTrue("Character should have minion array of length > 0", player.getMinions().size() > 0);
+			assertEquals("Character should have mount array of length 0", 0, player.getMounts().size());
+		} catch(Exception e) {
+
+		}
+	}
 
 }
