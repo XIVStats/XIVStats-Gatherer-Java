@@ -51,6 +51,7 @@ public class PlayerBuilder {
     private static final String LAYOUT_CHARACTER_BLOCK_BOX = "character-block__box";
     private static final String LAYOUT_FRAME_CHARA_WORLD = "frame__chara__world";
     private static final String LAYOUT_CHARACTER_BLOCK_NAME = "character-block__name";
+	private static final String LAYOUT_CHARACTER_TAB = "character_menu__link";
     private static final Logger LOG = LoggerFactory.getLogger(PlayerBuilder.class);
     /**
      * Number of days inactivity before character is considered inactive
@@ -195,20 +196,29 @@ public class PlayerBuilder {
             Document classJobDoc = pageLoader.getClassJobPage(playerID);
             setLevels(player, getLevelsFromPage(classJobDoc));
 
-            // Mounts from the relevant sub-section
-			try {
-				Document mountDoc = pageLoader.getMountPage(playerID);
-				player.setMounts(getMountsFromPage(mountDoc));
-			} catch (FetchYieldedPageNotFoundException e) {
+			if (isPlayerTabDisabled(doc, "Mounts")) {
 				player.setMounts(new ArrayList<>());
+			} else {
+				// Mounts from the relevant sub-section
+				try {
+					Document mountDoc = pageLoader.getMountPage(playerID);
+					player.setMounts(getMountsFromPage(mountDoc));
+				} catch (FetchYieldedPageNotFoundException e) {
+					player.setMounts(new ArrayList<>());
+				}
 			}
 
-            // Minions from the relevant sub-section
-			try {
-				Document minionDoc = pageLoader.getMinionPage(playerID);
-				player.setMinions(getMinionsFromPage(minionDoc));
-			} catch (FetchYieldedPageNotFoundException e) {
+
+			if (isPlayerTabDisabled(doc, "Minions")) {
 				player.setMinions(new ArrayList<>());
+			} else {
+				// Minions from the relevant sub-section
+				try {
+					Document minionDoc = pageLoader.getMinionPage(playerID);
+					player.setMinions(getMinionsFromPage(minionDoc));
+				} catch (FetchYieldedPageNotFoundException e) {
+					player.setMinions(new ArrayList<>());
+				}
 			}
 
             // Info based on the result of grabbing Mounts & Minions
@@ -284,6 +294,10 @@ public class PlayerBuilder {
         return player.getDateImgLastModified().after(nowMinusIncludeRange); // If the date occurs between the include range and now, then
                                                                             // return true. Else false
     }
+
+	private boolean isPlayerTabDisabled(final Document doc, final String tabName) {
+		return doc.select(".character__profile_tab > li:contains("+tabName+")").hasClass("disable");
+	}
 
     /**
      * Given a lodestone profile page, return the name of the character.
