@@ -1,12 +1,11 @@
 package com.ffxivcensus.gatherer.player;
 
-import static org.junit.Assert.*;
-
+import com.ffxivcensus.gatherer.edb.EorzeaDatabaseCache;
+import com.ffxivcensus.gatherer.lodestone.TestDataLodestonePageLoader;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.ffxivcensus.gatherer.edb.EorzeaDatabaseCache;
-import com.ffxivcensus.gatherer.lodestone.TestDataLodestonePageLoader;
+import static org.junit.Assert.*;
 
 public class PlayerBuilderTest {
 
@@ -82,7 +81,7 @@ public class PlayerBuilderTest {
         assertEquals(25, player.getLevelMiner());
         assertEquals(80, player.getLevelBotanist());
         assertEquals(87, player.getLevelFisher());
-        
+
         // Bozjan Southern Front
         assertEquals(25, player.getLevelBozja());
 
@@ -148,6 +147,29 @@ public class PlayerBuilderTest {
         // Test for data from very end
         assertTrue(player.getMounts().contains("Midgardsormr"));
     }
+
+
+	@Test
+	public void testLoadFrom33000061() throws Exception {
+		instance.setPageLoader(new TestDataLodestonePageLoader());
+		PlayerBean player = instance.getPlayer(33000061);
+
+		assertEquals(33000061, player.getId());
+		assertTrue(player.getMinions().size() == 0);
+		assertTrue(player.getMounts().size() > 0);
+
+	}
+
+	@Test
+	public void testLoadFrom33000046() throws Exception {
+		instance.setPageLoader(new TestDataLodestonePageLoader());
+		PlayerBean player = instance.getPlayer(33000046);
+
+		assertEquals(33000046, player.getId());
+		assertTrue(player.getMinions().size() > 0);
+		assertTrue(player.getMounts().size() == 0);
+
+	}
 
     @Test
     public void testLoadFrom22763008() throws Exception {
