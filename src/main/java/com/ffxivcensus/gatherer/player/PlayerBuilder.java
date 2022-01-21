@@ -51,7 +51,7 @@ public class PlayerBuilder {
     private static final String LAYOUT_CHARACTER_BLOCK_BOX = "character-block__box";
     private static final String LAYOUT_FRAME_CHARA_WORLD = "frame__chara__world";
     private static final String LAYOUT_CHARACTER_BLOCK_NAME = "character-block__name";
-	private static final String LAYOUT_CHARACTER_TAB = "character_menu__link";
+	private static final String LAYOUT_CHARACTER_TAB = "character__profile_tab";
     private static final Logger LOG = LoggerFactory.getLogger(PlayerBuilder.class);
     /**
      * Number of days inactivity before character is considered inactive
@@ -296,7 +296,7 @@ public class PlayerBuilder {
     }
 
 	private boolean isPlayerTabDisabled(final Document doc, final String tabName) {
-		return doc.select(".character__profile_tab > li:contains("+tabName+")").hasClass("disable");
+		return doc.select("."+LAYOUT_CHARACTER_TAB+" > li:contains("+tabName+")").hasClass("disable");
 	}
 
     /**
