@@ -51,6 +51,7 @@ public class PlayerBuilder {
     private static final String LAYOUT_CHARACTER_BLOCK_BOX = "character-block__box";
     private static final String LAYOUT_FRAME_CHARA_WORLD = "frame__chara__world";
     private static final String LAYOUT_CHARACTER_BLOCK_NAME = "character-block__name";
+    private static final String LAYOUT_CHARACTER_BLOCK_TITLE = "character-block__title";
 	private static final String LAYOUT_CHARACTER_TAB = "character__profile_tab";
     private static final Logger LOG = LoggerFactory.getLogger(PlayerBuilder.class);
     /**
@@ -190,6 +191,7 @@ public class PlayerBuilder {
             player.setRace(getRaceFromPage(doc));
             player.setGender(getGenderFromPage(doc));
             player.setGrandCompany(getGrandCompanyFromPage(doc));
+            player.setGrandCompanyRank(getGrandCompanyRankFromPage(doc));
             player.setFreeCompany(getFreeCompanyFromPage(doc));
             player.setDateImgLastModified(getDateLastUpdatedFromPage(doc, playerID));
 
@@ -354,6 +356,25 @@ public class PlayerBuilder {
         }
     }
 
+	private Element getElementForCharacterBlockWithName(Document doc, String titleToFind) {
+		Elements elements = doc.getElementsByClass(LAYOUT_CHARACTER_BLOCK_BOX);
+		for(Element element : elements) {
+			if (element.getElementsByClass(LAYOUT_CHARACTER_BLOCK_TITLE).get(0).text().equals(titleToFind)) {
+				return element;
+			}
+		}
+		return null;
+	}
+
+	private String getGrandCompanyBlockElementByIndexFromPage(final Document doc, int index) {
+		String value = "none";
+		Element element = this.getElementForCharacterBlockWithName(doc, "Grand Company");
+		if (element != null) {
+			value = element.getElementsByClass(LAYOUT_CHARACTER_BLOCK_NAME).text().split("/")[index].trim();
+		}
+		return value;
+	}
+
     /**
      * Given a lodestone profile page, return the grand company of the character.
      *
@@ -361,23 +382,24 @@ public class PlayerBuilder {
      * @return the grand company of the character.
      */
     private String getGrandCompanyFromPage(final Document doc) {
-        String gc = null;
-        // Get all elements with class chara_profile_box_info
-        Elements elements = doc.getElementsByClass(LAYOUT_CHARACTER_BLOCK_BOX);
-        if(elements.size() == 5) {
-            gc = elements.get(3).getElementsByClass(LAYOUT_CHARACTER_BLOCK_NAME).get(0).text().split("/")[0].trim();
-        } else if(elements.size() == 4) {
-            if(!elements.get(3).getElementsByClass(LAYOUT_CHARACTER_FREECOMPANY_NAME).isEmpty()) { // If box is fc
-                gc = "none";
-            } else {
-                gc = elements.get(3).getElementsByClass(LAYOUT_CHARACTER_BLOCK_NAME).get(0).text().split("/")[0].trim();
-            }
-        } else {
-            gc = "none";
-        }
-
-        return gc;
+        return getGrandCompanyBlockElementByIndexFromPage(doc, 0);
     }
+
+	/**
+	 * Given a lodestone profile page, return the grand company rank of the character.
+	 *
+	 * @param doc the lodestone profile page.
+	 * @return the grand company of the character.
+	 */
+	private String getGrandCompanyRankFromPage(final Document doc) {
+		return getGrandCompanyBlockElementByIndexFromPage(doc, 1)
+				.replace(" Serpent ", "")
+				.replace(" Storm ", "")
+				.replace(" Flame ", "")
+				.replace("Serpent ", "")
+				.replace("Storm ", "")
+				.replace("Flame ", "");
+	}
 
     /**
      * Given a lodestone profile page, return the free company of the character.

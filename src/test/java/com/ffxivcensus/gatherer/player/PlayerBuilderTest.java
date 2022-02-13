@@ -34,6 +34,7 @@ public class PlayerBuilderTest {
         assertEquals("Hyur", player.getRace());
         assertEquals("male", player.getGender());
         assertEquals("Order of the Twin Adder", player.getGrandCompany());
+        assertEquals("Captain", player.getGrandCompanyRank());
         // assertEquals("End of Days", playerOne.getFreeCompany());
 
         // Test classes - levels based on those at time of test creation
@@ -186,6 +187,7 @@ public class PlayerBuilderTest {
         assertEquals("Miqo'te", player.getRace());
         assertEquals("male", player.getGender());
         assertEquals("Maelstrom", player.getGrandCompany());
+        assertEquals("Corporal", player.getGrandCompanyRank());
         // assertEquals("End of Days", playerOne.getFreeCompany());
 
         // Test classes - levels based on those at time of test creation

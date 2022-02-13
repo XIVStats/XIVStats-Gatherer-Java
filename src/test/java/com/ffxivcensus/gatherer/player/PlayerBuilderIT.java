@@ -61,6 +61,7 @@ public class PlayerBuilderIT {
         assertEquals("Au Ra", playerOne.getRace());
         assertEquals("female", playerOne.getGender());
         assertEquals("Maelstrom", playerOne.getGrandCompany());
+        assertEquals("Captain", playerOne.getGrandCompanyRank());
         // assertEquals("End of Days", playerOne.getFreeCompany());
 
         // Test classes - levels based on those at time of test creation
@@ -207,6 +208,7 @@ public class PlayerBuilderIT {
 
         // Test grand company
         assertEquals("none", player.getGrandCompany());
+        assertEquals("none", player.getGrandCompanyRank());
         assertEquals("none", player.getFreeCompany());
 
         // Test gender
@@ -260,6 +262,7 @@ public class PlayerBuilderIT {
 
         // Verify that grand company is "None"
         assertEquals("none", player.getGrandCompany());
+        assertEquals("none", player.getGrandCompanyRank());
         assertEquals("NegiNabe", player.getFreeCompany());
     }
 
@@ -274,6 +277,7 @@ public class PlayerBuilderIT {
 
         // Test that GC is maelstrom
         assertEquals("Maelstrom", player.getGrandCompany());
+        assertEquals("Second Lieutenant", player.getGrandCompanyRank());
         assertEquals("none", player.getFreeCompany());
     }
 
