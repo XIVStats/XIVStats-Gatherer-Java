@@ -1,17 +1,11 @@
 package com.ffxivcensus.gatherer.player;
 
+import com.ffxivcensus.gatherer.util.StringListConverter;
+
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import javax.persistence.Column;
-import javax.persistence.Convert;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import com.ffxivcensus.gatherer.util.StringListConverter;
 
 /**
  * Object class to represent a Character/Player. This class specifies the attributes and behaviour of a player object.
@@ -31,6 +25,7 @@ public class PlayerBean {
     private String race = NOT_AVAILABLE;
     private String gender = NOT_AVAILABLE;
     private String grandCompany = NOT_AVAILABLE;
+	private String grandCompanyRank = NOT_AVAILABLE;
     private String freeCompany = NOT_AVAILABLE;
     private int levelGladiator;
     private int levelPugilist;
@@ -218,6 +213,14 @@ public class PlayerBean {
     public void setGrandCompany(final String grandCompany) {
         this.grandCompany = grandCompany;
     }
+
+	public String getGrandCompanyRank() {
+		return grandCompanyRank;
+	}
+
+	public void setGrandCompanyRank(final String grandCompanyRank) {
+		this.grandCompanyRank = grandCompanyRank;
+	}
 
     public String getFreeCompany() {
         return freeCompany;

@@ -634,3 +634,15 @@ databaseChangeLog:
                     constraints:
                       nullable: false
                     afterColumn: level_fisher
+  - changeSet:
+      id: 14
+      author: reidweb
+      changes:
+        - addColumn:
+            tableName: tblplayers
+            columns:
+              - column:
+                  name: grand_company_rank
+                  type: varchar(255)
+                  constraints:
+                    nullable: true
