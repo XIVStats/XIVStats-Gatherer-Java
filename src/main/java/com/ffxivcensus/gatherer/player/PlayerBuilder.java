@@ -393,9 +393,6 @@ public class PlayerBuilder {
 	 */
 	private String getGrandCompanyRankFromPage(final Document doc) {
 		return getGrandCompanyBlockElementByIndexFromPage(doc, 1)
-				.replace(" Serpent", "")
-				.replace(" Storm", "")
-				.replace(" Flame", "")
 				.replace("Serpent ", "")
 				.replace("Storm ", "")
 				.replace("Flame ", "");
