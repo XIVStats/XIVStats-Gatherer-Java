@@ -172,6 +172,18 @@ public class PlayerBuilderTest {
 		assertEquals("Captain", player.getGrandCompanyRank());
 	}
 
+	// verifies splitting of grand company rank works correctly
+	@Test
+	public void testLoadFrom27821077() throws Exception {
+		instance.setPageLoader(new TestDataLodestonePageLoader());
+		PlayerBean player = instance.getPlayer(27821077);
+
+		assertEquals(27821077, player.getId());
+		assertEquals("Order of the Twin Adder", player.getGrandCompany());
+		assertEquals("Second Lieutenant", player.getGrandCompanyRank());
+	}
+
+
 	@Test
 	public void testLoadFrom33000046() throws Exception {
 		instance.setPageLoader(new TestDataLodestonePageLoader());
