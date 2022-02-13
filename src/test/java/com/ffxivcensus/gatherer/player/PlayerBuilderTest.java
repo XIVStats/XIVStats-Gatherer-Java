@@ -161,6 +161,17 @@ public class PlayerBuilderTest {
 
 	}
 
+	// REGRESSION TEST: Tests behaviour described in https://github.com/XIVStats/XIVStats-Gatherer-Java/issues/64
+	@Test
+	public void testLoadFrom5313() throws Exception {
+		instance.setPageLoader(new TestDataLodestonePageLoader());
+		PlayerBean player = instance.getPlayer(5313);
+
+		assertEquals(5313, player.getId());
+		assertEquals("Order of the Twin Adder", player.getGrandCompany());
+		assertEquals("Captain", player.getGrandCompanyRank());
+	}
+
 	@Test
 	public void testLoadFrom33000046() throws Exception {
 		instance.setPageLoader(new TestDataLodestonePageLoader());
