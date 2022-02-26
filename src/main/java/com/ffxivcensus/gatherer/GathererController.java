@@ -1,18 +1,8 @@
 package com.ffxivcensus.gatherer;
 
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
-
-import org.apache.commons.cli.ParseException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.ffxivcensus.gatherer.config.ApplicationConfig;
+import com.ffxivcensus.gatherer.jobclass.JobClassStatsAggregator;
+import com.ffxivcensus.gatherer.jobclass.JobClassStatsRepository;
 import com.ffxivcensus.gatherer.player.CharacterStatus;
 import com.ffxivcensus.gatherer.player.PlayerBean;
 import com.ffxivcensus.gatherer.player.PlayerBeanRepository;
@@ -21,6 +11,13 @@ import com.ffxivcensus.gatherer.task.GathererTask;
 import com.ffxivcensus.gatherer.task.GatheringLimiterTask;
 import com.ffxivcensus.gatherer.task.LevemeteTask;
 import com.ffxivcensus.gatherer.task.TaskFactory;
+import org.apache.commons.cli.ParseException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.concurrent.*;
 
 /**
  * GathererController class of character gathering program. This class makes calls to fetch records from the lodestone, and then
@@ -38,23 +35,25 @@ public class GathererController {
     private final TaskFactory taskFactory;
     private final GatheringStatus gatheringStatus;
     private final PlayerBeanRepository playerRepository;
+    private final JobClassStatsRepository jobClassStatsRepository;
 
     /**
      * Constructs a new {@link GathererController} and configures with the provided {@link ApplicationConfig}.
-     * 
+     *
      * @param config Configuration Bean
      */
     public GathererController(@Autowired final ApplicationConfig config, @Autowired final TaskFactory taskFactory,
-                              @Autowired final PlayerBeanRepository playerRepository, @Autowired GatheringStatus gatheringStatus) {
+                              @Autowired final PlayerBeanRepository playerRepository, @Autowired final JobClassStatsRepository jobClassStatsRepository, @Autowired GatheringStatus gatheringStatus) {
         this.appConfig = config;
         this.taskFactory = taskFactory;
         this.gatheringStatus = gatheringStatus;
         this.playerRepository = playerRepository;
+		this.jobClassStatsRepository = jobClassStatsRepository;
     }
 
     /**
      * Start the gatherer controller instance up.
-     * 
+     *
      * @throws ParseException
      * @throws Exception Exception thrown if system is incorrectly configured.
      */
@@ -87,6 +86,11 @@ public class GathererController {
                      finalId,
                      days, hours % 24, minutes % 60, seconds % 60,
                      appConfig.getThreadLimit());
+
+			LOG.info("Starting aggregation of class/job stats");
+			JobClassStatsAggregator jobClassStatsAggregator = new JobClassStatsAggregator(playerRepository, jobClassStatsRepository);
+			jobClassStatsAggregator.aggregate(appConfig.getDataLabel());
+			LOG.info("Completed aggregation of class/job stats");
         }
     }
 

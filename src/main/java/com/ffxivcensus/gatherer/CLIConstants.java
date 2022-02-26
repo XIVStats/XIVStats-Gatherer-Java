@@ -5,11 +5,11 @@ import org.apache.commons.cli.Options;
 
 /**
  * Class encapsulating all of the CLI constants.
- * 
+ *
  * @author matthew.hillier
  */
 public class CLIConstants {
-    public static final String CLI_USAGE = "java -jar XIVStats-Gatherer-Java.jar [-i] -s startid [-f finishid] [-a autostop-id] [-g autostop-gap] [-d database-name] [-u database-user] [-p database-user-password] [-U database-url] [-t threads]";
+    public static final String CLI_USAGE = "java -jar XIVStats-Gatherer-Java.jar [-i] -s startid [-f finishid] [-a autostop-id] [-g autostop-gap] [-d database-name] [-u database-user] [-p database-user-password] [-U database-url] [-t threads] [-l label]";
 
     /**
      * Private constructor as this should never me initiated.
@@ -19,7 +19,7 @@ public class CLIConstants {
 
     /**
      * Establish the possible options (flags) to run the program with.
-     * 
+     *
      * @return the set of command line options.
      */
     public static Options setupOptions() {
@@ -48,6 +48,7 @@ public class CLIConstants {
                                   .desc("number of gatherer threads to run").build();
         Option optIgnoreSSLVerify = Option.builder("i").longOpt("ignore-ssl-verification")
                                           .desc("Supress/ignore MySQL SSL verification warnings").build();
+		Option optDataLabel = Option.builder("l").longOpt("label").argName("label").hasArg().numberOfArgs(1).required().desc("Label to apply to aggregate table rows for this run").build();
 
         // Add each option to the options object
         options.addOption(optStart);
@@ -61,6 +62,7 @@ public class CLIConstants {
         options.addOption(optURL);
         options.addOption(optHelp);
         options.addOption(optIgnoreSSLVerify);
+        options.addOption(optDataLabel);
 
         return options;
     }

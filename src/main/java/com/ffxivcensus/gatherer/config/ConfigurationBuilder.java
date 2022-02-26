@@ -1,17 +1,7 @@
 package com.ffxivcensus.gatherer.config;
 
-import java.io.File;
-import java.io.IOException;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-
-import org.apache.commons.cli.CommandLine;
-import org.apache.commons.cli.CommandLineParser;
-import org.apache.commons.cli.DefaultParser;
-import org.apache.commons.cli.Options;
-import org.apache.commons.cli.ParseException;
+import com.ffxivcensus.gatherer.GathererController;
+import org.apache.commons.cli.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
@@ -19,7 +9,11 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import com.ffxivcensus.gatherer.GathererController;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.File;
+import java.io.IOException;
 
 /**
  * Builder for the Gatherer configuration options.
@@ -33,7 +27,7 @@ import com.ffxivcensus.gatherer.GathererController;
  * </ol>
  * Once configuration has been completed, fetch the {@link ApplicationConfig} bean using the {@link #getConfiguration()} method and pass
  * into the {@link GathererController}.
- * 
+ *
  * @author matthew.hillier
  */
 public class ConfigurationBuilder {
@@ -42,7 +36,7 @@ public class ConfigurationBuilder {
 
     /**
      * Returns a new {@link ConfigurationBuilder} object with a pre-configured {@link ApplicationConfig} bean in it's default state.
-     * 
+     *
      * @return New {@link ConfigurationBuilder} instance ready to use.
      */
     public static ConfigurationBuilder createBuilder() {
@@ -51,7 +45,7 @@ public class ConfigurationBuilder {
 
     /**
      * Returns a new {@link ConfigurationBuilder} object ready to work with the given {@link ApplicationConfig} bean.
-     * 
+     *
      * @return New {@link ConfigurationBuilder} instance ready to use.
      */
     public static ConfigurationBuilder createBuilder(ApplicationConfig existingConfig) {
@@ -61,7 +55,7 @@ public class ConfigurationBuilder {
     /**
      * Creates a new {@link ConfigurationBuilder} instance, passing in the given {@link ApplicationConfiguration} object.
      * This is private to ensure that other callers cannot intercept and replace the {@link ApplicationConfig} bean by accident.
-     * 
+     *
      * @param configuration {@link ApplicationConfig} bean to be used with the new instance of the {@link ConfigurationBuilder}.
      */
     public ConfigurationBuilder(ApplicationConfig configuration) {
@@ -124,7 +118,7 @@ public class ConfigurationBuilder {
 
     /**
      * Sets configuration based on the input from the Command Line.
-     * 
+     *
      * @param options Command Line Options presented to the User
      * @param args Arguments passed in from the Command Line
      * @return New {@link ConfigurationBuilder} containing the updated Configuration bean and ready to be further configured.
@@ -142,12 +136,12 @@ public class ConfigurationBuilder {
             if(cmd.hasOption("f")) {
                 configuration.setEndId(Integer.parseInt(cmd.getOptionValue("f")));
             }
-            
+
             // Autostop Lower Id
             if(cmd.hasOption("a")) {
                 configuration.setAutoStopLowerLimitId(Integer.parseInt(cmd.getOptionValue("a")));
             }
-            
+
             // Autostop Character Gap Count
             if(cmd.hasOption("g")) {
                 configuration.setAutoStopGap(Integer.parseInt(cmd.getOptionValue("g")));
@@ -178,13 +172,18 @@ public class ConfigurationBuilder {
             if(cmd.hasOption("t")) {
                 configuration.setThreadLimit(Integer.parseInt(cmd.getOptionValue("t")));
             }
+
+			// Data label
+			if(cmd.hasOption("l")) {
+				configuration.setDataLabel(cmd.getOptionValue("l"));
+			}
         }
         return new ConfigurationBuilder(configuration);
     }
 
     /**
      * Fetches the {@link ApplicationConfig} bean configured by this builder.
-     * 
+     *
      * @return {@link ApplicationConfig} bean.
      */
     public ApplicationConfig getConfiguration() {

@@ -13,7 +13,7 @@ package com.ffxivcensus.gatherer.config;
  * <dt>{@link #dbIgnoreSSLWarn}</dt>
  * <dd>true</dd>
  * </dl>
- * 
+ *
  * @author matthew.hillier
  */
 public class ApplicationConfig {
@@ -86,6 +86,11 @@ public class ApplicationConfig {
      */
     private int autoStopGap = DEFAULT_AUTOSTOP_GAP;
 
+	/**
+	 * The label to apply to data in aggregate table
+	 */
+	private String dataLabel = "CURRENT";
+
     /////////////////////////////////
     // Database Configuration Methods
     /////////////////////////////////
@@ -129,6 +134,14 @@ public class ApplicationConfig {
     public void setDbIgnoreSSLWarn(boolean dbIgnoreSSLWarn) {
         this.dbIgnoreSSLWarn = dbIgnoreSSLWarn;
     }
+
+	public void setDataLabel(String dataLabel) {
+		this.dataLabel = dataLabel;
+	}
+
+	public String getDataLabel() {
+		return this.dataLabel;
+	}
 
     ////////////////////////
     // Process Configuration
