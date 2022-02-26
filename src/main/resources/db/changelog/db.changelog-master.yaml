@@ -646,3 +646,67 @@ databaseChangeLog:
                   type: varchar(255)
                   constraints:
                     nullable: true
+  - changeSet:
+      id: 15
+      author: reidweb
+      changes:
+        - createTable:
+            tableName: tblclasses
+            columns:
+              - column:
+                  name: class_abbreviation
+                  type: nvarchar(3)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: run_id
+                  type: varchar(255)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: starting_level
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: count_starting_lvl
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: lvl_1_to_29
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: lvl_30_to_49
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: lvl_50_to_59
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: lvl_60_to_69
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: lvl_70_to_79
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: lvl_80_to_89
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: lvl_90_to_99
+                  type: int
+                  constraints:
+                    nullable: false
