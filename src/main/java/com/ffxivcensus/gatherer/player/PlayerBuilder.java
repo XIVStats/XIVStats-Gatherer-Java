@@ -358,10 +358,12 @@ public class PlayerBuilder {
 
 	private Element getElementForCharacterBlockWithName(Document doc, String titleToFind) {
 		Elements elements = doc.getElementsByClass(LAYOUT_CHARACTER_BLOCK_BOX);
-		for(Element element : elements) {
-			if (element.getElementsByClass(LAYOUT_CHARACTER_BLOCK_TITLE).get(0).text().equals(titleToFind)) {
-				return element;
-			}
+			for (Element element : elements) {
+				Elements elementsWithClass = element.getElementsByClass(LAYOUT_CHARACTER_BLOCK_TITLE);
+				if (elementsWithClass.isEmpty()) return null;
+				else if (elementsWithClass.get(0).text().equals(titleToFind)) {
+					return element;
+				}
 		}
 		return null;
 	}

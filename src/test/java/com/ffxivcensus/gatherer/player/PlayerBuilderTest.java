@@ -172,6 +172,18 @@ public class PlayerBuilderTest {
 		assertEquals("Captain", player.getGrandCompanyRank());
 	}
 
+	// REGRESSION TEST: Tests player with FC but no GC
+	@Test
+	public void testLoadFrom33000075() throws Exception {
+		instance.setPageLoader(new TestDataLodestonePageLoader());
+		PlayerBean player = instance.getPlayer(33000075);
+
+		assertEquals(33000075, player.getId());
+		assertEquals("Legends of Light", player.getFreeCompany());
+		assertEquals("none", player.getGrandCompany());
+		assertEquals("none", player.getGrandCompanyRank());
+	}
+
 	// verifies splitting of grand company rank works correctly
 	@Test
 	public void testLoadFrom27821077() throws Exception {
