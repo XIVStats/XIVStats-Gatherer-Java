@@ -323,7 +323,7 @@ public class PlayerBuilder {
         String realmAndDatacenter = doc.getElementsByClass(LAYOUT_FRAME_CHARA_WORLD).get(0).text();
         String realm = null;
         if(!StringUtils.isEmpty(realmAndDatacenter)) {
-            realm = realmAndDatacenter.substring(0, realmAndDatacenter.indexOf("(") - 1);
+            realm = realmAndDatacenter.substring(0, realmAndDatacenter.indexOf("[") - 1);
         }
         return realm;
     }
