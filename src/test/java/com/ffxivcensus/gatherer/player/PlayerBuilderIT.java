@@ -76,7 +76,7 @@ public class PlayerBuilderIT {
         assertTrue(playerOne.getLevelLancer() >= 80);
         assertTrue(playerOne.getLevelRogue() >= 80);
         assertTrue(playerOne.getLevelSamurai() >= 80);
-        assertTrue(playerOne.getLevelReaper() == 0);
+        assertTrue(playerOne.getLevelReaper() >= 70);
 
         // Ranged Physical DPS
         assertTrue(playerOne.getLevelArcher() >= 80);
@@ -93,7 +93,7 @@ public class PlayerBuilderIT {
         assertTrue(playerOne.getLevelConjurer() >= 90);
         assertTrue(playerOne.getLevelScholar() >= 80);
         assertTrue(playerOne.getLevelAstrologian() >= 81);
-        assertTrue(playerOne.getLevelSage() == 0);
+        assertTrue(playerOne.getLevelSage() >= 70);
 
         // Disciples of the hand
         assertTrue(playerOne.getLevelCarpenter() >= 80);
