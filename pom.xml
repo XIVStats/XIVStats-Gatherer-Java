@@ -53,7 +53,7 @@
         <repository>
             <id>mvnrepository.com</id>
             <name>mvnrepository.com</name>
-            <url>http://mvnrepository.com/</url>
+            <url>https://mvnrepository.com/</url>
         </repository>
     </repositories>
 
